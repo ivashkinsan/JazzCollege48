@@ -1,0 +1,48 @@
+:root {
+  /* Основные цвета - тёмная тема */
+  --color-bg: #0a0a0a;
+  --color-bg-secondary: #141414;
+  --color-bg-tertiary: #1a1a1a;
+  
+  --color-text: #f5f5f5;
+  --color-text-secondary: #b0b0b0;
+  --color-text-muted: #666666;
+  
+  /* Акцент - золотой */
+  --color-accent: #D4AF37;
+  --color-accent-hover: #E8C85A;
+  --color-accent-dark: #B8942E;
+  
+  /* Нейтральные */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-gray: #333333;
+  --color-gray-light: #444444;
+  
+  /* Размеры */
+  --header-height: 70px;
+  --container-width: 1200px;
+  --border-radius: 4px;
+  
+  /* Отступы */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-xxl: 5rem;
+  
+  /* Тени */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+  
+  /* Переходы */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Границы */
+  --border-color: #333;
+  --border-light: #444;
+}

@@ -1,0 +1,100 @@
+.specialties__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.specialty-card {
+  padding: var(--spacing-xl);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--color-accent);
+}
+
+.specialty-card__code {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+.specialty-card__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: var(--spacing-sm);
+}
+
+.specialty-card__description {
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+}
+
+.specialty-card__profiles h4 {
+  font-size: 0.9375rem;
+  color: var(--color-white);
+  margin-bottom: var(--spacing-xs);
+}
+
+.specialty-card__profiles ul {
+  list-style: disc;
+  padding-left: var(--spacing-md);
+}
+
+.specialty-card__profiles li {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+  line-height: 1.6;
+}
+
+.instruments__section {
+  margin-top: var(--spacing-xl);
+}
+
+.section__subtitle-small {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.instruments__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.instrument-card {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.instrument-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+}
+
+.instrument-card__icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.instrument-card__name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: var(--spacing-xs);
+}
+
+.instrument-card__description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}

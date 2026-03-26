@@ -1,0 +1,101 @@
+.concerts__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.concert-card {
+  display: flex;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+}
+
+.concert-card:hover {
+  border-color: var(--color-accent);
+}
+
+.concert-card__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  background-color: var(--color-bg);
+  min-width: 100px;
+  border-radius: var(--border-radius);
+}
+
+.concert-card__day {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.concert-card__month {
+  font-size: 0.875rem;
+  color: var(--color-white);
+  text-transform: uppercase;
+  margin-top: var(--spacing-xs);
+}
+
+.concert-card__year {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.concert-card__content {
+  flex: 1;
+}
+
+.concert-card__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: var(--spacing-sm);
+}
+
+.concert-card__venue,
+.concert-card__time {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-xs);
+}
+
+.concert-card__description {
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-top: var(--spacing-sm);
+}
+
+.concert-card__free {
+  display: inline-block;
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-accent);
+  color: var(--color-black);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: var(--border-radius);
+}
+
+@media (max-width: 768px) {
+  .concert-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .concert-card__date {
+    flex-direction: row;
+    gap: var(--spacing-sm);
+    min-width: auto;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .concert-card__day {
+    font-size: 1.25rem;
+  }
+}
