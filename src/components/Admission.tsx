@@ -82,14 +82,6 @@ function Admission({ collegeInfo }: AdmissionProps) {
             </div>
           </div>
         </div>
-        <div className={styles.admissionInfo}>
-          <p className={styles.admissionNote}>
-            📞 Телефон: <a href={`tel:${collegeInfo.phone}`}>{collegeInfo.phone}</a>
-          </p>
-          <p className={styles.admissionNote}>
-            📧 Email: <a href={`mailto:${collegeInfo.email}`}>{collegeInfo.email}</a>
-          </p>
-        </div>
       </div>
     </section>
   );

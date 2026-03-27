@@ -21,93 +21,59 @@
 .subtitle {
   text-align: center;
   color: var(--color-text-secondary);
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   font-size: 1.125rem;
   line-height: 1.7;
 }
 
-/* Вкладки */
-.tabsSection {
+/* Секция администрации */
+.adminSection {
   padding: var(--spacing-xxl) 0;
   flex: 1;
 }
 
-.tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
-  justify-content: center;
-  margin-bottom: var(--spacing-xl);
-}
-
-.tab {
-  padding: var(--spacing-sm) var(--spacing-lg);
-  background-color: transparent;
-  border: 2px solid var(--color-accent);
-  color: var(--color-accent);
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.tab:hover:not(:disabled) {
-  background-color: var(--color-accent);
-  color: var(--color-black);
-}
-
-.tab:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-  border-color: var(--border-color);
-  color: var(--color-text-muted);
-}
-
-.tabActive {
-  background-color: var(--color-accent);
-  color: var(--color-black);
-}
-
-/* Сетка выпускников */
-.graduatesGrid {
+.adminGrid {
   display: grid;
   gap: var(--spacing-lg);
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 640px) {
-  .graduatesGrid {
+  .adminGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .graduatesGrid {
-    grid-template-columns: repeat(3, 1fr);
+  .adminGrid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
   }
 }
 
-/* Карточка выпускника */
-.graduateCard {
+/* Карточка администрации */
+.adminCard {
   background-color: var(--color-bg-tertiary);
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: var(--shadow-md);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
 }
 
-.graduateCard:hover {
+.adminCard:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
 }
 
 .imageWrapper {
-  position: relative;
-  height: 240px;
+  height: 280px;
   overflow: hidden;
+  background-color: var(--color-bg-secondary);
 }
 
 .image {
@@ -117,71 +83,56 @@
   transition: transform var(--transition-normal);
 }
 
-.graduateCard:hover .image {
+.adminCard:hover .image {
   transform: scale(1.05);
-}
-
-.featuredBadge {
-  position: absolute;
-  top: var(--spacing-sm);
-  right: var(--spacing-sm);
-  background-color: var(--color-accent);
-  color: var(--color-black);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  box-shadow: var(--shadow-md);
 }
 
 .content {
   padding: var(--spacing-lg);
-}
-
-.year {
-  display: inline-block;
-  background-color: var(--color-bg-secondary);
-  color: var(--color-text-secondary);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius);
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: var(--spacing-sm);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .name {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   color: var(--color-accent);
   margin-bottom: var(--spacing-xs);
 }
 
 .position {
   color: var(--color-text);
-  font-weight: 500;
-  margin-bottom: var(--spacing-xs);
-  font-size: 0.95rem;
-}
-
-.workplace {
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-weight: 600;
+  font-size: 1rem;
   margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .bio {
   color: var(--color-text-secondary);
   line-height: 1.6;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-md);
+  flex: 1;
 }
 
-.empty {
-  text-align: center;
+.contacts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: auto;
+}
+
+.contactLink {
   color: var(--color-text-secondary);
-  padding: var(--spacing-xxl);
-  font-size: 1.125rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color var(--transition-fast);
+}
+
+.contactLink:hover {
+  color: var(--color-accent);
 }
 
 /* CTA секция */
@@ -198,15 +149,15 @@
 }
 
 .ctaTitle {
-  font-size: 2rem;
+  font-size: 1.75rem;
   margin-bottom: var(--spacing-md);
   color: var(--color-accent);
 }
 
 .ctaText {
   color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-lg);
   font-size: 1.125rem;
+  line-height: 1.8;
 }
 
 /* Подвал страницы */

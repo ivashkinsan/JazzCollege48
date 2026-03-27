@@ -159,27 +159,3 @@
 [data-theme='light'] .requirementItem li {
   color: var(--color-charcoal);
 }
-
-.admissionInfo {
-  margin-top: var(--spacing-xl);
-  text-align: center;
-}
-
-.admissionNote {
-  font-size: 1rem;
-  margin: var(--spacing-sm) 0;
-}
-
-/* Тёмная тема: светлый текст */
-[data-theme='dark'] .admissionNote {
-  color: var(--color-text-secondary);
-}
-
-/* Светлая тема: тёмный текст */
-[data-theme='light'] .admissionNote {
-  color: var(--color-charcoal);
-}
-
-.admissionNote a {
-  color: var(--color-accent);
-}

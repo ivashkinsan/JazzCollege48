@@ -100,6 +100,44 @@ export interface CollegeInfo {
   website: string;
 }
 
+export interface AdminMember {
+  id: string;
+  name: string;
+  position: string;
+  image?: string;
+  bio?: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface Photo {
+  id: string;
+  title: string;
+  year: number;
+  category: 'концерты' | 'мастер-классы' | 'будни' | 'выпускные' | 'другое';
+  src: string;
+  thumbnail?: string;
+}
+
+export interface Video {
+  id: string;
+  title: string;
+  description: string;
+  videoUrl: string;
+  thumbnail?: string;
+  date: string;
+  source: 'rutube' | 'youtube' | 'vk';
+}
+
+export interface DaiProgram {
+  id: string;
+  name: string;
+  description: string;
+  age: string;
+  duration: string;
+  image?: string;
+}
+
 // ===== ДАННЫЕ =====
 
 export const collegeInfo: CollegeInfo = {
@@ -539,11 +577,175 @@ export const navigation: NavigationItem[] = [
   { id: "about", label: "Об отделении", href: "#about" },
   { id: "specialties", label: "Специальности", href: "#specialties" },
   { id: "teachers", label: "Преподаватели", href: "#teachers" },
-  { id: "ensembles", label: "Коллективы", href: "#ensembles" },
-  { id: "achievements", label: "Достижения", href: "#achievements" },
-  { id: "graduates", label: "Выпускники", href: "#graduates" },
-  { id: "concerts", label: "Концерты", href: "#concerts" },
-  { id: "news", label: "Новости", href: "#news" },
-  { id: "admission", label: "Поступающим", href: "#admission" },
+  { id: "graduates", label: "Выпускники", href: "/graduates" },
+  { id: "dai", label: "ДАИ", href: "/dai" },
+  { id: "admin", label: "Администрация", href: "/admin" },
+  { id: "photos", label: "Фото", href: "/photos" },
+  { id: "videos", label: "Видео", href: "/videos" },
   { id: "contacts", label: "Контакты", href: "#contacts" }
+];
+
+export const daiPrograms: DaiProgram[] = [
+  {
+    id: "1",
+    name: "Фортепиано",
+    description: "Обучение игре на фортепиано, основы музыкальной грамоты, чтение с листа, ансамблевая игра.",
+    age: "6-17 лет",
+    duration: "1-7 лет",
+    image: "/foto/dai/piano.jpg"
+  },
+  {
+    id: "2",
+    name: "Саксофон",
+    description: "Индивидуальные занятия по классу саксофона, изучение джазовых и эстрадных стилей, ансамбль.",
+    age: "10-17 лет",
+    duration: "1-5 лет",
+    image: "/foto/dai/saxophone.jpg"
+  },
+  {
+    id: "3",
+    name: "Гитара",
+    description: "Игра на гитаре в эстрадном и классическом стилях, аккомпанемент, импровизация.",
+    age: "8-17 лет",
+    duration: "1-5 лет",
+    image: "/foto/dai/guitar.jpg"
+  },
+  {
+    id: "4",
+    name: "Ударные инструменты",
+    description: "Обучение игре на ударной установке, перкуссии, ритм-секции в ансамбле.",
+    age: "10-17 лет",
+    duration: "1-5 лет",
+    image: "/foto/dai/drums.jpg"
+  },
+  {
+    id: "5",
+    name: "Эстрадный вокал",
+    description: "Постановка голоса, сценическая речь, актёрское мастерство, сольное и ансамблевое пение.",
+    age: "8-17 лет",
+    duration: "1-5 лет",
+    image: "/foto/dai/vocal.jpg"
+  },
+  {
+    id: "6",
+    name: "Подготовительное отделение",
+    description: "Подготовка детей 5-7 лет к поступлению в музыкальные учебные заведения. Основы музыкальной грамоты, ритмика, развитие слуха.",
+    age: "5-7 лет",
+    duration: "1-2 года",
+    image: "/foto/dai/prep.jpg"
+  }
+];
+
+export const adminMembers: AdminMember[] = [
+  {
+    id: "1",
+    name: "Веселова Ольга Владимировна",
+    position: "Директор колледжа",
+    image: "/foto_admin/Veselova.webp",
+    bio: "Руководит Липецким областным колледжем искусств им. К.Н. Игумнова. Курирует общее управление и развитие учебного заведения.",
+    email: "kolledgiskusstv@yandex.ru",
+    phone: "+7 (474) 241-41-71"
+  },
+  {
+    id: "2",
+    name: "Колодкина Ирина Валентиновна",
+    position: "Заместитель директора по учебной работе",
+    image: "/foto_admin/Kolodkina.jpg",
+    bio: "Курирует учебный процесс, методическую работу и организацию образовательной деятельности в колледже.",
+    email: "kolledgiskusstv@yandex.ru",
+    phone: "+7 (474) 241-41-67"
+  },
+  {
+    id: "3",
+    name: "Фаустова Ирина Викторовна",
+    position: "Заместитель директора по воспитательной работе",
+    image: "/foto_admin/Faustova.jpg",
+    bio: "Организует внеучебную деятельность, воспитательные мероприятия и работу со студентами. Окончила Липецкий государственный педагогический университет по специальности «Музыкальное образование».",
+    email: "kolledgiskusstv@yandex.ru",
+    phone: "+7 (474) 241-41-38"
+  },
+  {
+    id: "4",
+    name: "Кокшин Дмитрий Николаевич",
+    position: "Заведующий эстрадным отделением",
+    image: "/foto/admin/estrada-head.jpg",
+    bio: "Руководит эстрадным отделением. Преподаватель духовых инструментов по классу саксофона.",
+    email: "estrada@lokii.ru",
+    phone: "+7 (474) 241-41-74"
+  }
+];
+
+export const photos: Photo[] = [
+  // 2025
+  { id: "p1", title: "Отчётный концерт 2025", year: 2025, category: "концерты", src: "/foto/2025/concert-1.jpg" },
+  { id: "p2", title: "Мастер-класс от Леонида Гурьева", year: 2025, category: "мастер-классы", src: "/foto/2025/masterclass-1.jpg" },
+  { id: "p3", title: "Выпускной 2025", year: 2025, category: "выпускные", src: "/foto/2025/graduation.jpg" },
+  // 2024
+  { id: "p4", title: "Концерт в Москве", year: 2024, category: "концерты", src: "/foto/2024/moscow-concert.jpg" },
+  { id: "p5", title: "Будни отделения", year: 2024, category: "будни", src: "/foto/2024/weekdays.jpg" },
+  { id: "p6", title: "Мастер-класс по вокалу", year: 2024, category: "мастер-классы", src: "/foto/2024/vocal-master.jpg" },
+  // 2023
+  { id: "p7", title: "Отчётный концерт 2023", year: 2023, category: "концерты", src: "/foto/2023/concert.jpg" },
+  { id: "p8", title: "Выпускной 2023", year: 2023, category: "выпускные", src: "/foto/2023/graduation.jpg" },
+  // 2022
+  { id: "p9", title: "Концерт к 8 марта", year: 2022, category: "концерты", src: "/foto/2022/march-concert.jpg" },
+  { id: "p10", title: "Репетиция оркестра", year: 2022, category: "будни", src: "/foto/2022/rehearsal.jpg" },
+  // 2021
+  { id: "p11", title: "Онлайн-концерт", year: 2021, category: "концерты", src: "/foto/2021/online-concert.jpg" },
+  { id: "p12", title: "Выпускной 2021", year: 2021, category: "выпускные", src: "/foto/2021/graduation.jpg" },
+  // 2020
+  { id: "p13", title: "Последний звонок", year: 2020, category: "другое", src: "/foto/2020/last-bell.jpg" },
+  { id: "p14", title: "Концерт в филармонии", year: 2020, category: "концерты", src: "/foto/2020/philharmony.jpg" },
+  // 1990-2019
+  { id: "p15", title: "Архивное фото 2010", year: 2010, category: "другое", src: "/foto/archive/2010.jpg" },
+  { id: "p16", title: "Архивное фото 2000", year: 2000, category: "другое", src: "/foto/archive/2000.jpg" },
+  { id: "p17", title: "Архивное фото 1990", year: 1990, category: "другое", src: "/foto/archive/1990.jpg" }
+];
+
+export const videos: Video[] = [
+  {
+    id: "v1",
+    title: "Отчётный концерт эстрадного отделения 2025",
+    description: "Ежегодный отчётный концерт студентов эстрадного отделения ЛОКИ.",
+    videoUrl: "https://rutube.ru/video/xxxxx/",
+    thumbnail: "/video/thumbs/concert-2025.jpg",
+    date: "2025-05-27",
+    source: "rutube"
+  },
+  {
+    id: "v2",
+    title: "Мастер-класс Дениса Мельникова",
+    description: "Занятие по саксофону от заведующего эстрадно-джазовым отделом Академии джаза.",
+    videoUrl: "https://rutube.ru/video/xxxxx/",
+    thumbnail: "/video/thumbs/melnikov-master.jpg",
+    date: "2025-04-15",
+    source: "rutube"
+  },
+  {
+    id: "v3",
+    title: "Выступление в Москве. Дни культуры Липецкой области",
+    description: "Концерт «Земля Липецкая — Константину Игумнову» в ДМШ им. К.Н. Игумнова.",
+    videoUrl: "https://rutube.ru/video/xxxxx/",
+    thumbnail: "/video/thumbs/moscow-2025.jpg",
+    date: "2025-10-20",
+    source: "rutube"
+  },
+  {
+    id: "v4",
+    title: "Камертон регионов 2024",
+    description: "Фестиваль учебных заведений культуры и искусств.",
+    videoUrl: "https://rutube.ru/video/xxxxx/",
+    thumbnail: "/video/thumbs/kamerton-2024.jpg",
+    date: "2024-11-16",
+    source: "rutube"
+  },
+  {
+    id: "v5",
+    title: "Интервью с выпускниками",
+    description: "Встреча с успешными выпускниками эстрадного отделения.",
+    videoUrl: "https://rutube.ru/video/xxxxx/",
+    thumbnail: "/video/thumbs/interview.jpg",
+    date: "2024-09-01",
+    source: "rutube"
+  }
 ];

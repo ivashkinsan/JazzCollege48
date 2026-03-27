@@ -1,0 +1,282 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero секция */
+.hero {
+  padding: var(--spacing-xxl) 0;
+  background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-secondary) 100%);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.title {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-accent);
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--color-text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+/* Фильтры */
+.filtersSection {
+  padding: var(--spacing-xl) 0;
+  background-color: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.filterLabel {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.yearButtons,
+.categoryButtons {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.yearButton,
+.categoryButton {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--color-text-secondary);
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.yearButton:hover,
+.categoryButton:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.yearButtonActive,
+.categoryButtonActive {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-black);
+}
+
+/* Галерея */
+.gallerySection {
+  padding: var(--spacing-xxl) 0;
+  flex: 1;
+}
+
+.resultsInfo {
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-lg);
+  font-size: 0.95rem;
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-text-secondary);
+  padding: var(--spacing-xxl);
+  font-size: 1.125rem;
+}
+
+.photoGrid {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .photoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .photoGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.photoCard {
+  background-color: var(--color-bg-tertiary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: pointer;
+}
+
+.photoCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.photoWrapper {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.photoCard:hover .photo {
+  transform: scale(1.05);
+}
+
+.photoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7));
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-md);
+}
+
+.photoYear {
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.photoInfo {
+  padding: var(--spacing-md);
+}
+
+.photoTitle {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+}
+
+.photoCategory {
+  display: inline-block;
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  padding: 2px var(--spacing-xs);
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+/* Модальное окно */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: var(--spacing-md);
+}
+
+.modalContent {
+  position: relative;
+  max-width: 1200px;
+  max-height: 90vh;
+  background-color: var(--color-bg-tertiary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.modalClose {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  color: var(--color-white);
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color var(--transition-fast);
+}
+
+.modalClose:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modalImage {
+  max-width: 100%;
+  max-height: 70vh;
+  display: block;
+  margin: 0 auto;
+}
+
+.modalInfo {
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.modalTitle {
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-sm);
+}
+
+.modalMeta {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.modalMeta span {
+  margin: 0 var(--spacing-sm);
+}
+
+/* Подвал страницы */
+.pageFooter {
+  padding: var(--spacing-lg) 0;
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--border-color);
+}
+
+.backLink {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--color-accent);
+}

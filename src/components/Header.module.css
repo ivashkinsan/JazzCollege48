@@ -20,9 +20,16 @@
   justify-content: space-between;
 }
 
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
 .headerLogo {
   display: flex;
   align-items: center;
+  gap: var(--spacing-sm);
   text-decoration: none;
   transition: opacity var(--transition-fast);
 }
@@ -32,47 +39,52 @@
 }
 
 .headerLogoImage {
-  height: 40px;
+  height: 60px;
   width: auto;
   display: block;
+  background: transparent;
 }
 
 .headerLogoText {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  line-height: 1.2;
-  transition: color var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-/* Тёмная тема: белый текст */
-[data-theme='dark'] .headerLogoText {
+.headerLogoTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-accent);
+  line-height: 1.2;
+}
+
+.headerLogoSubtitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 1px;
+}
+
+[data-theme='dark'] .headerLogoSubtitle {
   color: var(--color-white);
 }
 
-/* Светлая тема: тёмный текст */
-[data-theme='light'] .headerLogoText {
+[data-theme='light'] .headerLogoSubtitle {
   color: var(--color-indigo);
-}
-
-.headerLogoSubtext {
-  font-size: 0.75rem;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .headerNav {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
   flex-wrap: wrap;
   justify-content: flex-end;
-  max-width: 60%;
+  align-items: center;
 }
 
 .headerNavLink {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -108,7 +120,6 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  margin-left: var(--spacing-sm);
   background-color: var(--color-bg-tertiary);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -124,4 +135,39 @@
 .themeToggleIcon {
   font-size: 1.25rem;
   color: var(--color-accent);
+}
+
+/* Адаптивность */
+@media (max-width: 900px) {
+  .headerNav {
+    gap: var(--spacing-sm);
+  }
+  
+  .headerNavLink {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .headerContainer {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .headerLogoImage {
+    height: 35px;
+    width: auto;
+  }
+  
+  .headerNav {
+    gap: var(--spacing-xs);
+  }
+  
+  .headerNavLink {
+    font-size: 0.65rem;
+  }
+  
+  .themeToggle {
+    width: 36px;
+    height: 36px;
+  }
 }

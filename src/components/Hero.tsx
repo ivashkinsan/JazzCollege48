@@ -6,13 +6,17 @@ function Hero() {
       <div className={styles.heroContent}>
         <div className={styles.heroLogoWrapper}>
           <img
-            src="/logo_type_2.png"
+            src="/logo_JazzCollege48.svg"
             alt="Эстрадное отделение ЛОКИ"
             className={styles.heroLogo}
-            width="180"
-            height="180"
+            width="150"
+            height="150"
           />
         </div>
+        <p className={styles.heroLogoText}>
+          <span className={styles.heroLogoTitle}>эстрадно-джазовое отделение</span>
+          <span className={styles.heroLocation}>Липецк</span>
+        </p>
         <p className={styles.heroSubtitle}>С 1981 года • Программа углубленной подготовки</p>
         <h1 className={styles.heroTitle}>
           Эстрадное отделение<br />

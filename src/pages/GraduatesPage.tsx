@@ -3,19 +3,16 @@ import { graduates, Graduate } from '../data/collegeData';
 import styles from './GraduatesPage.module.css';
 import { Link } from 'react-router-dom';
 
-// Группировка выпускников по десятилетиям
-const groupByDecade = (graduatesList: Graduate[]) => {
+// Группировка выпускников по пятилетиям
+const groupByFiveYears = (graduatesList: Graduate[]) => {
   const groups: Record<string, Graduate[]> = {};
   
   graduatesList.forEach((graduate) => {
     const year = graduate.graduationYear;
-    let decade: string;
-    
-    if (year >= 2020) decade = '2020-2026';
-    else if (year >= 2010) decade = '2010-2019';
-    else if (year >= 2000) decade = '2000-2009';
-    else if (year >= 1990) decade = '1990-1999';
-    else decade = 'Другие';
+    // Округляем год до ближайшего пятилетия вниз
+    const fiveYearStart = Math.floor((year - 1981) / 5) * 5 + 1981;
+    const fiveYearEnd = fiveYearStart + 4;
+    const decade = `${fiveYearStart}-${fiveYearEnd}`;
     
     if (!groups[decade]) {
       groups[decade] = [];
@@ -23,25 +20,30 @@ const groupByDecade = (graduatesList: Graduate[]) => {
     groups[decade].push(graduate);
   });
   
-  // Сортировка внутри десятилетий по году выпуска (новые сверху)
+  // Сортировка внутри пятилетий по году выпуска (старые сверху)
   Object.keys(groups).forEach((decade) => {
-    groups[decade].sort((a, b) => b.graduationYear - a.graduationYear);
+    groups[decade].sort((a, b) => a.graduationYear - b.graduationYear);
   });
   
   return groups;
 };
 
-const decadeLabels: Record<string, string> = {
-  '2020-2026': '2020-2026',
-  '2010-2019': '2010-2019',
-  '2000-2009': '2000-2009',
-  '1990-1999': '1990-1999',
-};
+const decades = [
+  '1981-1985',
+  '1986-1990',
+  '1991-1995',
+  '1996-2000',
+  '2001-2005',
+  '2006-2010',
+  '2011-2015',
+  '2016-2020',
+  '2021-2025'
+];
 
 function GraduatesPage() {
-  const [activeDecade, setActiveDecade] = useState<string>('2020-2026');
-  const groupedGraduates = groupByDecade(graduates);
-  const decades = Object.keys(groupedGraduates).filter(d => d !== 'Другие');
+  const [activeDecade, setActiveDecade] = useState<string>('1981-1985');
+  const groupedGraduates = groupByFiveYears(graduates);
+  const availableDecades = Object.keys(groupedGraduates);
 
   return (
     <div className={styles.page}>
@@ -58,15 +60,19 @@ function GraduatesPage() {
       <section className={styles.tabsSection}>
         <div className="container">
           <div className={styles.tabs}>
-            {decades.map((decade) => (
-              <button
-                key={decade}
-                className={`${styles.tab} ${activeDecade === decade ? styles.tabActive : ''}`}
-                onClick={() => setActiveDecade(decade)}
-              >
-                {decadeLabels[decade] || decade}
-              </button>
-            ))}
+            {decades.map((decade) => {
+              const hasGraduates = groupedGraduates[decade] && groupedGraduates[decade].length > 0;
+              return (
+                <button
+                  key={decade}
+                  className={`${styles.tab} ${activeDecade === decade ? styles.tabActive : ''}`}
+                  onClick={() => setActiveDecade(decade)}
+                  disabled={!hasGraduates}
+                >
+                  {decade}
+                </button>
+              );
+            })}
           </div>
 
           <div className={styles.graduatesGrid}>

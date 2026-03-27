@@ -16,20 +16,55 @@
 .footerInfo {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
   align-items: flex-start;
 }
 
-.footerLogo {
-  height: 36px;
-  width: auto;
-  margin-bottom: var(--spacing-xs);
-  opacity: 0.9;
+.footerLogoLink {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-decoration: none;
   transition: opacity var(--transition-fast);
 }
 
-.footerLogo:hover {
-  opacity: 1;
+.footerLogoLink:hover {
+  opacity: 0.8;
+}
+
+.footerLogo {
+  height: 50px;
+  width: auto;
+}
+
+.footerLogoText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footerLogoTitle {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.footerLogoSubtitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 1px;
+}
+
+[data-theme='dark'] .footerLogoSubtitle {
+  color: var(--color-white);
+}
+
+[data-theme='light'] .footerLogoSubtitle {
+  color: var(--color-indigo);
 }
 
 .footerText {

@@ -11,46 +11,69 @@ function Header({ navigation }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
 
-  // Проверка, находимся ли мы на странице выпускников
-  const isGraduatesPage = location.pathname === '/graduates';
+  // Проверка активной страницы
+  const isActivePage = (path: string) => location.pathname === path;
+  const isHomePage = location.pathname === '/';
 
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
         <Link to="/" className={styles.headerLogo}>
           <img
-            src="/logo_type_2.png"
+            src="/logo_JazzCollege48.svg"
             alt="ЛОКИ им. К.Н. Игумнова — Эстрадное отделение"
             className={styles.headerLogoImage}
-            width="200"
-            height="40"
+            width="60"
+            height="60"
           />
+          <div className={styles.headerLogoText}>
+            <span className={styles.headerLogoTitle}>эстрадно-джазовое отделение</span>
+            <span className={styles.headerLogoSubtitle}>Липецк</span>
+          </div>
         </Link>
-        <nav className={styles.headerNav}>
-          {navigation.map((item) => {
-            // Для ссылки на выпускники используем роут
-            if (item.id === 'graduates') {
+        <div className={styles.headerRight}>
+          <nav className={styles.headerNav}>
+            {navigation.map((item) => {
+              const isExternal = item.href.startsWith('#');
+              const isActive = isExternal
+                ? isHomePage && location.hash === item.href
+                : isActivePage(item.href);
+
+              // Если якорная ссылка и не на главной — переходим на главную с якорем
+              if (isExternal && !isHomePage) {
+                return (
+                  <a
+                    key={item.id}
+                    href={`/${item.href}`}
+                    className={`${styles.headerNavLink} ${isActive ? styles.headerNavLinkActive : ''}`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
+
+              if (!isExternal) {
+                return (
+                  <Link
+                    key={item.id}
+                    to={item.href}
+                    className={`${styles.headerNavLink} ${isActive ? styles.headerNavLinkActive : ''}`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              }
               return (
-                <Link
+                <a
                   key={item.id}
-                  to="/graduates"
-                  className={`${styles.headerNavLink} ${isGraduatesPage ? styles.headerNavLinkActive : ''}`}
+                  href={item.href}
+                  className={`${styles.headerNavLink} ${isActive ? styles.headerNavLinkActive : ''}`}
                 >
                   {item.label}
-                </Link>
+                </a>
               );
-            }
-            // Остальные ссылки остаются якорными
-            return (
-              <a
-                key={item.id}
-                href={item.href}
-                className={styles.headerNavLink}
-              >
-                {item.label}
-              </a>
-            );
-          })}
+            })}
+          </nav>
           <button
             onClick={toggleTheme}
             className={styles.themeToggle}
@@ -60,7 +83,7 @@ function Header({ navigation }: HeaderProps) {
               {theme === 'dark' ? '☀️' : '🌙'}
             </span>
           </button>
-        </nav>
+        </div>
       </div>
     </header>
   );

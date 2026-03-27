@@ -51,13 +51,13 @@
 }
 
 .heroLogoWrapper {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
   animation: logoGlow 3s ease-in-out infinite;
 }
 
 .heroLogo {
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.4));
   transition: transform var(--transition-slow), filter var(--transition-slow);
 }
@@ -74,6 +74,36 @@
 
 [data-theme='light'] .heroLogo:hover {
   filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.5));
+}
+
+.heroLogoText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: var(--spacing-md);
+}
+
+.heroLogoTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-accent);
+}
+
+.heroLocation {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 2px;
+}
+
+[data-theme='dark'] .heroLocation {
+  color: var(--color-white);
+}
+
+[data-theme='light'] .heroLocation {
+  color: var(--color-indigo);
 }
 
 @keyframes logoGlow {
