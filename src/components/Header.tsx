@@ -1,5 +1,6 @@
 import { NavigationItem } from '../data/collegeData';
-import './Header.css';
+import { useTheme } from '../hooks/useTheme';
+import styles from './Header.module.css';
 
 interface HeaderProps {
   shortName: string;
@@ -7,23 +8,39 @@ interface HeaderProps {
 }
 
 function Header({ shortName, navigation }: HeaderProps) {
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <header className="header">
-      <div className="header__container">
-        <div className="header__logo">
-          <span className="header__logo-text">{shortName}</span>
-          <span className="header__logo-subtext">Эстрадное отделение</span>
-        </div>
-        <nav className="header__nav">
+    <header className={styles.header}>
+      <div className={styles.headerContainer}>
+        <a href="#" className={styles.headerLogo}>
+          <img
+            src="/logo_type_2.png"
+            alt="ЛОКИ им. К.Н. Игумнова — Эстрадное отделение"
+            className={styles.headerLogoImage}
+            width="200"
+            height="40"
+          />
+        </a>
+        <nav className={styles.headerNav}>
           {navigation.map((item) => (
             <a
               key={item.id}
               href={item.href}
-              className="header__nav-link"
+              className={styles.headerNavLink}
             >
               {item.label}
             </a>
           ))}
+          <button
+            onClick={toggleTheme}
+            className={styles.themeToggle}
+            aria-label={`Переключить на ${theme === 'dark' ? 'светлую' : 'тёмную'} тему`}
+          >
+            <span className={styles.themeToggleIcon}>
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </span>
+          </button>
         </nav>
       </div>
     </header>

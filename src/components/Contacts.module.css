@@ -1,10 +1,10 @@
-.contacts__grid {
+.contactsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--spacing-lg);
 }
 
-.contact-card {
+.contactCard {
   padding: var(--spacing-lg);
   background-color: var(--color-bg-tertiary);
   border: 1px solid var(--border-color);
@@ -12,29 +12,29 @@
   transition: border-color var(--transition-normal);
 }
 
-.contact-card:hover {
+.contactCard:hover {
   border-color: var(--color-accent);
 }
 
-.contact-card__icon {
+.contactCardIcon {
   font-size: 2rem;
   color: var(--color-accent);
   margin-bottom: var(--spacing-md);
 }
 
-.contact-card__title {
+.contactCardTitle {
   font-size: 1rem;
   font-weight: 600;
   color: var(--color-white);
   margin-bottom: var(--spacing-sm);
 }
 
-.contact-card__value {
+.contactCardValue {
   color: var(--color-text-secondary);
   font-size: 0.9375rem;
   line-height: 1.8;
 }
 
-.contact-card__value a {
+.contactCardValue a {
   color: var(--color-accent);
 }

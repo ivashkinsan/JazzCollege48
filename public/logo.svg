@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F4E5C2;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#B8941F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B6914;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="darkGoldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B6914;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="1" dy="1" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="#FFFEF5"/>
+  
+  <!-- Staff Lines (flowing) -->
+  <g stroke="#D4AF37" stroke-width="1.5" fill="none" opacity="0.7">
+    <path d="M 200,380 Q 350,380 450,320 Q 550,260 650,240"/>
+    <path d="M 200,395 Q 350,395 450,335 Q 550,275 650,255"/>
+    <path d="M 200,410 Q 350,410 450,350 Q 550,290 650,270"/>
+    <path d="M 200,425 Q 350,425 450,365 Q 550,305 650,285"/>
+    <path d="M 200,440 Q 350,440 450,380 Q 550,320 650,300"/>
+  </g>
+  
+  <!-- Saxophone Body -->
+  <g filter="url(#shadow)">
+    <!-- Main curved body -->
+    <path d="M 380,120 
+             Q 380,120 390,140 
+             L 400,200 
+             Q 400,250 395,300 
+             Q 390,350 380,380 
+             Q 370,410 350,430 
+             Q 330,450 300,460 
+             Q 270,470 250,465 
+             Q 230,460 225,440 
+             Q 220,420 230,400 
+             Q 240,380 260,370 
+             Q 280,360 300,365 
+             Q 320,370 330,380 
+             Q 340,390 345,400 
+             Q 360,380 365,350 
+             Q 370,320 372,280 
+             L 375,200 
+             Q 375,160 380,120 Z" 
+          fill="url(#goldGradient)" stroke="#8B6914" stroke-width="2"/>
+    
+    <!-- Bell -->
+    <path d="M 225,440 
+             Q 220,450 225,465 
+             Q 230,480 250,485 
+             Q 270,490 300,485 
+             Q 330,480 350,465 
+             Q 360,455 355,440 
+             Q 340,455 310,462 
+             Q 280,468 260,463 
+             Q 240,458 225,440 Z" 
+          fill="url(#darkGoldGradient)" stroke="#8B6914" stroke-width="2"/>
+    
+    <!-- Neck -->
+    <path d="M 380,120 
+             Q 375,100 365,90 
+             Q 355,80 340,78 
+             L 320,75 
+             Q 310,73 308,70 
+             Q 306,67 315,65 
+             Q 325,63 345,66 
+             Q 365,69 378,80 
+             Q 390,90 395,110 
+             Q 397,118 380,120 Z" 
+          fill="url(#goldGradient)" stroke="#8B6914" stroke-width="2"/>
+    
+    <!-- Mouthpiece -->
+    <path d="M 308,70 
+             Q 295,68 285,65 
+             Q 275,62 272,58 
+             Q 270,55 275,54 
+             Q 280,53 295,56 
+             Q 310,59 315,65 
+             Q 317,67 308,70 Z" 
+          fill="#5A4A3A" stroke="#3A2A1A" stroke-width="1.5"/>
+    
+    <!-- Keys and details -->
+    <g fill="#B8941F" stroke="#8B6914" stroke-width="1">
+      <!-- Main body keys -->
+      <ellipse cx="368" cy="180" rx="6" ry="8"/>
+      <ellipse cx="365" cy="200" rx="6" ry="8"/>
+      <ellipse cx="362" cy="220" rx="6" ry="8"/>
+      <ellipse cx="358" cy="240" rx="6" ry="8"/>
+      <ellipse cx="355" cy="260" rx="6" ry="8"/>
+      <ellipse cx="352" cy="280" rx="6" ry="8"/>
+      <ellipse cx="350" cy="300" rx="6" ry="8"/>
+      <ellipse cx="348" cy="320" rx="6" ry="8"/>
+      
+      <!-- Side keys -->
+      <circle cx="375" cy="190" r="4"/>
+      <circle cx="372" cy="210" r="4"/>
+      <circle cx="368" cy="230" r="4"/>
+      <circle cx="365" cy="250" r="4"/>
+      <circle cx="362" cy="270" r="4"/>
+      <circle cx="358" cy="290" r="4"/>
+      
+      <!-- Lower keys -->
+      <ellipse cx="340" cy="350" rx="7" ry="9"/>
+      <ellipse cx="335" cy="370" rx="7" ry="9"/>
+      <ellipse cx="328" cy="390" rx="7" ry="9"/>
+      
+      <!-- Side keys on bell -->
+      <circle cx="310" cy="410" r="5"/>
+      <circle cx="295" cy="420" r="5"/>
+      <circle cx="280" cy="425" r="5"/>
+    </g>
+    
+    <!-- Key mechanisms -->
+    <g stroke="#8B6914" stroke-width="1.5" fill="none">
+      <line x1="368" y1="180" x2="375" y2="190"/>
+      <line x1="365" y1="200" x2="372" y2="210"/>
+      <line x1="362" y1="220" x2="368" y2="230"/>
+    </g>
+  </g>
+  
+  <!-- Musical Notes -->
+  <g fill="url(#darkGoldGradient)" stroke="#8B6914" stroke-width="1" filter="url(#shadow)">
+    <!-- Note 1 - eighth note left -->
+    <path d="M 280,320 L 280,360 Q 280,370 290,370 Q 300,370 300,360 L 300,340 Q 300,330 290,330 Z"/>
+    <path d="M 280,320 L 310,310 L 310,325 Q 310,335 300,335 L 280,320" fill="#D4AF37"/>
+    
+    <!-- Note 2 - quarter note upper left -->
+    <ellipse cx="420" cy="180" rx="12" ry="10" transform="rotate(-15 420 180)"/>
+    <rect x="430" y="140" width="4" height="45" transform="rotate(-15 432 140)"/>
+    
+    <!-- Note 3 - eighth note middle -->
+    <path d="M 480,280 L 480,320 Q 480,330 490,330 Q 500,330 500,320 L 500,300 Q 500,290 490,290 Z"/>
+    <path d="M 480,280 L 510,270 L 510,285 Q 510,295 500,295 L 480,280" fill="#D4AF37"/>
+    
+    <!-- Note 4 - beamed sixteenth notes -->
+    <ellipse cx="580" cy="220" rx="12" ry="10"/>
+    <rect x="590" y="170" width="4" height="55"/>
+    <ellipse cx="620" cy="210" rx="12" ry="10"/>
+    <rect x="630" y="160" width="4" height="55"/>
+    <path d="M 590,175 L 630,165 L 630,172 L 590,182 Z" fill="#D4AF37"/>
+    <path d="M 590,185 L 630,175 L 630,182 L 590,192 Z" fill="#D4AF37"/>
+    
+    <!-- Note 5 - eighth note right -->
+    <path d="M 640,340 L 640,380 Q 640,390 650,390 Q 660,390 660,380 L 660,360 Q 660,350 650,350 Z"/>
+    <path d="M 640,340 L 670,330 L 670,345 Q 670,355 660,355 L 640,340" fill="#D4AF37"/>
+    
+    <!-- Note 6 - quarter note lower left -->
+    <ellipse cx="340" cy="420" rx="10" ry="8" transform="rotate(-20 340 420)"/>
+    <rect x="348" y="390" width="3" height="35" transform="rotate(-20 349 390)"/>
+    
+    <!-- Note 7 - eighth note lower middle -->
+    <path d="M 400,440 L 400,475 Q 400,485 408,485 Q 416,485 416,475 L 416,460 Q 416,450 408,450 Z"/>
+    <path d="M 400,440 L 425,432 L 425,445 Q 425,453 417,453 L 400,440" fill="#D4AF37"/>
+    
+    <!-- Treble clef -->
+    <g transform="translate(250, 350)" fill="none" stroke="#D4AF37" stroke-width="2">
+      <path d="M 20,50 Q 15,50 12,45 Q 8,38 10,25 Q 12,10 18,5 Q 22,2 25,5 Q 28,8 27,15 Q 26,22 22,28 Q 18,33 15,35"/>
+      <path d="M 22,28 Q 28,25 32,20 Q 36,15 36,8 Q 36,2 32,-2 Q 28,-5 24,-3 Q 20,0 19,5"/>
+      <circle cx="24" cy="38" r="3" fill="#D4AF37"/>
+    </g>
+  </g>
+  
+  <!-- Additional decorative elements -->
+  <g fill="#D4AF37" opacity="0.6">
+    <circle cx="360" cy="250" r="2"/>
+    <circle cx="380" cy="200" r="2"/>
+    <circle cx="340" cy="300" r="2"/>
+  </g>
+</svg>

@@ -1,0 +1,214 @@
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-hero);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Светлая тема: убираем затемнение */
+[data-theme='light'] .hero::before {
+  opacity: 0.7;
+}
+
+.heroImageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heroLogoWrapper {
+  margin-bottom: var(--spacing-lg);
+  animation: logoGlow 3s ease-in-out infinite;
+}
+
+.heroLogo {
+  width: 180px;
+  height: 180px;
+  filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.4));
+  transition: transform var(--transition-slow), filter var(--transition-slow);
+}
+
+.heroLogo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.6));
+}
+
+/* Светлая тема: более мягкое свечение */
+[data-theme='light'] .heroLogo {
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+}
+
+[data-theme='light'] .heroLogo:hover {
+  filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.5));
+}
+
+@keyframes logoGlow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 35px rgba(212, 175, 55, 0.5));
+  }
+}
+
+.heroSubtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: var(--spacing-md);
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-lg);
+  max-width: 900px;
+}
+
+/* Светлая тема: тёмный заголовок */
+[data-theme='dark'] .heroTitle {
+  color: var(--color-white);
+}
+
+[data-theme='light'] .heroTitle {
+  color: var(--color-indigo);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.heroTitleAccent {
+  color: var(--color-accent);
+}
+
+.heroDescription {
+  font-size: 1.125rem;
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+  line-height: 1.8;
+}
+
+/* Светлая тема: более тёмный текст описания */
+[data-theme='dark'] .heroDescription {
+  color: var(--color-text-secondary);
+}
+
+[data-theme='light'] .heroDescription {
+  color: var(--color-charcoal);
+}
+
+.heroInfo {
+  font-size: 0.95rem;
+  max-width: 700px;
+  margin: 0 auto var(--spacing-xl);
+  line-height: 1.6;
+}
+
+/* Светлая тема: более тёмный текст */
+[data-theme='dark'] .heroInfo {
+  color: var(--color-text-secondary);
+}
+
+[data-theme='light'] .heroInfo {
+  color: var(--color-text-secondary);
+}
+
+.heroCta {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: var(--border-radius);
+  transition: all var(--transition-normal);
+}
+
+.btnPrimary {
+  background-color: var(--color-accent);
+  color: var(--color-black);
+}
+
+.btnPrimary:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+}
+
+.btnOutline {
+  background-color: transparent;
+  border: 1px solid var(--color-gray-light);
+  transition: all var(--transition-normal);
+}
+
+/* Тёмная тема: светлая кнопка */
+[data-theme='dark'] .btnOutline {
+  color: var(--color-white);
+}
+
+[data-theme='dark'] .btnOutline:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Светлая тема: тёмная кнопка с индиго */
+[data-theme='light'] .btnOutline {
+  color: var(--color-indigo);
+  border-color: var(--color-indigo);
+}
+
+[data-theme='light'] .btnOutline:hover {
+  background-color: var(--color-indigo);
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .heroImage {
+    display: none;
+  }
+}

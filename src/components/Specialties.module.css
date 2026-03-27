@@ -1,0 +1,222 @@
+.specialtiesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.specialtyCard {
+  padding: var(--spacing-xl);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--color-accent);
+  transition: all var(--transition-normal);
+}
+
+/* Светлая тема: тень и градиент */
+[data-theme='light'] .specialtyCard {
+  box-shadow: var(--shadow-sm);
+  background: var(--gradient-card);
+}
+
+[data-theme='light'] .specialtyCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.specialtyCardMain {
+  border-left-width: 4px;
+}
+
+.specialtyCardHeader {
+  margin-bottom: var(--spacing-md);
+}
+
+.specialtyCardCode {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+.specialtyCardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Тёмная тема: белый заголовок */
+[data-theme='dark'] .specialtyCardTitle {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный заголовок */
+[data-theme='light'] .specialtyCardTitle {
+  color: var(--color-indigo);
+}
+
+.specialtyCardDescription {
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+}
+
+.specialtyCardMeta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Тёмная тема: полупрозрачный белый фон */
+[data-theme='dark'] .specialtyCardMeta {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Светлая тема: кремовый фон */
+[data-theme='light'] .specialtyCardMeta {
+  background-color: var(--color-cream);
+}
+
+.metaItem {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .metaItem {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .metaItem {
+  color: var(--color-charcoal);
+}
+
+.metaItem strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* Тёмная тема: белый strong */
+[data-theme='dark'] .metaItem strong {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный strong */
+[data-theme='light'] .metaItem strong {
+  color: var(--color-indigo);
+}
+
+.specialtyCardProfiles h4 {
+  font-size: 0.9375rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Тёмная тема: белый заголовок */
+[data-theme='dark'] .specialtyCardProfiles h4 {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный заголовок */
+[data-theme='light'] .specialtyCardProfiles h4 {
+  color: var(--color-indigo);
+}
+
+.specialtyCardProfiles ul {
+  list-style: disc;
+  padding-left: var(--spacing-md);
+}
+
+.specialtyCardProfiles li {
+  line-height: 1.6;
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .specialtyCardProfiles li {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .specialtyCardProfiles li {
+  color: var(--color-charcoal);
+}
+
+.instrumentsSection {
+  margin-top: var(--spacing-xl);
+}
+
+.sectionSubtitleSmall {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.instrumentsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.instrumentCard {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+/* Светлая тема: тень */
+[data-theme='light'] .instrumentCard {
+  box-shadow: var(--shadow-sm);
+}
+
+.instrumentCard:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+}
+
+/* Светлая тема: более выраженная тень при наведении */
+[data-theme='light'] .instrumentCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.instrumentCardIcon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.instrumentCardName {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Тёмная тема: белый текст */
+[data-theme='dark'] .instrumentCardName {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .instrumentCardName {
+  color: var(--color-indigo);
+}
+
+.instrumentCardDescription {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .instrumentCardDescription {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .instrumentCardDescription {
+  color: var(--color-charcoal);
+}

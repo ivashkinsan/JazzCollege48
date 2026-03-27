@@ -1,0 +1,181 @@
+/* ===================================
+   Глобальные стили для JazzCollege48
+   =================================== */
+
+/* Сброс и базовые стили */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Приложение */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+}
+
+/* Контейнер */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Секции */
+.section {
+  padding: var(--spacing-xxl) 0;
+}
+
+.section--dark {
+  background-color: var(--color-bg-secondary);
+  transition: background-color var(--transition-normal);
+}
+
+.section--black {
+  background-color: var(--color-bg-tertiary);
+  transition: background-color var(--transition-normal);
+}
+
+/* Заголовки секций */
+.section__header {
+  text-align: center;
+  margin-bottom: var(--spacing-xxl);
+}
+
+.section__subtitle {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+}
+
+.section__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+  transition: color var(--transition-normal);
+}
+
+/* Тёмная тема: белый заголовок */
+[data-theme='dark'] .section__title {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный заголовок */
+[data-theme='light'] .section__title {
+  color: var(--color-indigo);
+}
+
+.section__intro {
+  text-align: center;
+  font-size: 1.125rem;
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xxl);
+  transition: color var(--transition-normal);
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .section__intro {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .section__intro {
+  color: var(--color-charcoal);
+}
+
+/* Кнопки */
+.btn {
+  display: inline-block;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-black);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-accent);
+  color: var(--color-black);
+}
+
+/* Ссылки */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* Изображения */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Списки */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .section__title {
+    font-size: 1.875rem;
+  }
+
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+}

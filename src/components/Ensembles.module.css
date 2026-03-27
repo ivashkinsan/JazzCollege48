@@ -1,0 +1,103 @@
+.ensemblesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.ensembleCard {
+  padding: var(--spacing-xl);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+}
+
+/* Светлая тема: тень */
+[data-theme='light'] .ensembleCard {
+  box-shadow: var(--shadow-sm);
+}
+
+.ensembleCard:hover {
+  border-color: var(--color-accent);
+}
+
+/* Светлая тема: тень при наведении */
+[data-theme='light'] .ensembleCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.ensembleCardHeader {
+  margin-bottom: var(--spacing-md);
+}
+
+.ensembleCardType {
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ensembleCardName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: var(--spacing-xs);
+}
+
+/* Тёмная тема: белый текст */
+[data-theme='dark'] .ensembleCardName {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .ensembleCardName {
+  color: var(--color-indigo);
+}
+
+.ensembleCardDescription {
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .ensembleCardDescription {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .ensembleCardDescription {
+  color: var(--color-charcoal);
+}
+
+.ensembleCardMembers h4 {
+  font-size: 0.9375rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Тёмная тема: белый текст */
+[data-theme='dark'] .ensembleCardMembers h4 {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .ensembleCardMembers h4 {
+  color: var(--color-indigo);
+}
+
+.ensembleCardMembers ul {
+  list-style: disc;
+  padding-left: var(--spacing-md);
+}
+
+.ensembleCardMembers li {
+  margin-bottom: var(--spacing-xs);
+  font-size: 0.9375rem;
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .ensembleCardMembers li {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .ensembleCardMembers li {
+  color: var(--color-charcoal);
+}

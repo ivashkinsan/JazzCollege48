@@ -5,6 +5,5 @@
       "WebSearch",
       "WebFetch(lokii.ru)"
     ]
-  },
-  "$version": 3
+  }
 }

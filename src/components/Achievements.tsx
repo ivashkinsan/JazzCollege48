@@ -1,5 +1,5 @@
 import { Achievement } from '../data/collegeData';
-import './Achievements.css';
+import styles from './Achievements.module.css';
 
 interface AchievementsProps {
   achievements: Achievement[];
@@ -13,29 +13,29 @@ function Achievements({ achievements }: AchievementsProps) {
           <p className="section__subtitle">Награды</p>
           <h2 className="section__title">Наши достижения</h2>
         </div>
-        <p className="section__intro">
+        <p className={styles.sectionIntro}>
           Студенты эстрадного отделения регулярно становятся лауреатами всероссийских и международных конкурсов
         </p>
-        <div className="achievements__grid">
+        <div className={styles.achievementsGrid}>
           {achievements.map((achievement) => {
             const date = new Date(achievement.date);
             const dateStr = date.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
             return (
-              <article key={achievement.id} className="achievement-card">
-                <div className="achievement-card__placeholder">
-                  <span className="achievement-card__icon">🏆</span>
-                  <p className="achievement-card__hint">Диплом</p>
+              <article key={achievement.id} className={styles.achievementCard}>
+                <div className={styles.achievementCardPlaceholder}>
+                  <span className={styles.achievementCardIcon}>🏆</span>
+                  <p className={styles.achievementCardHint}>Диплом</p>
                 </div>
-                <div className="achievement-card__content">
-                  <span className="achievement-card__place">{achievement.place}</span>
-                  <h3 className="achievement-card__title">{achievement.title}</h3>
+                <div className={styles.achievementCardContent}>
+                  <span className={styles.achievementCardPlace}>{achievement.place}</span>
+                  <h3 className={styles.achievementCardTitle}>{achievement.title}</h3>
                   {achievement.studentName && (
-                    <p className="achievement-card__student">{achievement.studentName}</p>
+                    <p className={styles.achievementCardStudent}>{achievement.studentName}</p>
                   )}
-                  <p className="achievement-card__competition">{achievement.competition}</p>
-                  <div className="achievement-card__meta">
-                    <span className="achievement-card__category">{achievement.category}</span>
-                    <span className="achievement-card__date">{dateStr}</span>
+                  <p className={styles.achievementCardCompetition}>{achievement.competition}</p>
+                  <div className={styles.achievementCardMeta}>
+                    <span className={styles.achievementCardCategory}>{achievement.category}</span>
+                    <span className={styles.achievementCardDate}>{dateStr}</span>
                   </div>
                 </div>
               </article>

@@ -1,5 +1,5 @@
 import { NavigationItem } from '../data/collegeData';
-import './Footer.css';
+import styles from './Footer.module.css';
 
 interface FooterProps {
   shortName: string;
@@ -8,16 +8,23 @@ interface FooterProps {
 
 function Footer({ shortName, navigation }: FooterProps) {
   return (
-    <footer className="footer">
+    <footer className={styles.footer}>
       <div className="container">
-        <div className="footer__content">
-          <div className="footer__info">
-            <p className="footer__text">© {new Date().getFullYear()} {shortName}</p>
-            <p className="footer__subtext">Эстрадное отделение</p>
+        <div className={styles.footerContent}>
+          <div className={styles.footerInfo}>
+            <img
+              src="/logo_type_2.png"
+              alt={shortName}
+              className={styles.footerLogo}
+              width="180"
+              height="36"
+            />
+            <p className={styles.footerText}>© {new Date().getFullYear()} {shortName}</p>
+            <p className={styles.footerSubtext}>Эстрадное отделение</p>
           </div>
-          <nav className="footer__nav">
+          <nav className={styles.footerNav}>
             {navigation.map((item) => (
-              <a key={item.id} href={item.href} className="footer__link">
+              <a key={item.id} href={item.href} className={styles.footerLink}>
                 {item.label}
               </a>
             ))}

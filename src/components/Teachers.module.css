@@ -1,0 +1,138 @@
+.teachersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.teacherCard {
+  position: relative;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.teacherCard:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+}
+
+/* Светлая тема: более выраженная тень */
+[data-theme='light'] .teacherCard {
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme='light'] .teacherCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.teacherCardImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+}
+
+.teacherCardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.teacherCard:hover .teacherCardImage {
+  transform: scale(1.05);
+}
+
+.teacherCardOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-lg);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
+  color: var(--color-white);
+}
+
+/* Светлая тема: более мягкий градиент */
+[data-theme='light'] .teacherCardOverlay {
+  background: linear-gradient(to top, rgba(45, 45, 68, 0.95) 0%, rgba(45, 45, 68, 0.6) 70%, transparent 100%);
+}
+
+.teacherCardContent {
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.teacherCardAvatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto var(--spacing-md);
+  background-color: var(--color-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Светлая тема: серый фон аватара */
+[data-theme='light'] .teacherCardAvatar {
+  background-color: var(--color-sand);
+}
+
+.teacherCardPlaceholder {
+  font-size: 3rem;
+}
+
+.teacherCardName {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Тёмная тема: белый текст */
+[data-theme='dark'] .teacherCardName {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .teacherCardName {
+  color: var(--color-indigo);
+}
+
+.teacherCardPosition {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-xs);
+}
+
+.teacherCardSpecialty {
+  font-size: 0.8125rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Тёмная тема: приглушённый текст */
+[data-theme='dark'] .teacherCardSpecialty {
+  color: var(--color-text-muted);
+}
+
+/* Светлая тема: более тёмный текст */
+[data-theme='light'] .teacherCardSpecialty {
+  color: var(--color-text-secondary);
+}
+
+.teacherCardBio {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .teacherCardBio {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .teacherCardBio {
+  color: var(--color-charcoal);
+}

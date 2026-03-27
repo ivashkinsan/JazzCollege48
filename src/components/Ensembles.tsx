@@ -1,5 +1,5 @@
 import { Ensemble } from '../data/collegeData';
-import './Ensembles.css';
+import styles from './Ensembles.module.css';
 
 interface EnsemblesProps {
   ensembles: Ensemble[];
@@ -13,16 +13,16 @@ function Ensembles({ ensembles }: EnsemblesProps) {
           <p className="section__subtitle">Творчество</p>
           <h2 className="section__title">Наши коллективы</h2>
         </div>
-        <div className="ensembles__grid">
+        <div className={styles.ensemblesGrid}>
           {ensembles.map((ensemble) => (
-            <article key={ensemble.id} className="ensemble-card">
-              <div className="ensemble-card__header">
-                <span className="ensemble-card__type">{ensemble.type}</span>
-                <h3 className="ensemble-card__name">{ensemble.name}</h3>
+            <article key={ensemble.id} className={styles.ensembleCard}>
+              <div className={styles.ensembleCardHeader}>
+                <span className={styles.ensembleCardType}>{ensemble.type}</span>
+                <h3 className={styles.ensembleCardName}>{ensemble.name}</h3>
               </div>
-              <p className="ensemble-card__description">{ensemble.description}</p>
+              <p className={styles.ensembleCardDescription}>{ensemble.description}</p>
               {ensemble.members && (
-                <div className="ensemble-card__members">
+                <div className={styles.ensembleCardMembers}>
                   <h4>В составе:</h4>
                   <ul>
                     {ensemble.members.map((member, i) => (

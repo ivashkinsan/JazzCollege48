@@ -1,0 +1,137 @@
+.aboutContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.aboutLogoBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  background: var(--gradient-card);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+}
+
+/* Светлая тема: тень */
+[data-theme='light'] .aboutLogoBadge {
+  box-shadow: var(--shadow-sm);
+}
+
+.aboutLogo {
+  width: 120px;
+  height: 120px;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+  transition: transform var(--transition-normal), filter var(--transition-normal);
+}
+
+.aboutLogo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.5));
+}
+
+.aboutLogoYear {
+  margin-top: var(--spacing-sm);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.aboutText {
+  line-height: 1.8;
+  font-size: 1.0625rem;
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .aboutText {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .aboutText {
+  color: var(--color-charcoal);
+}
+
+.aboutList {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-md) 0;
+}
+
+.aboutList li {
+  padding: var(--spacing-xs) 0;
+  padding-left: var(--spacing-md);
+  border-left: 2px solid var(--color-accent);
+  margin-bottom: var(--spacing-sm);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .aboutList li {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .aboutList li {
+  color: var(--color-charcoal);
+}
+
+.aboutStats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.stat {
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-tertiary);
+  border-left: 2px solid var(--color-accent);
+  transition: all var(--transition-normal);
+}
+
+/* Светлая тема: тень и градиент */
+[data-theme='light'] .stat {
+  box-shadow: var(--shadow-sm);
+  background: var(--gradient-card);
+}
+
+.statValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+  margin-bottom: var(--spacing-xs);
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Тёмная тема: приглушённый текст */
+[data-theme='dark'] .statLabel {
+  color: var(--color-text-muted);
+}
+
+/* Светлая тема: более тёмный текст */
+[data-theme='light'] .statLabel {
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .aboutContent {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutStats {
+    grid-template-columns: 1fr 1fr;
+  }
+}

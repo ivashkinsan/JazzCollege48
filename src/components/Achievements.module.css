@@ -1,0 +1,188 @@
+.sectionIntro {
+  text-align: center;
+  font-size: 1.0625rem;
+  max-width: 700px;
+  margin: -var(--spacing-lg) auto var(--spacing-xl);
+  line-height: 1.7;
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .sectionIntro {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .sectionIntro {
+  color: var(--color-charcoal);
+}
+
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.achievementCard {
+  display: flex;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+/* Светлая тема: тень */
+[data-theme='light'] .achievementCard {
+  box-shadow: var(--shadow-sm);
+}
+
+.achievementCard:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+}
+
+/* Светлая тема: тень при наведении */
+[data-theme='light'] .achievementCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.achievementCardPlaceholder {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+/* Тёмная тема: тёмный фон */
+[data-theme='dark'] .achievementCardPlaceholder {
+  background-color: var(--color-bg);
+}
+
+/* Светлая тема: кремовый фон */
+[data-theme='light'] .achievementCardPlaceholder {
+  background-color: var(--color-sand);
+}
+
+.achievementCardIcon {
+  font-size: 2.5rem;
+}
+
+.achievementCardHint {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  margin-top: var(--spacing-xs);
+}
+
+/* Тёмная тема: приглушённый текст */
+[data-theme='dark'] .achievementCardHint {
+  color: var(--color-text-muted);
+}
+
+/* Светлая тема: более тёмный текст */
+[data-theme='light'] .achievementCardHint {
+  color: var(--color-text-secondary);
+}
+
+.achievementCardContent {
+  flex: 1;
+  padding: var(--spacing-lg);
+}
+
+.achievementCardPlace {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-accent);
+  color: var(--color-black);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-sm);
+}
+
+.achievementCardTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Тёмная тема: белый текст */
+[data-theme='dark'] .achievementCardTitle {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .achievementCardTitle {
+  color: var(--color-indigo);
+}
+
+.achievementCardStudent {
+  font-size: 0.9375rem;
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-sm);
+}
+
+.achievementCardCompetition {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .achievementCardCompetition {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .achievementCardCompetition {
+  color: var(--color-charcoal);
+}
+
+.achievementCardMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--border-color);
+}
+
+.achievementCardCategory {
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+/* Тёмная тема: приглушённый текст */
+[data-theme='dark'] .achievementCardCategory {
+  color: var(--color-text-muted);
+}
+
+/* Светлая тема: более тёмный текст */
+[data-theme='light'] .achievementCardCategory {
+  color: var(--color-text-secondary);
+}
+
+.achievementCardDate {
+  font-size: 0.8125rem;
+}
+
+/* Тёмная тема: приглушённый текст */
+[data-theme='dark'] .achievementCardDate {
+  color: var(--color-text-muted);
+}
+
+/* Светлая тема: более тёмный текст */
+[data-theme='light'] .achievementCardDate {
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .achievementCard {
+    flex-direction: column;
+  }
+
+  .achievementCardPlaceholder {
+    width: 100%;
+    padding: var(--spacing-lg);
+  }
+}

@@ -1,0 +1,161 @@
+.graduatesByCity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.graduatesCityName {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-accent);
+  display: inline-block;
+}
+
+/* Тёмная тема: белый текст */
+[data-theme='dark'] .graduatesCityName {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .graduatesCityName {
+  color: var(--color-indigo);
+}
+
+.graduatesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.graduateCard {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+}
+
+/* Светлая тема: тень */
+[data-theme='light'] .graduateCard {
+  box-shadow: var(--shadow-sm);
+}
+
+.graduateCard:hover {
+  border-color: var(--color-accent);
+}
+
+/* Светлая тема: тень при наведении */
+[data-theme='light'] .graduateCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.graduateCardPlaceholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Тёмная тема: тёмный фон */
+[data-theme='dark'] .graduateCardPlaceholder {
+  background-color: var(--color-bg);
+}
+
+/* Светлая тема: кремовый фон */
+[data-theme='light'] .graduateCardPlaceholder {
+  background-color: var(--color-sand);
+}
+
+.graduateCardIcon {
+  font-size: 2rem;
+}
+
+.graduateCardContent {
+  flex: 1;
+}
+
+.graduateCardName {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Тёмная тема: белый текст */
+[data-theme='dark'] .graduateCardName {
+  color: var(--color-white);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .graduateCardName {
+  color: var(--color-indigo);
+}
+
+.graduateCardYear {
+  font-size: 0.75rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Тёмная тема: приглушённый текст */
+[data-theme='dark'] .graduateCardYear {
+  color: var(--color-text-muted);
+}
+
+/* Светлая тема: более тёмный текст */
+[data-theme='light'] .graduateCardYear {
+  color: var(--color-text-secondary);
+}
+
+.graduateCardPosition {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-xs);
+  line-height: 1.4;
+}
+
+.graduateCardWorkplace {
+  font-size: 0.8125rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Тёмная тема: светлый текст */
+[data-theme='dark'] .graduateCardWorkplace {
+  color: var(--color-text-secondary);
+}
+
+/* Светлая тема: тёмный текст */
+[data-theme='light'] .graduateCardWorkplace {
+  color: var(--color-charcoal);
+}
+
+.graduateCardBio {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* Тёмная тема: приглушённый текст */
+[data-theme='dark'] .graduateCardBio {
+  color: var(--color-text-muted);
+}
+
+/* Светлая тема: более тёмный текст */
+[data-theme='light'] .graduateCardBio {
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .graduateCard {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .graduatesCityName {
+    font-size: 1.25rem;
+  }
+}

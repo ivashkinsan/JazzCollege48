@@ -7,4 +7,11 @@ export default defineConfig({
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
+  css: {
+    modules: {
+      localsConvention: 'camelCaseOnly',
+      scopeBehaviour: 'local',
+      generateScopedName: '[name]__[local]--[hash:base64:5]',
+    },
+  },
 })

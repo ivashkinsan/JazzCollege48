@@ -12,7 +12,6 @@ import Concerts from './components/Concerts';
 import News from './components/News';
 import Admission from './components/Admission';
 import Contacts from './components/Contacts';
-import './App.css';
 
 function App() {
   return (
