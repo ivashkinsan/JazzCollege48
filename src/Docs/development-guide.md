@@ -2,88 +2,30 @@
 
 ## Введение
 
-Это руководство предназначено для разработчиков, работающих над проектом Lipetsk College Arts. Оно описывает лучшие практики, соглашения и процессы разработки.
+Руководство для разработчиков проекта Lipetsk College Arts.
 
 ---
 
 ## Начало работы
 
-### Предварительные требования
+### Требования
 
-- **Node.js:** версия 18.x или выше
-- **npm:** версия 9.x или выше
-- **Git:** для работы с репозиторием
+- **Node.js:** 18.x+
+- **npm:** 9.x+
+- **Git**
 
-**Проверка версий:**
 ```bash
-node --version  # v18.x.x или выше
-npm --version   # 9.x.x или выше
+node --version
+npm --version
 ```
 
-### Установка
+### Установка и запуск
 
 ```bash
-# Клонировать репозиторий
 git clone <repository-url>
 cd JazzCollege48
-
-# Установить зависимости
 npm install
-```
-
-### Запуск проекта
-
-```bash
-# Сервер разработки
-npm run dev
-
-# Открыть в браузере
-# http://localhost:5173
-```
-
----
-
-## Структура коммитов
-
-### Формат коммитов
-
-Проект использует соглашение Conventional Commits:
-
-```
-<type>(<scope>): <description>
-
-[optional body]
-
-[optional footer]
-```
-
-**Типы коммитов:**
-- `feat` — новая функциональность
-- `fix` — исправление ошибки
-- `docs` — изменение документации
-- `style` — форматирование, отступы (не влияющие на код)
-- `refactor` — рефакторинг кода
-- `test` — добавление тестов
-- `chore` — изменение конфигурации, зависимостей
-
-**Примеры:**
-```bash
-feat(components): добавить компонент VideoGallery
-fix(data): исправить опечатку в описании преподавателя
-docs: обновить README.md
-refactor(styles): вынести общие стили в variables.css
-```
-
-### Ветвление
-
-**Основная ветка:**
-- `main` — основная ветка для production
-
-**Ветки функций:**
-```bash
-git checkout -b feature/add-video-gallery
-git checkout -b fix/teacher-photo-path
-git checkout -b docs/update-readme
+npm run dev  # http://localhost:5173
 ```
 
 ---
@@ -92,136 +34,76 @@ git checkout -b docs/update-readme
 
 ### TypeScript
 
-**Общие правила:**
-
-1. **Использовать строгую типизацию:**
+**Строгая типизация:**
 ```typescript
-// ✅ Правильно
 interface Teacher {
   id: string;
   name: string;
-  email?: string;  // Опциональное поле
-}
-
-// ❌ Неправильно
-const teacher: any = { id: "1", name: "Имя" };
-```
-
-2. **Избегать `any`:**
-```typescript
-// ✅ Правильно
-function getTeacher(id: string): Teacher | undefined {
-  return teachers.find(t => t.id === id);
-}
-
-// ❌ Неправильно
-function getTeacher(id: any): any {
-  return teachers.find(t => t.id === id);
+  email?: string;
 }
 ```
 
-3. **Использовать типы для пропсов:**
+**Типизация пропсов:**
 ```typescript
-// ✅ Правильно
 interface HeaderProps {
   shortName: string;
   navigation: NavigationItem[];
 }
 
-function Header({ shortName, navigation }: HeaderProps) {
-  // ...
-}
-
-// ❌ Неправильно
-function Header({ shortName, navigation }) {
-  // ...
-}
+function Header({ shortName, navigation }: HeaderProps) { }
 ```
 
 ### React
 
-**Функциональные компоненты:**
-
+**Компоненты:**
 ```typescript
-// ✅ Правильно
 function ComponentName({ prop }: ComponentProps) {
-  return <div className="component-name">{prop}</div>;
+  return <div className={styles.component}>{prop}</div>;
 }
 
 export default ComponentName;
 ```
 
 **Именование:**
-- Компоненты: PascalCase (`TeacherCard`, `NewsList`)
-- Файлы: PascalCase для компонентов (`TeacherCard.tsx`)
-- Утилиты: camelCase (`collegeData.ts`)
+- Компоненты: PascalCase
+- Файлы: PascalCase (`.tsx`), camelCase (`.ts`)
 
 **Хуки:**
-
 ```typescript
 import { useState, useEffect } from 'react';
 
 function Example() {
   const [count, setCount] = useState<number>(0);
-  
-  useEffect(() => {
-    // side effects
-  }, []);
-  
+  useEffect(() => { }, []);
   return <div>{count}</div>;
 }
 ```
 
 ### CSS
 
-**BEM-именование:**
-
 ```css
-/* ✅ Правильно */
-.teacher-card { }
-.teacher-card__name { }
-.teacher-card__name--highlighted { }
-
-/* ❌ Неправильно */
-.teacherCard { }
-.name { }
-.highlighted { }
-```
-
-**Использование переменных:**
-
-```css
-/* ✅ Правильно */
 .card {
   background-color: var(--color-bg-tertiary);
   padding: var(--spacing-lg);
-}
-
-/* ❌ Неправильно */
-.card {
-  background-color: #1a1a1a;
-  padding: 2rem;
 }
 ```
 
 ---
 
-## Создание нового компонента
+## Создание компонента
 
-### Шаг 1: Создать файлы
+### Шаг 1: Файлы
 
 ```bash
-# Создать файлы компонента
 touch src/components/NewComponent.tsx
-touch src/components/NewComponent.css
+touch src/components/NewComponent.module.css
 ```
 
-### Шаг 2: Реализовать компонент
+### Шаг 2: Реализация
 
 ```tsx
-// src/components/NewComponent.tsx
 import { DataType } from '../data/collegeData';
-import './NewComponent.css';
+import styles from './NewComponent.module.css';
 
 interface NewComponentProps {
   data: DataType[];
@@ -229,11 +111,11 @@ interface NewComponentProps {
 
 function NewComponent({ data }: NewComponentProps) {
   return (
-    <section className="new-component">
+    <section className={styles.section}>
       <h2>Заголовок</h2>
-      <div className="new-component__grid">
+      <div className={styles.grid}>
         {data.map((item) => (
-          <div key={item.id} className="new-component__item">
+          <div key={item.id} className={styles.item}>
             {item.name}
           </div>
         ))}
@@ -245,91 +127,47 @@ function NewComponent({ data }: NewComponentProps) {
 export default NewComponent;
 ```
 
-### Шаг 3: Добавить стили
-
-```css
-/* src/components/NewComponent.css */
-.new-component {
-  padding: var(--spacing-xxl) 0;
-}
-
-.new-component__grid {
-  display: grid;
-  gap: var(--spacing-lg);
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.new-component__item {
-  background-color: var(--color-bg-tertiary);
-  padding: var(--spacing-lg);
-  border-radius: var(--border-radius);
-}
-```
-
-### Шаг 4: Добавить в App.tsx
+### Шаг 3: Добавить в App.tsx
 
 ```tsx
-// src/App.tsx
 import NewComponent from './components/NewComponent';
 
 function App() {
-  return (
-    <div className="app">
-      {/* ... другие компоненты */}
-      <NewComponent data={someData} />
-      {/* ... другие компоненты */}
-    </div>
-  );
+  return <NewComponent data={someData} />;
 }
 ```
 
 ---
 
-## Добавление новых данных
-
-### Шаг 1: Определить интерфейс
+## Добавление данных
 
 ```typescript
-// src/data/collegeData.ts
+// collegeData.ts
 export interface Video {
   id: string;
   title: string;
   url: string;
-  thumbnail: string;
   duration: string;
   date: string;
 }
-```
 
-### Шаг 2: Создать массив данных
-
-```typescript
 export const videos: Video[] = [
   {
     id: "1",
-    title: "Отчётный концерт 2025",
-    url: "https://youtube.com/watch?v=...",
-    thumbnail: "/thumbnails/concert-2025.jpg",
+    title: "Концерт 2025",
+    url: "https://youtube.com/...",
     duration: "1:30:00",
     date: "2025-05-27"
   }
 ];
 ```
 
-### Шаг 3: Экспортировать
-
-```typescript
-// В конце файла collegeData.ts
-export { videos };
-```
-
 ---
 
-## Работа с изображениями
+## Изображения
 
-### Размещение файлов
+### Размещение
 
-**Публичные изображения** (доступны по URL):
 ```
 public/
 ├── foto/
@@ -339,30 +177,17 @@ public/
     └── diploma.jpg
 ```
 
-**Использование:**
+### Использование
+
 ```tsx
 <img src="/foto/Kokshin.jpg" alt="Кокшин Д.Н." />
 ```
 
-**Импорт изображений** (для оптимизации):
-```typescript
-import heroImage from '../assets/hero.png';
+### Оптимизация
 
-<img src={heroImage} alt="Hero" />
-```
-
-### Оптимизация изображений
-
-**Рекомендации:**
-1. Сжимать изображения перед добавлением
-2. Использовать современные форматы (WebP)
-3. Указывать `alt` для доступности
-4. Оптимизировать размеры под разные экраны
-
-**Инструменты:**
-- [TinyPNG](https://tinypng.com/) — сжатие PNG/JPG
-- [Squoosh](https://squoosh.app/) — конвертация форматов
-- [ImageOptim](https://imageoptim.com/) — оптимизация для Mac
+1. Сжимать (TinyPNG, Squoosh)
+2. WebP формат
+3. Указывать `alt`
 
 ---
 
@@ -370,288 +195,131 @@ import heroImage from '../assets/hero.png';
 
 ### React DevTools
 
-**Установка:**
-- [Chrome Extension](https://chrome.google.com/webstore/detail/react-developer-tools)
-- [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
+- [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools)
+- [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
 
-**Возможности:**
-- Просмотр дерева компонентов
-- Инспекция пропсов и состояния
-- Профилирование производительности
-
-### Консоль браузера
+### Консоль
 
 ```typescript
-// Отладочный вывод
 console.log('Teacher:', teacher);
 console.table(teachers);
-
-// Трассировка
-console.trace('Component render');
-```
-
-### Source Maps
-
-Vite генерирует source maps автоматически в режиме разработки.
-
-**Настройка в vite.config.js:**
-```javascript
-export default defineConfig({
-  build: {
-    sourcemap: true  // Включить source maps для production
-  }
-});
-```
-
----
-
-## Тестирование
-
-### Ручное тестирование
-
-**Чеклист:**
-- [ ] Все ссылки работают
-- [ ] Изображения загружаются
-- [ ] Адаптивность на разных экранах
-- [ ] Консоль без ошибок
-- [ ] Навигация работает
-
-### Автоматические тесты (потенциально)
-
-**Установка Vitest:**
-```bash
-npm install --save-dev vitest @testing-library/react @testing-library/jest-dom
-```
-
-**Пример теста:**
-```typescript
-// src/components/__tests__/Header.test.tsx
-import { render, screen } from '@testing-library/react';
-import Header from '../Header';
-
-test('отображает название колледжа', () => {
-  render(<Header shortName="ЛОКИ" navigation={[]} />);
-  expect(screen.getByText('ЛОКИ')).toBeInTheDocument();
-});
-```
-
-**Запуск тестов:**
-```bash
-npx vitest
 ```
 
 ---
 
 ## Производительность
 
-### Оптимизация рендеринга
+### React.memo
 
-**React.memo для тяжёлых компонентов:**
 ```typescript
-import { memo } from 'react';
-
-const TeacherCard = memo(function TeacherCard({ teacher }: TeacherCardProps) {
-  return (
-    <div className="teacher-card">
-      {teacher.name}
-    </div>
-  );
+const TeacherCard = memo(function TeacherCard({ teacher }) {
+  return <div className={styles.card}>{teacher.name}</div>;
 });
 ```
 
-**useMemo для вычислений:**
-```typescript
-import { useMemo } from 'react';
+### useMemo
 
-function Component({ items }: ComponentProps) {
-  const filteredItems = useMemo(() => {
-    return items.filter(item => item.active);
-  }, [items]);
-  
-  return <div>{filteredItems.map(...)}</div>;
-}
+```typescript
+const filtered = useMemo(() => items.filter(i => i.active), [items]);
 ```
 
 ### Lazy loading
 
 ```typescript
-import { lazy, Suspense } from 'react';
+const Lazy = lazy(() => import('./LazyComponent'));
 
-const LazyComponent = lazy(() => import('./LazyComponent'));
-
-function App() {
-  return (
-    <Suspense fallback={<div>Загрузка...</div>}>
-      <LazyComponent />
-    </Suspense>
-  );
-}
+<Suspense fallback={<div>Загрузка...</div>}>
+  <Lazy />
+</Suspense>
 ```
 
 ---
 
 ## Доступность (A11y)
 
-### Семантический HTML
-
 ```html
-<!-- ✅ Правильно -->
 <nav aria-label="Основная навигация">
   <ul>
     <li><a href="#about">Об отделении</a></li>
   </ul>
 </nav>
-
-<!-- ❌ Неправильно -->
-<div class="nav">
-  <div onclick="navigate()">Об отделении</div>
-</div>
 ```
-
-### Alt-текст для изображений
 
 ```tsx
-<!-- ✅ Правильно -->
-<img src="/foto/teacher.jpg" alt="Кокшин Дмитрий Николаевич, преподаватель саксофона" />
+<img src="/foto/teacher.jpg" alt="Кокшин Дмитрий Николаевич, преподаватель" />
 
-<!-- ❌ Неправильно -->
-<img src="/foto/teacher.jpg" />
-<img src="/foto/teacher.jpg" alt="image" />
-```
-
-### ARIA-атрибуты
-
-```tsx
-<button 
-  aria-expanded={isOpen}
-  aria-controls="menu-content"
->
-  Меню
-</button>
-```
-
----
-
-## Документирование
-
-### JSDoc для функций
-
-```typescript
-/**
- * Находит преподавателя по ID
- * @param id - Уникальный идентификатор преподавателя
- * @returns Объект преподавателя или undefined
- */
-function findTeacherById(id: string): Teacher | undefined {
-  return teachers.find(teacher => teacher.id === id);
-}
-```
-
-### Комментарии в коде
-
-```typescript
-// ✅ Правильно: объясняет "почему"
-// Используем useMemo для оптимизации, т.к. фильтрация дорогая
-const filtered = useMemo(() => expensiveFilter(items), [items]);
-
-// ❌ Неправильно: объясняет "что"
-// Фильтруем элементы
-const filtered = items.filter(item => item.active);
+<button aria-expanded={isOpen} aria-controls="menu">Меню</button>
 ```
 
 ---
 
 ## Git Workflow
 
-### Создание pull request
+### Коммиты
 
-1. **Создать ветку:**
-   ```bash
-   git checkout -b feature/new-component
-   ```
+Conventional Commits:
+```
+<type>(<scope>): <description>
+```
 
-2. **Внести изменения:**
-   ```bash
-   git add .
-   git commit -m "feat(components): добавить новый компонент"
-   ```
+**Типы:** `feat`, `fix`, `docs`, `refactor`, `chore`
 
-3. **Отправить ветку:**
-   ```bash
-   git push origin feature/new-component
-   ```
+**Примеры:**
+```bash
+feat(components): добавить VideoGallery
+fix(data): исправить опечатку
+docs: обновить README.md
+```
 
-4. **Создать PR на GitHub**
+### Ветвление
 
-### Code Review Checklist
+```bash
+git checkout -b feature/new-component
+git add .
+git commit -m "feat(components): добавить компонент"
+git push origin feature/new-component
+```
 
-- [ ] Код следует стандартам проекта
-- [ ] Типизация TypeScript корректна
-- [ ] Компоненты переиспользуемы
+### Code Review
+
+- [ ] Код следует стандартам
+- [ ] Типизация корректна
 - [ ] Стили используют переменные
-- [ ] Нет console.log в production-коде
-- [ ] Коммиты имеют понятные сообщения
+- [ ] Нет console.log в production
 
 ---
 
 ## Устранение проблем
 
-### Частые ошибки
+### "Module not found"
 
-**"Module not found":**
 ```bash
-# Проверить путь импорта
-import Component from './Component';  // ✅
-import Component from '../Component'; // ❌
-
-# Очистить кэш
 rm -rf node_modules
 npm install
 ```
 
-**"Type 'X' is not assignable to type 'Y'":**
+### Ошибка типов
+
 ```typescript
-// Проверить соответствие типов
 interface A { id: string; }
 interface B { id: number; }
 
 const a: A = { id: "1" };
-const b: B = a;  // ❌ Ошибка типа
-
-// Исправить:
 const b: B = { id: 1 };  // ✅
 ```
 
-**HMR не работает:**
+### HMR не работает
+
 ```bash
 # Перезапустить сервер
-# Ctrl+C, затем npm run dev
-
 # Очистить кэш браузера
-# Проверить расширения браузера
 ```
 
 ---
 
 ## Ресурсы
 
-### Документация
-
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/docs/)
 - [Vite](https://vitejs.dev/guide/)
-- [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-
-### Инструменты
-
-- [ESLint Playground](https://eslint.org/play/)
-- [TypeScript Playground](https://www.typescriptlang.org/play)
-- [CSS Triggers](https://csstriggers.com/)
-
-### Расширения VS Code
-
-- ESLint
-- Prettier
-- CSS Variables
-- React Refactor
-- Auto Rename Tag
+- [ESLint](https://eslint.org/play/)

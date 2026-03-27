@@ -1,51 +1,50 @@
 import { Graduate } from '../data/collegeData';
 import styles from './Graduates.module.css';
-
-const CITIES = ['Москва', 'Санкт-Петербург', 'Ростов-на-Дону', 'Екатеринбург'];
+import { Link } from 'react-router-dom';
 
 interface GraduatesProps {
   graduates: Graduate[];
 }
 
 function Graduates({ graduates }: GraduatesProps) {
+  // Фильтруем только избранных выпускников для блока "Наша гордость"
+  const featuredGraduates = graduates.filter(g => g.isFeatured);
+
   return (
-    <section id="graduates" className="section section--black">
+    <section id="graduates" className={styles.graduates}>
       <div className="container">
-        <div className="section__header">
-          <p className="section__subtitle">Гордость</p>
-          <h2 className="section__title">Наши выпускники</h2>
-        </div>
-        <p className="section__intro">
-          Выпускники работают в ведущих концертных организациях и филармониях по всей России
+        <h2 className={styles.title}>Наша гордость</h2>
+        <p className={styles.subtitle}>
+          Выпускники эстрадного отделения, добившиеся значительных успехов в профессии
         </p>
-        <div className={styles.graduatesByCity}>
-          {CITIES.map((city) => {
-            const cityGraduates = graduates.filter((g) => g.city === city);
-            if (cityGraduates.length === 0) return null;
-            return (
-              <div key={city} className="graduates__city">
-                <h3 className={styles.graduatesCityName}>{city}</h3>
-                <div className={styles.graduatesGrid}>
-                  {cityGraduates.map((graduate) => (
-                    <article key={graduate.id} className={styles.graduateCard}>
-                      <div className={styles.graduateCardPlaceholder}>
-                        <span className={styles.graduateCardIcon}>🎓</span>
-                      </div>
-                      <div className={styles.graduateCardContent}>
-                        <h4 className={styles.graduateCardName}>{graduate.name}</h4>
-                        <p className={styles.graduateCardYear}>Выпуск {graduate.graduationYear}</p>
-                        <p className={styles.graduateCardPosition}>{graduate.position}</p>
-                        {graduate.workplace && (
-                          <p className={styles.graduateCardWorkplace}>{graduate.workplace}</p>
-                        )}
-                        {graduate.bio && <p className={styles.graduateCardBio}>{graduate.bio}</p>}
-                      </div>
-                    </article>
-                  ))}
+
+        <div className={styles.featuredGrid}>
+          {featuredGraduates.map((graduate) => (
+            <article key={graduate.id} className={styles.featuredCard}>
+              <div className={styles.featuredImageWrapper}>
+                <img
+                  src={graduate.image || '/foto/graduates/default.jpg'}
+                  alt={graduate.name}
+                  className={styles.featuredImage}
+                />
+                <div className={styles.yearBadge}>
+                  Выпуск {graduate.graduationYear}
                 </div>
               </div>
-            );
-          })}
+              <div className={styles.featuredContent}>
+                <h3 className={styles.featuredName}>{graduate.name}</h3>
+                <p className={styles.featuredPosition}>{graduate.position}</p>
+                <p className={styles.featuredWorkplace}>{graduate.workplace}</p>
+                <p className={styles.featuredBio}>{graduate.bio}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className={styles.ctaWrapper}>
+          <Link to="/graduates" className="btn btn--primary">
+            Все выпускники
+          </Link>
         </div>
       </div>
     </section>

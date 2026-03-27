@@ -24,11 +24,11 @@ export interface Graduate {
   id: string;
   name: string;
   graduationYear: number;
-  city: string;
   position: string;
   workplace?: string;
   image?: string;
   bio?: string;
+  isFeatured?: boolean; // Для блока "Наша гордость"
 }
 
 export interface Concert {
@@ -421,11 +421,42 @@ export const achievements: Achievement[] = [
 ];
 
 export const graduates: Graduate[] = [
+  // Выпускники для блока "Наша гордость"
+  {
+    id: "featured-1",
+    name: "Мельников Денис",
+    graduationYear: 2010,
+    position: "Саксофонист, аранжировщик, бэнд-лидер, педагог",
+    workplace: "Академия джаза (г. Москва)",
+    bio: "Заведующий эстрадно-джазовым отделом и педагог по классу саксофона и ансамбля в Академии джаза. Руководитель Jazz Academy Big Band. Ученик знаменитого Дмитрия Мосьпана.",
+    image: "/foto/graduates/melnikov.jpg",
+    isFeatured: true
+  },
+  {
+    id: "featured-2",
+    name: "Окунев Владислав",
+    graduationYear: 2008,
+    position: "Джазовый гитарист-виртуоз, аранжировщик, преподаватель",
+    workplace: "Kim Nazaretov Big Band, РГК им. С.В. Рахманинова",
+    bio: "Известный гитарист-виртуоз, работает в Kim Nazaretov Big Band. Преподаватель джазовой гитары и импровизации в Ростовской государственной консерватории им. С.В. Рахманинова. Сессионный музыкант.",
+    image: "/foto/graduates/okunev.jpg",
+    isFeatured: true
+  },
+  {
+    id: "featured-3",
+    name: "Чага Иван",
+    graduationYear: 2023,
+    position: "Барабанщик, студент",
+    workplace: "Академия музыки им. Гнесиных",
+    bio: "Талантливый барабанщик, студент академии музыки им. Гнесиных. Резидент московских джазовых клубов, участник фестиваля «Будущее джаза». Играл с известными российскими джазовыми музыкантами.",
+    image: "/foto/graduates/chaga.jpg",
+    isFeatured: true
+  },
+  // Другие выпускники
   {
     id: "1",
     name: "Смирнов Александр",
     graduationYear: 2020,
-    city: "Москва",
     position: "Артист эстрады, саксофонист",
     workplace: "Московский джазовый оркестр",
     bio: "Солист Московского джазового оркестра, участник международных фестивалей"
@@ -434,7 +465,6 @@ export const graduates: Graduate[] = [
     id: "2",
     name: "Васильева Екатерина",
     graduationYear: 2019,
-    city: "Санкт-Петербург",
     position: "Вокалистка, преподаватель",
     workplace: "Санкт-Петербургская филармония",
     bio: "Солистка филармонии, ведёт частную вокальную студию"
@@ -443,7 +473,6 @@ export const graduates: Graduate[] = [
     id: "3",
     name: "Новиков Михаил",
     graduationYear: 2021,
-    city: "Ростов-на-Дону",
     position: "Руководитель эстрадного коллектива",
     workplace: "Ростовская государственная филармония",
     bio: "Художественный руководитель эстрадного ансамбля, лауреат международных конкурсов"
@@ -452,7 +481,6 @@ export const graduates: Graduate[] = [
     id: "4",
     name: "Лебедева Ольга",
     graduationYear: 2018,
-    city: "Москва",
     position: "Звукорежиссёр",
     workplace: "Студия «Тон-Ателье»",
     bio: "Работает над звуковым оформлением концертных программ и альбомов"
@@ -461,7 +489,6 @@ export const graduates: Graduate[] = [
     id: "5",
     name: "Кравченко Игорь",
     graduationYear: 2022,
-    city: "Санкт-Петербург",
     position: "Гитарист, композитор",
     workplace: "Фрилансер",
     bio: "Пишет музыку для кино и театра, выступает с сольными концертами"
@@ -470,7 +497,6 @@ export const graduates: Graduate[] = [
     id: "6",
     name: "Попова Анастасия",
     graduationYear: 2020,
-    city: "Ростов-на-Дону",
     position: "Вокалистка мюзикла",
     workplace: "Ростовский музыкальный театр",
     bio: "Ведущая солистка мюзиклов, гастролирует по России"
@@ -479,7 +505,6 @@ export const graduates: Graduate[] = [
     id: "7",
     name: "Федоров Максим",
     graduationYear: 2017,
-    city: "Москва",
     position: "Бас-гитарист",
     workplace: "Государственный симфонический оркестр",
     bio: "Участник известных сессионных проектов, работает с топ-артистами российской эстрады"
@@ -488,7 +513,6 @@ export const graduates: Graduate[] = [
     id: "8",
     name: "Морозова Виктория",
     graduationYear: 2021,
-    city: "Екатеринбург",
     position: "Преподаватель эстрадного вокала",
     workplace: "Екатеринбургский колледж искусств",
     bio: "Преподаёт вокал, организует ежегодный фестиваль эстрадной песни"
@@ -497,7 +521,6 @@ export const graduates: Graduate[] = [
     id: "9",
     name: "Орлов Дмитрий",
     graduationYear: 2019,
-    city: "Санкт-Петербург",
     position: "Ударник",
     workplace: "Джаз-клуб «Бродячая собака»",
     bio: "Резидент известного джаз-клуба, участник международных джазовых фестивалей"
@@ -506,7 +529,6 @@ export const graduates: Graduate[] = [
     id: "10",
     name: "Соколова Елена",
     graduationYear: 2023,
-    city: "Москва",
     position: "Клавишница, аранжировщик",
     workplace: "Продюсерский центр",
     bio: "Работает аранжировщиком, аккомпаниатор в популярных телепроектах"

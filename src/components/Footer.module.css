@@ -66,6 +66,10 @@
   transition: color var(--transition-fast);
 }
 
+.footerLinkActive {
+  color: var(--color-accent);
+}
+
 /* Тёмная тема: светлый текст */
 [data-theme='dark'] .footerLink {
   color: var(--color-text-secondary);

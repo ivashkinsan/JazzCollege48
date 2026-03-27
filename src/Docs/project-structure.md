@@ -9,62 +9,52 @@ JazzCollege48/
 ├── dist/                          # Production-сборка (генерируется)
 ├── node_modules/                  # Зависимости npm
 ├── public/                        # Статические ресурсы
-│   └── favicon.svg                # Иконка сайта
-├── src/                           # Исходный код приложения
-│   ├── Docs/                      # Документация проекта
+│   ├── favicon.svg
+│   └── foto/                      # Фотографии
+├── src/                           # Исходный код
+│   ├── Docs/                      # Документация
 │   ├── assets/                    # Графические ресурсы
-│   │   ├── hero.png               # Изображение для Hero-секции
-│   │   ├── react.svg              # SVG React (шаблон)
-│   │   └── vite.svg               # SVG Vite (шаблон)
 │   ├── components/                # React-компоненты
 │   ├── data/                      # Модули с данными
-│   ├── pages/                     # Страницы (резерв)
 │   ├── styles/                    # Глобальные стили
 │   ├── App.css                    # Стили приложения
 │   ├── App.tsx                    # Корневой компонент
 │   ├── index.css                  # Глобальные стили
 │   ├── main.tsx                   # Точка входа
 │   └── vite-env.d.ts              # Типы для Vite
-├── lipetsk-college-arts/          # Дополнительные материалы
-├── Reference/                     # Референсы и изображения
 ├── .gitattributes                 # Настройки Git
 ├── .gitignore                     # Игнорируемые файлы Git
 ├── eslint.config.js               # Конфигурация ESLint
 ├── index.html                     # HTML-шаблон
 ├── package.json                   # Зависимости и скрипты
-├── package-lock.json              # Заблокированные версии зависимостей
-├── programma_podgotovki_spezialistov_estrada_uglub.txt  # Программа подготовки
-├── README.md                      # Описание проекта
 ├── tsconfig.json                  # Конфигурация TypeScript
-├── tsconfig.node.json             # Конфигурация TypeScript для Node
+├── tsconfig.node.json             # TypeScript для Node
 └── vite.config.js                 # Конфигурация Vite
 ```
+
+---
 
 ## Детальное описание директорий
 
 ### /src — Исходный код
 
-Основная директория с исходным кодом приложения.
-
 #### /src/components — React-компоненты
-
-Содержит все компоненты приложения. Каждый компонент состоит из TypeScript-файла и CSS-файла со стилями.
 
 | Компонент | Файлы | Назначение |
 |-----------|-------|------------|
-| Header | Header.tsx, Header.css | Шапка сайта с навигацией |
-| Footer | Footer.tsx, Footer.css | Подвал сайта |
-| Hero | Hero.tsx, Hero.css | Главный экран |
-| About | About.tsx, About.css | Информация об отделении |
-| Specialties | Specialties.tsx, Specialties.css | Специальности и профили |
-| Teachers | Teachers.tsx, Teachers.css | Карточки преподавателей |
-| Ensembles | Ensembles.tsx, Ensembles.css | Творческие коллективы |
-| Achievements | Achievements.tsx, Achievements.css | Достижения студентов |
-| Graduates | Graduates.tsx, Graduates.css | Выпускники |
-| Concerts | Concerts.tsx, Concerts.css | Афиша концертов |
-| News | News.tsx, News.css | Новости |
-| Admission | Admission.tsx, Admission.css | Информация для поступающих |
-| Contacts | Contacts.tsx, Contacts.css | Контакты |
+| Header | Header.tsx, Header.module.css | Шапка с навигацией |
+| Footer | Footer.tsx, Footer.module.css | Подвал сайта |
+| Hero | Hero.tsx, Hero.module.css | Главный экран |
+| About | About.tsx, About.module.css | Информация об отделении |
+| Specialties | Specialties.tsx, Specialties.module.css | Специальности |
+| Teachers | Teachers.tsx, Teachers.module.css | Карточки преподавателей |
+| Ensembles | Ensembles.tsx, Ensembles.module.css | Творческие коллективы |
+| Achievements | Achievements.tsx, Achievements.module.css | Достижения |
+| Graduates | Graduates.tsx, Graduates.module.css | Выпускники |
+| Concerts | Concerts.tsx, Concerts.module.css | Афиша концертов |
+| News | News.tsx, News.module.css | Новости |
+| Admission | Admission.tsx, Admission.module.css | Поступающим |
+| Contacts | Contacts.tsx, Contacts.module.css | Контакты |
 
 #### /src/data — Модули данных
 
@@ -81,23 +71,20 @@ JazzCollege48/
 
 | Файл | Описание |
 |------|----------|
-| hero.png | Изображение для главного экрана |
-| react.svg | SVG-логотип React (шаблонный) |
-| vite.svg | SVG-логотип Vite (шаблонный) |
+| hero.png | Изображение для Hero-секции |
 
 #### /src/styles — Глобальные стили
 
 | Файл | Описание |
 |------|----------|
 | variables.css | CSS-переменные для темизации |
-
-#### /src/pages — Страницы
-
-Пустая директория, зарезервирована для будущего расширения (маршрутизация).
+| global.css | Глобальные стили (reset, container) |
 
 #### /src/Docs — Документация
 
 Документация проекта в формате Markdown.
+
+---
 
 ### /public — Публичные ресурсы
 
@@ -106,19 +93,9 @@ JazzCollege48/
 | Файл | Описание |
 |------|----------|
 | favicon.svg | Иконка сайта в формате SVG |
+| foto/*.jpg | Фотографии преподавателей |
 
-### /Reference — Референсы
-
-Изображения и материалы для дизайна.
-
-| Файл | Описание |
-|------|----------|
-| 2-music-themes.jpg | Референс музыкальной темы |
-| 3-music-themes.jpg | Референс музыкальной темы |
-| darl_theme.jpg | Референс темы |
-| music20.jpg | Музыкальное изображение |
-| music22.jpg | Музыкальное изображение |
-| /web | Веб-референсы |
+---
 
 ## Конфигурационные файлы
 
@@ -127,17 +104,14 @@ JazzCollege48/
 | Файл | Назначение |
 |------|------------|
 | package.json | Зависимости, скрипты, метаданные |
-| tsconfig.json | Настройки компилятора TypeScript |
-| tsconfig.node.json | Настройки TypeScript для Node-окружения |
+| tsconfig.json | Настройки TypeScript |
 | vite.config.js | Настройки сборщика Vite |
 | eslint.config.js | Правила линтинга |
 | .gitignore | Игнорируемые Git-файлы |
-| .gitattributes | Атрибуты Git |
 
 ### HTML-шаблон
 
-**index.html** — главный HTML-файл приложения:
-
+**index.html:**
 ```html
 <!doctype html>
 <html lang="ru">
@@ -153,6 +127,8 @@ JazzCollege48/
   </body>
 </html>
 ```
+
+---
 
 ## Точки входа
 
@@ -175,7 +151,7 @@ createRoot(document.getElementById('root')!).render(
 
 ### App.tsx
 
-Корневой компонент, собирающий все части приложения:
+Корневой компонент:
 
 ```tsx
 function App() {
@@ -187,13 +163,7 @@ function App() {
         <About department={estradaDepartment} />
         <Specialties department={estradaDepartment} />
         <Teachers teachers={teachers} />
-        <Ensembles ensembles={ensembles} />
-        <Achievements achievements={achievements} />
-        <Graduates graduates={graduates} />
-        <Concerts concerts={concerts} />
-        <News news={news} />
-        <Admission collegeInfo={collegeInfo} />
-        <Contacts collegeInfo={collegeInfo} />
+        {/* ... другие компоненты */}
       </main>
       <Footer shortName={collegeInfo.shortName} navigation={navigation} />
     </div>
@@ -201,44 +171,47 @@ function App() {
 }
 ```
 
+---
+
 ## Именование файлов
 
 ### Компоненты
 
-- **PascalCase** для имён файлов компонентов: `Header.tsx`, `Footer.tsx`
-- **kebab-case** для имён CSS-файлов: `Header.css`, `Footer.css`
+- **PascalCase** для имён файлов: `Header.tsx`, `Footer.tsx`
+- **kebab-case** для CSS-файлов: `Header.module.css`
 
 ### Утилиты и данные
 
-- **camelCase** для файлов с данными: `collegeData.ts`
+- **camelCase**: `collegeData.ts`
 
 ### Конфигурации
 
-- Точка в начале для скрытых файлов: `.gitignore`, `.gitattributes`
-- Расширение `.json` для JSON-конфигов
-- Расширение `.js` для JS-конфигов
-- Расширение `.ts` / `.tsx` для TypeScript-файлов
+- Точка в начале: `.gitignore`, `.gitattributes`
+- Расширения: `.json`, `.js`, `.ts`, `.tsx`
+
+---
 
 ## Генерируемые директории
 
 ### /dist
 
-Создаётся при выполнении `npm run build`. Содержит оптимизированную production-сборку:
-
+Создаётся при `npm run build`. Содержит оптимизированную production-сборку:
 - Минифицированные JS и CSS файлы
 - Статические ресурсы из /public
 - HTML-файлы с подключёнными бандлами
 
 ### /node_modules
 
-Создаётся при выполнении `npm install`. Содержит все зависимости проекта. Не коммитится в Git.
+Создаётся при `npm install`. Содержит зависимости проекта. Не коммитится в Git.
+
+---
 
 ## Расширяемость
 
 ### Зарезервированные директории
 
 - `/src/pages` — для будущей маршрутизации
-- `/src/hooks` — для кастомных хуков (рекомендуется создать)
-- `/src/utils` — для утилитных функций (рекомендуется создать)
-- `/src/types` — для общих TypeScript-типов (рекомендуется создать)
-- `/src/api` — для API-клиентов (рекомендуется создать)
+- `/src/hooks` — для кастомных хуков
+- `/src/utils` — для утилитных функций
+- `/src/types` — для общих TypeScript-типов
+- `/src/api` — для API-клиентов

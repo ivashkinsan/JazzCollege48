@@ -80,6 +80,10 @@
   white-space: nowrap;
 }
 
+.headerNavLinkActive {
+  color: var(--color-accent);
+}
+
 /* Тёмная тема: светлый текст */
 [data-theme='dark'] .headerNavLink {
   color: var(--color-text-secondary);
