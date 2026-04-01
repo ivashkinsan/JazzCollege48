@@ -704,6 +704,15 @@ export const photos: Photo[] = [
 
 export const videos: Video[] = [
   {
+    id: "v0",
+    title: "Видео с эстрадного отделения",
+    description: "Видеозапись выступления студентов эстрадного отделения.",
+    videoUrl: "https://rutube.ru/video/private/5ebdfc5c594d14d955a9548f7f09205d/?p=BKH7oE6fUOzlk7J4gZy_cg",
+    thumbnail: "/video/thumbs/default.jpg",
+    date: "2025-04-01",
+    source: "rutube"
+  },
+  {
     id: "v1",
     title: "Отчётный концерт эстрадного отделения 2025",
     description: "Ежегодный отчётный концерт студентов эстрадного отделения ЛОКИ.",

@@ -13,14 +13,15 @@ function Hero() {
             height="150"
           />
         </div>
-        <p className={styles.heroLogoText}>
+        {/* <p className={styles.heroLogoText}>
           <span className={styles.heroLogoTitle}>эстрадно-джазовое отделение</span>
           <span className={styles.heroLocation}>Липецк</span>
-        </p>
-        <p className={styles.heroSubtitle}>С 1981 года • Программа углубленной подготовки</p>
+        </p> */}
+        {/* <p className={styles.heroSubtitle}>основано в 1981 году</p> */}
         <h1 className={styles.heroTitle}>
           Эстрадное отделение<br />
-          <span className={styles.heroTitleAccent}>ЛОКИ им. К.Н. Игумнова</span>
+          <span className={styles.heroTitleAccent}>Липецкого областного колледжа искусств<br /></span>
+          <span className={styles.heroTitleAccent}>им. К.Н. Игумнова</span>
         </h1>
         <p className={styles.heroDescription}>
           Готовим профессиональных музыкантов и вокалистов для работы
