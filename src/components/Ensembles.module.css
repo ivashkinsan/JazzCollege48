@@ -101,3 +101,26 @@
 [data-theme='light'] .ensembleCardMembers li {
   color: var(--color-charcoal);
 }
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+  .ensemblesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ensembleCard {
+    padding: var(--spacing-md);
+  }
+
+  .ensembleCardName {
+    font-size: 1.125rem;
+  }
+
+  .ensembleCardMembers ul {
+    padding-left: var(--spacing-sm);
+  }
+
+  .ensembleCardMembers li {
+    font-size: 0.875rem;
+  }
+}

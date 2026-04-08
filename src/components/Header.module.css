@@ -7,64 +7,73 @@
   background-color: var(--color-bg-secondary);
   border-bottom: 1px solid var(--border-color);
   z-index: 1000;
-  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+  transition: background-color var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.header:hover {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 }
 
 .headerContainer {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0 var(--spacing-md);
+  padding: 0 var(--spacing-lg);
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  overflow: visible;
 }
 
 .headerRight {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
+  overflow: visible;
 }
 
+/* ===== Логотип ===== */
 .headerLogo {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
   text-decoration: none;
+  padding: 0.5rem 0;
   transition: opacity var(--transition-fast);
 }
 
 .headerLogo:hover {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .headerLogoImage {
-  height: 60px;
+  height: 52px;
   width: auto;
   display: block;
-  background: transparent;
+  flex-shrink: 0;
 }
 
 .headerLogoText {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  line-height: 1;
 }
 
 .headerLogoTitle {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   color: var(--color-accent);
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 .headerLogoSubtitle {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--color-text);
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 [data-theme='dark'] .headerLogoSubtitle {
@@ -75,97 +84,494 @@
   color: var(--color-indigo);
 }
 
+/* ===== Навигация ===== */
 .headerNav {
   display: flex;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  gap: 0.25rem;
   align-items: center;
 }
 
 .headerNavLink {
-  font-size: 0.8rem;
+  position: relative;
+  font-size: 0.8125rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: color var(--transition-fast);
+  letter-spacing: 0.3px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
   white-space: nowrap;
+  text-decoration: none;
 }
 
-.headerNavLinkActive {
-  color: var(--color-accent);
-}
-
-/* Тёмная тема: светлый текст */
+/* Тёмная тема */
 [data-theme='dark'] .headerNavLink {
   color: var(--color-text-secondary);
 }
 
 [data-theme='dark'] .headerNavLink:hover {
-  color: var(--color-accent);
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.06);
 }
 
-/* Светлая тема: тёмный текст */
+/* Светлая тема */
 [data-theme='light'] .headerNavLink {
   color: var(--color-charcoal);
 }
 
 [data-theme='light'] .headerNavLink:hover {
   color: var(--color-accent);
+  background: rgba(99, 102, 241, 0.06);
 }
 
+/* Активная ссылка */
+.headerNavLinkActive {
+  color: var(--color-accent) !important;
+  font-weight: 600;
+}
+
+[data-theme='dark'] .headerNavLinkActive {
+  background: rgba(99, 102, 241, 0.12);
+}
+
+[data-theme='light'] .headerNavLinkActive {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+/* Подчёркивание активной ссылки */
+.headerNavLinkActive::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 1px;
+}
+
+/* ===== Dropdown ===== */
+.dropdownWrapper {
+  position: relative;
+}
+
+.dropdownTrigger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  text-decoration: none;
+  color: inherit;
+}
+
+[data-theme='dark'] .dropdownTrigger {
+  color: var(--color-text-secondary);
+}
+
+[data-theme='dark'] .dropdownTrigger:hover {
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='light'] .dropdownTrigger {
+  color: var(--color-charcoal);
+}
+
+[data-theme='light'] .dropdownTrigger:hover {
+  color: var(--color-accent);
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.dropdownTriggerActive {
+  color: var(--color-accent) !important;
+  font-weight: 600;
+}
+
+[data-theme='dark'] .dropdownTriggerActive {
+  background: rgba(99, 102, 241, 0.12);
+}
+
+[data-theme='light'] .dropdownTriggerActive {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.dropdownArrow {
+  font-size: 0.625rem;
+  line-height: 1;
+  opacity: 0.6;
+  transition: transform var(--transition-fast);
+}
+
+.dropdownWrapper:hover .dropdownArrow {
+  transform: rotate(180deg);
+}
+
+/* Выпадающее меню */
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  min-width: 180px;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.375rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-lg);
+  z-index: 1001;
+}
+
+/* Прозрачный мостик — область между кнопкой и меню */
+.dropdownMenu::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
+.dropdownMenuOpen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Стрелка вверх у dropdown */
+.dropdownMenu::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: var(--color-bg-tertiary);
+  border-left: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+}
+
+.dropdownLink {
+  display: block;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.dropdownLink:hover {
+  color: var(--color-accent);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.dropdownLinkActive {
+  color: var(--color-accent) !important;
+  font-weight: 600;
+  background: rgba(99, 102, 241, 0.1);
+}
+
+/* ===== Переключатель темы ===== */
 .themeToggle {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: var(--color-bg-tertiary);
+  background-color: transparent;
   border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  border-radius: 10px;
   cursor: pointer;
   transition: all var(--transition-fast);
+  flex-shrink: 0;
+  margin-left: 0.5rem;
 }
 
 .themeToggle:hover {
   border-color: var(--color-accent);
-  background-color: var(--color-bg);
+  background-color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+.themeToggle:hover .themeToggleIcon {
+  color: var(--color-white);
 }
 
 .themeToggleIcon {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
+  color: var(--color-accent);
+  transition: color var(--transition-fast);
+}
+
+/* ===== Бургер-кнопка ===== */
+.burgerBtn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  z-index: 1002;
+}
+
+.burgerBtn:hover {
+  border-color: var(--color-accent);
+}
+
+.burgerLine {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
+/* Анимация бургера в крестик */
+.burgerLineOpen1 {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burgerLineOpen2 {
+  opacity: 0;
+}
+
+.burgerLineOpen3 {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ===== Мобильное меню ===== */
+.mobileMenu {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-bg-secondary);
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: block;
+}
+
+.mobileMenuOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.mobileMenuContent {
+  padding: var(--spacing-lg) var(--spacing-md);
+  padding-bottom: calc(var(--spacing-lg) + env(safe-area-inset-bottom));
+  max-width: var(--container-width);
+  margin: 0 auto;
+  min-height: calc(100vh - var(--header-height));
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Ссылки мобильного меню */
+.mobileLink {
+  display: block;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+[data-theme='dark'] .mobileLink:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-white);
+}
+
+[data-theme='light'] .mobileLink:hover {
+  background: rgba(99, 102, 241, 0.06);
   color: var(--color-accent);
 }
 
-/* Адаптивность */
-@media (max-width: 900px) {
-  .headerNav {
-    gap: var(--spacing-sm);
+.mobileLinkActive {
+  color: var(--color-accent) !important;
+  font-weight: 600;
+  background: rgba(99, 102, 241, 0.1);
+}
+
+/* Dropdown в мобильном меню */
+.mobileDropdown {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mobileDropdownTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+[data-theme='dark'] .mobileDropdownTrigger:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='light'] .mobileDropdownTrigger:hover {
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.mobileDropdownTriggerActive {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.mobileArrow {
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.mobileArrowOpen {
+  transform: rotate(180deg);
+}
+
+.mobileDropdownMenu {
+  padding: 0.25rem 0 0.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.mobileDropdownMenu .mobileLink {
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+}
+
+/* ===== Адаптивность ===== */
+@media (max-width: 1100px) {
+  .headerContainer {
+    padding: 0 var(--spacing-md);
   }
-  
-  .headerNavLink {
-    font-size: 0.7rem;
+
+  .headerNav {
+    gap: 0;
+  }
+
+  .headerNavLink,
+  .dropdownTrigger {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .headerContainer {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .headerLogoImage {
+    height: 44px;
+  }
+
+  .headerLogoTitle {
+    font-size: 0.625rem;
+  }
+
+  .headerLogoSubtitle {
+    font-size: 0.8rem;
+  }
+
+  .dropdownMenu {
+    min-width: 160px;
+  }
+
+  .themeToggle {
+    width: 36px;
+    height: 36px;
   }
 }
 
 @media (max-width: 768px) {
+  /* Скрываем десктопную навигацию */
+  .headerNav {
+    display: none;
+  }
+
+  /* Мобильная раскладка: бургер | лого | тема */
   .headerContainer {
     padding: 0 var(--spacing-sm);
   }
-  
-  .headerLogoImage {
-    height: 35px;
-    width: auto;
+
+  /* Бургер - первый (левый) */
+  .burgerBtn {
+    display: flex;
+    order: 1;
+    margin-left: 0;
   }
-  
-  .headerNav {
+
+  /* Лого - второй (центр) */
+  .headerLogo {
+    order: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 0;
+  }
+
+  .headerLogoText {
+    display: none;
+  }
+
+  .headerLogoImage {
+    height: 36px;
+  }
+
+  /* Тема - третья (правая) */
+  .headerRight {
+    order: 3;
     gap: var(--spacing-xs);
   }
-  
-  .headerNavLink {
-    font-size: 0.65rem;
-  }
-  
+
   .themeToggle {
     width: 36px;
     height: 36px;

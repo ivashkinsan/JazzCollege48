@@ -1,79 +1,214 @@
-import { NavigationItem } from '../data/collegeData';
+import { NavigationEntry, NavigationItem } from '../data/collegeData';
 import { useTheme } from '../hooks/useTheme';
 import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 
 interface HeaderProps {
-  navigation: NavigationItem[];
+  navigation: NavigationEntry[];
+}
+
+function isDropdown(item: NavigationEntry): item is NavigationItem & { items: NavigationItem[] } {
+  return 'items' in item;
 }
 
 function Header({ navigation }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Проверка активной страницы
-  const isActivePage = (path: string) => location.pathname === path;
+  // Закрываем мобильное меню при переходе на другую страницу
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setOpenDropdown(null);
+  }, [location.pathname, location.hash]);
+
+  // Блокируем скролл при открытом мобильном меню
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
+
   const isHomePage = location.pathname === '/';
+
+  const getLinkProps = (item: NavigationItem, mobile = false) => {
+    const isAnchor = item.href.startsWith('#');
+    const href = isAnchor && !isHomePage ? `/${item.href}` : item.href;
+    const isActive = isAnchor
+      ? isHomePage && location.hash === item.href
+      : location.pathname === item.href;
+
+    const className = mobile
+      ? `${styles.mobileLink}${isActive ? ` ${styles.mobileLinkActive}` : ''}`
+      : `${styles.dropdownLink}${isActive ? ` ${styles.dropdownLinkActive}` : ''}`;
+
+    if (isAnchor) {
+      return { href, className, children: item.label };
+    }
+    return { to: item.href, className, children: item.label };
+  };
+
+  const isAnyDropdownActive = (items: NavigationItem[]) => {
+    return items.some(item => {
+      const isAnchor = item.href.startsWith('#');
+      return isAnchor
+        ? isHomePage && location.hash === item.href
+        : location.pathname === item.href;
+    });
+  };
+
+  const handleMobileLinkClick = () => {
+    setMobileMenuOpen(false);
+    setOpenDropdown(null);
+  };
+
+  const renderNavItem = (item: NavigationEntry) => {
+    if (isDropdown(item)) {
+      const hasActive = isAnyDropdownActive(item.items);
+
+      return (
+        <div
+          key={item.id}
+          className={styles.dropdownWrapper}
+          onMouseEnter={() => setOpenDropdown(item.id)}
+          onMouseLeave={() => setOpenDropdown(null)}
+        >
+          <button
+            className={`${styles.dropdownTrigger}${hasActive ? ` ${styles.dropdownTriggerActive}` : ''}`}
+          >
+            {item.label}
+            <span className={styles.dropdownArrow}>▾</span>
+          </button>
+          <div className={`${styles.dropdownMenu}${openDropdown === item.id ? ` ${styles.dropdownMenuOpen}` : ''}`}>
+            {item.items.map(child => {
+              const props = getLinkProps(child);
+              if ('to' in props) {
+                return (
+                  <Link key={child.id} {...props} onClick={() => setOpenDropdown(null)}>
+                    {props.children}
+                  </Link>
+                );
+              }
+              return (
+                <a key={child.id} {...props} onClick={() => setOpenDropdown(null)}>
+                  {props.children}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
+    // Обычная ссылка
+    const linkProps = getLinkProps(item);
+    if ('to' in linkProps) {
+      return (
+        <Link key={item.id} {...linkProps}>
+          {linkProps.children}
+        </Link>
+      );
+    }
+    return (
+      <a key={item.id} {...linkProps}>
+        {linkProps.children}
+      </a>
+    );
+  };
+
+  // Мобильное меню — рекурсивный рендер
+  const renderMobileItem = (item: NavigationEntry) => {
+    if (isDropdown(item)) {
+      const [dropdownOpen, setDropdownOpen] = useState(false);
+      const hasActive = isAnyDropdownActive(item.items);
+
+      return (
+        <div key={item.id} className={styles.mobileDropdown}>
+          <button
+            className={`${styles.mobileDropdownTrigger}${hasActive ? ` ${styles.mobileDropdownTriggerActive}` : ''}`}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          >
+            {item.label}
+            <span className={`${styles.mobileArrow}${dropdownOpen ? ` ${styles.mobileArrowOpen}` : ''}`}>▾</span>
+          </button>
+          {dropdownOpen && (
+            <div className={styles.mobileDropdownMenu}>
+              {item.items.map(child => {
+                const props = getLinkProps(child, true);
+                if ('to' in props) {
+                  return (
+                    <Link key={child.id} {...props} onClick={handleMobileLinkClick}>
+                      {props.children}
+                    </Link>
+                  );
+                }
+                return (
+                  <a key={child.id} {...props} onClick={handleMobileLinkClick}>
+                    {props.children}
+                  </a>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const linkProps = getLinkProps(item, true);
+    if ('to' in linkProps) {
+      return (
+        <Link key={item.id} {...linkProps} onClick={handleMobileLinkClick}>
+          {linkProps.children}
+        </Link>
+      );
+    }
+    return (
+      <a key={item.id} {...linkProps} onClick={handleMobileLinkClick}>
+        {linkProps.children}
+      </a>
+    );
+  };
 
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
+        {/* Бургер-кнопка (мобильная) */}
+        <button
+          className={styles.burgerBtn}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
+          aria-expanded={mobileMenuOpen}
+        >
+          <span className={`${styles.burgerLine} ${mobileMenuOpen ? styles.burgerLineOpen1 : ''}`} />
+          <span className={`${styles.burgerLine} ${mobileMenuOpen ? styles.burgerLineOpen2 : ''}`} />
+          <span className={`${styles.burgerLine} ${mobileMenuOpen ? styles.burgerLineOpen3 : ''}`} />
+        </button>
+
         <Link to="/" className={styles.headerLogo}>
           <img
             src="/logo_JazzCollege48.svg"
             alt="ЛОКИ им. К.Н. Игумнова — Эстрадное отделение"
             className={styles.headerLogoImage}
-            width="60"
-            height="60"
+            width="52"
+            height="52"
           />
           <div className={styles.headerLogoText}>
             <span className={styles.headerLogoTitle}>эстрадно-джазовое отделение</span>
             <span className={styles.headerLogoSubtitle}>Липецк</span>
           </div>
         </Link>
+
         <div className={styles.headerRight}>
+          {/* Десктопная навигация */}
           <nav className={styles.headerNav}>
-            {navigation.map((item) => {
-              const isExternal = item.href.startsWith('#');
-              const isActive = isExternal
-                ? isHomePage && location.hash === item.href
-                : isActivePage(item.href);
-
-              // Если якорная ссылка и не на главной — переходим на главную с якорем
-              if (isExternal && !isHomePage) {
-                return (
-                  <a
-                    key={item.id}
-                    href={`/${item.href}`}
-                    className={`${styles.headerNavLink} ${isActive ? styles.headerNavLinkActive : ''}`}
-                  >
-                    {item.label}
-                  </a>
-                );
-              }
-
-              if (!isExternal) {
-                return (
-                  <Link
-                    key={item.id}
-                    to={item.href}
-                    className={`${styles.headerNavLink} ${isActive ? styles.headerNavLinkActive : ''}`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              }
-              return (
-                <a
-                  key={item.id}
-                  href={item.href}
-                  className={`${styles.headerNavLink} ${isActive ? styles.headerNavLinkActive : ''}`}
-                >
-                  {item.label}
-                </a>
-              );
-            })}
+            {navigation.map(renderNavItem)}
           </nav>
+
           <button
             onClick={toggleTheme}
             className={styles.themeToggle}
@@ -83,6 +218,15 @@ function Header({ navigation }: HeaderProps) {
               {theme === 'dark' ? '☀️' : '🌙'}
             </span>
           </button>
+        </div>
+      </div>
+
+      {/* Мобильное меню */}
+      <div className={`${styles.mobileMenu}${mobileMenuOpen ? ` ${styles.mobileMenuOpen}` : ''}`}>
+        <div className={styles.mobileMenuContent}>
+          <nav className={styles.mobileNav}>
+            {navigation.map(renderMobileItem)}
+          </nav>
         </div>
       </div>
     </header>

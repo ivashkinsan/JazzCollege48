@@ -263,3 +263,31 @@
 .backLink:hover {
   color: var(--color-accent);
 }
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.875rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .programGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .programCard {
+    padding: var(--spacing-md);
+  }
+
+  .programCardTitle {
+    font-size: 1.0625rem;
+  }
+
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+}

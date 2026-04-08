@@ -253,3 +253,35 @@
 .backLink:hover {
   color: var(--color-accent);
 }
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.875rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .videoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .videoCard {
+    padding: var(--spacing-md);
+  }
+
+  .videoTitle {
+    font-size: 1rem;
+  }
+
+  .videoMeta {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .modalContent {
+    max-width: 95vw;
+  }
+}

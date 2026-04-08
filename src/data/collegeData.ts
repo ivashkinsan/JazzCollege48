@@ -640,6 +640,26 @@ export const graduates: Graduate[] = [
     image: "/foto_nasha_gordost/Chaga.jpg",
     isFeatured: true
   },
+  {
+    id: "featured-4",
+    name: "Стульнев Дмитрий Андреевич",
+    graduationYear: 2010,
+    position: "Дирижёр, бэнд-лидер, руководитель Липецкого джазового оркестра",
+    workplace: "Липецкий джазовый оркестр, Липецкий Дом музыки",
+    bio: "Художественный руководитель Липецкого джазового оркестра. Ведёт совместные проекты с Липецкой филармонией, организует концерты «Джазовые портреты»",
+    image: "/foto_nasha_gordost/Stulnev.jpg",
+    isFeatured: true
+  },
+  {
+    id: "featured-5",
+    name: "Меринова Екатерина",
+    graduationYear: 2018,
+    position: "Саксофонистка, вокалистка, лауреат международных конкурсов",
+    workplace: "Эстрадно-джазовый оркестр им. Кима Назаретова, РГК им. С.В. Рахманинова",
+    bio: "Выпускница Ростовской государственной консерватории им. С.В. Рахманинова. Артистка эстрадно-джазового оркестра им. Кима Назаретова, преподаватель детской музыкальной школы им. П.И. Чайковского г. Ростова-на-Дону. Лауреат международных и всероссийских конкурсов.",
+    image: "/foto_nasha_gordost/Merinova.jpg",
+    isFeatured: true
+  },
   // Другие выпускники
   {
     id: "1",
@@ -723,17 +743,43 @@ export const graduates: Graduate[] = [
   }
 ];
 
-export const navigation: NavigationItem[] = [
+export interface NavigationItem {
+  id: string;
+  label: string;
+  href: string;
+}
+
+export interface NavigationDropdown {
+  id: string;
+  label: string;
+  items: NavigationItem[];
+}
+
+export type NavigationEntry = NavigationItem | NavigationDropdown;
+
+export const navigation: NavigationEntry[] = [
   { id: "about", label: "Об отделении", href: "#about" },
   { id: "specialties", label: "Специальности", href: "#specialties" },
-  { id: "teachers", label: "Преподаватели", href: "#teachers" },
+  {
+    id: "department",
+    label: "Отделение",
+    items: [
+      { id: "teachers", label: "Преподаватели", href: "#teachers" },
+      { id: "admin", label: "Администрация", href: "/admin" },
+      { id: "dai", label: "ДАИ", href: "/dai" }
+    ]
+  },
+  { id: "graduates", label: "Выпускники", href: "/graduates" },
   { id: "afisha", label: "Афиша", href: "/afisha" },
   { id: "news", label: "Новости", href: "/news" },
-  { id: "graduates", label: "Выпускники", href: "/graduates" },
-  { id: "dai", label: "ДАИ", href: "/dai" },
-  { id: "admin", label: "Администрация", href: "/admin" },
-  { id: "photos", label: "Фото", href: "/photos" },
-  { id: "videos", label: "Видео", href: "/videos" },
+  {
+    id: "media",
+    label: "Медиа",
+    items: [
+      { id: "photos", label: "Фото", href: "/photos" },
+      { id: "videos", label: "Видео", href: "/videos" }
+    ]
+  },
   { id: "contacts", label: "Контакты", href: "#contacts" }
 ];
 

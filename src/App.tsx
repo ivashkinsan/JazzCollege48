@@ -22,6 +22,7 @@ import DaiPage from './pages/DaiPage';
 import NewsPage from './pages/NewsPage';
 import AfishaPage from './pages/AfishaPage';
 import ScrollToHash from './components/ScrollToHash';
+import ScrollToTop from './components/ScrollToTop';
 
 // Главная страница с секциями
 function HomePage() {
@@ -72,6 +73,7 @@ function App() {
         </main>
         <Footer navigation={navigation} />
       </div>
+      <ScrollToTop />
     </BrowserRouter>
   );
 }

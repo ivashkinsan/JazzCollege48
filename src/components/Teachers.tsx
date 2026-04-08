@@ -17,15 +17,17 @@ function Teachers({ teachers }: TeachersProps) {
           {teachers.map((teacher) => (
             <article key={teacher.id} className={styles.teacherCard}>
               {teacher.image ? (
-                <div className={styles.teacherCardImageWrapper}>
-                  <img src={teacher.image} alt={teacher.name} className={styles.teacherCardImage} />
-                  <div className={styles.teacherCardOverlay}>
+                <>
+                  <div className={styles.teacherCardImageWrapper}>
+                    <img src={teacher.image} alt={teacher.name} className={styles.teacherCardImage} />
+                  </div>
+                  <div className={styles.teacherCardInfo}>
                     <h3 className={styles.teacherCardName}>{teacher.name}</h3>
                     <p className={styles.teacherCardPosition}>{teacher.position}</p>
                     <p className={styles.teacherCardSpecialty}>{teacher.specialty}</p>
                     {teacher.bio && <p className={styles.teacherCardBio}>{teacher.bio}</p>}
                   </div>
-                </div>
+                </>
               ) : (
                 <div className={styles.teacherCardContent}>
                   <div className={styles.teacherCardAvatar}>

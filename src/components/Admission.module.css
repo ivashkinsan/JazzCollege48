@@ -159,3 +159,41 @@
 [data-theme='light'] .requirementItem li {
   color: var(--color-charcoal);
 }
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+  .admissionSteps {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .admissionIntro {
+    font-size: 1rem;
+  }
+
+  .stepNumber {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+
+  .stepTitle {
+    font-size: 1rem;
+  }
+
+  .stepDescription {
+    font-size: 0.875rem;
+  }
+
+  .requirementsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .admissionRequirements {
+    padding: var(--spacing-md);
+  }
+
+  .admissionRequirementsTitle {
+    font-size: 1.125rem;
+  }
+}

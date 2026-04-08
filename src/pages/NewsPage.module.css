@@ -100,6 +100,8 @@
 
 /* ===== Карточка ===== */
 .newsCard {
+  display: flex;
+  flex-direction: column;
   padding: 0;
   background-color: var(--color-bg-tertiary);
   border: 1px solid var(--border-color);
@@ -116,21 +118,27 @@
 /* Обложка */
 .newsCardCover {
   width: 100%;
-  height: 220px;
+  aspect-ratio: 1 / 1;
+  max-height: 320px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  background: var(--color-bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .newsCardCover img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform var(--transition-normal);
 }
 
 .newsCard:hover .newsCardCover img {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 /* Оверлей при наведении */
@@ -172,6 +180,9 @@
 /* Контент карточки */
 .newsCardContent {
   padding: var(--spacing-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Мета */
@@ -256,7 +267,7 @@
 
 /* Кнопка "Читать далее" */
 .expandBtn {
-  margin-top: var(--spacing-md);
+  margin-top: auto;
   padding: 0.5rem 1rem;
   background: transparent;
   border: 1px solid var(--color-accent);
@@ -265,6 +276,7 @@
   cursor: pointer;
   font-size: 0.875rem;
   transition: all var(--transition-normal);
+  align-self: flex-start;
 }
 
 .expandBtn:hover {
@@ -315,7 +327,7 @@
   }
 
   .newsCardCover {
-    height: 180px;
+    max-height: 280px;
   }
 
   .imageContainer {

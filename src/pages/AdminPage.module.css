@@ -176,3 +176,30 @@
 .backLink:hover {
   color: var(--color-accent);
 }
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.875rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .adminGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .adminCard {
+    padding: var(--spacing-md);
+  }
+
+  .adminCardName {
+    font-size: 1.125rem;
+  }
+
+  .adminCardInfo {
+    padding: var(--spacing-sm);
+  }
+}

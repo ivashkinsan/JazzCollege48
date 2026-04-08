@@ -1,16 +1,30 @@
-import { NavigationItem } from '../data/collegeData';
+import { NavigationEntry } from '../data/collegeData';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Footer.module.css';
 
 interface FooterProps {
-  navigation: NavigationItem[];
+  navigation: NavigationEntry[];
+}
+
+function isDropdown(item: NavigationEntry): item is NavigationEntry & { items: { href: string; id: string; label: string }[] } {
+  return 'items' in item;
 }
 
 function Footer({ navigation }: FooterProps) {
   const location = useLocation();
-
-  const isActivePage = (path: string) => location.pathname === path;
   const isHomePage = location.pathname === '/';
+
+  // Flatten: dropdown items + regular links
+  const flatLinks = navigation.flatMap(item =>
+    isDropdown(item) ? item.items : [item]
+  );
+
+  const isActive = (href: string) => {
+    const isAnchor = href.startsWith('#');
+    return isAnchor
+      ? isHomePage && location.hash === href
+      : location.pathname === href;
+  };
 
   return (
     <footer className={styles.footer}>
@@ -34,44 +48,27 @@ function Footer({ navigation }: FooterProps) {
             <p className={styles.footerSubtext}>Эстрадное отделение</p>
           </div>
           <nav className={styles.footerNav}>
-            {navigation.map((item) => {
-              const isExternal = item.href.startsWith('#');
-              const isActive = isExternal
-                ? isHomePage && location.hash === item.href
-                : isActivePage(item.href);
+            {flatLinks.map((item) => {
+              const isAnchor = item.href.startsWith('#');
+              const href = isAnchor && !isHomePage ? `/${item.href}` : item.href;
+              const active = isActive(item.href);
 
-              // Если якорная ссылка и не на главной — переходим на главную с якорем
-              if (isExternal && !isHomePage) {
-                return (
-                  <a
-                    key={item.id}
-                    href={`/${item.href}`}
-                    className={`${styles.footerLink} ${isActive ? styles.footerLinkActive : ''}`}
-                  >
-                    {item.label}
-                  </a>
-                );
-              }
-
-              if (!isExternal) {
-                return (
-                  <Link
-                    key={item.id}
-                    to={item.href}
-                    className={`${styles.footerLink} ${isActive ? styles.footerLinkActive : ''}`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              }
-              return (
+              return isAnchor ? (
                 <a
                   key={item.id}
-                  href={item.href}
-                  className={`${styles.footerLink} ${isActive ? styles.footerLinkActive : ''}`}
+                  href={href}
+                  className={`${styles.footerLink}${active ? ` ${styles.footerLinkActive}` : ''}`}
                 >
                   {item.label}
                 </a>
+              ) : (
+                <Link
+                  key={item.id}
+                  to={href}
+                  className={`${styles.footerLink}${active ? ` ${styles.footerLinkActive}` : ''}`}
+                >
+                  {item.label}
+                </Link>
               );
             })}
           </nav>

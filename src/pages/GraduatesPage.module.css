@@ -225,3 +225,45 @@
 .backLink:hover {
   color: var(--color-accent);
 }
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.875rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .yearButtons,
+  .filterButtons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .graduatesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .graduateCard {
+    padding: var(--spacing-md);
+  }
+
+  .graduateImage {
+    height: 250px;
+  }
+
+  .graduateName {
+    font-size: 1.125rem;
+  }
+
+  .graduateBio {
+    font-size: 0.8125rem;
+  }
+}

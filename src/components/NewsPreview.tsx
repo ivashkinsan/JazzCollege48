@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ExtendedNewsItem } from '../data/collegeData';
 import { Link } from 'react-router-dom';
+import Lightbox from './Lightbox';
 import styles from './NewsPreview.module.css';
 
 interface NewsPreviewProps {
@@ -16,6 +17,9 @@ const categoryLabels: Record<string, string> = {
 
 function NewsPreview({ news }: NewsPreviewProps) {
   const [expandedNews, setExpandedNews] = useState<string | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   // Берём только 3 последние новости
   const latestNews = news.slice(0, 3);
@@ -24,6 +28,12 @@ function NewsPreview({ news }: NewsPreviewProps) {
 
   const toggleExpand = (id: string) => {
     setExpandedNews(expandedNews === id ? null : id);
+  };
+
+  const openLightbox = (images: string[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
   };
 
   return (
@@ -44,13 +54,23 @@ function NewsPreview({ news }: NewsPreviewProps) {
             });
             const isExpanded = expandedNews === item.id;
             const hasFullContent = item.content && item.content.length > item.description.length;
+            const hasGallery = item.gallery && item.gallery.length > 0;
+            const allImages = [item.cover, ...(item.gallery || [])].filter(Boolean) as string[];
 
             return (
               <article key={item.id} className={styles.newsCard}>
                 {/* Обложка или заглушка */}
-                <div className={styles.newsCardCover}>
+                <div
+                  className={styles.newsCardCover}
+                  onClick={() => allImages.length > 0 && openLightbox(allImages, 0)}
+                >
                   {item.cover ? (
-                    <img src={item.cover} alt={item.title} loading="lazy" />
+                    <>
+                      <img src={item.cover} alt={item.title} loading="lazy" />
+                      <div className={styles.coverOverlay}>
+                        <span>🔍</span>
+                      </div>
+                    </>
                   ) : (
                     <div className={styles.newsCardCoverPlaceholder}>
                       <span className={styles.coverPlaceholderIcon}>
@@ -81,6 +101,25 @@ function NewsPreview({ news }: NewsPreviewProps) {
                     {!isExpanded && hasFullContent && '...'}
                   </p>
 
+                  {/* Мини-галерея */}
+                  {hasGallery && isExpanded && (
+                    <div className={styles.miniGallery}>
+                      {item.gallery!.map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={img}
+                          alt={`${item.title} — фото ${idx + 1}`}
+                          loading="lazy"
+                          className={styles.miniGalleryImage}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openLightbox(allImages, idx + 1);
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
+
                   {/* Кнопка развернуть */}
                   {hasFullContent && (
                     <button
@@ -102,6 +141,14 @@ function NewsPreview({ news }: NewsPreviewProps) {
           </Link>
         </div>
       </div>
+
+      {/* Lightbox */}
+      <Lightbox
+        images={lightboxImages}
+        initialIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </section>
   );
 }

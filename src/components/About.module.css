@@ -129,9 +129,56 @@
 @media (max-width: 768px) {
   .aboutContent {
     grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .aboutLogo {
+    width: 90px;
+    height: 90px;
+  }
+
+  .aboutText {
+    font-size: 1rem;
+    line-height: 1.7;
   }
 
   .aboutStats {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .stat {
+    padding: var(--spacing-md);
+  }
+
+  .statValue {
+    font-size: 2rem;
+  }
+
+  .statLabel {
+    font-size: 0.8125rem;
+  }
+
+  .aboutLogoBadge {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutLogo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .aboutLogoYear {
+    font-size: 0.75rem;
+  }
+
+  .aboutList li {
+    font-size: 0.875rem;
+  }
+
+  .statValue {
+    font-size: 1.75rem;
   }
 }

@@ -45,20 +45,12 @@ function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
 
   return (
     <div className={styles.lightbox} onClick={onClose}>
-      <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
+      <div className={styles.lightboxContent}>
         {/* Закрыть */}
         <button className={styles.closeBtn} onClick={onClose}>✕</button>
 
-        {/* Навигация */}
-        {images.length > 1 && (
-          <>
-            <button className={styles.navBtn} onClick={goPrev}>‹</button>
-            <button className={`${styles.navBtn} ${styles.nextBtn}`} onClick={goNext}>›</button>
-          </>
-        )}
-
-        {/* Изображение */}
-        <div className={styles.imageContainer}>
+        {/* Изображение — клик по фото НЕ закрывает */}
+        <div className={styles.imageContainer} onClick={(e) => e.stopPropagation()}>
           <img
             src={images[currentIndex]}
             alt={`Фото ${currentIndex + 1}`}
@@ -68,23 +60,27 @@ function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
 
         {/* Счётчик */}
         {images.length > 1 && (
-          <div className={styles.counter}>
+          <div className={styles.counter} onClick={(e) => e.stopPropagation()}>
             {currentIndex + 1} / {images.length}
           </div>
         )}
 
-        {/* Миниатюры */}
+        {/* Навигация + Миниатюры */}
         {images.length > 1 && (
-          <div className={styles.thumbnails}>
-            {images.map((img, idx) => (
-              <img
-                key={idx}
-                src={img}
-                alt={`Миниатюра ${idx + 1}`}
-                className={`${styles.thumbnail} ${idx === currentIndex ? styles.thumbnailActive : ''}`}
-                onClick={() => setCurrentIndex(idx)}
-              />
-            ))}
+          <div className={styles.navBar} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.navBtn} onClick={goPrev}>‹</button>
+            <div className={styles.thumbnails}>
+              {images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt={`Миниатюра ${idx + 1}`}
+                  className={`${styles.thumbnail} ${idx === currentIndex ? styles.thumbnailActive : ''}`}
+                  onClick={() => setCurrentIndex(idx)}
+                />
+              ))}
+            </div>
+            <button className={styles.navBtn} onClick={goNext}>›</button>
           </div>
         )}
       </div>
