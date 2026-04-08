@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { photos } from '../data/collegeData';
+import Lightbox from '../components/Lightbox';
 import styles from './PhotosPage.module.css';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +15,9 @@ const getUniqueYears = (photos: typeof photos) => {
 function PhotosPage() {
   const [selectedYear, setSelectedYear] = useState<number | 'all'>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('все');
-  const [selectedPhoto, setSelectedPhoto] = useState<typeof photos[0] | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const uniqueYears = useMemo(() => getUniqueYears(photos), []);
 
@@ -25,6 +28,13 @@ function PhotosPage() {
       return yearMatch && categoryMatch;
     });
   }, [selectedYear, selectedCategory]);
+
+  const openLightbox = (index: number) => {
+    const allImages = filteredPhotos.map(p => p.src);
+    setLightboxImages(allImages);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
 
   return (
     <div className={styles.page}>
@@ -91,11 +101,11 @@ function PhotosPage() {
             </p>
           ) : (
             <div className={styles.photoGrid}>
-              {filteredPhotos.map((photo) => (
+              {filteredPhotos.map((photo, index) => (
                 <div
                   key={photo.id}
                   className={styles.photoCard}
-                  onClick={() => setSelectedPhoto(photo)}
+                  onClick={() => openLightbox(index)}
                 >
                   <div className={styles.photoWrapper}>
                     <img
@@ -119,29 +129,13 @@ function PhotosPage() {
         </div>
       </section>
 
-      {/* Модальное окно для просмотра фото */}
-      {selectedPhoto && (
-        <div className={styles.modal} onClick={() => setSelectedPhoto(null)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button className={styles.modalClose} onClick={() => setSelectedPhoto(null)}>
-              ✕
-            </button>
-            <img
-              src={selectedPhoto.src}
-              alt={selectedPhoto.title}
-              className={styles.modalImage}
-            />
-            <div className={styles.modalInfo}>
-              <h3 className={styles.modalTitle}>{selectedPhoto.title}</h3>
-              <p className={styles.modalMeta}>
-                <span>{selectedPhoto.year} год</span>
-                <span>•</span>
-                <span>{selectedPhoto.category}</span>
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Lightbox */}
+      <Lightbox
+        images={lightboxImages}
+        initialIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
 
       <footer className={styles.pageFooter}>
         <div className="container">

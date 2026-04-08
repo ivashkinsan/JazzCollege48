@@ -362,38 +362,188 @@ export const concerts: Concert[] = [
   }
 ];
 
-export const news: NewsItem[] = [
-  {
-    id: "1",
-    title: "Приёмная кампания 2025: высокий конкурс на эстрадные специальности",
-    date: "2025-08-15",
-    description: "На эстрадные специальности ЛОКИ подано 356 заявлений на 156 бюджетных мест. Конкурс на новую специальность «Музыкальное звукооператорское мастерство» составил более 3 человек на место."
-  },
-  {
-    id: "2",
-    title: "Студенты эстрадного отделения выступили в Москве",
-    date: "2025-10-20",
-    description: "В рамках Дней культуры Липецкой области в Москве состоялся концерт «Земля Липецкая — Константину Игумнову». Студенты-эстрадники исполнили произведения на саксофоне, флейте, гобое, фортепиано, а также вокальные номера."
-  },
-  {
-    id: "3",
-    title: "Мастер-класс от Леонида Гурьева в ЛОКИ",
-    date: "2025-11-20",
-    description: "В рамках творческой смены «Мечтай, дерзай, твори!» прошёл мастер-класс доцента Московской консерватории Леонида Гурьева для студентов, обучающихся игре на духовых инструментах."
-  },
-  {
-    id: "4",
-    title: "Интенсив по креативным проектам",
-    date: "2025-04-10",
-    description: "ЛОКИ принял участников двухдневного интенсива «От яркой идеи до социокультурного проекта». Студенты эстрадного отделения разработали собственные концертные программы."
-  },
-  {
-    id: "5",
-    title: "Совещание руководителей школ искусств",
-    date: "2025-10-05",
-    description: "На базе колледжа прошло совещание, посвящённое итогам приёмной кампании и участию в проекте «Пушкинская карта». Лучшие педагоги эстрадного отделения получили благодарственные письма."
+// Загрузка новостей из markdown файлов
+// Vite импортирует raw-контент .md файлов через glob import
+const newsModules = import.meta.glob('../news/**/*.md', { query: '?raw', import: 'default' });
+
+// Функция парсинга frontmatter из markdown
+function parseMarkdownNews(content: string): NewsItem | null {
+  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  if (!frontmatterMatch) return null;
+  
+  const [, frontmatterStr, body] = frontmatterMatch;
+  
+  const parseField = (field: string) => {
+    const match = frontmatterStr.match(new RegExp(`^${field}:\\s*(.+)$`, 'm'));
+    return match ? match[1].trim() : '';
+  };
+  
+  const title = parseField('title').replace(/^["']|["']$/g, '');
+  const date = parseField('date');
+  const category = parseField('category');
+  const cover = parseField('cover');
+  
+  // Извлекаем описание из первых 200 символов тела
+  const description = body.trim().slice(0, 250).replace(/[#*_~`]/g, '').trim();
+  
+  if (!title || !date) return null;
+  
+  return {
+    id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
+    title,
+    date,
+    description,
+    content: body.trim(),
+    category,
+    cover: cover || undefined,
+    // Парсим галерею из комментариев <!-- gallery -->
+    gallery: parseGallery(content)
+  };
+}
+
+function parseGallery(content: string): string[] {
+  const galleryMatch = content.match(/<!--\s*gallery\s*-->\n([\s\S]*?)$/);
+  if (!galleryMatch) return [];
+  
+  const lines = galleryMatch[1].split('\n');
+  return lines
+    .filter(line => line.startsWith('- '))
+    .map(line => line.slice(2).trim())
+    .filter(Boolean);
+}
+
+// Расширенный интерфейс новости
+export interface ExtendedNewsItem extends NewsItem {
+  content?: string;
+  category?: string;
+  cover?: string;
+  gallery?: string[];
+}
+
+// Загружаем все новости при инициализации
+export const news: ExtendedNewsItem[] = [];
+let isLoading = false;
+let isLoaded = false;
+
+// Асинхронная загрузка новостей (вызывать в App.tsx)
+export async function loadNews(): Promise<ExtendedNewsItem[]> {
+  if (isLoaded) return news; // Уже загружено
+  if (isLoading) {
+    // Ждём завершения текущей загрузки
+    return new Promise((resolve) => {
+      const check = setInterval(() => {
+        if (isLoaded) {
+          clearInterval(check);
+          resolve(news);
+        }
+      }, 50);
+    });
   }
-];
+
+  isLoading = true;
+  const loaded: ExtendedNewsItem[] = [];
+
+  for (const path in newsModules) {
+    const content = (await newsModules[path]() as string).replace(/\r\n/g, '\n');
+    const item = parseMarkdownNews(content);
+    if (item) {
+      loaded.push(item as ExtendedNewsItem);
+    }
+  }
+
+  // Сортируем по дате (новые сверху)
+  loaded.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  news.length = 0; // Очищаем массив
+  news.push(...loaded);
+  isLoaded = true;
+  return news;
+}
+
+// ===== АФИШИ =====
+
+// Vite импортирует raw-контент .md файлов афиш через glob import
+const afishaModules = import.meta.glob('../afisha/**/*.md', { query: '?raw', import: 'default' });
+
+export interface AfishaItem {
+  id: string;
+  title: string;
+  date: string;
+  time?: string;
+  venue?: string;
+  cover?: string;
+  content: string;
+  gallery?: string[];
+  tags?: string[];
+}
+
+export const afisha: AfishaItem[] = [];
+let isAfishaLoaded = false;
+let isAfishaLoading = false;
+
+export async function loadAfisha(): Promise<AfishaItem[]> {
+  if (isAfishaLoaded) return afisha;
+  if (isAfishaLoading) {
+    return new Promise((resolve) => {
+      const check = setInterval(() => {
+        if (isAfishaLoaded) {
+          clearInterval(check);
+          resolve(afisha);
+        }
+      }, 50);
+    });
+  }
+
+  isAfishaLoading = true;
+  const loaded: AfishaItem[] = [];
+
+  for (const path in afishaModules) {
+    const content = (await afishaModules[path]() as string).replace(/\r\n/g, '\n');
+    const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    if (!frontmatterMatch) continue;
+
+    const [, frontmatterStr, body] = frontmatterMatch;
+    const parseField = (field: string) => {
+      const match = frontmatterStr.match(new RegExp(`^${field}:\\s*(.+)$`, 'm'));
+      return match ? match[1].trim().replace(/^["']|["']$/g, '') : '';
+    };
+
+    const title = parseField('title');
+    const date = parseField('date');
+    const time = parseField('time') || undefined;
+    const venue = parseField('venue') || undefined;
+    const cover = parseField('cover') || undefined;
+    const tagsStr = parseField('tags');
+    const tags = tagsStr ? tagsStr.replace(/[\[\]]/g, '').split(',').map(t => t.trim()).filter(Boolean) : [];
+
+    // Парсим галерею
+    const galleryMatch = content.match(/<!--\s*gallery\s*-->\n([\s\S]*?)$/);
+    const gallery = galleryMatch
+      ? galleryMatch[1].split('\n').filter(l => l.startsWith('- ')).map(l => l.slice(2).trim()).filter(Boolean)
+      : [];
+
+    if (!title || !date) continue;
+
+    loaded.push({
+      id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
+      title,
+      date,
+      time,
+      venue,
+      cover,
+      content: body.trim(),
+      gallery,
+      tags
+    });
+  }
+
+  loaded.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  afisha.length = 0;
+  afisha.push(...loaded);
+  isAfishaLoaded = true;
+  console.log(`[afisha] Загружено ${loaded.length} афиш:`, loaded.map(a => `${a.date} ${a.title}`));
+  return afisha;
+}
 
 export const achievements: Achievement[] = [
   {
@@ -463,21 +613,21 @@ export const graduates: Graduate[] = [
   {
     id: "featured-1",
     name: "Мельников Денис",
-    graduationYear: 2010,
+    graduationYear: 2015,
     position: "Саксофонист, аранжировщик, бэнд-лидер, педагог",
     workplace: "Академия джаза (г. Москва)",
     bio: "Заведующий эстрадно-джазовым отделом и педагог по классу саксофона и ансамбля в Академии джаза. Руководитель Jazz Academy Big Band. Ученик знаменитого Дмитрия Мосьпана.",
-    image: "/foto/graduates/melnikov.jpg",
+    image: "/foto_nasha_gordost/Melnikov.jpg",
     isFeatured: true
   },
   {
     id: "featured-2",
     name: "Окунев Владислав",
-    graduationYear: 2008,
+    graduationYear: 2003,
     position: "Джазовый гитарист-виртуоз, аранжировщик, преподаватель",
     workplace: "Kim Nazaretov Big Band, РГК им. С.В. Рахманинова",
     bio: "Известный гитарист-виртуоз, работает в Kim Nazaretov Big Band. Преподаватель джазовой гитары и импровизации в Ростовской государственной консерватории им. С.В. Рахманинова. Сессионный музыкант.",
-    image: "/foto/graduates/okunev.jpg",
+    image: "/foto_nasha_gordost/Okunev.jpg",
     isFeatured: true
   },
   {
@@ -487,7 +637,7 @@ export const graduates: Graduate[] = [
     position: "Барабанщик, студент",
     workplace: "Академия музыки им. Гнесиных",
     bio: "Талантливый барабанщик, студент академии музыки им. Гнесиных. Резидент московских джазовых клубов, участник фестиваля «Будущее джаза». Играл с известными российскими джазовыми музыкантами.",
-    image: "/foto/graduates/chaga.jpg",
+    image: "/foto_nasha_gordost/Chaga.jpg",
     isFeatured: true
   },
   // Другие выпускники
@@ -577,6 +727,8 @@ export const navigation: NavigationItem[] = [
   { id: "about", label: "Об отделении", href: "#about" },
   { id: "specialties", label: "Специальности", href: "#specialties" },
   { id: "teachers", label: "Преподаватели", href: "#teachers" },
+  { id: "afisha", label: "Афиша", href: "/afisha" },
+  { id: "news", label: "Новости", href: "/news" },
   { id: "graduates", label: "Выпускники", href: "/graduates" },
   { id: "dai", label: "ДАИ", href: "/dai" },
   { id: "admin", label: "Администрация", href: "/admin" },

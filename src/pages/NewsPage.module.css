@@ -1,0 +1,324 @@
+/* ===== Страница новостей ===== */
+.page {
+  min-height: 100vh;
+  padding-bottom: var(--spacing-xxl);
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
+  padding: var(--spacing-xxl) 0;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+}
+
+[data-theme='dark'] .title {
+  color: var(--color-white);
+}
+
+[data-theme='light'] .title {
+  color: var(--color-indigo);
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== Фильтры ===== */
+.filtersSection {
+  padding: var(--spacing-lg) 0;
+  background: var(--color-bg-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.categoryFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.categoryBtn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+}
+
+.categoryBtn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.categoryBtnActive {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+.categoryBtnActive:hover {
+  background: var(--color-accent-dark, var(--color-accent));
+  color: var(--color-white);
+}
+
+/* ===== Сетка новостей ===== */
+.newsSection {
+  padding: var(--spacing-xl) 0;
+}
+
+.resultsInfo {
+  text-align: center;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-lg);
+  font-size: 0.875rem;
+}
+
+.empty {
+  text-align: center;
+  padding: var(--spacing-xxl);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.newsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+/* ===== Карточка ===== */
+.newsCard {
+  padding: 0;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.newsCard:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+/* Обложка */
+.newsCardCover {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.newsCardCover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+}
+
+.newsCard:hover .newsCardCover img {
+  transform: scale(1.05);
+}
+
+/* Оверлей при наведении */
+.coverOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.newsCardCover:hover .coverOverlay {
+  opacity: 1;
+}
+
+.coverOverlay span {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* Заглушка */
+.newsCardCoverPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-tertiary) 100%);
+}
+
+.coverPlaceholderIcon {
+  font-size: 4rem;
+  opacity: 0.5;
+}
+
+/* Контент карточки */
+.newsCardContent {
+  padding: var(--spacing-lg);
+}
+
+/* Мета */
+.newsCardMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.newsCardCategory {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.newsCardDate {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+[data-theme='light'] .newsCardDate {
+  color: var(--color-text-secondary);
+}
+
+/* Заголовок */
+.newsCardTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.4;
+}
+
+[data-theme='dark'] .newsCardTitle {
+  color: var(--color-white);
+}
+
+[data-theme='light'] .newsCardTitle {
+  color: var(--color-indigo);
+}
+
+/* Описание */
+.newsCardDescription {
+  line-height: 1.7;
+  font-size: 0.9375rem;
+}
+
+[data-theme='dark'] .newsCardDescription {
+  color: var(--color-text-secondary);
+}
+
+[data-theme='light'] .newsCardDescription {
+  color: var(--color-charcoal);
+}
+
+/* Галерея */
+.newsCardGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin-top: var(--spacing-md);
+}
+
+.newsCardGalleryImage {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.newsCardGalleryImage:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+}
+
+/* Кнопка "Читать далее" */
+.expandBtn {
+  margin-top: var(--spacing-md);
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+}
+
+.expandBtn:hover {
+  background: var(--color-accent);
+  color: var(--color-white);
+}
+
+/* ===== Футер страницы ===== */
+.pageFooter {
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--spacing-xl);
+}
+
+.backLink {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  transition: all var(--transition-normal);
+}
+
+.backLink:hover {
+  background: var(--color-accent);
+  color: var(--color-white);
+}
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .title {
+    font-size: 1.875rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .newsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .newsCardCover {
+    height: 180px;
+  }
+
+  .imageContainer {
+    padding: 1rem;
+  }
+}

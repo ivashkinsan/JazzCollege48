@@ -9,27 +9,32 @@ JazzCollege48/
 ├── dist/                          # Production-сборка (генерируется)
 ├── node_modules/                  # Зависимости npm
 ├── public/                        # Статические ресурсы
-│   ├── favicon.svg
-│   └── foto/                      # Фотографии
+│   ├── afisha/images/             # Постеры афиш (портрет А4)
+│   ├── foto/                      # Фотографии преподавателей
+│   ├── foto_nasha_gordost/        # Фото выпускников «Наша гордость»
+│   ├── new_for_sort/              # Сырые файлы для обработки
+│   ├── news/images/               # Фото новостей
+│   └── favicon.svg
+├── scripts/                       # Скрипты обработки
+│   ├── add-news.js                # Добавление новостей
+│   ├── add-afisha.js              # Добавление афиш
+│   └── migrate-news.js            # Миграция .txt → .md
 ├── src/                           # Исходный код
 │   ├── Docs/                      # Документация
+│   ├── afisha/                    # Markdown файлы афиш
 │   ├── assets/                    # Графические ресурсы
 │   ├── components/                # React-компоненты
 │   ├── data/                      # Модули с данными
+│   ├── news/                      # Markdown файлы новостей
+│   │   ├── 2025/
+│   │   └── 2026/
+│   ├── pages/                     # Страницы приложения
 │   ├── styles/                    # Глобальные стили
-│   ├── App.css                    # Стили приложения
 │   ├── App.tsx                    # Корневой компонент
-│   ├── index.css                  # Глобальные стили
-│   ├── main.tsx                   # Точка входа
-│   └── vite-env.d.ts              # Типы для Vite
-├── .gitattributes                 # Настройки Git
-├── .gitignore                     # Игнорируемые файлы Git
-├── eslint.config.js               # Конфигурация ESLint
-├── index.html                     # HTML-шаблон
-├── package.json                   # Зависимости и скрипты
-├── tsconfig.json                  # Конфигурация TypeScript
-├── tsconfig.node.json             # TypeScript для Node
-└── vite.config.js                 # Конфигурация Vite
+│   └── main.tsx                   # Точка входа
+├── package.json
+├── vite.config.js
+└── tsconfig.json
 ```
 
 ---
@@ -50,11 +55,24 @@ JazzCollege48/
 | Teachers | Teachers.tsx, Teachers.module.css | Карточки преподавателей |
 | Ensembles | Ensembles.tsx, Ensembles.module.css | Творческие коллективы |
 | Achievements | Achievements.tsx, Achievements.module.css | Достижения |
-| Graduates | Graduates.tsx, Graduates.module.css | Выпускники |
-| Concerts | Concerts.tsx, Concerts.module.css | Афиша концертов |
-| News | News.tsx, News.module.css | Новости |
+| Graduates | Graduates.tsx, Graduates.module.css | Выпускники («Наша гордость») |
+| ConcertsPreview | ConcertsPreview.tsx, ConcertsPreview.module.css | 3 последних афиши на главной |
+| NewsPreview | NewsPreview.tsx, NewsPreview.module.css | 3 последних новости на главной |
+| Lightbox | Lightbox.tsx, Lightbox.module.css | Полноэкранный просмотр фото |
 | Admission | Admission.tsx, Admission.module.css | Поступающим |
 | Contacts | Contacts.tsx, Contacts.module.css | Контакты |
+
+#### /src/pages — Страницы
+
+| Страница | Файлы | Назначение |
+|----------|-------|------------|
+| NewsPage | NewsPage.tsx, NewsPage.module.css | Все новости |
+| AfishaPage | AfishaPage.tsx, AfishaPage.module.css | Афиша мероприятий |
+| GraduatesPage | GraduatesPage.tsx, GraduatesPage.module.css | Все выпускники |
+| AdminPage | AdminPage.tsx, AdminPage.module.css | Администрация |
+| PhotosPage | PhotosPage.tsx, PhotosPage.module.css | Фотогалерея |
+| VideosPage | VideosPage.tsx, VideosPage.module.css | Видеозаписи |
+| DaiPage | DaiPage.tsx, DaiPage.module.css | Детская академия искусств |
 
 #### /src/data — Модули данных
 
@@ -210,8 +228,23 @@ function App() {
 
 ### Зарезервированные директории
 
-- `/src/pages` — для будущей маршрутизации
 - `/src/hooks` — для кастомных хуков
 - `/src/utils` — для утилитных функций
 - `/src/types` — для общих TypeScript-типов
 - `/src/api` — для API-клиентов
+
+### Навигация
+
+| Пункт меню | Тип | Путь |
+|------------|-----|------|
+| Об отделении | Якорь | `#about` |
+| Специальности | Якорь | `#specialties` |
+| Преподаватели | Якорь | `#teachers` |
+| **Афиша** | Страница | `/afisha` |
+| **Новости** | Страница | `/news` |
+| Выпускники | Страница | `/graduates` |
+| ДАИ | Страница | `/dai` |
+| Администрация | Страница | `/admin` |
+| Фото | Страница | `/photos` |
+| Видео | Страница | `/videos` |
+| Контакты | Якорь | `#contacts` |

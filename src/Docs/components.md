@@ -2,276 +2,99 @@
 
 ## Обзор
 
-Приложение состоит из 13 функциональных компонентов с TypeScript. Каждый компонент имеет собственный CSS Module.
+Приложение состоит из функциональных компонентов с TypeScript. Каждый компонент имеет собственный CSS Module. Используется React Router для маршрутизации.
 
-## Структура компонента
+## Компоненты главной страницы
 
-```tsx
-import styles from './ComponentName.module.css';
+| Компонент | Файл | Назначение |
+|-----------|------|------------|
+| Header | Header.tsx | Шапка с навигацией и переключением темы |
+| Footer | Footer.tsx | Подвал с навигацией |
+| Hero | Hero.tsx | Главный экран |
+| About | About.tsx | Информация об отделении |
+| Specialties | Specialties.tsx | Специальности и инструменты |
+| Teachers | Teachers.tsx | Карточки преподавателей |
+| Ensembles | Ensembles.tsx | Творческие коллективы |
+| Achievements | Achievements.tsx | Достижения |
+| Graduates | Graduates.tsx | Блок «Наша гордость» |
+| **ConcertsPreview** | ConcertsPreview.tsx | 3 последних афиши |
+| **NewsPreview** | NewsPreview.tsx | 3 последних новости |
+| Admission | Admission.tsx | Поступающим |
+| Contacts | Contacts.tsx | Контакты |
 
-interface ComponentNameProps {
-  propertyName: Type;
-}
+## Страницы
 
-function ComponentName({ prop }: ComponentNameProps) {
-  return (
-    <section className={styles.component}>
-      {/* JSX */}
-    </section>
-  );
-}
+| Страница | Файл | Назначение |
+|----------|------|------------|
+| **NewsPage** | pages/NewsPage.tsx | Все новости с фильтрацией |
+| **AfishaPage** | pages/AfishaPage.tsx | Афиша (предстоящие + прошедшие) |
+| GraduatesPage | pages/GraduatesPage.tsx | Все выпускники |
+| PhotosPage | pages/PhotosPage.tsx | Фотогалерея |
+| VideosPage | pages/VideosPage.tsx | Видеозаписи |
+| DaiPage | pages/DaiPage.tsx | Детская академия искусств |
+| AdminPage | pages/AdminPage.tsx | Администрация |
 
-export default ComponentName;
-```
+## Общие компоненты
 
-**Особенности:**
-- CSS Modules импортируются как объекты
-- Классы в camelCase: `styles.headerNav`
-- Глобальные классы (`section`, `container`, `btn`) — обычные
+### Lightbox
 
----
+**Файл:** `src/components/Lightbox.tsx`
 
-## Компоненты
-
-### Header
-
-**Файл:** `src/components/Header.tsx`
-
-**Пропсы:**
-```typescript
-interface HeaderProps {
-  shortName: string;
-  navigation: NavigationItem[];
-}
-```
-
-**Структура:**
-```tsx
-<header className={styles.header}>
-  <div className={styles.headerContainer}>
-    <div className={styles.headerLogo}>
-      <span className={styles.headerLogoText}>{shortName}</span>
-      <span className={styles.headerLogoSubtext}>Эстрадное отделение</span>
-    </div>
-    <nav className={styles.headerNav}>
-      {navigation.map((item) => (
-        <a key={item.id} href={item.href} className={styles.headerNavLink}>
-          {item.label}
-        </a>
-      ))}
-    </nav>
-  </div>
-</header>
-```
-
----
-
-### Footer
-
-**Файл:** `src/components/Footer.tsx`
-
-**Пропсы:** `FooterProps` (аналогично Header)
-
-**Структура:**
-- Левая колонка: название и навигация
-- Правая колонка: контактная информация
-
----
-
-### Hero
-
-**Файл:** `src/components/Hero.tsx`
-
-**Пропсы:** Отсутствуют
-
-**Структура:**
-```tsx
-<section className={styles.hero}>
-  <div className={styles.heroContent}>
-    <p className={styles.heroSubtitle}>С 1981 года • Программа углубленной подготовки</p>
-    <h1 className={styles.heroTitle}>Эстрадное отделение</h1>
-    <p className={styles.heroDescription}>Готовим профессиональных музыкантов...</p>
-    <div className={styles.heroCta}>
-      <a href="#admission" className="btn btn--primary">Поступить</a>
-      <a href="#about" className="btn btn--outline">Узнать больше</a>
-    </div>
-  </div>
-  <div className={styles.heroImageWrapper}>
-    <img src="/foto/Full.png" alt="Преподаватели и студенты" />
-  </div>
-</section>
-```
-
----
-
-### About
-
-**Файл:** `src/components/About.tsx`
+Полноэкранный просмотр фотографий. Используется на страницах `/news`, `/afisha`, `/photos`.
 
 **Пропсы:**
 ```typescript
-interface AboutProps {
-  department: EstradaDepartment;
+interface LightboxProps {
+  images: string[];       // Массив путей к фото
+  initialIndex: number;   // Начальный индекс
+  isOpen: boolean;
+  onClose: () => void;
 }
 ```
 
-**Используемые данные:**
-- `department.description`
-- `department.features`
-- `department.established`
+**Управление:**
+- Стрелки ‹ › — навигация
+- ← → — клавиатура
+- Esc — закрыть
+- Миниатюры внизу
 
 ---
 
-### Specialties
-
-**Файл:** `src/components/Specialties.tsx`
-
-**Пропсы:** `SpecialtiesProps { department: EstradaDepartment }`
-
-**Структура:**
-- Карточка специальности (код, название)
-- Квалификация, срок, форма обучения
-- Список профилей подготовки
-- Сетка инструментов по категориям:
-  - 🎹 Клавишные
-  - 🎺 Духовые
-  - 🥁 Ударные
-  - 🎸 Струнные
-
----
-
-### Teachers
-
-**Файл:** `src/components/Teachers.tsx`
-
-**Пропсы:**
-```typescript
-interface TeachersProps {
-  teachers: Teacher[];
-}
-```
-
-**Структура:**
-```tsx
-<section className={styles.teachers}>
-  <div className={styles.teachersGrid}>
-    {teachers.map((teacher) => (
-      <div key={teacher.id} className={styles.teacherCard}>
-        <img src={teacher.image} alt={teacher.name} />
-        <h3>{teacher.name}</h3>
-        <p className={styles.teacherCardPosition}>{teacher.position}</p>
-        <p className={styles.teacherCardSpecialty}>{teacher.specialty}</p>
-      </div>
-    ))}
-  </div>
-</section>
-```
-
-**Преподаватели (10):**
-1. Кокшин Дмитрий Николаевич (Саксофон)
-2. Ивашкин Александр Владимирович (Фортепиано)
-3. Данилов Дмитрий Александрович (Гитара)
-4. Катрук Максим Николаевич (Бас-гитара)
-5. Реннер Людмила Арнольдовна (Саксофон)
-6. Колупаев Вячеслав Иванович (Фортепиано)
-7. Игнаткин Олег Александрович (Ударные)
-8. Волкова Наталья Викторовна (Вокал)
-9. Бережная Василина Евгеньевна (Вокал)
-10. Темникова Дарья Викторовна (Вокал)
-
----
-
-### Ensembles
-
-**Файл:** `src/components/Ensembles.tsx`
-
-**Пропсы:** `EnsemblesProps { ensembles: Ensemble[] }`
-
-**Коллективы (3):**
-1. Эстрадный оркестр ЛОКИ
-2. Вокальный ансамбль
-3. Инструментальные ансамбли
-
----
-
-### Achievements
-
-**Файл:** `src/components/Achievements.tsx`
-
-**Пропсы:** `AchievementsProps { achievements: Achievement[] }`
-
-**Достижения (6):**
-- Лауреат I степени — Всероссийский конкурс
-- Гран-при фестиваля «Эстрадный голос»
-- Лауреат II степени — Региональный конкурс джаза
-
----
-
-### Graduates
+## Graduates (блок «Наша гордость»)
 
 **Файл:** `src/components/Graduates.tsx`
 
-**Пропсы:** `GraduatesProps { graduates: Graduate[] }`
+- Фильтрует выпускников по `isFeatured: true`
+- Фото: `public/foto_nasha_gordost/`
+- Высота фото: 340px, `object-fit: contain`
+- Карточки выровнены (flex-колонка, `flex: 1` для текста)
 
-**Выпускники (10):**
-Города: Москва, Санкт-Петербург, Ростов-на-Дону, Екатеринбург
-
----
-
-### Concerts
-
-**Файл:** `src/components/Concerts.tsx`
-
-**Пропсы:** `ConcertsProps { concerts: Concert[] }`
-
-**Мероприятия (5):**
-1. Отчётный концерт эстрадного отделения
-2. «Камертон регионов»
-3. «Земля Липецкая — Константину Игумнову»
-4. Творческая смена «Мечтай, дерзай, твори!»
-5. «Молодёжный квартал»
+**Выпускники блока:**
+1. Мельников Денис (2015) — Академия джаза
+2. Окунев Владислав (2003) — Kim Nazaretov Big Band
+3. Чага Иван (2023) — Академия музыки им. Гнесиных
 
 ---
 
-### News
+## ConcertsPreview (афиша на главной)
 
-**Файл:** `src/components/News.tsx`
+**Файл:** `src/components/ConcertsPreview.tsx`
 
-**Пропсы:** `NewsProps { news: NewsItem[] }`
-
-**Темы новостей (5):**
-- Приёмная кампания
-- Выступления в Москве
-- Мастер-классы
-- Творческие смены
-- Совещания руководителей
+- Загружает афиши через `loadAfisha()`
+- Фильтрует предстоящие события
+- Показывает 3 ближайших (сортировка по дате)
+- Кнопка «Вся афиша →» на `/afisha`
 
 ---
 
-### Admission
+## NewsPreview (новости на главной)
 
-**Файл:** `src/components/Admission.tsx`
+**Файл:** `src/components/NewsPreview.tsx`
 
-**Пропсы:** `AdmissionProps { collegeInfo: CollegeInfo }`
-
-**Структура:**
-- Требования к поступлению
-- Информация о специальности
-- Контакты для связи
-
----
-
-### Contacts
-
-**Файл:** `src/components/Contacts.tsx`
-
-**Пропсы:** `ContactsProps { collegeInfo: CollegeInfo }`
-
-**Структура:**
-- Адрес
-- Телефон
-- Email
-- Сайт
+- Загружает новости через `loadNews()`
+- Показывает 3 последних
+- Кнопка «Читать далее →» для раскрытия текста
+- Кнопка «Все новости →» на `/news`
 
 ---
 

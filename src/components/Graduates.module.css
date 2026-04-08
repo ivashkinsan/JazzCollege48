@@ -38,6 +38,8 @@
 }
 
 .featuredCard {
+  display: flex;
+  flex-direction: column;
   background-color: var(--color-bg-tertiary);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -53,19 +55,25 @@
 
 .featuredImageWrapper {
   position: relative;
-  height: 280px;
+  width: 100%;
+  height: 340px;
   overflow: hidden;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .featuredImage {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform var(--transition-normal);
 }
 
 .featuredCard:hover .featuredImage {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .yearBadge {
@@ -82,6 +90,9 @@
 
 .featuredContent {
   padding: var(--spacing-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .featuredName {
@@ -118,4 +129,12 @@
   display: inline-block;
   padding: var(--spacing-md) var(--spacing-xl);
   font-size: 1.125rem;
+}
+
+/* Адаптивность фото */
+@media (max-width: 768px) {
+  .featuredImageWrapper {
+    min-height: 220px;
+    max-height: 320px;
+  }
 }

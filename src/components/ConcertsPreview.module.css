@@ -1,0 +1,167 @@
+.concertsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.concertCard {
+  display: flex;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-normal);
+}
+
+[data-theme='light'] .concertCard {
+  box-shadow: var(--shadow-sm);
+}
+
+.concertCard:hover {
+  border-color: var(--color-accent);
+}
+
+[data-theme='light'] .concertCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.concertCardDate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  min-width: 100px;
+  border-radius: var(--border-radius);
+}
+
+[data-theme='dark'] .concertCardDate {
+  background-color: var(--color-bg);
+}
+
+[data-theme='light'] .concertCardDate {
+  background-color: var(--color-sand);
+}
+
+.concertCardDay {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.concertCardMonth {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  margin-top: var(--spacing-xs);
+}
+
+[data-theme='dark'] .concertCardMonth {
+  color: var(--color-white);
+}
+
+[data-theme='light'] .concertCardMonth {
+  color: var(--color-indigo);
+}
+
+.concertCardYear {
+  font-size: 0.75rem;
+  margin-top: 2px;
+}
+
+[data-theme='dark'] .concertCardYear {
+  color: var(--color-text-muted);
+}
+
+[data-theme='light'] .concertCardYear {
+  color: var(--color-text-secondary);
+}
+
+.concertCardContent {
+  flex: 1;
+}
+
+.concertCardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+[data-theme='dark'] .concertCardTitle {
+  color: var(--color-white);
+}
+
+[data-theme='light'] .concertCardTitle {
+  color: var(--color-indigo);
+}
+
+.concertCardVenue,
+.concertCardTime {
+  font-size: 0.875rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+[data-theme='dark'] .concertCardVenue,
+[data-theme='dark'] .concertCardTime {
+  color: var(--color-text-muted);
+}
+
+[data-theme='light'] .concertCardVenue,
+[data-theme='light'] .concertCardTime {
+  color: var(--color-text-secondary);
+}
+
+.concertCardDescription {
+  line-height: 1.7;
+  margin-top: var(--spacing-sm);
+}
+
+[data-theme='dark'] .concertCardDescription {
+  color: var(--color-text-secondary);
+}
+
+[data-theme='light'] .concertCardDescription {
+  color: var(--color-charcoal);
+}
+
+/* Кнопка "Вся афиша" */
+.moreLink {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+}
+
+.moreButton {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: var(--color-accent);
+  color: var(--color-white);
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all var(--transition-normal);
+}
+
+.moreButton:hover {
+  background: var(--color-accent-dark, var(--color-accent));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+  .concertCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .concertCardDate {
+    flex-direction: row;
+    gap: var(--spacing-sm);
+    min-width: auto;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .concertCardDay {
+    font-size: 1.25rem;
+  }
+}
