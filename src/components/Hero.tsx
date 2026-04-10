@@ -36,9 +36,6 @@ function Hero() {
           <a href="#about" className={`${styles.btn} ${styles.btnOutline}`}>Узнать больше</a>
         </div>
       </div>
-      <div className={styles.heroImageWrapper}>
-        <img src="/foto/Full.png" alt="Преподаватели и студенты" className={styles.heroImage} />
-      </div>
     </section>
   );
 }
