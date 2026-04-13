@@ -4,8 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 
-const baseName = import.meta.env.BASE_URL;
-
 interface HeaderProps {
   navigation: NavigationEntry[];
 }
@@ -40,16 +38,17 @@ function Header({ navigation }: HeaderProps) {
 
   const getLinkProps = (item: NavigationItem, mobile = false) => {
     const isAnchor = item.href.startsWith('#');
-    
+
     if (isAnchor) {
       // Для якорных ссылок: на главной — #anchor, на других — /#anchor (для перехода на главную + скролл)
-      const linkPath = isHomePage ? item.href : baseName + item.href;
+      // basename добавится автоматически React Router, НЕ добавляем baseName вручную!
+      const linkPath = isHomePage ? item.href : `/${item.href}`;
       const isActive = isHomePage && location.hash === item.href;
-      
+
       const className = mobile
         ? `${styles.mobileLink}${isActive ? ` ${styles.mobileLinkActive}` : ''}`
         : `${styles.dropdownLink}${isActive ? ` ${styles.dropdownLinkActive}` : ''}`;
-      
+
       return { to: linkPath, className, children: item.label, href: undefined as undefined };
     }
     

@@ -73,6 +73,7 @@ dist/
 **vite.config.js:**
 ```javascript
 export default defineConfig({
+  base: '/JazzCollege48/',  // Важно для GitHub Pages!
   plugins: [react()],
   build: {
     target: 'esnext',
@@ -81,6 +82,8 @@ export default defineConfig({
   },
 })
 ```
+
+> **ВАЖНО:** Для деплоя на GitHub Pages обязательно указать `base: '/repo-name/'` в vite.config.js. Без этого пути к ресурсам будут неверными.
 
 ---
 
@@ -115,18 +118,106 @@ npm run type-check
 
 ---
 
-## Развёртывание
+## Развёртывание на GitHub Pages
 
-### Требования к хостингу
+### Настройка репозитория
 
-- Поддержка статических файлов
-- HTTPS (рекомендуется)
-- Gzip/Brotli сжатие
-- Кэширование статических активов
+1. **vite.config.js** — указать `base`:
+```javascript
+base: '/JazzCollege48/',
+```
+
+2. **BrowserRouter** в `App.tsx` — добавить `basename`:
+```tsx
+const baseName = import.meta.env.BASE_URL;
+
+function App() {
+  return (
+    <BrowserRouter basename={baseName}>
+      {/* Routes */}
+    </BrowserRouter>
+  );
+}
+```
+
+3. **Пути к изображениям** — использовать функцию `asset()`:
+```tsx
+import { asset } from './data/collegeData';
+
+<img src={asset('/foto/teacher.jpg')} alt="..." />
+```
+
+4. **Якорные ссылки** в Header — автоматически обрабатываются через `baseName`.
+
+### GitHub Actions workflow
+
+Проект использует автоматическую сборку через GitHub Actions:
+
+**.github/workflows/deploy.yml:**
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/deploy-pages@v4
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+```
+
+**Настройки на GitHub:**
+- Settings → Pages → Source: **GitHub Actions**
+- URL сайта: `https://ivashkinsan.github.io/JazzCollege48/`
+
+### Процесс деплоя
+
+1. Пуш в ветку `main`:
+```bash
+git add -A
+git commit -m "..."
+git push
+```
+
+2. GitHub Actions автоматически:
+   - Установит зависимости (`npm ci`)
+   - Соберёт проект (`npm run build`)
+   - Задеплоит на GitHub Pages
+
+3. Сайт доступен через 1-2 минуты после пуша.
 
 ---
 
-## Деплой на платформы
+## Деплой на другие платформы
 
 ### Vercel
 
@@ -169,39 +260,6 @@ Vercel автоматически определяет Vite-проект.
   from = "/*"
   to = "/index.html"
   status = 200
-```
-
----
-
-### GitHub Pages
-
-**Установка:**
-```bash
-npm install --save-dev gh-pages
-```
-
-**package.json:**
-```json
-{
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
-  "homepage": "https://username.github.io/repo-name"
-}
-```
-
-**Запуск:**
-```bash
-npm run deploy
-```
-
-**vite.config.js:**
-```javascript
-export default defineConfig({
-  base: '/repo-name/',
-  plugins: [react()],
-})
 ```
 
 ---
@@ -255,6 +313,7 @@ VITE_APP_TITLE=ЛОКИ Эстрада
 
 ```typescript
 const apiUrl = import.meta.env.VITE_API_URL;
+const baseName = import.meta.env.BASE_URL;  // '/JazzCollege48/' на GitHub Pages
 ```
 
 ### Режимы
@@ -265,34 +324,47 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 ---
 
+## Утилита `asset()` для путей
+
+**Определение:** `src/data/collegeData.ts`
+
+```typescript
+export function asset(path: string): string {
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
+    return path;
+  }
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return import.meta.env.BASE_URL + cleanPath;
+}
+```
+
+**Назначение:** Добавляет `BASE_URL` ко всем путям к изображениям, обеспечивая корректную работу на GitHub Pages.
+
+**Использование:**
+```tsx
+import { asset } from './data/collegeData';
+
+// В компонентах:
+<img src={asset('/foto/teacher.jpg')} alt="..." />
+<img src={graduate.image || asset('/foto/graduates/default.jpg')} alt="..." />
+
+// В CSS background-image — использовать inline-style:
+<section style={{ backgroundImage: `url(${asset('/foto/Full.png')})` }}>
+```
+
+> **ВАЖНО:** ВСЕ пути к изображениям должны быть обёрнуты в `asset()`. Это включает:
+> - Статические данные в `collegeData.ts` (teachers, graduates, achievements и т.д.)
+> - Пути из Markdown (cover, gallery в новостях и афишах)
+> - Логотипы и фоновые изображения в компонентах
+> - Fallback-пути (default изображения)
+
+---
+
 ## CI/CD
 
 ### GitHub Actions
 
-**.github/workflows/deploy.yml:**
-```yaml
-name: Deploy
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-      - run: npm ci
-      - run: npm run build
-      - run: npm run lint
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-```
+Автоматическая сборка и деплой при каждом пуше в `main`.
 
 ---
 
@@ -348,14 +420,27 @@ npm run type-check
 # Очистить кэш браузера
 ```
 
+### 404 на GitHub Pages
+
+**Причины:**
+1. Не указан `base: '/repo-name/'` в `vite.config.js`
+2. Не указан `basename` в `BrowserRouter`
+3. Пути к фото без `asset()`
+
+**Решение:** Проверить все три пункта выше, пересобрать и запушить.
+
 ---
 
 ## Чеклист перед деплоем
 
-- [ ] Сборка без ошибок
-- [ ] Линтинг без ошибок
-- [ ] Проверка типов без ошибок
+- [ ] Сборка без ошибок (`npm run build`)
+- [ ] Линтинг без ошибок (`npm run lint`)
+- [ ] Проверка типов без ошибок (`npm run type-check`)
 - [ ] Локальный просмотр успешен
 - [ ] Все ссылки работают
+- [ ] `base` указан в `vite.config.js`
+- [ ] `basename` указан в `BrowserRouter`
+- [ ] Все пути к фото через `asset()`
 - [ ] Изображения оптимизированы
 - [ ] Favicon добавлен
+- [ ] GitHub Actions workflow настроен
