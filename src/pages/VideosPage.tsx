@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { videos } from '../data/collegeData';
+import { videos, asset } from '../data/collegeData';
 import styles from './VideosPage.module.css';
 import { Link } from 'react-router-dom';
 
@@ -64,7 +64,7 @@ function VideosPage() {
               <article key={video.id} className={styles.videoCard}>
                 <div className={styles.thumbnailWrapper}>
                   <img
-                    src={video.thumbnail || '/video/thumbs/default.jpg'}
+                    src={video.thumbnail || asset('/video/thumbs/default.jpg')}
                     alt={video.title}
                     className={styles.thumbnail}
                     loading="lazy"

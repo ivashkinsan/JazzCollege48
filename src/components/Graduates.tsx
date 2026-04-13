@@ -1,4 +1,4 @@
-import { Graduate } from '../data/collegeData';
+import { Graduate, asset } from '../data/collegeData';
 import styles from './Graduates.module.css';
 import { Link } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ function Graduates({ graduates }: GraduatesProps) {
             <article key={graduate.id} className={styles.featuredCard}>
               <div className={styles.featuredImageWrapper}>
                 <img
-                  src={graduate.image || '/foto/graduates/default.jpg'}
+                  src={graduate.image || asset('/foto/graduates/default.jpg')}
                   alt={graduate.name}
                   className={styles.featuredImage}
                 />

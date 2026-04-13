@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { graduates, Graduate } from '../data/collegeData';
+import { graduates, Graduate, asset } from '../data/collegeData';
 import styles from './GraduatesPage.module.css';
 import { Link } from 'react-router-dom';
 
@@ -79,7 +79,7 @@ function GraduatesPage() {
               <article key={graduate.id} className={styles.graduateCard}>
                 <div className={styles.imageWrapper}>
                   <img
-                    src={graduate.image || '/foto/graduates/default.jpg'}
+                    src={graduate.image || asset('/foto/graduates/default.jpg')}
                     alt={graduate.name}
                     className={styles.image}
                   />

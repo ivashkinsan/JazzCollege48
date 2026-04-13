@@ -1,4 +1,4 @@
-import { EstradaDepartment } from '../data/collegeData';
+import { EstradaDepartment, asset } from '../data/collegeData';
 import styles from './About.module.css';
 
 interface AboutProps {
@@ -61,7 +61,7 @@ function About({ department: _department }: AboutProps) {
             </div>
             <div className={styles.aboutLogoBadge} style={{ marginTop: 'var(--spacing-lg)' }}>
               <img
-                src="/logo_type_2.png"
+                src={asset('/logo_type_2.png')}
                 alt="Эстрадное отделение ЛОКИ"
                 className={styles.aboutLogo}
                 width="120"

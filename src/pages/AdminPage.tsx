@@ -1,4 +1,4 @@
-import { adminMembers } from '../data/collegeData';
+import { adminMembers, asset } from '../data/collegeData';
 import styles from './AdminPage.module.css';
 import { Link } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ function AdminPage() {
               <article key={member.id} className={styles.adminCard}>
                 <div className={styles.imageWrapper}>
                   <img
-                    src={member.image || '/foto/admin/default.jpg'}
+                    src={member.image || asset('/foto/admin/default.jpg')}
                     alt={member.name}
                     className={styles.image}
                   />

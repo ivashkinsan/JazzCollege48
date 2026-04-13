@@ -1,4 +1,4 @@
-import { NavigationEntry, NavigationItem, NavigationDropdown } from '../data/collegeData';
+import { NavigationEntry, NavigationItem, NavigationDropdown, asset } from '../data/collegeData';
 import { useTheme } from '../hooks/useTheme';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -200,7 +200,7 @@ function Header({ navigation }: HeaderProps) {
 
         <Link to="/" className={styles.headerLogo}>
           <img
-            src="/logo_JazzCollege48.svg"
+            src={asset('/logo_JazzCollege48.svg')}
             alt="ЛОКИ им. К.Н. Игумнова — Эстрадное отделение"
             className={styles.headerLogoImage}
             width="52"

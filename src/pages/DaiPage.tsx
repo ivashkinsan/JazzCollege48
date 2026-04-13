@@ -1,4 +1,4 @@
-import { daiPrograms } from '../data/collegeData';
+import { daiPrograms, asset } from '../data/collegeData';
 import styles from './DaiPage.module.css';
 import { Link } from 'react-router-dom';
 
@@ -61,7 +61,7 @@ function DaiPage() {
               <article key={program.id} className={styles.programCard}>
                 <div className={styles.programImageWrapper}>
                   <img
-                    src={program.image || '/foto/dai/default.jpg'}
+                    src={program.image || asset('/foto/dai/default.jpg')}
                     alt={program.name}
                     className={styles.programImage}
                   />

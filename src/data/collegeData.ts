@@ -2,7 +2,7 @@
 // Добавляем BASE_URL для корректной работы на GitHub Pages
 const base = import.meta.env.BASE_URL;
 
-function asset(path: string): string {
+export function asset(path: string): string {
   // Если путь уже начинается с http/https или data: — возвращаем как есть
   if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
     return path;
@@ -413,9 +413,9 @@ function parseMarkdownNews(content: string): NewsItem | null {
     description,
     content: body.trim(),
     category,
-    cover: cover || undefined,
+    cover: cover ? asset(cover) : undefined,
     // Парсим галерею из комментариев <!-- gallery -->
-    gallery: parseGallery(content)
+    gallery: parseGallery(content).map(img => asset(img))
   };
 }
 
@@ -537,7 +537,7 @@ export async function loadAfisha(): Promise<AfishaItem[]> {
     // Парсим галерею
     const galleryMatch = content.match(/<!--\s*gallery\s*-->\n([\s\S]*?)$/);
     const gallery = galleryMatch
-      ? galleryMatch[1].split('\n').filter(l => l.startsWith('- ')).map(l => l.slice(2).trim()).filter(Boolean)
+      ? galleryMatch[1].split('\n').filter(l => l.startsWith('- ')).map(l => asset(l.slice(2).trim())).filter(Boolean)
       : [];
 
     if (!title || !date) continue;
@@ -548,7 +548,7 @@ export async function loadAfisha(): Promise<AfishaItem[]> {
       date,
       time,
       venue,
-      cover,
+      cover: cover ? asset(cover) : undefined,
       content: body.trim(),
       gallery,
       tags

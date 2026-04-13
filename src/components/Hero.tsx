@@ -1,12 +1,17 @@
+import { asset } from '../data/collegeData';
 import styles from './Hero.module.css';
 
 function Hero() {
   return (
-    <section id="hero" className={styles.hero}>
+    <section
+      id="hero"
+      className={styles.hero}
+      style={{ backgroundImage: `url(${asset('/foto/Full.png')})` }}
+    >
       <div className={styles.heroContent}>
         <div className={styles.heroLogoWrapper}>
           <img
-            src="/logo_JazzCollege48.svg"
+            src={asset('/logo_JazzCollege48.svg')}
             alt="Эстрадное отделение ЛОКИ"
             className={styles.heroLogo}
             width="150"

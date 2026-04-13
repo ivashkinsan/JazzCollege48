@@ -1,4 +1,4 @@
-import { NavigationEntry } from '../data/collegeData';
+import { NavigationEntry, asset } from '../data/collegeData';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Footer.module.css';
 
@@ -33,7 +33,7 @@ function Footer({ navigation }: FooterProps) {
           <div className={styles.footerInfo}>
             <Link to="/" className={styles.footerLogoLink}>
               <img
-                src="/logo_JazzCollege48.svg"
+                src={asset('/logo_JazzCollege48.svg')}
                 alt="ЛОКИ им. К.Н. Игумнова"
                 className={styles.footerLogo}
                 width="50"
