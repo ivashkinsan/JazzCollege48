@@ -24,6 +24,8 @@ import AfishaPage from './pages/AfishaPage';
 import ScrollToHash from './components/ScrollToHash';
 import ScrollToTop from './components/ScrollToTop';
 
+const baseName = import.meta.env.BASE_URL;
+
 // Главная страница с секциями
 function HomePage() {
   const [newsData, setNewsData] = useState<ExtendedNewsItem[]>([]);
@@ -55,7 +57,7 @@ function HomePage() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={baseName}>
       <ScrollToHash />
       <div className="app">
         <Header navigation={navigation} />
