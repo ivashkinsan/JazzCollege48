@@ -4,7 +4,10 @@
       "Bash(move *)",
       "WebSearch",
       "WebFetch(lokii.ru)",
-      "Bash(node *)"
+      "Bash(node *)",
+      "Bash(del *)",
+      "Bash(ren *)",
+      "Bash(git add *)"
     ]
   },
   "$version": 3
