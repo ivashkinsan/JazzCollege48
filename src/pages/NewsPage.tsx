@@ -23,7 +23,7 @@ function NewsPage() {
     loadNews().then(setNewsData);
   }, []);
 
-  const categories = ['all', ...new Set(newsData.map(n => n.category).filter(Boolean))];
+  const categories = ['all', ...new Set(newsData.map(n => n.category).filter((cat): cat is string => Boolean(cat)))];
 
   const filteredNews = selectedCategory === 'all'
     ? newsData

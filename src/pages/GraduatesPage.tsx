@@ -43,7 +43,6 @@ const decades = [
 function GraduatesPage() {
   const [activeDecade, setActiveDecade] = useState<string>('1981-1985');
   const groupedGraduates = groupByFiveYears(graduates);
-  const availableDecades = Object.keys(groupedGraduates);
 
   return (
     <div className={styles.page}>

@@ -2,7 +2,7 @@ import { CollegeInfo } from '../data/collegeData';
 import styles from './Admission.module.css';
 
 interface AdmissionProps {
-  collegeInfo: CollegeInfo;
+  collegeInfo?: CollegeInfo;
 }
 
 function Admission({ collegeInfo: _collegeInfo }: AdmissionProps) {

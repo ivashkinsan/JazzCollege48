@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 
 function isDropdown(item: NavigationEntry): item is NavigationDropdown {
-  return 'items' in item;
+  return 'items' in item && Array.isArray(item.items);
 }
 
 function Header({ navigation }: HeaderProps) {
@@ -48,13 +48,14 @@ function Header({ navigation }: HeaderProps) {
       : `${styles.dropdownLink}${isActive ? ` ${styles.dropdownLinkActive}` : ''}`;
 
     if (isAnchor) {
-      return { type: 'anchor' as const, href, className, children: item.label };
+      return { href, className, children: item.label, to: undefined as undefined };
     }
-    return { type: 'link' as const, to: item.href, className, children: item.label };
+    return { to: item.href, className, children: item.label, href: undefined as undefined };
   };
 
-  const isAnyDropdownActive = (items: NavigationItem[]) => {
+  const isAnyDropdownActive = (items: NavigationEntry[]) => {
     return items.some(item => {
+      if (isDropdown(item)) return isAnyDropdownActive(item.items);
       const isAnchor = item.href.startsWith('#');
       return isAnchor
         ? isHomePage && location.hash === item.href
@@ -87,7 +88,7 @@ function Header({ navigation }: HeaderProps) {
           <div className={`${styles.dropdownMenu}${openDropdown === item.id ? ` ${styles.dropdownMenuOpen}` : ''}`}>
             {item.items.map(child => {
               const props = getLinkProps(child);
-              if (props.type === 'link') {
+              if (props.to) {
                 return (
                   <Link key={child.id} to={props.to} className={props.className} onClick={() => setOpenDropdown(null)}>
                     {props.children}
@@ -107,7 +108,7 @@ function Header({ navigation }: HeaderProps) {
 
     // Обычная ссылка
     const linkProps = getLinkProps(item);
-    if (linkProps.type === 'link') {
+    if (linkProps.to) {
       return (
         <Link key={item.id} to={linkProps.to} className={linkProps.className}>
           {linkProps.children}
@@ -140,7 +141,7 @@ function Header({ navigation }: HeaderProps) {
             <div className={styles.mobileDropdownMenu}>
               {item.items.map(child => {
                 const props = getLinkProps(child, true);
-                if (props.type === 'link') {
+                if (props.to) {
                   return (
                     <Link key={child.id} to={props.to} className={props.className} onClick={handleMobileLinkClick}>
                       {props.children}
@@ -160,7 +161,7 @@ function Header({ navigation }: HeaderProps) {
     }
 
     const linkProps = getLinkProps(item, true);
-    if (linkProps.type === 'link') {
+    if (linkProps.to) {
       return (
         <Link key={item.id} to={linkProps.to} className={linkProps.className} onClick={handleMobileLinkClick}>
           {linkProps.children}

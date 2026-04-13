@@ -76,8 +76,8 @@ function AfishaPage() {
 
           <h3 className={styles.afishaCardTitle}>{item.title}</h3>
           <p className={styles.afishaCardDescription}>
-            {isExpanded ? item.content : item.content.slice(0, 200)}
-            {!isExpanded && item.content.length > 200 && '...'}
+            {isExpanded ? item.content : (item.content || '').slice(0, 200)}
+            {!isExpanded && (item.content || '').length > 200 && '...'}
           </p>
 
           {/* Галерея */}
@@ -100,7 +100,7 @@ function AfishaPage() {
           )}
 
           {/* Кнопка развернуть/свернуть */}
-          {item.content.length > 200 && (
+          {(item.content || '').length > 200 && (
             <button
               className={styles.expandBtn}
               onClick={() => toggleExpand(item.id)}

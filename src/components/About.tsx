@@ -2,7 +2,7 @@ import { EstradaDepartment } from '../data/collegeData';
 import styles from './About.module.css';
 
 interface AboutProps {
-  department: EstradaDepartment;
+  department?: EstradaDepartment;
 }
 
 function About({ department: _department }: AboutProps) {

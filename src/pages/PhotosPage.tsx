@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { photos } from '../data/collegeData';
+import { photos, Photo } from '../data/collegeData';
 import Lightbox from '../components/Lightbox';
 import styles from './PhotosPage.module.css';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const categories = ['все', 'концерты', 'мастер-классы', 'будни', 'выпускные', 'другое'];
 
 // Получение уникальных лет
-const getUniqueYears = (photos: typeof photos) => {
+const getUniqueYears = (photos: Photo[]) => {
   const years = photos.map(p => p.year);
   return [...new Set(years)].sort((a, b) => b - a);
 };
