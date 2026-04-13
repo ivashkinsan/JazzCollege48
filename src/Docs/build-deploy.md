@@ -147,7 +147,24 @@ import { asset } from './data/collegeData';
 <img src={asset('/foto/teacher.jpg')} alt="..." />
 ```
 
-4. **Якорные ссылки** в Header — автоматически обрабатываются через `baseName`.
+4. **Якорные ссылки** в Header — **НЕ** добавлять `baseName` вручную.
+
+> ⚠️ **ВАЖНО про якорные ссылки:**
+>
+> В компоненте Header якорные ссылки (`#contacts`, `#about` и т.д.) формируются так:
+> - На главной странице: `#contacts` (как есть)
+> - На внутренних страницах: `/#contacts` (с ведущим слэшем)
+>
+> **НЕЛЬЗЯ** вручную добавлять `baseName` (`import.meta.env.BASE_URL`) к пути — React Router уже добавит `basename` автоматически. Иначе получится дублирование: `/JazzCollege48/JazzCollege48/#contacts`.
+>
+> ```tsx
+> // ПРАВИЛЬНО — basename добавится сам:
+> const linkPath = isHomePage ? item.href : `/${item.href}`;
+> <Link to={linkPath}>Контакты</Link>
+>
+> // НЕПРАВИЛЬНО — дублирование пути:
+> const linkPath = baseName + item.href; // ❌ /JazzCollege48/#contacts + basename = /JazzCollege48/JazzCollege48/#contacts
+> ```
 
 ### GitHub Actions workflow
 
@@ -428,6 +445,12 @@ npm run type-check
 3. Пути к фото без `asset()`
 
 **Решение:** Проверить все три пункта выше, пересобрать и запушить.
+
+### Дублирование пути (/JazzCollege48/JazzCollege48/...)
+
+**Причина:** Вручную добавлен `baseName` к пути в `<Link to={...}>`, но React Router уже добавляет `basename` автоматически.
+
+**Решение:** Убрать ручное добавление `baseName`/`BASE_URL`. Для якорных ссылок использовать `/#anchor` вместо `baseName + '#anchor'`.
 
 ---
 
