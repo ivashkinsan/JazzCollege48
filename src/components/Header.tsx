@@ -4,6 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './Header.module.css';
 
+const baseName = import.meta.env.BASE_URL;
+
 interface HeaderProps {
   navigation: NavigationEntry[];
 }
@@ -38,18 +40,24 @@ function Header({ navigation }: HeaderProps) {
 
   const getLinkProps = (item: NavigationItem, mobile = false) => {
     const isAnchor = item.href.startsWith('#');
-    const href = isAnchor && !isHomePage ? `/${item.href}` : item.href;
-    const isActive = isAnchor
-      ? isHomePage && location.hash === item.href
-      : location.pathname === item.href;
-
+    
+    if (isAnchor) {
+      // Для якорных ссылок: на главной — #anchor, на других — /#anchor (для перехода на главную + скролл)
+      const linkPath = isHomePage ? item.href : baseName + item.href;
+      const isActive = isHomePage && location.hash === item.href;
+      
+      const className = mobile
+        ? `${styles.mobileLink}${isActive ? ` ${styles.mobileLinkActive}` : ''}`
+        : `${styles.dropdownLink}${isActive ? ` ${styles.dropdownLinkActive}` : ''}`;
+      
+      return { to: linkPath, className, children: item.label, href: undefined as undefined };
+    }
+    
+    const isActive = location.pathname === item.href;
     const className = mobile
       ? `${styles.mobileLink}${isActive ? ` ${styles.mobileLinkActive}` : ''}`
       : `${styles.dropdownLink}${isActive ? ` ${styles.dropdownLinkActive}` : ''}`;
 
-    if (isAnchor) {
-      return { href, className, children: item.label, to: undefined as undefined };
-    }
     return { to: item.href, className, children: item.label, href: undefined as undefined };
   };
 
