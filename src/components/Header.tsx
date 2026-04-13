@@ -1,4 +1,4 @@
-import { NavigationEntry, NavigationItem } from '../data/collegeData';
+import { NavigationEntry, NavigationItem, NavigationDropdown } from '../data/collegeData';
 import { useTheme } from '../hooks/useTheme';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -8,7 +8,7 @@ interface HeaderProps {
   navigation: NavigationEntry[];
 }
 
-function isDropdown(item: NavigationEntry): item is NavigationItem & { items: NavigationItem[] } {
+function isDropdown(item: NavigationEntry): item is NavigationDropdown {
   return 'items' in item;
 }
 
@@ -48,9 +48,9 @@ function Header({ navigation }: HeaderProps) {
       : `${styles.dropdownLink}${isActive ? ` ${styles.dropdownLinkActive}` : ''}`;
 
     if (isAnchor) {
-      return { href, className, children: item.label };
+      return { type: 'anchor' as const, href, className, children: item.label };
     }
-    return { to: item.href, className, children: item.label };
+    return { type: 'link' as const, to: item.href, className, children: item.label };
   };
 
   const isAnyDropdownActive = (items: NavigationItem[]) => {
@@ -87,15 +87,15 @@ function Header({ navigation }: HeaderProps) {
           <div className={`${styles.dropdownMenu}${openDropdown === item.id ? ` ${styles.dropdownMenuOpen}` : ''}`}>
             {item.items.map(child => {
               const props = getLinkProps(child);
-              if ('to' in props) {
+              if (props.type === 'link') {
                 return (
-                  <Link key={child.id} {...props} onClick={() => setOpenDropdown(null)}>
+                  <Link key={child.id} to={props.to} className={props.className} onClick={() => setOpenDropdown(null)}>
                     {props.children}
                   </Link>
                 );
               }
               return (
-                <a key={child.id} {...props} onClick={() => setOpenDropdown(null)}>
+                <a key={child.id} href={props.href} className={props.className} onClick={() => setOpenDropdown(null)}>
                   {props.children}
                 </a>
               );
@@ -107,15 +107,15 @@ function Header({ navigation }: HeaderProps) {
 
     // Обычная ссылка
     const linkProps = getLinkProps(item);
-    if ('to' in linkProps) {
+    if (linkProps.type === 'link') {
       return (
-        <Link key={item.id} {...linkProps}>
+        <Link key={item.id} to={linkProps.to} className={linkProps.className}>
           {linkProps.children}
         </Link>
       );
     }
     return (
-      <a key={item.id} {...linkProps}>
+      <a key={item.id} href={linkProps.href} className={linkProps.className}>
         {linkProps.children}
       </a>
     );
@@ -140,15 +140,15 @@ function Header({ navigation }: HeaderProps) {
             <div className={styles.mobileDropdownMenu}>
               {item.items.map(child => {
                 const props = getLinkProps(child, true);
-                if ('to' in props) {
+                if (props.type === 'link') {
                   return (
-                    <Link key={child.id} {...props} onClick={handleMobileLinkClick}>
+                    <Link key={child.id} to={props.to} className={props.className} onClick={handleMobileLinkClick}>
                       {props.children}
                     </Link>
                   );
                 }
                 return (
-                  <a key={child.id} {...props} onClick={handleMobileLinkClick}>
+                  <a key={child.id} href={props.href} className={props.className} onClick={handleMobileLinkClick}>
                     {props.children}
                   </a>
                 );
@@ -160,15 +160,15 @@ function Header({ navigation }: HeaderProps) {
     }
 
     const linkProps = getLinkProps(item, true);
-    if ('to' in linkProps) {
+    if (linkProps.type === 'link') {
       return (
-        <Link key={item.id} {...linkProps} onClick={handleMobileLinkClick}>
+        <Link key={item.id} to={linkProps.to} className={linkProps.className} onClick={handleMobileLinkClick}>
           {linkProps.children}
         </Link>
       );
     }
     return (
-      <a key={item.id} {...linkProps} onClick={handleMobileLinkClick}>
+      <a key={item.id} href={linkProps.href} className={linkProps.className} onClick={handleMobileLinkClick}>
         {linkProps.children}
       </a>
     );

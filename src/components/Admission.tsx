@@ -5,7 +5,7 @@ interface AdmissionProps {
   collegeInfo: CollegeInfo;
 }
 
-function Admission({ collegeInfo }: AdmissionProps) {
+function Admission({ collegeInfo: _collegeInfo }: AdmissionProps) {
   return (
     <section id="admission" className="section section--dark">
       <div className="container">

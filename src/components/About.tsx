@@ -5,7 +5,7 @@ interface AboutProps {
   department: EstradaDepartment;
 }
 
-function About({ department }: AboutProps) {
+function About({ department: _department }: AboutProps) {
   return (
     <section id="about" className="section section--dark">
       <div className="container">

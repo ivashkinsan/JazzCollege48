@@ -35,11 +35,6 @@ function AfishaPage() {
 
   const renderAfishaCard = (item: AfishaItem) => {
     const date = new Date(item.date);
-    const dateStr = date.toLocaleDateString('ru-RU', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
     const isExpanded = expandedAfisha === item.id;
     const hasGallery = item.gallery && item.gallery.length > 0;
     const allImages = [item.cover, ...(item.gallery || [])].filter(Boolean) as string[];
