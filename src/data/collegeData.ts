@@ -58,6 +58,8 @@ export interface NewsItem {
   content?: string;
   category?: string;
   image?: string;
+  cover?: string;
+  gallery?: string[];
 }
 
 export interface Specialty {

@@ -53,8 +53,8 @@ function Header({ navigation }: HeaderProps) {
     return { to: item.href, className, children: item.label, href: undefined as undefined };
   };
 
-  const isAnyDropdownActive = (items: NavigationEntry[]) => {
-    return items.some(item => {
+  const isAnyDropdownActive = (items: NavigationEntry[]): boolean => {
+    return items.some((item): boolean => {
       if (isDropdown(item)) return isAnyDropdownActive(item.items);
       const isAnchor = item.href.startsWith('#');
       return isAnchor
