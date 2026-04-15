@@ -33,7 +33,7 @@ function Footer({ navigation }: FooterProps) {
           <div className={styles.footerInfo}>
             <Link to="/" className={styles.footerLogoLink}>
               <img
-                src={asset('/logo_JazzCollege48.svg')}
+                src={asset('/Logo/Logo_var_1.png')}
                 alt="ЛОКИ им. К.Н. Игумнова"
                 className={styles.footerLogo}
                 width="50"

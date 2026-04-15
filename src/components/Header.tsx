@@ -199,7 +199,7 @@ function Header({ navigation }: HeaderProps) {
 
         <Link to="/" className={styles.headerLogo}>
           <img
-            src={asset('/logo_JazzCollege48.svg')}
+            src={asset('/Logo/Logo_var_1.png')}
             alt="ЛОКИ им. К.Н. Игумнова — Эстрадное отделение"
             className={styles.headerLogoImage}
             width="52"

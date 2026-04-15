@@ -11,7 +11,7 @@ function Hero() {
       <div className={styles.heroContent}>
         <div className={styles.heroLogoWrapper}>
           <img
-            src={asset('/logo_JazzCollege48.svg')}
+            src={asset('/Logo/Logo_var_1.png')}
             alt="Эстрадное отделение ЛОКИ"
             className={styles.heroLogo}
             width="150"
