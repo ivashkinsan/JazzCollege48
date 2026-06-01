@@ -37,7 +37,8 @@ const decades = [
   '2006-2010',
   '2011-2015',
   '2016-2020',
-  '2021-2025'
+  '2021-2025',
+  '2026-2030'
 ];
 
 function GraduatesPage() {
@@ -57,6 +58,7 @@ function GraduatesPage() {
       </section>
 
       <section className={styles.tabsSection}>
+        
         <div className="container">
           <div className={styles.tabs}>
             {decades.map((decade) => {

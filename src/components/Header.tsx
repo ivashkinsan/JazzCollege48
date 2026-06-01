@@ -206,8 +206,8 @@ function Header({ navigation }: HeaderProps) {
             height="52"
           />
           <div className={styles.headerLogoText}>
-            <span className={styles.headerLogoTitle}>эстрадно-джазовое отделение</span>
-            <span className={styles.headerLogoSubtitle}>Липецк</span>
+            <span className={styles.headerLogoTitle}>эстрадное отделение</span>
+            <span className={styles.headerLogoSubtitle}>г.Липецк</span>
           </div>
         </Link>
 

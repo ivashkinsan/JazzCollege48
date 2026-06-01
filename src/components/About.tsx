@@ -10,7 +10,7 @@ function About({ department: _department }: AboutProps) {
     <section id="about" className="section section--dark">
       <div className="container">
         <div className="section__header">
-          <p className="section__subtitle">Об отделении</p>
+          <p className="section__subtitle">О нас</p>
           <h2 className="section__title">Традиции эстрадного образования</h2>
         </div>
         <div className={styles.aboutContent}>
