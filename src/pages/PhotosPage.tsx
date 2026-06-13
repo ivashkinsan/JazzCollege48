@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 import { photos } from '../data/staticData';
-import { asset } from '../utils/asset';
 import Lightbox from '../components/Lightbox';
 import styles from './PhotosPage.module.css';
 import { Link } from 'react-router-dom';
+import type { Photo } from '../types/college';
 
 const categories = ['все', 'концерты', 'мастер-классы', 'будни', 'выпускные', 'другое'];
 

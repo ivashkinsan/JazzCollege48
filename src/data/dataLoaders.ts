@@ -1,5 +1,5 @@
 import { asset } from '../utils/asset';
-import type { NewsItem, ExtendedNewsItem, AfishaItem } from '../types/college';
+import type { ExtendedNewsItem, AfishaItem } from '../types/college';
 
 const newsModules = import.meta.glob('../news/**/*.md', { query: '?raw', import: 'default' });
 const afishaModules = import.meta.glob('../afisha/**/*.md', { query: '?raw', import: 'default' });
