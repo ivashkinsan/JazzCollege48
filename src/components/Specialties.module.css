@@ -169,12 +169,29 @@
   background-color: var(--color-bg-tertiary);
   transition: all var(--transition-normal);
   border: 1px solid var(--border-color);
+  display: flex; /* Use flexbox for alignment */
+}
+
+.instrumentCard::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 1;
+  transition: all var(--transition-normal);
 }
 
 .instrumentCard:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-lg);
   border-color: var(--color-accent-light);
+}
+
+.instrumentCard:hover::after {
+  height: 70%;
 }
 
 .instrumentCardImage {
@@ -199,7 +216,7 @@
   font-weight: 600;
   color: var(--color-white);
   text-align: center;
-  background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  z-index: 2; /* Ensure text is above the overlay */
   transition: all var(--transition-normal);
 }
 
