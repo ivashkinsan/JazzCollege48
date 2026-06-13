@@ -1,4 +1,5 @@
-import { Concert } from '../data/collegeData';
+import { useState, useEffect } from 'react';
+import type { Concert } from '../types/college';
 import styles from './Concerts.module.css';
 
 interface ConcertsProps {

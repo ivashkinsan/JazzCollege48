@@ -1,4 +1,5 @@
-import { Graduate, asset } from '../data/collegeData';
+import type { Graduate } from '../types/college';
+import { asset } from '../utils/asset';
 import styles from './Graduates.module.css';
 import { Link } from 'react-router-dom';
 

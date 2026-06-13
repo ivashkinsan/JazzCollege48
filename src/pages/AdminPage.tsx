@@ -1,4 +1,5 @@
-import { adminMembers, asset } from '../data/collegeData';
+import { adminMembers } from '../data/staticData';
+import { asset } from '../utils/asset';
 import styles from './AdminPage.module.css';
 import { Link } from 'react-router-dom';
 

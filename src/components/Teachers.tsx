@@ -1,4 +1,4 @@
-import { Teacher } from '../data/collegeData';
+import type { Teacher } from '../types/college';
 import styles from './Teachers.module.css';
 
 interface TeachersProps {

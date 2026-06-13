@@ -1,4 +1,4 @@
-import { asset } from '../data/collegeData';
+import { asset } from '../utils/asset';
 import styles from './Hero.module.css';
 
 function Hero() {

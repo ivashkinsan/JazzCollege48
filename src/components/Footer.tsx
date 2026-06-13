@@ -1,4 +1,5 @@
-import { NavigationEntry, asset } from '../data/collegeData';
+import type { NavigationEntry } from '../types/college';
+import { asset } from '../utils/asset';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Footer.module.css';
 

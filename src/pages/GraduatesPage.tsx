@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { graduates, Graduate, asset } from '../data/collegeData';
+import { graduates } from '../data/staticData';
+import type { Graduate } from '../types/college';
+import { asset } from '../utils/asset';
 import styles from './GraduatesPage.module.css';
 import { Link } from 'react-router-dom';
 

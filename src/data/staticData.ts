@@ -1,160 +1,18 @@
-// ===== ХЕЛПЕР ДЛЯ ПУТЕЙ =====
-// Добавляем BASE_URL для корректной работы на GitHub Pages
-const base = import.meta.env.BASE_URL;
-
-export function asset(path: string): string {
-  // Если путь уже начинается с http/https или data: — возвращаем как есть
-  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
-    return path;
-  }
-  // Убираем ведущий слэш и добавляем base
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-  return base + cleanPath;
-}
-
-// ===== ИНТЕРФЕЙСЫ =====
-
-export interface Teacher {
-  id: string;
-  name: string;
-  position: string;
-  specialty: string;
-  image?: string;
-  bio?: string;
-}
-
-export interface Achievement {
-  id: string;
-  title: string;
-  studentName?: string;
-  competition: string;
-  date: string;
-  place: string;
-  category: string;
-  image?: string;
-}
-
-export interface Graduate {
-  id: string;
-  name: string;
-  graduationYear: number;
-  position: string;
-  workplace?: string;
-  image?: string;
-  bio?: string;
-  isFeatured?: boolean; // Для блока "Наша гордость"
-}
-
-export interface Concert {
-  id: string;
-  title: string;
-  date: string;
-  time?: string;
-  venue: string;
-  description: string;
-  image?: string;
-  isFree?: boolean;
-}
-
-export interface Ensemble {
-  id: string;
-  name: string;
-  type: string;
-  description: string;
-  members?: string[];
-}
-
-export interface NewsItem {
-  id: string;
-  title: string;
-  date: string;
-  description: string;
-  content?: string;
-  category?: string;
-  image?: string;
-  cover?: string;
-  gallery?: string[];
-}
-
-export interface Specialty {
-  code: string;
-  name: string;
-  profiles: string[];
-  description: string;
-  qualification?: string;
-  studyDuration?: string;
-  studyForm?: string;
-}
-
-export interface Instrument {
-  id: string;
-  name: string;
-  category: 'клавишные' | 'духовые' | 'ударные' | 'струнные';
-  description: string;
-}
-
-export interface EstradaDepartment {
-  name: string;
-  established: number;
-  description: string;
-  headName: string;
-  specialties: Specialty[];
-  features: string[];
-  instruments: Instrument[];
-}
-
-export interface NavigationItem {
-  id: string;
-  label: string;
-  href: string;
-}
-
-export interface CollegeInfo {
-  name: string;
-  shortName: string;
-  address: string;
-  phone: string;
-  email: string;
-  website: string;
-}
-
-export interface AdminMember {
-  id: string;
-  name: string;
-  position: string;
-  image?: string;
-  bio?: string;
-  email?: string;
-  phone?: string;
-}
-
-export interface Photo {
-  id: string;
-  title: string;
-  year: number;
-  category: 'концерты' | 'мастер-классы' | 'будни' | 'выпускные' | 'другое';
-  src: string;
-  thumbnail?: string;
-}
-
-export interface Video {
-  id: string;
-  title: string;
-  description: string;
-  videoUrl: string;
-  thumbnail?: string;
-  date: string;
-  source: 'rutube' | 'youtube' | 'vk';
-}
-
-export interface DaiProgram {
-  id: string;
-  name: string;
-  description: string;
-  age: string;
-  duration: string;
-  image?: string;
-}
+import type {
+  CollegeInfo,
+  EstradaDepartment,
+  Teacher,
+  Ensemble,
+  Concert,
+  Achievement,
+  Graduate,
+  NavigationEntry,
+  DaiProgram,
+  AdminMember,
+  Photo,
+  Video
+} from '../types/college';
+import { asset } from '../utils/asset';
 
 // ===== ДАННЫЕ =====
 
@@ -181,8 +39,27 @@ export const estradaDepartment: EstradaDepartment = {
       studyDuration: "3 года 10 месяцев",
       studyForm: "Очная",
       profiles: [
-        "Инструменты эстрадного оркестра (ударные, духовые, струнные, клавишные)",
-        "Эстрадное пение"
+        {
+          name: "Инструменты эстрадного оркестра",
+          disciplines: [
+            "Специальный инструмент",
+            "Джазовая импровизация",
+            "Ансамблевое исполнительство",
+            "Оркестровый класс",
+            "Фортепианное исполнительство"
+          ]
+        },
+        {
+          name: "Эстрадное пение",
+          disciplines: [
+            "Сольное пение",
+            "Ансамблевое исполнительство",
+            "Джазовая импровизация",
+            "Основы сценической речи, мастерство актера",
+            "Танец, сценическое движение",
+            "Фортепианное исполнительство"
+          ]
+        }
       ]
     }
   ],
@@ -198,30 +75,21 @@ export const estradaDepartment: EstradaDepartment = {
     "Творческие смены и интенсивы по креативным проектам"
   ],
   instruments: [
-    {
-      id: "keys",
-      name: "Клавишные инструменты",
-      category: "клавишные",
-      description: "Фортепиано, синтезаторы, электроорган"
-    },
-    {
-      id: "winds",
-      name: "Духовые инструменты",
-      category: "духовые",
-      description: "Саксофон, труба, тромбон"
-    },
-    {
-      id: "percussion",
-      name: "Ударные инструменты",
-      category: "ударные",
-      description: "Ударная установка, перкуссия"
-    },
-    {
-      id: "strings",
-      name: "Струнные инструменты",
-      category: "струнные",
-      description: "Электрогитара, бас-гитара, контрабас"
-    }
+    { name: 'Фортепиано', image: asset('/instruments/piano.jpg') },
+    { name: 'Синтезатор', image: asset('/instruments/synthesizer.jpg') },
+    { name: 'Гитара', image: asset('/instruments/guitar.jpg') },
+    { name: 'Бас-гитара', image: asset('/instruments/bass-guitar.jpg') },
+    { name: 'Контрабас', image: asset('/instruments/double-bass.jpg') },
+    { name: 'Сопрано-саксофон', image: asset('/instruments/soprano-sax.jpg') },
+    { name: 'Альт-саксофон', image: asset('/instruments/alto-sax.jpg') },
+    { name: 'Тенор-саксофон', image: asset('/instruments/tenor-sax.jpg') },
+    { name: 'Баритон-саксофон', image: asset('/instruments/baritone-sax.jpg') },
+    { name: 'Труба', image: asset('/instruments/trumpet.jpg') },
+    { name: 'Тромбон', image: asset('/instruments/trombone.jpg') },
+    { name: 'Бас-тромбон', image: asset('/instruments/bass-trombone.jpg') },
+    { name: 'Ударная установка', image: asset('/instruments/drums.jpg') },
+    { name: 'Перкуссия', image: asset('/instruments/percussion.jpg') },
+    { name: 'Вибрафон', image: asset('/instruments/vibraphone.jpg') },
   ]
 };
 
@@ -271,7 +139,7 @@ export const teachers: Teacher[] = [
     name: "Колупаев Вячеслав Иванович",
     position: "Преподаватель клавишных инструментов",
     specialty: "Фортепиано",
-    image: asset("/foto/Kolupaew.jpg"),
+    image: asset("/foto/Kolupaew.jpeg"),
     bio: "Известный музыкант города, преподаватель по классу фортепиано"
   },
   {
@@ -379,189 +247,6 @@ export const concerts: Concert[] = [
     isFree: false
   }
 ];
-
-// Загрузка новостей из markdown файлов
-// Vite импортирует raw-контент .md файлов через glob import
-const newsModules = import.meta.glob('../news/**/*.md', { query: '?raw', import: 'default' });
-
-// Функция парсинга frontmatter из markdown
-function parseMarkdownNews(content: string): NewsItem | null {
-  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  if (!frontmatterMatch) return null;
-  
-  const [, frontmatterStr, body] = frontmatterMatch;
-  
-  const parseField = (field: string) => {
-    const match = frontmatterStr.match(new RegExp(`^${field}:\\s*(.+)$`, 'm'));
-    return match ? match[1].trim() : '';
-  };
-  
-  const title = parseField('title').replace(/^["']|["']$/g, '');
-  const date = parseField('date');
-  const category = parseField('category');
-  const cover = parseField('cover');
-  
-  // Извлекаем описание из первых 200 символов тела
-  const description = body.trim().slice(0, 250).replace(/[#*_~`]/g, '').trim();
-  
-  if (!title || !date) return null;
-  
-  return {
-    id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
-    title,
-    date,
-    description,
-    content: body.trim(),
-    category,
-    cover: cover ? asset(cover) : undefined,
-    // Парсим галерею из комментариев <!-- gallery -->
-    gallery: parseGallery(content).map(img => asset(img))
-  };
-}
-
-function parseGallery(content: string): string[] {
-  const galleryMatch = content.match(/<!--\s*gallery\s*-->\n([\s\S]*?)$/);
-  if (!galleryMatch) return [];
-  
-  const lines = galleryMatch[1].split('\n');
-  return lines
-    .filter(line => line.startsWith('- '))
-    .map(line => line.slice(2).trim())
-    .filter(Boolean);
-}
-
-// Расширенный интерфейс новости
-export interface ExtendedNewsItem extends NewsItem {
-  content?: string;
-  category?: string;
-  cover?: string;
-  gallery?: string[];
-}
-
-// Загружаем все новости при инициализации
-export const news: ExtendedNewsItem[] = [];
-let isLoading = false;
-let isLoaded = false;
-
-// Асинхронная загрузка новостей (вызывать в App.tsx)
-export async function loadNews(): Promise<ExtendedNewsItem[]> {
-  if (isLoaded) return news; // Уже загружено
-  if (isLoading) {
-    // Ждём завершения текущей загрузки
-    return new Promise((resolve) => {
-      const check = setInterval(() => {
-        if (isLoaded) {
-          clearInterval(check);
-          resolve(news);
-        }
-      }, 50);
-    });
-  }
-
-  isLoading = true;
-  const loaded: ExtendedNewsItem[] = [];
-
-  for (const path in newsModules) {
-    const content = (await newsModules[path]() as string).replace(/\r\n/g, '\n');
-    const item = parseMarkdownNews(content);
-    if (item) {
-      loaded.push(item as ExtendedNewsItem);
-    }
-  }
-
-  // Сортируем по дате (новые сверху)
-  loaded.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-  news.length = 0; // Очищаем массив
-  news.push(...loaded);
-  isLoaded = true;
-  return news;
-}
-
-// ===== АФИШИ =====
-
-// Vite импортирует raw-контент .md файлов афиш через glob import
-const afishaModules = import.meta.glob('../afisha/**/*.md', { query: '?raw', import: 'default' });
-
-export interface AfishaItem {
-  id: string;
-  title: string;
-  date: string;
-  time?: string;
-  venue?: string;
-  cover?: string;
-  content: string;
-  gallery?: string[];
-  tags?: string[];
-}
-
-export const afisha: AfishaItem[] = [];
-let isAfishaLoaded = false;
-let isAfishaLoading = false;
-
-export async function loadAfisha(): Promise<AfishaItem[]> {
-  if (isAfishaLoaded) return afisha;
-  if (isAfishaLoading) {
-    return new Promise((resolve) => {
-      const check = setInterval(() => {
-        if (isAfishaLoaded) {
-          clearInterval(check);
-          resolve(afisha);
-        }
-      }, 50);
-    });
-  }
-
-  isAfishaLoading = true;
-  const loaded: AfishaItem[] = [];
-
-  for (const path in afishaModules) {
-    const content = (await afishaModules[path]() as string).replace(/\r\n/g, '\n');
-    const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-    if (!frontmatterMatch) continue;
-
-    const [, frontmatterStr, body] = frontmatterMatch;
-    const parseField = (field: string) => {
-      const match = frontmatterStr.match(new RegExp(`^${field}:\\s*(.+)$`, 'm'));
-      return match ? match[1].trim().replace(/^["']|["']$/g, '') : '';
-    };
-
-    const title = parseField('title');
-    const date = parseField('date');
-    const time = parseField('time') || undefined;
-    const venue = parseField('venue') || undefined;
-    const cover = parseField('cover') || undefined;
-    const tagsStr = parseField('tags');
-    const tags = tagsStr ? tagsStr.replace(/[\[\]]/g, '').split(',').map(t => t.trim()).filter(Boolean) : [];
-
-    // Парсим галерею
-    const galleryMatch = content.match(/<!--\s*gallery\s*-->\n([\s\S]*?)$/);
-    const gallery = galleryMatch
-      ? galleryMatch[1].split('\n').filter(l => l.startsWith('- ')).map(l => asset(l.slice(2).trim())).filter(Boolean)
-      : [];
-
-    if (!title || !date) continue;
-
-    loaded.push({
-      id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
-      title,
-      date,
-      time,
-      venue,
-      cover: cover ? asset(cover) : undefined,
-      content: body.trim(),
-      gallery,
-      tags
-    });
-  }
-
-  loaded.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  afisha.length = 0;
-  afisha.push(...loaded);
-  isAfishaLoaded = true;
-  console.log(`[afisha] Загружено ${loaded.length} афиш:`, loaded.map(a => `${a.date} ${a.title}`));
-  return afisha;
-}
 
 export const achievements: Achievement[] = [
   {
@@ -728,20 +413,6 @@ export const graduates: Graduate[] = [
     bio: "Ведущая солистка мюзиклов, гастролирует по России"
   },
 ];
-
-export interface NavigationItem {
-  id: string;
-  label: string;
-  href: string;
-}
-
-export interface NavigationDropdown {
-  id: string;
-  label: string;
-  items: NavigationItem[];
-}
-
-export type NavigationEntry = NavigationItem | NavigationDropdown;
 
 export const navigation: NavigationEntry[] = [
   { id: "about", label: "О нас", href: "#about" },

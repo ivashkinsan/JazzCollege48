@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { loadAfisha, AfishaItem } from '../data/collegeData';
+import { loadAfisha } from '../data/dataLoaders';
+import type { AfishaItem } from '../types/college';
 import styles from './ConcertsPreview.module.css';
 
 function ConcertsPreview() {

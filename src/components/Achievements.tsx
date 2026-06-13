@@ -1,4 +1,4 @@
-import { Achievement } from '../data/collegeData';
+import type { Achievement } from '../types/college';
 import styles from './Achievements.module.css';
 
 interface AchievementsProps {

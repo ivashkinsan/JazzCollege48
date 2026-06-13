@@ -1,4 +1,4 @@
-import { Ensemble } from '../data/collegeData';
+import type { Ensemble } from '../types/college';
 import styles from './Ensembles.module.css';
 
 interface EnsemblesProps {

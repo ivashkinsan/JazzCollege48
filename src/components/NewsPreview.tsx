@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExtendedNewsItem } from '../data/collegeData';
+import type { ExtendedNewsItem } from '../types/college';
 import { Link } from 'react-router-dom';
 import Lightbox from './Lightbox';
 import styles from './NewsPreview.module.css';

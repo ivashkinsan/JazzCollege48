@@ -1,4 +1,4 @@
-import { EstradaDepartment } from '../data/collegeData';
+import type { EstradaDepartment } from '../types/college';
 import styles from './Specialties.module.css';
 
 interface SpecialtiesProps {
@@ -37,9 +37,16 @@ function Specialties({ department }: SpecialtiesProps) {
 
           <div className={styles.specialtyCardProfiles}>
             <h4>Профили подготовки:</h4>
-            <ul>
+            <ul className={styles.profileList}>
               {specialty.profiles.map((profile, i) => (
-                <li key={i}>{profile}</li>
+                <li key={i}>
+                  <strong>{profile.name}</strong>
+                  <ul className={styles.disciplineList}>
+                    {profile.disciplines.map((discipline, j) => (
+                      <li key={j}>{discipline}</li>
+                    ))}
+                  </ul>
+                </li>
               ))}
             </ul>
           </div>
@@ -48,16 +55,10 @@ function Specialties({ department }: SpecialtiesProps) {
         <div className={styles.instrumentsSection}>
           <h3 className={styles.sectionSubtitleSmall}>Инструменты эстрадного оркестра</h3>
           <div className={styles.instrumentsGrid}>
-            {department.instruments.map((instrument) => (
-              <div key={instrument.id} className={styles.instrumentCard}>
-                <div className={styles.instrumentCardIcon}>
-                  {instrument.category === 'клавишные' && '🎹'}
-                  {instrument.category === 'духовые' && '🎺'}
-                  {instrument.category === 'ударные' && '🥁'}
-                  {instrument.category === 'струнные' && '🎸'}
-                </div>
+            {department.instruments.map((instrument, index) => (
+              <div key={index} className={styles.instrumentCard}>
+                <img src={instrument.image} alt={instrument.name} className={styles.instrumentCardImage} loading="lazy" />
                 <h4 className={styles.instrumentCardName}>{instrument.name}</h4>
-                <p className={styles.instrumentCardDescription}>{instrument.description}</p>
               </div>
             ))}
           </div>

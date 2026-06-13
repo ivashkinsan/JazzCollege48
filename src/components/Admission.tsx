@@ -1,4 +1,4 @@
-import { CollegeInfo } from '../data/collegeData';
+import type { CollegeInfo } from '../types/college';
 import styles from './Admission.module.css';
 
 interface AdmissionProps {

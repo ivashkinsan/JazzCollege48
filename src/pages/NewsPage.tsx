@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { loadNews, ExtendedNewsItem } from '../data/collegeData';
+import { loadNews } from '../data/dataLoaders';
+import type { ExtendedNewsItem } from '../types/college';
 import Lightbox from '../components/Lightbox';
 import styles from './NewsPage.module.css';
 

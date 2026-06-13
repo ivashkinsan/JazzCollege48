@@ -1,4 +1,5 @@
-import { daiPrograms, asset } from '../data/collegeData';
+import { daiPrograms } from '../data/staticData';
+import { asset } from '../utils/asset';
 import styles from './DaiPage.module.css';
 import { Link } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import { CollegeInfo } from '../data/collegeData';
+import type { CollegeInfo } from '../types/college';
 import styles from './Contacts.module.css';
 
 interface ContactsProps {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { loadAfisha, AfishaItem } from '../data/collegeData';
+import { loadAfisha } from '../data/dataLoaders';
+import type { AfishaItem } from '../types/college';
 import Lightbox from '../components/Lightbox';
 import styles from './AfishaPage.module.css';
 

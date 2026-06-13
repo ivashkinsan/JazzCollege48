@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
-import { videos, asset } from '../data/collegeData';
+import { videos } from '../data/staticData';
+import { asset } from '../utils/asset';
 import styles from './VideosPage.module.css';
 import { Link } from 'react-router-dom';
 

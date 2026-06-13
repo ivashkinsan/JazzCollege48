@@ -1,4 +1,5 @@
-import { NavigationEntry, NavigationItem, NavigationDropdown, asset } from '../data/collegeData';
+import type { NavigationEntry, NavigationItem, NavigationDropdown } from '../types/college';
+import { asset } from '../utils/asset';
 import { useTheme } from '../hooks/useTheme';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
