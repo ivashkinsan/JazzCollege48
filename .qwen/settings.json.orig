@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(move *)",
-      "WebSearch",
-      "WebFetch(lokii.ru)"
-    ]
-  }
-}

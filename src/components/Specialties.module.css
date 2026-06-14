@@ -179,7 +179,7 @@
   left: 0;
   right: 0;
   height: 60%;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
   z-index: 1;
   transition: all var(--transition-normal);
 }
@@ -197,7 +197,7 @@
 .instrumentCardImage {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   transition: transform var(--transition-slow);
 }
@@ -245,8 +245,26 @@
   }
 
   .instrumentsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    align-items: center; /* Vertically center items */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
     gap: var(--spacing-md);
+    padding: 1rem var(--spacing-md); /* Simplified padding */
+
+    /* Hide scrollbar for a cleaner look */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .instrumentsGrid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  /* Target instrument card specifically inside the media query */
+  .instrumentsGrid > .instrumentCard {
+    flex: 0 0 80vw; /* Slightly smaller cards */
+    scroll-snap-align: start;
   }
 }
 

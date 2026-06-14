@@ -1,16 +1,95 @@
-# React + Vite
+# Липецкий областной колледж искусств им. К.Н. Игумнова
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## О проекте
 
-Currently, two official plugins are available:
+Веб-сайт для Липецкого областного колледжа искусств им. К.Н. Игумнова, специализирующегося на эстрадном отделении. Проект представляет собой современный информационный ресурс с возможностью динамического обновления контента.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Технологии
 
-## React Compiler
+- **Frontend**: React с TypeScript
+- **Сборка**: Vite
+- **Роутинг**: React Router DOM
+- **Стилизация**: CSS Modules и CSS Custom Properties
+- **Контент**: Динамическая загрузка из Markdown файлов
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Структура проекта
 
-## Expanding the ESLint configuration
+```
+src/
+├── App.tsx              # Основной компонент приложения
+├── main.tsx             # Точка входа
+├── components/          # Компоненты интерфейса
+├── pages/               # Страницы сайта
+├── data/                # Логика работы с данными
+│   ├── staticData.ts    # Статические данные
+│   └── dataLoaders.ts   # Загрузчики динамических данных
+├── types/               # TypeScript типы
+├── utils/               # Вспомогательные функции
+└── assets/              # Статические ресурсы
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Особенности реализации
+
+### Динамический контент
+- Новости и афиша загружаются из Markdown файлов в директориях `src/news` и `src/afisha`
+- Поддержка галерей через комментарии в markdown
+- Парсинг frontmatter для метаданных
+
+### Система данных
+- Четко определенные типы данных в `src/types/college.ts`
+- Поддержка расширенных интерфейсов для динамически загружаемых элементов
+- Использование TypeScript для обеспечения типобезопасности
+
+### Интерфейс
+- Адаптивный дизайн для мобильных устройств
+- Система тем (светлая/темная)
+- Использование CSS Custom Properties для стилизации
+- Lightbox для просмотра фото
+
+## Функциональность
+
+1. **Информационная поддержка**:
+   - Полная информация о колледже и его отделениях
+   - Страницы с преподавателями, выпускниками, достижениями
+   - Афиша мероприятий
+
+2. **Медиа-контент**:
+   - Галерея фото с разбивкой по годам и категориям
+   - Видео контент с возможностью просмотра
+   - Система тегов для фильтрации
+
+3. **Интерактивность**:
+   - Фильтрация новостей по категориям
+   - Lightbox для просмотра фото
+   - Система раскрытия/сворачивания новостей
+
+## Запуск проекта
+
+```bash
+# Установка зависимостей
+npm install
+
+# Разработка
+npm run dev
+
+# Сборка
+npm run build
+
+# Линтинг
+npm run lint
+
+# Предпросмотр
+npm run preview
+```
+
+## Директории контента
+
+- `src/news/` - Новости колледжа (Markdown файлы)
+- `src/afisha/` - Афиша мероприятий (Markdown файлы)
+- `src/data/` - Статические данные о колледже
+- `src/components/` - Компоненты интерфейса
+- `src/pages/` - Страницы сайта
+
+## Поддержка тем
+
+Проект поддерживает как светлую, так и темную тему оформления, что обеспечивает удобство использования в разных условиях освещения.
