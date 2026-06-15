@@ -29,7 +29,7 @@ function parseMarkdown(content: string): { frontmatter: Record<string, string>, 
 
     const [, frontmatterStr, body] = frontmatterMatch;
     const frontmatter: Record<string, string> = {};
-    const lines = frontmatterStr.split('');
+    const lines = frontmatterStr.split('\\n');
 
     for (const line of lines) {
         const match = line.match(/^([^:]+):\s*(.*)$/);
@@ -65,7 +65,7 @@ export async function loadNews(): Promise<ExtendedNewsItem[]> {
   const loadedItems: ExtendedNewsItem[] = [];
   for (const path in newsModules) {
     const rawContent = await newsModules[path]() as string;
-    const content = rawContent.split('').join('');
+    const content = rawContent;
     const parsed = parseMarkdown(content);
 
     if (parsed) {
@@ -115,7 +115,7 @@ export async function loadAfisha(): Promise<AfishaItem[]> {
     const loadedItems: AfishaItem[] = [];
     for (const path in afishaModules) {
         const rawContent = await afishaModules[path]() as string;
-        const content = rawContent.split('').join('');
+        const content = rawContent;
         const parsed = parseMarkdown(content);
 
         if (parsed) {
