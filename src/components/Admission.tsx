@@ -120,10 +120,7 @@ function Admission({ collegeInfo: _collegeInfo }: AdmissionProps) {
               <span className={styles.infoListIcon}>✓</span>
               <span>Прием на обучение осуществляется при условии владения поступающим объемом знаний и умений в соответствии с требованиями к выпускникам ДМШ / ДШИ по специальности.</span>
             </li>
-            <li className={styles.infoListItem}>
-              <span className={styles.infoListIcon}>✓</span>
-              <span>В этом тексте учтены требования ФГОС (приказ Минобрнауки №1379 от 27.10.2014 с актуальными изменениями) и локальные образовательные программы колледжа (ППССЗ) для 2025 года.</span>
-            </li>
+
           </ul>
         </div>
       </div>

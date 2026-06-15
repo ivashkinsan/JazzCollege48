@@ -209,6 +209,31 @@
   transform: translateY(-2px);
 }
 
+/* --- Стили для секции Hero --- */
+/* Текст в Hero всегда светлый из-за тёмного оверлея */
+[data-theme='light'] .heroTitle,
+[data-theme='light'] .heroDescription,
+[data-theme='light'] .heroInfo,
+[data-theme='light'] .heroLocation {
+  color: var(--color-white);
+}
+
+/* Кнопки в Hero также должны быть стилизованы для тёмного фона */
+.hero .btnPrimary:hover {
+  color: var(--color-white); /* Белый текст при наведении */
+}
+
+.hero .btnOutline {
+  color: var(--color-white);
+  border-color: var(--color-white);
+}
+
+.hero .btnOutline:hover {
+  background-color: transparent; /* Сохранить прозрачный фон */
+  border-color: var(--color-accent); /* Изменить цвет рамки на акцентный */
+  color: var(--color-accent); /* Изменить цвет текста на акцентный */
+}
+
 @media (max-width: 768px) {
   .heroImage {
     display: none;
