@@ -78,11 +78,11 @@
 
 **Адрес:** Липецкая обл., г. Липецк, ул. Студенческий Городок, д. 6
 
-**Телефон:** +7 (474) 241-41-71
+**Телефон:** +7 (4742) 41-41-71
 
-**Email:** lokii@yandex.ru
+**Email:** kolledgisskusstv@yandex.ru
 
-**Сайт:** lokii.ru
+**Сайт:** lokiigumnova.gosuslugi.ru
 
 ---
 

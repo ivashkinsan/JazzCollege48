@@ -14,7 +14,7 @@ function parseGallery(content: string): string[] {
     return [];
   }
   return galleryMatch[1]
-    .split('')
+    .split(/\r?\n/)
     .map(line => line.replace(/^-/, '').trim())
     .filter(Boolean)
     .map(img => asset(img));
@@ -24,12 +24,14 @@ function parseGallery(content: string): string[] {
  * A generic markdown parser that separates frontmatter and body.
  */
 function parseMarkdown(content: string): { frontmatter: Record<string, string>, body: string } | null {
-    const frontmatterMatch = content.match(new RegExp(`^---([\s\S]*?)---([\s\S]*)$`));
+    // Удаляем BOM (Byte Order Mark), который может присутствовать в начале файла
+    const cleanedContent = content.replace(/^\uFEFF/, '');
+    const frontmatterMatch = cleanedContent.match(new RegExp(`^---([\\s\\S]*?)---([\\s\\S]*)$`));
     if (!frontmatterMatch) return null;
 
     const [, frontmatterStr, body] = frontmatterMatch;
     const frontmatter: Record<string, string> = {};
-    const lines = frontmatterStr.split('\\n');
+    const lines = frontmatterStr.split(/\r?\n/);
 
     for (const line of lines) {
         const match = line.match(/^([^:]+):\s*(.*)$/);

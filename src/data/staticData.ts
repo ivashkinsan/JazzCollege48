@@ -20,9 +20,9 @@ export const collegeInfo: CollegeInfo = {
   name: "Липецкий областной колледж искусств им. К.Н. Игумнова",
   shortName: "ЛОКИ им. К.Н. Игумнова",
   address: "Липецкая обл., г. Липецк, ул. Студенческий Городок, д. 6",
-  phone: "+7 (474) 241-41-71",
-  email: "lokii@yandex.ru",
-  website: "lokii.ru",
+  phone: "+7 (4742) 41-41-71",
+  email: "kolledgisskusstv@yandex.ru",
+  website: "lokiigumnova.gosuslugi.ru",
 };
 
 export const estradaDepartment: EstradaDepartment = {
@@ -526,7 +526,7 @@ export const adminMembers: AdminMember[] = [
     image: asset("/foto_admin/Veselova.webp"),
     bio: "Руководит Липецким областным колледжем искусств им. К.Н. Игумнова. Курирует общее управление и развитие учебного заведения.",
     email: "kolledgiskusstv@yandex.ru",
-    phone: "+7 (474) 241-41-71",
+    phone: "+7 (4742) 41-41-71",
   },
   {
     id: "2",
@@ -552,7 +552,7 @@ export const adminMembers: AdminMember[] = [
     position: "Заведующий эстрадным отделением",
     image: asset("/foto/admin/estrada-head.jpg"),
     bio: "Руководит эстрадным отделением. Преподаватель духовых инструментов по классу саксофона.",
-    email: "estrada@lokii.ru",
+    email: "kolledgisskusstv@yandex.ru",
     phone: "+7 (474) 241-41-74",
   },
 ];

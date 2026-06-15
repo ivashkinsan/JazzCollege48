@@ -58,7 +58,7 @@ function AdminPage() {
             <h2 className={styles.ctaTitle}>По вопросам обращайтесь</h2>
             <p className={styles.ctaText}>
               Приемная директора: +7 (474) 241-41-70<br />
-              Email: lokii@yandex.ru
+              Email: kolledgisskusstv@yandex.ru
             </p>
           </div>
         </div>

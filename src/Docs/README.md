@@ -16,6 +16,7 @@
 | 6 | [Модуль данных](./06-data-module.md) | `06-data-module.md` | Интерфейсы, данные, загрузка из Markdown |
 | 7 | [Стили и дизайн](./07-styles-design.md) | `07-styles-design.md` | CSS-модули, дизайн-система, переменные |
 | 8 | [Сборка и деплой](./08-build-deploy.md) | `08-build-deploy.md` | GitHub Pages, asset(), устранение проблем |
+| 9 | [Парсинг данных](./09-data-parsing.md) | `09-data-parsing.md` | Детальное описание логики парсинга Markdown |
 
 ---
 
