@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { loadNews } from './data/dataLoaders';
-import { navigation, collegeInfo, estradaDepartment, teachers, ensembles, achievements, graduates } from './data/staticData';
+import { navigation, collegeInfo, estradaDepartment, teachers, achievements, graduates } from './data/staticData';
 import type { ExtendedNewsItem } from './types/college';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -9,7 +9,6 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Specialties from './components/Specialties';
 import Teachers from './components/Teachers';
-import Ensembles from './components/Ensembles';
 import Achievements from './components/Achievements';
 import Graduates from './components/Graduates';
 import ConcertsPreview from './components/ConcertsPreview';
@@ -21,6 +20,7 @@ import AdminPage from './pages/AdminPage';
 import PhotosPage from './pages/PhotosPage';
 import VideosPage from './pages/VideosPage';
 import DaiPage from './pages/DaiPage';
+import DepartmentPage from './pages/DepartmentPage';
 import NewsPage from './pages/NewsPage';
 import AfishaPage from './pages/AfishaPage';
 import ScrollToHash from './components/ScrollToHash';
@@ -46,7 +46,6 @@ function HomePage() {
       <About department={estradaDepartment} />
       <Specialties department={estradaDepartment} />
       <Teachers teachers={teachers} />
-      <Ensembles ensembles={ensembles} />
       <Achievements achievements={achievements} />
       <Graduates graduates={graduates} />
       <ConcertsPreview />
@@ -71,6 +70,7 @@ function App() {
             <Route path="/graduates" element={<GraduatesPage />} />
             <Route path="/dai" element={<DaiPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/department" element={<DepartmentPage />} />
             <Route path="/photos" element={<PhotosPage />} />
             <Route path="/videos" element={<VideosPage />} />
           </Routes>

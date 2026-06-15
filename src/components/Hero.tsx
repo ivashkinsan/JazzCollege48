@@ -9,15 +9,6 @@ function Hero() {
       style={{ backgroundImage: `url(${asset('/foto/Full.png')})` }}
     >
       <div className={styles.heroContent}>
-        <div className={styles.heroLogoWrapper}>
-          <img
-            src={asset('/Logo/Logo_var_1.png')}
-            alt="Эстрадное отделение ЛОКИ"
-            className={styles.heroLogo}
-            width="150"
-            height="150"
-          />
-        </div>
         {/* <p className={styles.heroLogoText}>
           <span className={styles.heroLogoTitle}>эстрадно-джазовое отделение</span>
           <span className={styles.heroLocation}>Липецк</span>

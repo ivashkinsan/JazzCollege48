@@ -50,7 +50,7 @@ function About({ department: _department }: AboutProps) {
             </div>
             <div className={styles.aboutLogoBadge} style={{ marginTop: 'var(--spacing-lg)' }}>
               <img
-                src={asset('/logo_type_2.png')}
+                src={asset('/Logo/Logo_var_1.png')}
                 alt="Эстрадное отделение ЛОКИ"
                 className={styles.aboutLogo}
                 width="120"
@@ -66,3 +66,4 @@ function About({ department: _department }: AboutProps) {
 }
 
 export default About;
+

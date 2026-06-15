@@ -441,6 +441,7 @@ export const navigation: NavigationEntry[] = [
     id: "department",
     label: "Отделение",
     items: [
+      { id: "orchestra", label: "Оркестр", href: "/department" },
       { id: "teachers", label: "Преподаватели", href: "#teachers" },
       { id: "admin", label: "Администрация", href: "/admin" },
       { id: "dai", label: "ДАИ", href: "/dai" },
