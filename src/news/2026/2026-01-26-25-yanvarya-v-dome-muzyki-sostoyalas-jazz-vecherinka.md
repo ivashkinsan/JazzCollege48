@@ -2,6 +2,7 @@
 title: "25 января в Доме музыки состоялась JAZZ-вечеринка Липецкого джазового оркестра"
 date: 2026-01-26
 category: konzert
+cover: /news/images/2026/2026-01-26-25-yanvarya-v-dome-muzyki-sostoyalas-jazz-vecherinka/cover.jpg
 tags: []
 ---
 
