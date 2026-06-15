@@ -4,22 +4,45 @@
   gap: var(--spacing-lg);
 }
 
-.sectionLead {
-  font-size: 1.0625rem;
-  line-height: 1.8;
+.introGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
   margin-bottom: var(--spacing-xl);
-  max-width: 800px;
+}
+
+.introColumn {
+  font-size: 1rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.introColumn p {
+  margin: 0;
+}
+
+.introColumn .icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-md);
+  display: block;
 }
 
 /* Тёмная тема: светлый текст */
-[data-theme='dark'] .sectionLead {
+[data-theme='dark'] .introColumn {
   color: var(--color-text-secondary);
 }
 
 /* Светлая тема: тёмный текст */
-[data-theme='light'] .sectionLead {
+[data-theme='light'] .introColumn {
   color: var(--color-charcoal);
 }
+
+@media (max-width: 992px) {
+  .introGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 .step {
   text-align: center;
@@ -89,7 +112,43 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: var(--spacing-lg);
+  text-align: center;
 }
+
+.importantInfo {
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-tertiary);
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--color-accent);
+}
+
+.importantInfo p {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+}
+
+.infoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.infoListItem {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  font-size: 1rem;
+  line-height: 1.7;
+  align-items: center;
+}
+
+.infoListIcon {
+  color: var(--color-accent);
+  font-size: 1.25rem;
+}
+
 
 /* Тёмная тема: белый текст */
 [data-theme='dark'] .subheading {
