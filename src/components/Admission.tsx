@@ -13,17 +13,17 @@ function Admission({ collegeInfo: _collegeInfo }: AdmissionProps) {
           <p className="section__subtitle">Абитуриенту</p>
           <h2 className="section__title">Как поступить</h2>
         </div>
-        <p className={styles.admissionIntro}>
+        <p className={styles.sectionLead}>
           Прием абитуриентов на специальность 53.02.02 «Музыкальное искусство эстрады (по видам)» проводится на базе основного общего образования (9 классов). Срок обучения — 3 года 10 месяцев.
           Выпускники получают квалификацию: «Артист, преподаватель, руководитель эстрадного коллектива».
         </p>
-        <p className={styles.admissionIntro}>
+        <p className={styles.sectionLead}>
           Обучение ведется по двум профилям: «Эстрадное пение» и «Инструменты эстрадного оркестра». Вступительные испытания включают профессиональные творческие задания и проверку музыкально-теоретической подготовки.
         </p>
-        <p className={styles.admissionIntro}>
+        <p className={styles.sectionLead}>
           Важно: прием проводится только при условии владения поступающим объемом знаний и умений в соответствии с требованиями к выпускникам детских школ искусств (ДШИ).
         </p>
-        <h3 className={styles.admissionRequirementsTitle}>Этапы поступления</h3>
+        <h3 className={styles.subheading}>Этапы поступления</h3>
         <div className={styles.admissionSteps}>
           <div className={styles.step}>
             <div className={styles.stepNumber}>1</div>
@@ -53,7 +53,7 @@ function Admission({ collegeInfo: _collegeInfo }: AdmissionProps) {
           </div>
         </div>
         <div className={styles.admissionRequirements}>
-          <h3 className={styles.admissionRequirementsTitle}>Требования к вступительным испытаниям</h3>
+          <h3 className={styles.subheading}>Требования к вступительным испытаниям</h3>
           <div className={styles.requirementsGrid}>
             <div className={styles.requirementItem}>
               <h4>🎤 Профиль: «Эстрадное пение»</h4>
@@ -86,23 +86,23 @@ function Admission({ collegeInfo: _collegeInfo }: AdmissionProps) {
             </div>
           </div>
         </div>
-        <h3 className={styles.admissionRequirementsTitle}>Важная информация для поступающих</h3>
-        <p className={styles.admissionIntro}>
+        <h3 className={styles.subheading}>Важная информация для поступающих</h3>
+        <p className={styles.sectionLead}>
           Форма обучения: только очная.
         </p>
-        <p className={styles.admissionIntro}>
+        <p className={styles.sectionLead}>
           Нормативный срок обучения: 3 года 10 месяцев на базе 9 классов.
         </p>
-        <p className={styles.admissionIntro}>
+        <p className={styles.sectionLead}>
           Учебная практика: С первого курса студенты участвуют в работе ансамблей и оркестра (Big Band), проходят педагогическую практику в Детской академии искусств.
         </p>
-        <p className={styles.admissionIntro}>
+        <p className={styles.sectionLead}>
           Концертмейстер: Вокалистам и инструменталистам на экзамене может быть предоставлен концертмейстер (по запросу), однако использование качественных фонограмм также приветствуется.
         </p>
-        <p className={styles.admissionIntro}>
+        <p className={styles.sectionLead}>
           Прием на обучение осуществляется при условии владения поступающим объемом знаний и умений в соответствии с требованиями к выпускникам ДМШ / ДШИ по специальности.
         </p>
-        <p className={styles.admissionIntro}>
+        <p className={styles.sectionLead}>
           В этом тексте учтены требования ФГОС (приказ Минобрнауки №1379 от 27.10.2014 с актуальными изменениями) и локальные образовательные программы колледжа (ППССЗ) для 2025 года.
         </p>
       </div>

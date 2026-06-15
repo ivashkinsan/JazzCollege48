@@ -272,6 +272,16 @@
   list-style: none; /* Remove default list style */
   padding: 0;
   margin-top: var(--spacing-sm);
+  display: grid; /* Add grid display */
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: var(--spacing-xl); /* Add gap between columns */
+}
+
+@media (max-width: 768px) {
+  .profileList {
+    grid-template-columns: 1fr; /* Single column on smaller screens */
+    gap: var(--spacing-md); /* Adjust gap for smaller screens */
+  }
 }
 
 .profileList > li {

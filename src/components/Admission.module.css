@@ -4,7 +4,7 @@
   gap: var(--spacing-lg);
 }
 
-.admissionIntro {
+.sectionLead {
   font-size: 1.0625rem;
   line-height: 1.8;
   margin-bottom: var(--spacing-xl);
@@ -12,12 +12,12 @@
 }
 
 /* Тёмная тема: светлый текст */
-[data-theme='dark'] .admissionIntro {
+[data-theme='dark'] .sectionLead {
   color: var(--color-text-secondary);
 }
 
 /* Светлая тема: тёмный текст */
-[data-theme='light'] .admissionIntro {
+[data-theme='light'] .sectionLead {
   color: var(--color-charcoal);
 }
 
@@ -85,20 +85,19 @@
   background: var(--gradient-card);
 }
 
-.admissionRequirementsTitle {
+.subheading {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: var(--spacing-lg);
-  text-align: center;
 }
 
 /* Тёмная тема: белый текст */
-[data-theme='dark'] .admissionRequirementsTitle {
+[data-theme='dark'] .subheading {
   color: var(--color-white);
 }
 
 /* Светлая тема: тёмный текст */
-[data-theme='light'] .admissionRequirementsTitle {
+[data-theme='light'] .subheading {
   color: var(--color-indigo);
 }
 
@@ -167,7 +166,7 @@
     gap: var(--spacing-md);
   }
 
-  .admissionIntro {
+  .sectionLead {
     font-size: 1rem;
   }
 
@@ -193,7 +192,7 @@
     padding: var(--spacing-md);
   }
 
-  .admissionRequirementsTitle {
+  .subheading {
     font-size: 1.125rem;
   }
 }
