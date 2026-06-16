@@ -1,0 +1,42 @@
+import { asset } from '../utils/asset';
+
+/**
+ * Parses gallery image paths from a markdown comment block.
+ */
+export function parseGallery(content: string): string[] {
+  const galleryMatch = content.match(new RegExp(`<!--\s*gallery\s*-->
+([\\s\\S]*?)$`));
+  if (!galleryMatch || !galleryMatch[1]) {
+    return [];
+  }
+  return galleryMatch[1]
+    .split(/\r?\n/)
+    .map(line => line.replace(/^-/, '').trim())
+    .filter(Boolean)
+    .map(img => asset(img));
+}
+
+/**
+ * A generic markdown parser that separates frontmatter and body.
+ */
+export function parseMarkdown(content: string): { frontmatter: Record<string, string>, body: string } | null {
+    // Удаляем BOM (Byte Order Mark), который может присутствовать в начале файла
+    const cleanedContent = content.replace(/^\uFEFF/, '');
+    const frontmatterMatch = cleanedContent.match(new RegExp(`^---([\\s\\S]*?)---([\\s\\S]*)$`));
+    if (!frontmatterMatch) return null;
+
+    const [, frontmatterStr, body] = frontmatterMatch;
+    const frontmatter: Record<string, string> = {};
+    const lines = frontmatterStr.split(/\r?\n/);
+
+    for (const line of lines) {
+        const match = line.match(/^([^:]+):\s*(.*)$/);
+        if (match) {
+            const key = match[1].trim();
+            const value = match[2].trim().replace(/^["']|["']$/g, '');
+            frontmatter[key] = value;
+        }
+    }
+
+    return { frontmatter, body: body.trim() };
+}
