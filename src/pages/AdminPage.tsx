@@ -1,4 +1,4 @@
-import { adminMembers } from '../data/staticData';
+import { adminMembers } from '../data/static';
 import { asset } from '../utils/asset';
 import styles from './AdminPage.module.css';
 import { Link } from 'react-router-dom';

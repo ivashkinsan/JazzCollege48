@@ -1,4 +1,4 @@
-import { ensembles } from '../data/staticData';
+import { ensembles } from '../data/static';
 import Orchestra from '../components/Orchestra';
 
 const orchestraData = ensembles.find(e => e.type === 'Оркестр');

@@ -2,7 +2,6 @@ export interface Teacher {
   id: string;
   name: string;
   position: string;
-  specialty: string;
   image?: string;
   bio?: string;
 }

@@ -24,21 +24,19 @@ function Teachers({ teachers }: TeachersProps) {
                   <div className={styles.teacherCardInfo}>
                     <h3 className={styles.teacherCardName}>{teacher.name}</h3>
                     <p className={styles.teacherCardPosition}>{teacher.position}</p>
-                    <p className={styles.teacherCardSpecialty}>{teacher.specialty}</p>
                     {teacher.bio && <p className={styles.teacherCardBio}>{teacher.bio}</p>}
-                  </div>
-                </>
-              ) : (
-                <div className={styles.teacherCardContent}>
-                  <div className={styles.teacherCardAvatar}>
+                    </div>
+                    </>
+                    ) : (
+                    <div className={styles.teacherCardContent}>
+                    <div className={styles.teacherCardAvatar}>
                     <span className={styles.teacherCardPlaceholder}>👨‍🏫</span>
-                  </div>
-                  <h3 className={styles.teacherCardName}>{teacher.name}</h3>
-                  <p className={styles.teacherCardPosition}>{teacher.position}</p>
-                  <p className={styles.teacherCardSpecialty}>{teacher.specialty}</p>
-                  {teacher.bio && <p className={styles.teacherCardBio}>{teacher.bio}</p>}
-                </div>
-              )}
+                    </div>
+                    <h3 className={styles.teacherCardName}>{teacher.name}</h3>
+                    <p className={styles.teacherCardPosition}>{teacher.position}</p>
+                    {teacher.bio && <p className={styles.teacherCardBio}>{teacher.bio}</p>}
+                    </div>
+                    )}
             </article>
           ))}
         </div>

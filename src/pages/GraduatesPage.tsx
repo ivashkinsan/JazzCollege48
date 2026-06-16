@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { graduates } from '../data/staticData';
+import { graduates } from '../data/static';
 import type { Graduate } from '../types/college';
 import { asset } from '../utils/asset';
 import styles from './GraduatesPage.module.css';

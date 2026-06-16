@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { photos } from '../data/staticData';
+import { photos } from '../data/static';
 import Lightbox from '../components/Lightbox';
 import styles from './PhotosPage.module.css';
 import { Link } from 'react-router-dom';

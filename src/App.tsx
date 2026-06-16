@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { loadNews } from './data/dataLoaders';
-import { navigation, collegeInfo, estradaDepartment, teachers, achievements, graduates } from './data/staticData';
+import { navigation, collegeInfo, estradaDepartment, teachers, achievements, graduates } from './data/static';
 import type { ExtendedNewsItem } from './types/college';
 import Header from './components/Header';
 import Footer from './components/Footer';
