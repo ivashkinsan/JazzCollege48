@@ -53,4 +53,28 @@ export const videos: Video[] = [
     date: "2024-09-01",
     source: "rutube",
   },
+  {
+    id: "v6",
+    title: "Новое видео Rutube 1",
+    description: "Добавлено новое видео с Rutube.",
+    videoUrl: "https://rutube.ru/video/60acab378434f02887c90ff7b321894c/",
+    date: "2026-06-17",
+    source: "rutube",
+  },
+  {
+    id: "v7",
+    title: "Новое видео Rutube 2",
+    description: "Добавлено новое видео с Rutube.",
+    videoUrl: "https://rutube.ru/video/45fc9a7df80b344cf865c8661f9bdb14/",
+    date: "2026-06-17",
+    source: "rutube",
+  },
+  {
+    id: "v8",
+    title: "Новое видео Rutube 3",
+    description: "Добавлено новое видео с Rutube.",
+    videoUrl: "https://rutube.ru/video/c8e7b162920f25da4b97dfee3aac59bc/",
+    date: "2026-06-17",
+    source: "rutube",
+  },
 ];
