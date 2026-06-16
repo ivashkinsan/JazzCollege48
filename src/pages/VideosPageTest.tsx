@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { loadVideos } from '../data/dataLoaders';
 import type { Video } from '../types/college';
-import { asset } from '../utils/asset';
 import styles from './VideosPage.module.css';
 import { Link } from 'react-router-dom';
 
@@ -42,9 +41,8 @@ const getEmbedUrl = (video: Video) => {
   return '';
 };
 
-function VideosPage() {
+function VideosPageTest() {
   const [videos, setVideos] = useState<Video[]>([]);
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -66,9 +64,9 @@ function VideosPage() {
     <div className={styles.page}>
       <section className={styles.hero}>
         <div className="container">
-          <h1 className={styles.title}>Видео</h1>
+          <h1 className={styles.title}>Видео (Тест)</h1>
           <p className={styles.subtitle}>
-            Видеозаписи концертов, мастер-классов и мероприятий эстрадного отделения
+            Прямое встраивание iframe
           </p>
         </div>
       </section>
@@ -78,21 +76,14 @@ function VideosPage() {
           <div className={styles.videosGrid}>
             {sortedVideos.map((video) => (
               <article key={video.id} className={styles.videoCard}>
-                <div className={styles.thumbnailWrapper}>
-                  <img
-                    src={video.thumbnail || asset('/video/thumbs/default.jpg')}
-                    alt={video.title}
-                    className={styles.thumbnail}
-                    loading="lazy"
+                <div className={styles.videoContainer}>
+                  <iframe
+                    src={getEmbedUrl(video)}
+                    title={video.title}
+                    allow="clipboard-write; autoplay"
+                    allowFullScreen={true}
+                    className={styles.videoFrame}
                   />
-                  <button
-                    className={styles.playButton}
-                    onClick={() => setSelectedVideo(video)}
-                    aria-label={`Смотреть: ${video.title}`}
-                  >
-                    ▶
-                  </button>
-                  <span className={styles.sourceBadge}>{video.source}</span>
                 </div>
                 <div className={styles.videoInfo}>
                   <h3 className={styles.videoTitle}>{video.title}</h3>
@@ -113,41 +104,10 @@ function VideosPage() {
         </div>
       </section>
 
-      {/* Модальное окно для просмотра видео */}
-      {selectedVideo && (
-        <div className={styles.modal} onClick={() => setSelectedVideo(null)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button className={styles.modalClose} onClick={() => setSelectedVideo(null)}>
-              ✕
-            </button>
-            <div className={styles.videoContainer}>
-              <iframe
-                src={getEmbedUrl(selectedVideo)}
-                title={selectedVideo.title}
-                allow="clipboard-write; autoplay"
-                allowFullScreen={true}
-                className={styles.videoFrame}
-              />
-            </div>
-            <div className={styles.modalInfo}>
-              <h3 className={styles.modalTitle}>{selectedVideo.title}</h3>
-              <p className={styles.modalDescription}>{selectedVideo.description}</p>
-              <p className={styles.modalDate}>
-                Опубликовано: {new Date(selectedVideo.date).toLocaleDateString('ru-RU', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric'
-                })}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
       <footer className={styles.pageFooter}>
         <div className="container">
-          <Link to="/" className={styles.backLink}>
-            ← На главную
+          <Link to="/videos" className={styles.backLink}>
+            ← Назад к обычной странице видео
           </Link>
         </div>
       </footer>
@@ -155,4 +115,4 @@ function VideosPage() {
   );
 }
 
-export default VideosPage;
+export default VideosPageTest;

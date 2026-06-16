@@ -1,6 +1,7 @@
 import { adminMembers } from '../data/static';
 import { asset } from '../utils/asset';
 import styles from './AdminPage.module.css';
+import teacherStyles from '../components/Teachers.module.css';
 import { Link } from 'react-router-dom';
 
 function AdminPage() {
@@ -17,21 +18,21 @@ function AdminPage() {
 
       <section className={styles.adminSection}>
         <div className="container">
-          <div className={styles.adminGrid}>
+          <div className={teacherStyles.teachersGrid}>
             {adminMembers.map((member) => (
-              <article key={member.id} className={styles.adminCard}>
-                <div className={styles.imageWrapper}>
+              <article key={member.id} className={teacherStyles.teacherCard}>
+                <div className={teacherStyles.teacherCardImageWrapper}>
                   <img
                     src={member.image || asset('/foto/admin/default.jpg')}
                     alt={member.name}
-                    className={styles.image}
+                    className={teacherStyles.teacherCardImage}
                   />
                 </div>
-                <div className={styles.content}>
-                  <h3 className={styles.name}>{member.name}</h3>
-                  <p className={styles.position}>{member.position}</p>
+                <div className={teacherStyles.teacherCardInfo}>
+                  <h3 className={teacherStyles.teacherCardName}>{member.name}</h3>
+                  <p className={teacherStyles.teacherCardPosition}>{member.position}</p>
                   {member.bio && (
-                    <p className={styles.bio}>{member.bio}</p>
+                    <p className={teacherStyles.teacherCardBio}>{member.bio}</p>
                   )}
                   <div className={styles.contacts}>
                     {member.email && (

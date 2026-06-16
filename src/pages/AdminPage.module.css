@@ -33,90 +33,6 @@
   flex: 1;
 }
 
-.adminGrid {
-  display: grid;
-  gap: var(--spacing-lg);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 640px) {
-  .adminGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .adminGrid {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 900px;
-    margin: 0 auto;
-  }
-}
-
-/* Карточка администрации */
-.adminCard {
-  background-color: var(--color-bg-tertiary);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-  border: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-}
-
-.adminCard:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.imageWrapper {
-  height: 280px;
-  overflow: hidden;
-  background-color: var(--color-bg-secondary);
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--transition-normal);
-}
-
-.adminCard:hover .image {
-  transform: scale(1.05);
-}
-
-.content {
-  padding: var(--spacing-lg);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.name {
-  font-size: 1.35rem;
-  color: var(--color-accent);
-  margin-bottom: var(--spacing-xs);
-}
-
-.position {
-  color: var(--color-text);
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: var(--spacing-md);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.bio {
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-  font-size: 0.95rem;
-  margin-bottom: var(--spacing-md);
-  flex: 1;
-}
-
 .contacts {
   display: flex;
   flex-direction: column;
@@ -186,20 +102,5 @@
   .subtitle {
     font-size: 1rem;
   }
-
-  .adminGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .adminCard {
-    padding: var(--spacing-md);
-  }
-
-  .adminCardName {
-    font-size: 1.125rem;
-  }
-
-  .adminCardInfo {
-    padding: var(--spacing-sm);
-  }
 }
+
