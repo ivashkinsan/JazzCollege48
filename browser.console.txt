@@ -1,0 +1,18 @@
+index-xilcTkfs.js:9 <Router basename="/./"> is not able to match the URL "/" because it does not start with the basename, so the <Router> won't render anything.
+te @ index-xilcTkfs.js:9
+It @ index-xilcTkfs.js:11
+So @ index-xilcTkfs.js:8
+hc @ index-xilcTkfs.js:8
+Mc @ index-xilcTkfs.js:8
+Mu @ index-xilcTkfs.js:8
+ku @ index-xilcTkfs.js:8
+Ou @ index-xilcTkfs.js:8
+gu @ index-xilcTkfs.js:8
+cd @ index-xilcTkfs.js:8
+te @ index-xilcTkfs.js:1
+postMessage
+ne @ index-xilcTkfs.js:1
+e.unstable_scheduleCallback @ index-xilcTkfs.js:1
+sd @ index-xilcTkfs.js:8
+od @ index-xilcTkfs.js:8
+(anonymous) @ index-xilcTkfs.js:8

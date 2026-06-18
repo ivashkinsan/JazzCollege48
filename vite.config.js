@@ -1,10 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import Imagemin from 'unplugin-imagemin/vite';
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/JazzCollege48/',
-  plugins: [react()],
+  base: '/',
+  plugins: [
+    react(),
+    Imagemin({
+      mode: 'squoosh', // Или 'sharp', если Squoosh не подходит
+      cache: true // Включаем кэширование
+    }),
+  ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
@@ -16,3 +23,4 @@ export default defineConfig({
     },
   },
 })
+

@@ -41,7 +41,7 @@ export async function loadNews(): Promise<ExtendedNewsItem[]> {
                 content: body,
                 category,
                 cover: cover ? asset(cover) : undefined,
-                gallery: parseGallery(content)
+                gallery: parseGallery(body)
             });
         }
     }
