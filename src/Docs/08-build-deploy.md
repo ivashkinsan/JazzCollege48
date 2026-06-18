@@ -9,8 +9,9 @@
 | Команда | Описание |
 |---------|----------|
 | `npm run dev` | Сервер разработки (порт 5173) |
-| `npm run build` | Production-сборка |
+| `npm run build` | Production-сборка с оптимизацией изображений |
 | `npm run preview` | Просмотр сборки (порт 4173) |
+| `npm run deploy` | **Сборка и развертывание проекта на FTP-хостинг** |
 | `npm run lint` | Проверка ESLint |
 | `npm run type-check` | Проверка TypeScript |
 
@@ -53,9 +54,9 @@ npm run build
 
 **Процесс:**
 1. Компиляция TypeScript → JavaScript
-2. Сборка модулей в бандлы
-3. Минификация кода
-4. Оптимизация активов
+2. **Оптимизация изображений (кэшируется)**
+3. Сборка модулей в бандлы
+4. Минификация кода
 5. Генерация source maps (опционально)
 
 **Результат:**
@@ -73,8 +74,14 @@ dist/
 **vite.config.js:**
 ```javascript
 export default defineConfig({
-  base: '/JazzCollege48/',  // Важно для GitHub Pages!
-  plugins: [react()],
+  base: '/',
+  plugins: [
+    react(),
+    Imagemin({
+      mode: 'squoosh',
+      cache: true
+    }),
+  ],
   build: {
     target: 'esnext',
     minify: 'esbuild',
@@ -83,7 +90,48 @@ export default defineConfig({
 })
 ```
 
-> **ВАЖНО:** Для деплоя на GitHub Pages обязательно указать `base: '/repo-name/'` в vite.config.js. Без этого пути к ресурсам будут неверными.
+> **ВАЖНО:** Параметр `base: '/'` указывает, что сайт будет развернут в корне домена. Это критично для корректной работы React Router и путей к ресурсам.
+
+---
+
+## Локальное развертывание по FTP
+
+Это основной способ развертывания проекта на рабочий сервер.
+
+### 1. Настройка окружения
+
+Перед первым развертыванием необходимо создать файл `.env` в корне проекта.
+
+1.  Создайте файл с именем `.env`.
+2.  Скопируйте в него следующее содержимое и подставьте свои данные:
+
+```env
+# Учетные данные для FTP
+FTP_HOST="АДРЕС_ВАШЕГО_FTP_СЕРВЕРА"
+FTP_USER="ВАШ_ЛОГИН"
+FTP_PASSWORD="ВАШ_ПАРОЛЬ"
+FTP_REMOTE_PATH="/путь/к/папке/сайта/на/сервере/"
+```
+
+> **Безопасность:** Файл `.env` находится в `.gitignore` и не должен никогда попадать в репозиторий, так как содержит секретные данные.
+
+### 2. Запуск развертывания
+
+Для сборки и развертывания проекта выполните одну команду:
+
+```bash
+npm run deploy
+```
+
+### 3. Как это работает
+
+Команда `npm run deploy` запускает два последовательных шага:
+1.  `npm run build`: Собирает проект в папку `dist/`, включая оптимизацию изображений.
+2.  `node scripts/deploy.js`: Запускает специальный скрипт, который:
+    -   Читает учетные данные из файла `.env`.
+    -   Подключается к FTP-серверу.
+    -   **Полностью очищает** указанную в `FTP_REMOTE_PATH` директорию на сервере.
+    -   Загружает все содержимое папки `dist/` на сервер.
 
 ---
 
@@ -106,7 +154,6 @@ npm run lint
 ```
 
 **Инструмент:** ESLint 9.39.4
-**Плагины:** `@eslint/js`, `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`
 
 ### Проверка типов
 
@@ -118,53 +165,18 @@ npm run type-check
 
 ---
 
-## Развёртывание на GitHub Pages
+## Развёртывание на GitHub Pages (Альтернативный способ)
+
+Хотя основной метод развертывания - по FTP, в проекте сохранена возможность развертывания на GitHub Pages, например, для демонстрации.
 
 ### Настройка репозитория
 
-1. **vite.config.js** — указать `base`:
+1. **vite.config.js** — для GitHub Pages нужно изменить `base`:
 ```javascript
 base: '/JazzCollege48/',
 ```
 
-2. **BrowserRouter** в `App.tsx` — добавить `basename`:
-```tsx
-const baseName = import.meta.env.BASE_URL;
-
-function App() {
-  return (
-    <BrowserRouter basename={baseName}>
-      {/* Routes */}
-    </BrowserRouter>
-  );
-}
-```
-
-3. **Пути к изображениям** — использовать функцию `asset()`:
-```tsx
-import { asset } from './data/collegeData';
-
-<img src={asset('/foto/teacher.jpg')} alt="..." />
-```
-
-4. **Якорные ссылки** в Header — **НЕ** добавлять `baseName` вручную.
-
-> ⚠️ **ВАЖНО про якорные ссылки:**
->
-> В компоненте Header якорные ссылки (`#contacts`, `#about` и т.д.) формируются так:
-> - На главной странице: `#contacts` (как есть)
-> - На внутренних страницах: `/#contacts` (с ведущим слэшем)
->
-> **НЕЛЬЗЯ** вручную добавлять `baseName` (`import.meta.env.BASE_URL`) к пути — React Router уже добавит `basename` автоматически. Иначе получится дублирование: `/JazzCollege48/JazzCollege48/#contacts`.
->
-> ```tsx
-> // ПРАВИЛЬНО — basename добавится сам:
-> const linkPath = isHomePage ? item.href : `/${item.href}`;
-> <Link to={linkPath}>Контакты</Link>
->
-> // НЕПРАВИЛЬНО — дублирование пути:
-> const linkPath = baseName + item.href; // ❌ /JazzCollege48/#contacts + basename = /JazzCollege48/JazzCollege48/#contacts
-> ```
+2. **BrowserRouter** в `App.tsx` — уже настроен и использует `import.meta.env.BASE_URL`, поэтому менять ничего не нужно.
 
 ### GitHub Actions workflow
 
@@ -212,176 +224,19 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 ```
 
-**Настройки на GitHub:**
-- Settings → Pages → Source: **GitHub Actions**
-- URL сайта: `https://ivashkinsan.github.io/JazzCollege48/`
-
-### Процесс деплоя
-
-1. Пуш в ветку `main`:
-```bash
-git add -A
-git commit -m "..."
-git push
-```
-
-2. GitHub Actions автоматически:
-   - Установит зависимости (`npm ci`)
-   - Соберёт проект (`npm run build`)
-   - Задеплоит на GitHub Pages
-
-3. Сайт доступен через 1-2 минуты после пуша.
-
----
-
-## Деплой на другие платформы
-
-### Vercel
-
-**Автоматический деплой:**
-```bash
-npm i -g vercel
-vercel
-```
-
-Vercel автоматически определяет Vite-проект.
-
-**vercel.json (опционально):**
-```json
-{
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite"
-}
-```
-
----
-
-### Netlify
-
-**Ручной деплой:** Перетащить `dist/` в Netlify Drop
-
-**Автоматический через Git:**
-1. Подключить репозиторий в Netlify
-2. Настройки:
-   - **Build command:** `npm run build`
-   - **Publish directory:** `dist`
-
-**netlify.toml:**
-```toml
-[build]
-  command = "npm run build"
-  publish = "dist"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-```
-
----
-
-### Традиционный хостинг (FTP)
-
-1. Собрать: `npm run build`
-2. Загрузить содержимое `dist/` на сервер через FTP
-
----
-
-## Docker (опционально)
-
-**Dockerfile:**
-```dockerfile
-FROM node:20-alpine as build
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-**Сборка и запуск:**
-```bash
-docker build -t lipetsk-college-arts .
-docker run -p 80:80 lipetsk-college-arts
-```
-
 ---
 
 ## Переменные окружения
 
 ### .env файл
 
+Для локального развертывания по FTP используется файл `.env` (см. секцию "Локальное развертывание по FTP").
+
+Для других целей (например, ключи API) переменные должны начинаться с `VITE_`.
 ```env
 VITE_API_URL=https://api.example.com
-VITE_APP_TITLE=ЛОКИ Эстрада
 ```
-
-**Правила:**
-- Переменные должны начинаться с `VITE_`
-- Доступ через `import.meta.env`
-
-### Использование
-
-```typescript
-const apiUrl = import.meta.env.VITE_API_URL;
-const baseName = import.meta.env.BASE_URL;  // '/JazzCollege48/' на GitHub Pages
-```
-
-### Режимы
-
-- `.env` — все режимы
-- `.env.development` — разработка
-- `.env.production` — production
-
----
-
-## Утилита `asset()` для путей
-
-**Определение:** `src/data/collegeData.ts`
-
-```typescript
-export function asset(path: string): string {
-  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
-    return path;
-  }
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-  return import.meta.env.BASE_URL + cleanPath;
-}
-```
-
-**Назначение:** Добавляет `BASE_URL` ко всем путям к изображениям, обеспечивая корректную работу на GitHub Pages.
-
-**Использование:**
-```tsx
-import { asset } from './data/collegeData';
-
-// В компонентах:
-<img src={asset('/foto/teacher.jpg')} alt="..." />
-<img src={graduate.image || asset('/foto/graduates/default.jpg')} alt="..." />
-
-// В CSS background-image — использовать inline-style:
-<section style={{ backgroundImage: `url(${asset('/foto/Full.png')})` }}>
-```
-
-> **ВАЖНО:** ВСЕ пути к изображениям должны быть обёрнуты в `asset()`. Это включает:
-> - Статические данные в `collegeData.ts` (teachers, graduates, achievements и т.д.)
-> - Пути из Markdown (cover, gallery в новостях и афишах)
-> - Логотипы и фоновые изображения в компонентах
-> - Fallback-пути (default изображения)
-
----
-
-## CI/CD
-
-### GitHub Actions
-
-Автоматическая сборка и деплой при каждом пуше в `main`.
+Доступ к ним осуществляется через `import.meta.env.VITE_API_URL`.
 
 ---
 
@@ -404,66 +259,7 @@ export default defineConfig({
 
 ### Рекомендации
 
-1. **Code splitting** — разделение vendor-библиотек
-2. **Оптимизация изображений** — сжатие, WebP
-3. **Кэширование** — hash в именах файлов
-4. **Минификация** — включена по умолчанию
-
----
-
-## Устранение проблем
-
-### "Build failed with errors"
-
-```bash
-# Очистить кэш
-rm -rf node_modules
-rm package-lock.json
-npm install
-npm run build
-```
-
-### Ошибка типов TypeScript
-
-```bash
-npm run type-check
-# Исправить ошибки в выводе
-```
-
-### HMR не работает
-
-```bash
-# Перезапустить сервер
-# Очистить кэш браузера
-```
-
-### 404 на GitHub Pages
-
-**Причины:**
-1. Не указан `base: '/repo-name/'` в `vite.config.js`
-2. Не указан `basename` в `BrowserRouter`
-3. Пути к фото без `asset()`
-
-**Решение:** Проверить все три пункта выше, пересобрать и запушить.
-
-### Дублирование пути (/JazzCollege48/JazzCollege48/...)
-
-**Причина:** Вручную добавлен `baseName` к пути в `<Link to={...}>`, но React Router уже добавляет `basename` автоматически.
-
-**Решение:** Убрать ручное добавление `baseName`/`BASE_URL`. Для якорных ссылок использовать `/#anchor` вместо `baseName + '#anchor'`.
-
----
-
-## Чеклист перед деплоем
-
-- [ ] Сборка без ошибок (`npm run build`)
-- [ ] Линтинг без ошибок (`npm run lint`)
-- [ ] Проверка типов без ошибок (`npm run type-check`)
-- [ ] Локальный просмотр успешен
-- [ ] Все ссылки работают
-- [ ] `base` указан в `vite.config.js`
-- [ ] `basename` указан в `BrowserRouter`
-- [ ] Все пути к фото через `asset()`
-- [ ] Изображения оптимизированы
-- [ ] Favicon добавлен
-- [ ] GitHub Actions workflow настроен
+1. **Автоматическая оптимизация изображений** — выполняется при сборке (`npm run build`) с помощью `unplugin-imagemin`. Повторная обработка неизмененных изображений пропускается благодаря кэшированию.
+2. **Code splitting** — разделение vendor-библиотек.
+3. **Кэширование** — hash в именах файлов.
+4. **Минификация** — включена по умолчанию.

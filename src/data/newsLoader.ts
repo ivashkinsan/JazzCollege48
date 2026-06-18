@@ -1,6 +1,6 @@
 import { asset } from '../utils/asset';
 import type { ExtendedNewsItem } from '../types/college';
-import { parseMarkdown, parseGallery } from './parser';
+import { parseMarkdown, parseGallery, stripGallery } from './parser';
 
 const newsModules = import.meta.glob('../news/**/*.md', { query: '?raw', import: 'default' });
 
@@ -31,17 +31,19 @@ export async function loadNews(): Promise<ExtendedNewsItem[]> {
     if (parsed) {
         const { frontmatter, body } = parsed;
         const { title, date, category, cover } = frontmatter;
+        const gallery = parseGallery(body);
+        const cleanedBody = stripGallery(body);
 
         if (title && date) {
             loadedItems.push({
                 id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
                 title,
                 date,
-                description: body.slice(0, 250).replace(/[#*_~`]/g, '').trim(),
-                content: body,
+                description: cleanedBody.slice(0, 250).replace(/[#*_~`]/g, '').trim(),
+                content: cleanedBody,
                 category,
                 cover: cover ? asset(cover) : undefined,
-                gallery: parseGallery(body)
+                gallery: gallery
             });
         }
     }

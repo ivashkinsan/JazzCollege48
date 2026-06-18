@@ -1,6 +1,6 @@
 ---
-title: "30 сентября студенты и преподаватель специальности Музыкальное искусство эстрады"
-date: 2025-10-29
+title: "концертной программы в честь Областного слёта ветеранов войны и труда Серебряный волонтёр"
+date: 2025-10-30
 category: konzert
 cover: /news/images/2025/2025-10-29-30-sentyabrya-studenty-i-prepodavatel-spetsialnosti/cover.jpg
 tags: []

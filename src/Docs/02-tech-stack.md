@@ -103,6 +103,9 @@ npm run lint  # Проверка кода
 | @types/react | ^19.2.14 | Типы для React |
 | @types/react-dom | ^19.2.3 | Типы для React DOM |
 | globals | ^17.4.0 | Глобальные переменные |
+| **unplugin-imagemin** | **^0.5.0** | **Оптимизация изображений при сборке** |
+| **basic-ftp** | **^5.0.0** | **FTP-клиент для скрипта развертывания** |
+| **dotenv** | **^16.0.0** | **Загрузка переменных окружения из `.env`** |
 
 ---
 
@@ -153,9 +156,17 @@ npm run lint  # Проверка кода
 ```javascript
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import Imagemin from 'unplugin-imagemin/vite';
 
 export default defineConfig({
-  plugins: [react()],
+  base: '/',
+  plugins: [
+    react(),
+    Imagemin({
+      mode: 'squoosh',
+      cache: true
+    }),
+  ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
@@ -166,8 +177,9 @@ export default defineConfig({
 
 | Настройка | Значение | Описание |
 |-----------|----------|----------|
-| `plugins` | [react()] | Плагин для поддержки React |
-| `resolve.extensions` | ['.ts', '.tsx', '.js', '.jsx'] | Автоматическое разрешение расширений |
+| `base` | `'/'` | Базовый путь для развертывания в корне домена. |
+| `plugins` | `[react(), Imagemin(...)]` | Плагины для поддержки React и оптимизации изображений. |
+| `resolve.extensions` | `['.ts', '.tsx', '.js', '.jsx']` | Автоматическое разрешение расширений. |
 
 ---
 

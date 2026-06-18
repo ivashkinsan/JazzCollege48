@@ -4,7 +4,7 @@ import { asset } from '../utils/asset';
  * Parses gallery image paths from a markdown comment block.
  */
 export function parseGallery(content: string): string[] {
-  const galleryMatch = content.match(new RegExp(`<!--\s*gallery\s*-->
+  const galleryMatch = content.match(new RegExp(`<!--\\s*gallery\\s*-->
 ([\\s\\S]*?)$`));
   if (!galleryMatch || !galleryMatch[1]) {
     return [];
@@ -14,6 +14,17 @@ export function parseGallery(content: string): string[] {
     .map(line => line.replace(/^-/, '').trim())
     .filter(Boolean)
     .map(img => asset(img));
+}
+
+/**
+ * Strips the gallery block from the content.
+ */
+export function stripGallery(content: string): string {
+    const galleryMatch = content.match(new RegExp(`<!--\\s*gallery\\s*-->`));
+    if (galleryMatch && galleryMatch.index) {
+        return content.slice(0, galleryMatch.index).trim();
+    }
+    return content;
 }
 
 /**
@@ -40,3 +51,4 @@ export function parseMarkdown(content: string): { frontmatter: Record<string, st
 
     return { frontmatter, body: body.trim() };
 }
+
