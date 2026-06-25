@@ -19,6 +19,7 @@ import GraduatesPage from './pages/GraduatesPage';
 import AdminPage from './pages/AdminPage';
 import PhotosPage from './pages/PhotosPage';
 import VideosPage from './pages/VideosPage';
+import VideosPage2 from './pages/VideosPage2';
 import DaiPage from './pages/DaiPage';
 import DepartmentPage from './pages/DepartmentPage';
 import NewsPage from './pages/NewsPage';
@@ -73,6 +74,7 @@ function App() {
             <Route path="/department" element={<DepartmentPage />} />
             <Route path="/photos" element={<PhotosPage />} />
             <Route path="/videos" element={<VideosPage />} />
+            <Route path="/videos2" element={<VideosPage2 />} />
           </Routes>
         </main>
         <Footer navigation={navigation} />

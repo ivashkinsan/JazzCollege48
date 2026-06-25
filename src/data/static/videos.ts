@@ -88,4 +88,12 @@ export const videos: Video[] = [
     date: "2026-03-06",
     source: "rutube",
   },
+  {
+    id: "v9-yandex-test",
+    title: "Тестовое видео с Яндекс.Диска",
+    description: "Это видео загружается напрямую с Яндекс.Диска с помощью кастомной логики.",
+    videoUrl: "https://disk.yandex.ru/i/QhkWtEsbbsTLSQ",
+    date: "2026-06-25",
+    source: "yandex",
+  },
 ];
