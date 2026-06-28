@@ -1,15 +1,15 @@
 import { useState, useMemo } from 'react';
-import { photos } from '../data/static';
+import { Link } from 'react-router-dom';
+import albums from '../data/media-manifest.json';
 import Lightbox from '../components/Lightbox';
 import styles from './PhotosPage.module.css';
-import { Link } from 'react-router-dom';
-import type { Photo } from '../types/college';
+import type { PhotoAlbum } from '../types/college';
 
 const categories = ['все', 'концерты', 'мастер-классы', 'будни', 'выпускные', 'другое'];
 
-// Получение уникальных лет
-const getUniqueYears = (photos: Photo[]) => {
-  const years = photos.map(p => p.year);
+// Получение уникальных лет из альбомов
+const getUniqueYears = (albums: PhotoAlbum[]) => {
+  const years = albums.map(a => new Date(a.albumDate).getFullYear());
   return [...new Set(years)].sort((a, b) => b - a);
 };
 
@@ -18,22 +18,20 @@ function PhotosPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('все');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const uniqueYears = useMemo(() => getUniqueYears(photos), []);
+  const uniqueYears = useMemo(() => getUniqueYears(albums as PhotoAlbum[]), []);
 
-  const filteredPhotos = useMemo(() => {
-    return photos.filter((photo) => {
-      const yearMatch = selectedYear === 'all' || photo.year === selectedYear;
-      const categoryMatch = selectedCategory === 'все' || photo.category === selectedCategory;
+  const filteredAlbums = useMemo(() => {
+    return (albums as PhotoAlbum[]).filter((album) => {
+      const yearMatch = selectedYear === 'all' || new Date(album.albumDate).getFullYear() === selectedYear;
+      const categoryMatch = selectedCategory === 'все' || album.albumCategory === selectedCategory;
       return yearMatch && categoryMatch;
     });
   }, [selectedYear, selectedCategory]);
 
-  const openLightbox = (index: number) => {
-    const allImages = filteredPhotos.map(p => p.src);
+  const openLightbox = (album: PhotoAlbum) => {
+    const allImages = album.photos.map(p => p.src);
     setLightboxImages(allImages);
-    setLightboxIndex(index);
     setLightboxOpen(true);
   };
 
@@ -93,35 +91,35 @@ function PhotosPage() {
       <section className={styles.gallerySection}>
         <div className="container">
           <div className={styles.resultsInfo}>
-            Найдено: {filteredPhotos.length} фото
+            Найдено: {filteredAlbums.length} {filteredAlbums.length === 1 ? 'альбом' : (filteredAlbums.length > 1 && filteredAlbums.length < 5) ? 'альбома' : 'альбомов'}
           </div>
 
-          {filteredPhotos.length === 0 ? (
+          {filteredAlbums.length === 0 ? (
             <p className={styles.empty}>
-              По выбранным фильтрам фотографий не найдено
+              По выбранным фильтрам альбомов не найдено
             </p>
           ) : (
             <div className={styles.photoGrid}>
-              {filteredPhotos.map((photo, index) => (
+              {filteredAlbums.map((album) => (
                 <div
-                  key={photo.id}
+                  key={album.albumId}
                   className={styles.photoCard}
-                  onClick={() => openLightbox(index)}
+                  onClick={() => openLightbox(album)}
                 >
                   <div className={styles.photoWrapper}>
                     <img
-                      src={photo.src}
-                      alt={photo.title}
+                      src={album.photos[0]?.src}
+                      alt={album.albumTitle}
                       className={styles.photo}
                       loading="lazy"
                     />
                     <div className={styles.photoOverlay}>
-                      <span className={styles.photoYear}>{photo.year}</span>
+                      <span className={styles.photoYear}>{new Date(album.albumDate).getFullYear()}</span>
                     </div>
                   </div>
                   <div className={styles.photoInfo}>
-                    <h3 className={styles.photoTitle}>{photo.title}</h3>
-                    <span className={styles.photoCategory}>{photo.category}</span>
+                    <h3 className={styles.photoTitle}>{album.albumTitle}</h3>
+                    <span className={styles.photoCategory}>{album.albumCategory}</span>
                   </div>
                 </div>
               ))}
@@ -133,7 +131,7 @@ function PhotosPage() {
       {/* Lightbox */}
       <Lightbox
         images={lightboxImages}
-        initialIndex={lightboxIndex}
+        initialIndex={0}
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
       />

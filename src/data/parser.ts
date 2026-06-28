@@ -1,10 +1,10 @@
 import { asset } from '../utils/asset';
 
 /**
- * Parses gallery image paths from a markdown comment block.
+ * Parses gallery image IDs from a markdown comment block.
  */
-export function parseGallery(content: string): string[] {
-  const galleryMatch = content.match(new RegExp(`<!--\\s*gallery\\s*-->
+export function parseGalleryIds(content: string): string[] {
+  const galleryMatch = content.match(new RegExp(`<!--\\s*gallery\\s*-->\\r?
 ([\\s\\S]*?)$`));
   if (!galleryMatch || !galleryMatch[1]) {
     return [];
@@ -12,8 +12,7 @@ export function parseGallery(content: string): string[] {
   return galleryMatch[1]
     .split(/\r?\n/)
     .map(line => line.replace(/^-/, '').trim())
-    .filter(Boolean)
-    .map(img => asset(img));
+    .filter(Boolean);
 }
 
 /**

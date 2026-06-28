@@ -86,10 +86,12 @@ function NewsPage() {
                 });
                 const isExpanded = expandedNews === item.id;
                 const hasGallery = item.gallery && item.gallery.length > 0;
+                
+                // FIX: Extract src strings from Photo objects
                 const allImages = [
-                  item.cover,
-                  ...(item.gallery || [])
-                ].filter(Boolean) as string[];
+                  item.cover?.src,
+                  ...(item.gallery?.map(p => p.src) || [])
+                ].filter((src): src is string => !!src);
 
                 return (
                   <article key={item.id} className={styles.newsCard}>
@@ -98,8 +100,8 @@ function NewsPage() {
                       className={styles.newsCardCover}
                       onClick={() => allImages.length > 0 && openLightbox(allImages, 0)}
                     >
-                      {item.cover ? (
-                        <img src={item.cover} alt={item.title} loading="lazy" />
+                      {item.cover?.src ? (
+                        <img src={item.cover.src} alt={item.title} loading="lazy" />
                       ) : (
                         <div className={styles.newsCardCoverPlaceholder}>
                           <span className={styles.coverPlaceholderIcon}>
@@ -111,7 +113,7 @@ function NewsPage() {
                           </span>
                         </div>
                       )}
-                      {item.cover && (
+                      {item.cover?.src && (
                         <div className={styles.coverOverlay}>
                           <span>🔍</span>
                         </div>
@@ -140,14 +142,14 @@ function NewsPage() {
                         <div className={styles.newsCardGallery}>
                           {item.gallery!.map((img, idx) => (
                             <img
-                              key={idx}
-                              src={img}
+                              key={img.id}
+                              src={img.src}
                               alt={`${item.title} - фото ${idx + 1}`}
                               loading="lazy"
                               className={styles.newsCardGalleryImage}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                openLightbox(allImages, idx + 1);
+                                openLightbox(allImages, allImages.indexOf(img.src));
                               }}
                             />
                           ))}

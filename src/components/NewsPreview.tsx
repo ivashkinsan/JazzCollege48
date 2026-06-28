@@ -55,7 +55,12 @@ function NewsPreview({ news }: NewsPreviewProps) {
             const isExpanded = expandedNews === item.id;
             const hasFullContent = item.content && item.content.length > item.description.length;
             const hasGallery = item.gallery && item.gallery.length > 0;
-            const allImages = [item.cover, ...(item.gallery || [])].filter(Boolean) as string[];
+            
+            // FIX: Extract src strings from Photo objects
+            const allImages = [
+              item.cover?.src,
+              ...(item.gallery?.map(p => p.src) || [])
+            ].filter((src): src is string => !!src);
 
             return (
               <article key={item.id} className={styles.newsCard}>
@@ -64,9 +69,9 @@ function NewsPreview({ news }: NewsPreviewProps) {
                   className={styles.newsCardCover}
                   onClick={() => allImages.length > 0 && openLightbox(allImages, 0)}
                 >
-                  {item.cover ? (
+                  {item.cover?.src ? (
                     <>
-                      <img src={item.cover} alt={item.title} loading="lazy" />
+                      <img src={item.cover.src} alt={item.title} loading="lazy" />
                       <div className={styles.coverOverlay}>
                         <span>🔍</span>
                       </div>
@@ -104,16 +109,16 @@ function NewsPreview({ news }: NewsPreviewProps) {
                   {/* Мини-галерея */}
                   {hasGallery && isExpanded && (
                     <div className={styles.miniGallery}>
-                      {item.gallery!.map((img, idx) => (
+                      {item.gallery!.map((img) => (
                         <img
-                          key={idx}
-                          src={img}
-                          alt={`${item.title} — фото ${idx + 1}`}
+                          key={img.id}
+                          src={img.src}
+                          alt={`${item.title} — фото ${img.id}`}
                           loading="lazy"
                           className={styles.miniGalleryImage}
                           onClick={(e) => {
                             e.stopPropagation();
-                            openLightbox(allImages, idx + 1);
+                            openLightbox(allImages, allImages.indexOf(img.src));
                           }}
                         />
                       ))}

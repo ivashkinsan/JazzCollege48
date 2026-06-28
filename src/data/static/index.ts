@@ -8,5 +8,4 @@ export * from "./graduates";
 export * from "./navigation";
 export * from "./daiPrograms";
 export * from "./adminMembers";
-export * from "./photos";
 export * from "./videos";

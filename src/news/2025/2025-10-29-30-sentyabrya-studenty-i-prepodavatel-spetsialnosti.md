@@ -2,7 +2,7 @@
 title: "концертной программы в честь Областного слёта ветеранов войны и труда Серебряный волонтёр"
 date: 2025-10-30
 category: konzert
-cover: /news/images/2025/2025-10-29-30-sentyabrya-studenty-i-prepodavatel-spetsialnosti/cover.jpg
+coverImageId: kontsertnoy_programmy_v_chest_oblastnogo_slyota_vete_2025_01
 tags: []
 ---
 

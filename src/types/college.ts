@@ -54,9 +54,8 @@ export interface NewsItem {
   description: string;
   content?: string;
   category?: string;
-  image?: string;
-  cover?: string;
-  gallery?: string[];
+  cover?: Photo;
+  gallery?: Photo[];
 }
 
 export interface Specialty {
@@ -122,11 +121,18 @@ export interface AdminMember {
 
 export interface Photo {
   id: string;
-  title: string;
-  year: number;
-  category: 'концерты' | 'мастер-классы' | 'будни' | 'выпускные' | 'другое';
   src: string;
+  title?: string;
+  description?: string;
   thumbnail?: string;
+}
+
+export interface PhotoAlbum {
+  albumId: string;
+  albumTitle: string;
+  albumDate: string;
+  albumCategory: 'концерты' | 'мастер-классы' | 'будни' | 'выпускные' | 'другое';
+  photos: Photo[];
 }
 
 export interface Video {
@@ -152,8 +158,8 @@ export interface DaiProgram {
 export interface ExtendedNewsItem extends NewsItem {
   content?: string;
   category?: string;
-  cover?: string;
-  gallery?: string[];
+  cover?: Photo;
+  gallery?: Photo[];
 }
 
 // Расширенный интерфейс афиши для динамической загрузки
@@ -163,8 +169,8 @@ export interface AfishaItem {
   date: string;
   time?: string;
   venue?: string;
-  cover?: string;
+  cover?: Photo;
   content: string;
-  gallery?: string[];
+  gallery?: Photo[];
   tags?: string[];
 }

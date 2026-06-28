@@ -3,7 +3,7 @@ title: "Фестиваль «JAZZ-48» — молодежные коллекти
 date: 2024-04-22
 time: "18:00"
 venue: Концертный зал «УНИОН»
-cover: /afisha/images/2024/2024-04-22-dzhazovyy-festival-soberet-molodezhnye-kollektivy-rossii-v-l/cover.jpg
+coverImageId: festival_jazz_48_molodezhnye_kollektivy_rossii_v_lipeck_2024_01
 tags: []
 ---
 

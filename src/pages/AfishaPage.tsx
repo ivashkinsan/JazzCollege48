@@ -38,7 +38,12 @@ function AfishaPage() {
     const date = new Date(item.date);
     const isExpanded = expandedAfisha === item.id;
     const hasGallery = item.gallery && item.gallery.length > 0;
-    const allImages = [item.cover, ...(item.gallery || [])].filter(Boolean) as string[];
+    
+    // FIX: Extract src strings from Photo objects
+    const allImages = [
+      item.cover?.src,
+      ...(item.gallery?.map(p => p.src) || [])
+    ].filter((src): src is string => !!src);
 
     return (
       <article key={item.id} className={styles.afishaCard}>
@@ -47,14 +52,14 @@ function AfishaPage() {
           className={styles.afishaCardCover}
           onClick={() => allImages.length > 0 && openLightbox(allImages, 0)}
         >
-          {item.cover ? (
-            <img src={item.cover} alt={item.title} loading="lazy" />
+          {item.cover?.src ? (
+            <img src={item.cover.src} alt={item.title} loading="lazy" />
           ) : (
             <div className={styles.afishaCardCoverPlaceholder}>
               <span className={styles.coverPlaceholderIcon}>🎵</span>
             </div>
           )}
-          {item.cover && (
+          {item.cover?.src && (
             <div className={styles.coverOverlay}>
               <span>🔍</span>
             </div>
@@ -86,14 +91,14 @@ function AfishaPage() {
             <div className={styles.afishaCardGallery}>
               {item.gallery!.map((img, idx) => (
                 <img
-                  key={idx}
-                  src={img}
+                  key={img.id}
+                  src={img.src}
                   alt={`${item.title} - фото ${idx + 1}`}
                   loading="lazy"
                   className={styles.afishaCardGalleryImage}
                   onClick={(e) => {
                     e.stopPropagation();
-                    openLightbox(allImages, idx + 1);
+                    openLightbox(allImages, allImages.indexOf(img.src));
                   }}
                 />
               ))}

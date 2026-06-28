@@ -1,6 +1,10 @@
-import { asset } from '../utils/asset';
-import type { ExtendedNewsItem } from '../types/college';
-import { parseMarkdown, parseGallery, stripGallery } from './parser';
+import type { ExtendedNewsItem, Photo, PhotoAlbum } from '../types/college';
+import { parseMarkdown, parseGalleryIds, stripGallery } from './parser';
+import mediaManifest from './media-manifest.json';
+
+// Create a lookup map for efficient access to media items by ID.
+const allPhotos = (mediaManifest as PhotoAlbum[]).flatMap(album => album.photos);
+const mediaMap = new Map<string, Photo>(allPhotos.map(photo => [photo.id, photo]));
 
 const newsModules = import.meta.glob('../news/**/*.md', { query: '?raw', import: 'default' });
 
@@ -30,11 +34,18 @@ export async function loadNews(): Promise<ExtendedNewsItem[]> {
 
     if (parsed) {
         const { frontmatter, body } = parsed;
-        const { title, date, category, cover } = frontmatter;
-        const gallery = parseGallery(body);
+        const { title, date, category, coverImageId } = frontmatter;
+        
+        const galleryIds = parseGalleryIds(body);
         const cleanedBody = stripGallery(body);
 
         if (title && date) {
+            // Look up media objects from the manifest
+            const coverPhoto = coverImageId ? mediaMap.get(coverImageId) : undefined;
+            const galleryPhotos = galleryIds
+              .map(id => mediaMap.get(id))
+              .filter((item): item is Photo => !!item);
+
             loadedItems.push({
                 id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
                 title,
@@ -42,8 +53,8 @@ export async function loadNews(): Promise<ExtendedNewsItem[]> {
                 description: cleanedBody.slice(0, 250).replace(/[#*_~`]/g, '').trim(),
                 content: cleanedBody,
                 category,
-                cover: cover ? asset(cover) : undefined,
-                gallery: gallery
+                cover: coverPhoto,
+                gallery: galleryPhotos
             });
         }
     }

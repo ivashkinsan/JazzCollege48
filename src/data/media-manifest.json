@@ -1,0 +1,340 @@
+[
+  {
+    "albumId": "master-class-rakhmaninov-2024",
+    "albumTitle": "Мастер-класс студентов РГК им. Рахманинова",
+    "albumDate": "2024-02-06",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "mc_rakhmaninov_2024_01",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/cover.jpg",
+        "title": "Общее фото участников"
+      },
+      {
+        "id": "mc_rakhmaninov_2024_02",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-1.jpg",
+        "title": "Выступление на сцене"
+      },
+      {
+        "id": "mc_rakhmaninov_2024_03",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-2.jpg",
+        "title": "Работа с оркестром"
+      },
+      {
+        "id": "mc_rakhmaninov_2024_04",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-3.jpg",
+        "title": "Джем-сейшн"
+      },
+      {
+        "id": "mc_rakhmaninov_2024_05",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-4.jpg",
+        "title": "Соло на саксофоне"
+      },
+      {
+        "id": "mc_rakhmaninov_2024_06",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-5.jpg",
+        "title": "Взгляд из зала"
+      },
+      {
+        "id": "mc_rakhmaninov_2024_07",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-6.jpg",
+        "title": "Эмоции на сцене"
+      },
+      {
+        "id": "mc_rakhmaninov_2024_08",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-7.jpg",
+        "title": "Участники мастер-класса"
+      },
+      {
+        "id": "mc_rakhmaninov_2024_09",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-8.jpg",
+        "title": "За кулисами"
+      },
+      {
+        "id": "mc_rakhmaninov_2024_10",
+        "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-9.jpg",
+        "title": "Финальный аккорд"
+      }
+    ]
+  },
+  {
+    "albumId": "jazz-vecherinka-2026-01",
+    "albumTitle": "JAZZ-вечеринка в Доме музыки",
+    "albumDate": "2026-01-26",
+    "albumCategory": "концерты",
+    "photos": [
+      {
+        "id": "jazz_vecherinka_2026_01",
+        "src": "/media/2026/2026-01-26-jazz-vecherinka-dom-muzyki/cover.jpg",
+        "title": "Студенты на сцене с Липецким джазовым оркестром"
+      }
+    ]
+  },
+  {
+    "albumId": "dzhaz-v-polden-2026-01",
+    "albumTitle": "Глоток свежего 'Джаза в полдень'",
+    "albumDate": "2026-01-28",
+    "albumCategory": "концерты",
+    "photos": [
+      {
+        "id": "dzhaz_v_polden_2026_01",
+        "src": "/media/2026/2026-01-28-dzhaz-v-polden/cover.jpg",
+        "title": "Студенты и преподаватели на сцене"
+      }
+    ]
+  },
+  {
+    "albumId": "valeriya-baranova-uchastnitsa-rossiyskoy-studenchesk-2025",
+    "albumTitle": "Валерия Баранова — участница Российской студенческой весны в Ставрополе",
+    "albumDate": "2025-10-06",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_01",
+        "src": "/media/2025/2025-10-06-valeriya-baranova-studvesna/cover.jpg",
+        "title": "Валерия Баранова — участница Российской студенческой весны в Ставрополе"
+      },
+      {
+        "id": "valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_02",
+        "src": "/media/2025/2025-10-06-valeriya-baranova-studvesna/gallery-1.jpg",
+        "title": "Валерия Баранова — участница Российской студенческой весны в Ставрополе"
+      },
+      {
+        "id": "valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_03",
+        "src": "/media/2025/2025-10-06-valeriya-baranova-studvesna/gallery-2.jpg",
+        "title": "Валерия Баранова — участница Российской студенческой весны в Ставрополе"
+      }
+    ]
+  },
+  {
+    "albumId": "kontsertnoy-programmy-v-chest-oblastnogo-slyota-vete-2025",
+    "albumTitle": "концертной программы в честь Областного слёта ветеранов войны и труда Серебряный волонтёр",
+    "albumDate": "2025-10-29",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "kontsertnoy_programmy_v_chest_oblastnogo_slyota_vete_2025_01",
+        "src": "/media/2025/2025-10-29-slyot-veteranov/cover.jpg",
+        "title": "концертной программы в честь Областного слёта ветеранов войны и труда Серебряный волонтёр"
+      }
+    ]
+  },
+  {
+    "albumId": "21-noyabrya-studenty-spetsial-nosti-muzykal-noe-iskus-2025",
+    "albumTitle": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса",
+    "albumDate": "2025-11-23",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "21_noyabrya_studenty_spetsial_nosti_muzykal_noe_iskus_2025_01",
+        "src": "/media/2025/2025-11-23-vystuplenie-v-kise/cover.jpg",
+        "title": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса"
+      },
+      {
+        "id": "21_noyabrya_studenty_spetsial_nosti_muzykal_noe_iskus_2025_02",
+        "src": "/media/2025/2025-11-23-vystuplenie-v-kise/gallery-1.jpg",
+        "title": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса"
+      },
+      {
+        "id": "21_noyabrya_studenty_spetsial_nosti_muzykal_noe_iskus_2025_03",
+        "src": "/media/2025/2025-11-23-vystuplenie-v-kise/gallery-2.jpg",
+        "title": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса"
+      },
+      {
+        "id": "21_noyabrya_studenty_spetsial_nosti_muzykal_noe_iskus_2025_04",
+        "src": "/media/2025/2025-11-23-vystuplenie-v-kise/gallery-3.jpg",
+        "title": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледдже индустрии сервиса"
+      },
+      {
+        "id": "21_noyabrya_studenty_spetsial_nosti_muzykal_noe_iskus_2025_05",
+        "src": "/media/2025/2025-11-23-vystuplenie-v-kise/gallery-4.jpg",
+        "title": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса"
+      }
+    ]
+  },
+  {
+    "albumId": "v-kolledzhe-iskusstv-sostoyalsya-master-klass-ivana-ch-2025",
+    "albumTitle": "В колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса",
+    "albumDate": "2025-12-17",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "v_kolledzhe_iskusstv_sostoyalsya_master_klass_ivana_ch_2025_01",
+        "src": "/media/2025/2025-12-17-master-klass-ivan-chaga/cover.jpg",
+        "title": "В колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса"
+      },
+      {
+        "id": "v_kolledzhe_iskusstv_sostoyalsya_master_klass_ivana_ch_2025_02",
+        "src": "/media/2025/2025-12-17-master-klass-ivan-chaga/gallery-1.jpg",
+        "title": "В колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса"
+      }
+    ]
+  },
+  {
+    "albumId": "vesna-prishla-v-ritme-dzhaza-2026",
+    "albumTitle": "🎶 Весна пришла в ритме джаза! 🎶",
+    "albumDate": "2026-03-06",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "vesna_prishla_v_ritme_dzhaza_2026_01",
+        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/cover.jpg",
+        "title": "🎶 Весна пришла в ритме джаза! 🎶"
+      },
+      {
+        "id": "vesna_prishla_v_ritme_dzhaza_2026_02",
+        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/gallery-1.jpg",
+        "title": "🎶 Весна пришла в ритме джаза! 🎶"
+      },
+      {
+        "id": "vesna_prishla_v_ritme_dzhaza_2026_03",
+        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/gallery-2.jpg",
+        "title": "🎶 Весна пришла в ритме джаза! 🎶"
+      },
+      {
+        "id": "vesna_prishla_v_ritme_dzhaza_2026_04",
+        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/gallery-3.jpg",
+        "title": "🎶 Весна пришла в ритме джаза! 🎶"
+      },
+      {
+        "id": "vesna_prishla_v_ritme_dzhaza_2026_05",
+        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/gallery-4.jpg",
+        "title": "🎶 Весна пришла в ритме джаза! 🎶"
+      }
+    ]
+  },
+  {
+    "albumId": "11-12-marta-priglashaem-na-kontsert-vesna-v-ritmakh-2026",
+    "albumTitle": "11, 12 марта приглашаем на концерт «Весна в ритмах джаза…» тех, кто не смог 6-го марта",
+    "albumDate": "2026-03-10",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "11_12_marta_priglashaem_na_kontsert_vesna_v_ritmakh_2026_01",
+        "src": "/media/2026/2026-03-10-priglashenie-vesna-v-ritme-dzhaza/cover.jpg",
+        "title": "11, 12 марта приглашаем на концерт «Весна в ритмах джаза…» тех, кто не смог 6-го марта"
+      }
+    ]
+  },
+  {
+    "albumId": "12-marta-zavershilsya-nash-dzhazovyy-marafon-kontsert-2026",
+    "albumTitle": "12 марта завершился наш джазовый марафон! Концерт «Весна в ритмах джаза» по Пушкинской карте",
+    "albumDate": "2026-03-12",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "12_marta_zavershilsya_nash_dzhazovyy_marafon_kontsert_2026_01",
+        "src": "/media/2026/2026-03-12-marafon-zavershenie/cover.jpg",
+        "title": "12 марта завершился наш джазовый марафон! Концерт «Весна в ритмах джаза» по Пушкинской карте"
+      },
+      {
+        "id": "12_marta_zavershilsya_nash_dzhazovyy_marafon_kontsert_2026_02",
+        "src": "/media/2026/2026-03-12-marafon-zavershenie/gallery-1.jpg",
+        "title": "12 марта завершился наш джазовый марафон! Концерт «Весна в ритмах джаза» по Пушкинской карте"
+      },
+      {
+        "id": "12_marta_zavershilsya_nash_dzhazovyy_marafon_kontsert_2026_03",
+        "src": "/media/2026/2026-03-12-marafon-zavershenie/gallery-2.jpg",
+        "title": "12 марта завершился наш джазовый марафон! Концерт «Весна в ритмах джаза» по Пушкинской карте"
+      }
+    ]
+  },
+  {
+    "albumId": "pozdravlyaem-pobediteley-2026",
+    "albumTitle": "✨ Поздравляем победителей ✨",
+    "albumDate": "2026-03-23",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "pozdravlyaem_pobediteley_2026_01",
+        "src": "/media/2026/2026-03-23-pozdravlyaem-pobediteley/cover.jpg",
+        "title": "✨ Поздравляем победителей ✨"
+      },
+      {
+        "id": "pozdravlyaem_pobediteley_2026_02",
+        "src": "/media/2026/2026-03-23-pozdravlyaem-pobediteley/gallery-1.jpg",
+        "title": "✨ Поздравляем победителей ✨"
+      },
+      {
+        "id": "pozdravlyaem_pobediteley_2026_03",
+        "src": "/media/2026/2026-03-23-pozdravlyaem-pobediteley/gallery-2.jpg",
+        "title": "✨ Поздравляем победителей ✨"
+      }
+    ]
+  },
+  {
+    "albumId": "testovyy-dzhazovyy-ko-tsert-2026",
+    "albumTitle": "Тестовый джазовый концерт",
+    "albumDate": "2026-07-10",
+    "albumCategory": "концерты",
+    "photos": [
+      {
+        "id": "testovyy_dzhazovyy_ko_tsert_2026_01",
+        "src": "/media/2026/2026-07-10-testovyy-dzhazovyy-ko-tsert/band_photo.webp",
+        "title": "Тестовый джазовый концерт"
+      },
+      {
+        "id": "testovyy_dzhazovyy_ko_tsert_2026_02",
+        "src": "/media/2026/2026-07-10-testovyy-dzhazovyy-ko-tsert/cover.jpeg",
+        "title": "Тестовый джазовый концерт"
+      }
+    ]
+  },
+  {
+    "albumId": "testovaya-ovost-ob-uspesh-oy-sdache-sessii-2026",
+    "albumTitle": "Тестовая новость об успешной сдаче сессии",
+    "albumDate": "2026-06-28",
+    "albumCategory": "новости",
+    "photos": [
+      {
+        "id": "testovaya_ovost_ob_uspesh_oy_sdache_sessii_2026_01",
+        "src": "/media/2026/2026-06-28-testovaya-ovost-ob-uspesh-oy-sdache-sessii/cover.jpg",
+        "title": "Тестовая новость об успешной сдаче сессии"
+      },
+      {
+        "id": "testovaya_ovost_ob_uspesh_oy_sdache_sessii_2026_02",
+        "src": "/media/2026/2026-06-28-testovaya-ovost-ob-uspesh-oy-sdache-sessii/gallery_01.png",
+        "title": "Тестовая новость об успешной сдаче сессии"
+      }
+    ]
+  },
+  {
+    "albumId": "festival-jazz-48-molodezhnye-kollektivy-rossii-v-lipeck-2024",
+    "albumTitle": "Фестиваль «JAZZ-48» — молодежные коллективы России в Липецке",
+    "albumDate": "2024-04-22",
+    "albumCategory": "концерты",
+    "photos": [
+      {
+        "id": "festival_jazz_48_molodezhnye_kollektivy_rossii_v_lipeck_2024_01",
+        "src": "/media/2024/2024-04-22-dzhazovyy-festival-soberet-molodezhnye-kollektivy-rossii-v-l/cover.jpg",
+        "title": "Фестиваль «JAZZ-48» — молодежные коллективы России в Липецке"
+      }
+    ]
+  },
+  {
+    "albumId": "dzhazovye-portrety-sovetskiy-i-rossiyskiy-dzhaz-2025",
+    "albumTitle": "Джазовые портреты. Советский и российский джаз",
+    "albumDate": "2025-12-16",
+    "albumCategory": "концерты",
+    "photos": [
+      {
+        "id": "dzhazovye_portrety_sovetskiy_i_rossiyskiy_dzhaz_2025_01",
+        "src": "/media/2025/2025-12-16-dzhazovye-portrety-nova-projekt/cover.jpg",
+        "title": "Джазовые портреты. Советский и российский джаз"
+      }
+    ]
+  },
+  {
+    "albumId": "6-marta-v-1400-nas-zhdet-nastoyashchiy-prazdnik-posvyashchennyy-vesne-zhenshchine-i-konechno-lyubvi-2026",
+    "albumTitle": "6 марта в 14.00 нас ждет настоящий праздник, посвященный весне, женщине и, конечно, любви",
+    "albumDate": "2026-03-06",
+    "albumCategory": "концерты",
+    "photos": [
+      {
+        "id": "6_marta_v_1400_nas_zhdet_nastoyashchiy_prazdnik_posvyashchennyy_vesne_zhenshchine_i_konechno_lyubvi_2026_01",
+        "src": "/media/2026/2026-03-06-vesna-zhenshchina-i-lyubov/cover.jpg",
+        "title": "6 марта в 14.00 нас ждет настоящий праздник, посвященный весне, женщине и, конечно, любви"
+      }
+    ]
+  }
+]

@@ -2,11 +2,9 @@
 title: "✨ Поздравляем победителей ✨"
 date: 2026-03-23
 category: konkurs
-cover: /news/images/2026/2026-03-23-pozdravlyaem-pobediteley/cover.jpg
+coverImageId: pozdravlyaem_pobediteley_2026_01
 tags: []
----
-
-В Москве в Академии джаза состоялся XII Международный фестиваль-конкурс «Детский триумф джаза».
+---\n\n\n\nВ Москве в Академии джаза состоялся XII Международный фестиваль-конкурс «Детский триумф джаза».
 
 Конкурс проводился в два этапа: первый — отборочный по видеозаписям, второй — очные выступления. Председатель жюри — Народный артист РФ, лауреат государственной премии РФ ИГОРЬ БУТМАН.
 
@@ -18,3 +16,9 @@ tags: []
 <!-- gallery -->
 - /news/images/2026/2026-03-23-pozdravlyaem-pobediteley/gallery-1.jpg
 - /news/images/2026/2026-03-23-pozdravlyaem-pobediteley/gallery-2.jpg
+
+<!-- gallery -->
+- pozdravlyaem_pobediteley_2026_02\n- pozdravlyaem_pobediteley_2026_03
+
+<!-- gallery -->
+- pozdravlyaem_pobediteley_2026_02\n- pozdravlyaem_pobediteley_2026_03\n\n<!-- gallery -->\n- pozdravlyaem_pobediteley_2026_02\n- pozdravlyaem_pobediteley_2026_03\n\n<!-- gallery -->\n- pozdravlyaem_pobediteley_2026_02\n- pozdravlyaem_pobediteley_2026_03
