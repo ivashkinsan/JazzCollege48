@@ -263,42 +263,6 @@
     ]
   },
   {
-    "albumId": "testovyy-dzhazovyy-ko-tsert-2026",
-    "albumTitle": "Тестовый джазовый концерт",
-    "albumDate": "2026-07-10",
-    "albumCategory": "концерты",
-    "photos": [
-      {
-        "id": "testovyy_dzhazovyy_ko_tsert_2026_01",
-        "src": "/media/2026/2026-07-10-testovyy-dzhazovyy-ko-tsert/band_photo.webp",
-        "title": "Тестовый джазовый концерт"
-      },
-      {
-        "id": "testovyy_dzhazovyy_ko_tsert_2026_02",
-        "src": "/media/2026/2026-07-10-testovyy-dzhazovyy-ko-tsert/cover.jpeg",
-        "title": "Тестовый джазовый концерт"
-      }
-    ]
-  },
-  {
-    "albumId": "testovaya-ovost-ob-uspesh-oy-sdache-sessii-2026",
-    "albumTitle": "Тестовая новость об успешной сдаче сессии",
-    "albumDate": "2026-06-28",
-    "albumCategory": "новости",
-    "photos": [
-      {
-        "id": "testovaya_ovost_ob_uspesh_oy_sdache_sessii_2026_01",
-        "src": "/media/2026/2026-06-28-testovaya-ovost-ob-uspesh-oy-sdache-sessii/cover.jpg",
-        "title": "Тестовая новость об успешной сдаче сессии"
-      },
-      {
-        "id": "testovaya_ovost_ob_uspesh_oy_sdache_sessii_2026_02",
-        "src": "/media/2026/2026-06-28-testovaya-ovost-ob-uspesh-oy-sdache-sessii/gallery_01.png",
-        "title": "Тестовая новость об успешной сдаче сессии"
-      }
-    ]
-  },
-  {
     "albumId": "festival-jazz-48-molodezhnye-kollektivy-rossii-v-lipeck-2024",
     "albumTitle": "Фестиваль «JAZZ-48» — молодежные коллективы России в Липецке",
     "albumDate": "2024-04-22",
@@ -334,6 +298,19 @@
         "id": "6_marta_v_1400_nas_zhdet_nastoyashchiy_prazdnik_posvyashchennyy_vesne_zhenshchine_i_konechno_lyubvi_2026_01",
         "src": "/media/2026/2026-03-06-vesna-zhenshchina-i-lyubov/cover.jpg",
         "title": "6 марта в 14.00 нас ждет настоящий праздник, посвященный весне, женщине и, конечно, любви"
+      }
+    ]
+  },
+  {
+    "albumId": "dzhazovyy-dzhem-seyshn-v-biblioteke-2026",
+    "albumTitle": "Джазовый джем-сейшн в Библиотеке",
+    "albumDate": "2026-03-31",
+    "albumCategory": "концерты",
+    "photos": [
+      {
+        "id": "dzhazovyy_dzhem_seyshn_v_biblioteke_2026_01",
+        "src": "/media/2026/2026-03-31-dzhazovyy-dzhem-seyshn-v-biblioteke/cover.jpg",
+        "title": "Джазовый джем-сейшн в Библиотеке"
       }
     ]
   }

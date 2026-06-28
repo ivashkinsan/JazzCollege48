@@ -1,105 +1,135 @@
-.concertsList {
-  display: flex;
-  flex-direction: column;
+.concertsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--spacing-lg);
+  flex-wrap: wrap;
 }
 
+/* Карточка афиши */
 .concertCard {
   display: flex;
-  gap: var(--spacing-lg);
-  padding: var(--spacing-lg);
+  flex-direction: column;
+  padding: 0;
   background-color: var(--color-bg-tertiary);
   border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
   transition: all var(--transition-normal);
-}
-
-/* Светлая тема: тень */
-[data-theme='light'] .concertCard {
-  box-shadow: var(--shadow-sm);
 }
 
 .concertCard:hover {
   border-color: var(--color-accent);
-}
-
-/* Светлая тема: тень при наведении */
-[data-theme='light'] .concertCard:hover {
   box-shadow: var(--shadow-md);
 }
 
-.concertCardDate {
+/* Обложка афиши */
+.concertCardCover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 320px;
+  overflow: hidden;
+  background: var(--color-bg-secondary);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: var(--spacing-md);
-  min-width: 100px;
-  border-radius: var(--border-radius);
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-/* Тёмная тема: тёмный фон */
-[data-theme='dark'] .concertCardDate {
-  background-color: var(--color-bg);
+.concertCardCover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform var(--transition-normal);
 }
 
-/* Светлая тема: кремовый фон */
-[data-theme='light'] .concertCardDate {
-  background-color: var(--color-sand);
+.concertCard:hover .concertCardCover img {
+  transform: scale(1.02);
 }
 
-.concertCardDay {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  line-height: 1;
+/* Оверлей с лупой */
+.coverOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
 }
 
-.concertCardMonth {
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  margin-top: var(--spacing-xs);
+.concertCardCover:hover .coverOverlay {
+  opacity: 1;
 }
 
-/* Тёмная тема: белый текст */
-[data-theme='dark'] .concertCardMonth {
-  color: var(--color-white);
+.coverOverlay span {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
 }
 
-/* Светлая тема: тёмный текст */
-[data-theme='light'] .concertCardMonth {
-  color: var(--color-indigo);
+/* Заглушка для афиш без обложки */
+.concertCardCoverPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-tertiary) 100%);
 }
 
-.concertCardYear {
-  font-size: 0.75rem;
-  margin-top: 2px;
-}
-
-/* Тёмная тема: приглушённый текст */
-[data-theme='dark'] .concertCardYear {
-  color: var(--color-text-muted);
-}
-
-/* Светлая тема: более тёмный текст */
-[data-theme='light'] .concertCardYear {
-  color: var(--color-text-secondary);
+.coverPlaceholderIcon {
+  font-size: 4rem;
+  opacity: 0.5;
 }
 
 .concertCardContent {
+  padding: var(--spacing-lg);
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.concertCardTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
+/* Мета-данные (категория + дата) */
+.concertCardMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   margin-bottom: var(--spacing-sm);
 }
 
-/* Тёмная тема: белый текст */
+.concertCardCategory {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.concertCardDateText {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+[data-theme='light'] .concertCardDateText {
+  color: var(--color-text-secondary);
+}
+
+.concertCardTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.4;
+}
+
 [data-theme='dark'] .concertCardTitle {
   color: var(--color-white);
 }
 
-/* Светлая тема: тёмный текст */
 [data-theme='light'] .concertCardTitle {
   color: var(--color-indigo);
 }
@@ -110,13 +140,11 @@
   margin-bottom: var(--spacing-xs);
 }
 
-/* Тёмная тема: приглушённый текст */
 [data-theme='dark'] .concertCardVenue,
 [data-theme='dark'] .concertCardTime {
   color: var(--color-text-muted);
 }
 
-/* Светлая тема: более тёмный текст */
 [data-theme='light'] .concertCardVenue,
 [data-theme='light'] .concertCardTime {
   color: var(--color-text-secondary);
@@ -124,46 +152,26 @@
 
 .concertCardDescription {
   line-height: 1.7;
-  margin-top: var(--spacing-sm);
+  font-size: 0.9375rem;
+  margin-top: 0; /* Override default margin from NewsPreview */
 }
 
-/* Тёмная тема: светлый текст */
 [data-theme='dark'] .concertCardDescription {
   color: var(--color-text-secondary);
 }
 
-/* Светлая тема: тёмный текст */
 [data-theme='light'] .concertCardDescription {
   color: var(--color-charcoal);
 }
 
-.concertCardFree {
-  display: inline-block;
-  margin-top: var(--spacing-sm);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background-color: var(--color-accent);
-  color: var(--color-black);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  border-radius: var(--border-radius);
-}
-
+/* ===== Адаптивность ===== */
 @media (max-width: 768px) {
-  .concertCard {
-    flex-direction: column;
-    align-items: flex-start;
+  .concertsGrid {
+    grid-template-columns: 1fr;
   }
 
-  .concertCardDate {
-    flex-direction: row;
-    gap: var(--spacing-sm);
-    min-width: auto;
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .concertCardDay {
-    font-size: 1.25rem;
+  .concertCardCover {
+    max-height: 280px;
   }
 }
+

@@ -1,44 +1,96 @@
-import type { Concert } from '../types/college';
+import { useState } from 'react'; // Import useState
+import type { AfishaItem } from '../types/college';
 import styles from './Concerts.module.css';
+import Lightbox from './Lightbox'; // Import Lightbox
 
 interface ConcertsProps {
-  concerts: Concert[];
+  concerts: AfishaItem[];
 }
 
+const categoryLabels: Record<string, string> = {
+  концерты: '🎵 Концерт',
+  'мастер-класс': '🎓 Мастер-класс',
+  'фестиваль': '🎉 Фестиваль',
+  // Добавьте другие категории по мере необходимости
+};
+
 function Concerts({ concerts }: ConcertsProps) {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const openLightbox = (images: string[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
   return (
-    <section id="concerts" className="section section--dark">
-      <div className="container">
-        <div className="section__header">
-          <p className="section__subtitle">Афиша</p>
-          <h2 className="section__title">Предстоящие концерты</h2>
-        </div>
-        <div className={styles.concertsList}>
-          {concerts.map((concert) => {
-            const date = new Date(concert.date);
-            const day = date.toLocaleDateString('ru-RU', { day: 'numeric' });
-            const month = date.toLocaleDateString('ru-RU', { month: 'long' });
-            const year = date.toLocaleDateString('ru-RU', { year: 'numeric' });
-            return (
-              <article key={concert.id} className={styles.concertCard}>
-                <div className={styles.concertCardDate}>
-                  <span className={styles.concertCardDay}>{day}</span>
-                  <span className={styles.concertCardMonth}>{month}</span>
-                  <span className={styles.concertCardYear}>{year}</span>
+    <> {/* Use Fragment to return multiple elements */}
+      <div className={styles.concertsGrid}>
+        {concerts.map((concert) => {
+          const date = new Date(concert.date);
+          const dateStr = date.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          });
+          const primaryTag = concert.tags && concert.tags.length > 0 ? concert.tags[0] : '';
+          const category = primaryTag || 'концерты';
+
+          // For afisha, we only expect one cover image, so the gallery will contain only that.
+          const allImages = concert.cover?.src ? [concert.cover.src] : [];
+
+          return (
+            <article key={concert.id} className={styles.concertCard}>
+              <div
+                className={styles.concertCardCover}
+                onClick={() => allImages.length > 0 && openLightbox(allImages, 0)}
+              >
+                {concert.cover?.src ? (
+                  <>
+                    <img src={concert.cover.src} alt={concert.title} loading="lazy" />
+                    <div className={styles.coverOverlay}>
+                      <span>🔍</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className={styles.concertCardCoverPlaceholder}>
+                    <span className={styles.coverPlaceholderIcon}>
+                      {categoryLabels[category] || '🎵'}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.concertCardContent}>
+                <div className={styles.concertCardMeta}>
+                  {category && (
+                      <span className={styles.concertCardCategory}>
+                          {categoryLabels[category] || category}
+                      </span>
+                  )}
+                  <div className={styles.concertCardDateText}>{dateStr}</div>
                 </div>
-                <div className={styles.concertCardContent}>
-                  <h3 className={styles.concertCardTitle}>{concert.title}</h3>
-                  <p className={styles.concertCardVenue}>📍 {concert.venue}</p>
-                  {concert.time && <p className={styles.concertCardTime}>🕐 {concert.time}</p>}
-                  <p className={styles.concertCardDescription}>{concert.description}</p>
-                  {concert.isFree && <span className={styles.concertCardFree}>Вход свободный</span>}
-                </div>
-              </article>
-            );
-          })}
-        </div>
+
+                <h3 className={styles.concertCardTitle}>{concert.title}</h3>
+                <p className={styles.concertCardVenue}>📍 {concert.venue}</p>
+                {concert.time && <p className={styles.concertCardTime}>🕐 {concert.time}</p>}
+                <p className={styles.concertCardDescription}>{concert.content}</p>
+              </div>
+            </article>
+          );
+        })}
       </div>
-    </section>
+
+      {/* Lightbox */}
+      <Lightbox
+        images={lightboxImages}
+        initialIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
+    </>
   );
 }
 

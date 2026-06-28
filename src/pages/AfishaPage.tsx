@@ -1,183 +1,62 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { loadAfisha } from '../data';
 import type { AfishaItem } from '../types/college';
-import Lightbox from '../components/Lightbox';
-import styles from './AfishaPage.module.css';
+import Concerts from '../components/Concerts';
+import styles from './AfishaPage.module.css'; // Assuming we'll create this CSS module
 
 function AfishaPage() {
-  const [afishaData, setAfishaData] = useState<AfishaItem[]>([]);
-  const [expandedAfisha, setExpandedAfisha] = useState<string | null>(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [upcomingAfisha, setUpcomingAfisha] = useState<AfishaItem[]>([]);
+  const [pastAfisha, setPastAfisha] = useState<AfishaItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadAfisha().then((data) => {
-      console.log('[AfishaPage] Получено афиш:', data.length, data.map(a => a.title));
-      setAfishaData([...data]);
+      const now = new Date();
+      const upcoming = data
+        .filter(item => new Date(item.date) >= now)
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // Oldest to newest
+
+      const past = data
+        .filter(item => new Date(item.date) < now)
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Newest to oldest
+
+      setUpcomingAfisha(upcoming);
+      setPastAfisha(past);
+      setLoading(false);
     });
   }, []);
 
-  const toggleExpand = (id: string) => {
-    setExpandedAfisha(expandedAfisha === id ? null : id);
-  };
-
-  const openLightbox = (images: string[], index: number) => {
-    setLightboxImages(images);
-    setLightboxIndex(index);
-    setLightboxOpen(true);
-  };
-
-  // Разделяем на предстоящие и прошедшие
-  const now = new Date();
-  const upcoming = afishaData.filter(a => new Date(a.date) >= now);
-  const past = afishaData.filter(a => new Date(a.date) < now);
-
-  const renderAfishaCard = (item: AfishaItem) => {
-    const date = new Date(item.date);
-    const isExpanded = expandedAfisha === item.id;
-    const hasGallery = item.gallery && item.gallery.length > 0;
-    
-    // FIX: Extract src strings from Photo objects
-    const allImages = [
-      item.cover?.src,
-      ...(item.gallery?.map(p => p.src) || [])
-    ].filter((src): src is string => !!src);
-
-    return (
-      <article key={item.id} className={styles.afishaCard}>
-        {/* Обложка */}
-        <div
-          className={styles.afishaCardCover}
-          onClick={() => allImages.length > 0 && openLightbox(allImages, 0)}
-        >
-          {item.cover?.src ? (
-            <img src={item.cover.src} alt={item.title} loading="lazy" />
-          ) : (
-            <div className={styles.afishaCardCoverPlaceholder}>
-              <span className={styles.coverPlaceholderIcon}>🎵</span>
-            </div>
-          )}
-          {item.cover?.src && (
-            <div className={styles.coverOverlay}>
-              <span>🔍</span>
-            </div>
-          )}
-        </div>
-
-        <div className={styles.afishaCardContent}>
-          {/* Дата и время */}
-          <div className={styles.afishaCardMeta}>
-            <div className={styles.afishaCardDate}>
-              <span className={styles.dateDay}>{date.getDate()}</span>
-              <span className={styles.dateMonth}>
-                {date.toLocaleDateString('ru-RU', { month: 'short' })}
-              </span>
-              <span className={styles.dateYear}>{date.getFullYear()}</span>
-            </div>
-            {item.time && <div className={styles.afishaCardTime}>{item.time}</div>}
-            {item.venue && <div className={styles.afishaCardVenue}>{item.venue}</div>}
-          </div>
-
-          <h3 className={styles.afishaCardTitle}>{item.title}</h3>
-          <p className={styles.afishaCardDescription}>
-            {isExpanded ? item.content : (item.content || '').slice(0, 200)}
-            {!isExpanded && (item.content || '').length > 200 && '...'}
-          </p>
-
-          {/* Галерея */}
-          {hasGallery && isExpanded && (
-            <div className={styles.afishaCardGallery}>
-              {item.gallery!.map((img, idx) => (
-                <img
-                  key={img.id}
-                  src={img.src}
-                  alt={`${item.title} - фото ${idx + 1}`}
-                  loading="lazy"
-                  className={styles.afishaCardGalleryImage}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openLightbox(allImages, allImages.indexOf(img.src));
-                  }}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* Кнопка развернуть/свернуть */}
-          {(item.content || '').length > 200 && (
-            <button
-              className={styles.expandBtn}
-              onClick={() => toggleExpand(item.id)}
-            >
-              {isExpanded ? 'Свернуть' : 'Подробнее →'}
-            </button>
-          )}
-        </div>
-      </article>
-    );
-  };
+  if (loading) {
+    return <div className="container">Загрузка афиш...</div>;
+  }
 
   return (
-    <div className={styles.page}>
-      <section className={styles.hero}>
-        <div className="container">
-          <h1 className={styles.title}>Афиша</h1>
-          <p className={styles.subtitle}>
-            Предстоящие концерты и события эстрадного отделения
-          </p>
+    <section className="section">
+      <div className="container">
+        <div className="section__header">
+          <p className="section__subtitle">Афиша</p>
+          <h2 className="section__title">Все события</h2>
         </div>
-      </section>
 
-      {/* Предстоящие события */}
-      {upcoming.length > 0 && (
-        <section className={styles.afishaSection}>
-          <div className="container">
-            <h2 className={styles.sectionTitle}>🗓 Предстоящие события</h2>
-            <div className={styles.afishaGrid}>
-              {upcoming.map(renderAfishaCard)}
-            </div>
+        {upcomingAfisha.length > 0 && (
+          <div className={styles.categoryBlock}>
+            <h3 className={styles.categoryTitle}>Предстоящие события</h3>
+            <Concerts concerts={upcomingAfisha} />
           </div>
-        </section>
-      )}
+        )}
 
-      {/* Прошедшие события */}
-      {past.length > 0 && (
-        <section className={`${styles.afishaSection} ${styles.pastSection}`}>
-          <div className="container">
-            <h2 className={styles.sectionTitle}>Прошедшие события</h2>
-            <div className={styles.afishaGrid}>
-              {past.map(renderAfishaCard)}
-            </div>
+        {pastAfisha.length > 0 && (
+          <div className={styles.categoryBlock}>
+            <h3 className={styles.categoryTitle}>Прошедшие события</h3>
+            <Concerts concerts={pastAfisha} />
           </div>
-        </section>
-      )}
+        )}
 
-      {afishaData.length === 0 && (
-        <section className={styles.afishaSection}>
-          <div className="container">
-            <p className={styles.empty}>Афиша скоро будет обновлена</p>
-          </div>
-        </section>
-      )}
-
-      <footer className={styles.pageFooter}>
-        <div className="container">
-          <Link to="/" className={styles.backLink}>
-            ← На главную
-          </Link>
-        </div>
-      </footer>
-
-      {/* Lightbox */}
-      <Lightbox
-        images={lightboxImages}
-        initialIndex={lightboxIndex}
-        isOpen={lightboxOpen}
-        onClose={() => setLightboxOpen(false)}
-      />
-    </div>
+        {upcomingAfisha.length === 0 && pastAfisha.length === 0 && (
+          <p>Нет доступных событий.</p>
+        )}
+      </div>
+    </section>
   );
 }
 
