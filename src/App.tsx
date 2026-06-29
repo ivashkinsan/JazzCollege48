@@ -24,6 +24,7 @@ import DaiPage from './pages/DaiPage';
 import DepartmentPage from './pages/DepartmentPage';
 import NewsPage from './pages/NewsPage';
 import AfishaPage from './pages/AfishaPage';
+import LibraryPage from './pages/LibraryPage';
 import ScrollToHash from './components/ScrollToHash';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -75,6 +76,7 @@ function App() {
             <Route path="/photos" element={<PhotosPage />} />
             <Route path="/videos" element={<VideosPage />} />
             <Route path="/videos2" element={<VideosPage2 />} />
+            <Route path="/library" element={<LibraryPage />} />
           </Routes>
         </main>
         <Footer navigation={navigation} />

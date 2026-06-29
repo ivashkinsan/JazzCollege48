@@ -4,6 +4,7 @@ import albums from '../data/media-manifest.json';
 import Lightbox from '../components/Lightbox';
 import styles from './PhotosPage.module.css';
 import type { PhotoAlbum } from '../types/college';
+import { Helmet } from 'react-helmet-async';
 
 const categories = ['все', 'концерты', 'мастер-классы', "конкурсы", 'будни', 'выпускные', 'другое'];
 
@@ -37,6 +38,10 @@ function PhotosPage() {
 
   return (
     <div className={styles.page}>
+      <Helmet>
+        <title>Фотогалерея - JazzCollege48</title>
+        <meta name="description" content="Фотографии с концертов, мастер-классов, конкурсов и повседневной жизни эстрадного отделения Липецкого колледжа искусств." />
+      </Helmet>
       <section className={styles.hero}>
         <div className="container">
           <h1 className={styles.title}>Фотогалерея</h1>

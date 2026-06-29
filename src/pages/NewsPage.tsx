@@ -4,6 +4,7 @@ import { loadNews } from '../data';
 import type { ExtendedNewsItem } from '../types/college';
 import Lightbox from '../components/Lightbox';
 import styles from './NewsPage.module.css';
+import { Helmet } from 'react-helmet-async';
 
 const categoryLabels: Record<string, string> = {
   konzert: '🎵 Концерт',
@@ -42,6 +43,10 @@ function NewsPage() {
 
   return (
     <div className={styles.page}>
+      <Helmet>
+        <title>Новости отделения - JazzCollege48</title>
+        <meta name="description" content="Последние новости, события, мастер-классы и концерты эстрадного отделения Липецкого колледжа искусств." />
+      </Helmet>
       <section className={styles.hero}>
         <div className="container">
           <h1 className={styles.title}>Новости отделения</h1>

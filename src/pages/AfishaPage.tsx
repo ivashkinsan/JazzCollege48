@@ -3,6 +3,7 @@ import { loadAfisha } from '../data';
 import type { AfishaItem } from '../types/college';
 import Concerts from '../components/Concerts';
 import styles from './AfishaPage.module.css'; // Assuming we'll create this CSS module
+import { Helmet } from 'react-helmet-async';
 
 function AfishaPage() {
   const [upcomingAfisha, setUpcomingAfisha] = useState<AfishaItem[]>([]);
@@ -32,6 +33,10 @@ function AfishaPage() {
 
   return (
     <section className="section">
+      <Helmet>
+        <title>Афиша мероприятий - JazzCollege48</title>
+        <meta name="description" content="Полный список предстоящих и прошедших концертов, мастер-классов и событий эстрадного отделения Липецкого колледжа искусств." />
+      </Helmet>
       <div className="container">
         <div className="section__header">
           <p className="section__subtitle">Афиша</p>
