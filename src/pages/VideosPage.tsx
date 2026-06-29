@@ -19,6 +19,12 @@ const getEmbedUrl = (video: Video) => {
       const videoId = url.searchParams.get('v') || url.pathname.split('/').pop();
       return `https://www.youtube.com/embed/${videoId}`;
     }
+    if (video.source === 'yandex') {
+      // Transforms https://disk.yandex.ru/i/VIDEO_ID to an embeddable URL
+      if (url.pathname.startsWith('/i/')) {
+        return `https://disk.yandex.ru/client/disk${url.pathname}?embed=1`;
+      }
+    }
     if (video.source === 'vk') {
       // Example: https://vk.com/video-123_456
       const videoId = url.pathname.split('/').pop();

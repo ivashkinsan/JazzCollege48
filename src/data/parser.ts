@@ -1,4 +1,4 @@
-import { asset } from '../utils/asset';
+
 
 /**
  * Parses gallery image IDs from a markdown comment block.

@@ -5,29 +5,26 @@
 ```
 JazzCollege48/
 ├── .git/                          # Git-репозиторий
-├── .qwen/                         # Настройки IDE
 ├── dist/                          # Production-сборка (генерируется)
 ├── node_modules/                  # Зависимости npm
 ├── public/                        # Статические ресурсы
-│   ├── afisha/images/             # Постеры афиш (портрет А4)
-│   ├── foto/                      # Фотографии преподавателей
-│   ├── foto_nasha_gordost/        # Фото выпускников «Наша гордость»
-│   ├── new_for_sort/              # Сырые файлы для обработки
-│   ├── news/images/               # Фото новостей
-│   └── favicon.svg
+│   └── media/                     # **ЦЕНТРАЛИЗОВАННЫЙ КОНТЕНТ**
+│       ├── 2026/
+│       │   └── 2026-01-26-event/  # Папка с контентом события
+│       │       ├── cover.jpg
+│       │       └── my-event.md    # MD-файл события
+│       └── manifest.json          # Манифест для MD-файлов
 ├── scripts/                       # Скрипты обработки
-│   ├── add-news.js                # Добавление новостей
-│   ├── add-afisha.js              # Добавление афиш
-│   └── migrate-news.js            # Миграция .txt → .md
+│   ├── staging/                   # Папка для добавления нового контента
+│   │   ├── instructions/
+│   │   │   └── README.md          # Инструкция
+│   │   └── example-news/          # Пример для добавления новости
+│   └── add-content.js             # **ЕДИНЫЙ СКРИПТ ДОБАВЛЕНИЯ КОНТЕНТА**
 ├── src/                           # Исходный код
 │   ├── Docs/                      # Документация
-│   ├── afisha/                    # Markdown файлы афиш
 │   ├── assets/                    # Графические ресурсы
 │   ├── components/                # React-компоненты
 │   ├── data/                      # Модули с данными
-│   ├── news/                      # Markdown файлы новостей
-│   │   ├── 2025/
-│   │   └── 2026/
 │   ├── pages/                     # Страницы приложения
 │   ├── styles/                    # Глобальные стили
 │   ├── App.tsx                    # Корневой компонент
@@ -41,77 +38,39 @@ JazzCollege48/
 
 ## Детальное описание директорий
 
-### /src — Исходный код
-
-#### /src/components — React-компоненты
-
-| Компонент | Файлы | Назначение |
-|-----------|-------|------------|
-| Header | Header.tsx, Header.module.css | Шапка с навигацией |
-| Footer | Footer.tsx, Footer.module.css | Подвал сайта |
-| Hero | Hero.tsx, Hero.module.css | Главный экран |
-| About | About.tsx, About.module.css | Информация об отделении |
-| Specialties | Specialties.tsx, Specialties.module.css | Специальности |
-| Teachers | Teachers.tsx, Teachers.module.css | Карточки преподавателей |
-| Ensembles | Ensembles.tsx, Ensembles.module.css | Творческие коллективы |
-| Achievements | Achievements.tsx, Achievements.module.css | Достижения |
-| Graduates | Graduates.tsx, Graduates.module.css | Выпускники («Наша гордость») |
-| ConcertsPreview | ConcertsPreview.tsx, ConcertsPreview.module.css | 3 последних афиши на главной |
-| NewsPreview | NewsPreview.tsx, NewsPreview.module.css | 3 последних новости на главной |
-| Lightbox | Lightbox.tsx, Lightbox.module.css | Полноэкранный просмотр фото |
-| Admission | Admission.tsx, Admission.module.css | Поступающим |
-| Contacts | Contacts.tsx, Contacts.module.css | Контакты |
-
-#### /src/pages — Страницы
-
-| Страница | Файлы | Назначение |
-|----------|-------|------------|
-| NewsPage | NewsPage.tsx, NewsPage.module.css | Все новости |
-| AfishaPage | AfishaPage.tsx, AfishaPage.module.css | Афиша мероприятий |
-| GraduatesPage | GraduatesPage.tsx, GraduatesPage.module.css | Все выпускники |
-| AdminPage | AdminPage.tsx, AdminPage.module.css | Администрация |
-| PhotosPage | PhotosPage.tsx, PhotosPage.module.css | Фотогалерея |
-| VideosPage | VideosPage.tsx, VideosPage.module.css | Видеозаписи |
-| DaiPage | DaiPage.tsx, DaiPage.module.css | Детская академия искусств |
-
-#### /src/data — Модули данных
-
-| Файл | Описание |
-|------|----------|
-| collegeData.ts | Интерфейсы и данные приложения |
-
-Содержит:
-- TypeScript-интерфейсы для всех типов данных
-- Экспортируемые константы с данными
-- Навигационную структуру
-
-#### /src/assets — Графические ресурсы
-
-| Файл | Описание |
-|------|----------|
-| hero.png | Изображение для Hero-секции |
-
-#### /src/styles — Глобальные стили
-
-| Файл | Описание |
-|------|----------|
-| variables.css | CSS-переменные для темизации |
-| global.css | Глобальные стили (reset, container) |
-
-#### /src/Docs — Документация
-
-Документация проекта в формате Markdown.
-
----
-
 ### /public — Публичные ресурсы
-
 Статические файлы, копируемые в сборку без изменений.
 
+| Путь | Описание |
+|------|----------|
+| `/media/` | **Основная папка с контентом.** Здесь хранятся все материалы сайта (новости, афиши), сгруппированные по папкам `год/дата-событие`. Каждая папка содержит `.md` файл и все относящиеся к нему изображения. |
+| `/media/manifest.json` | **Манифест контента.** JSON-файл со списком всех `.md` файлов. Используется загрузчиками данных для обнаружения контента. |
+
+### /scripts — Скрипты обработки
+
+| Путь | Описание |
+|------|----------|
+| `/scripts/staging/` | **Рабочая область для контент-менеджера.** Сюда помещаются папки с новым контентом для обработки. |
+| `/scripts/add-content.js` | **Главный скрипт.** Обрабатывает папки в `staging`, создает `.md` файлы и изображения в `public/media`, обновляет манифесты. |
+
+### /src — Исходный код
+
+#### /src/data — Модули данных
+Отвечает за предоставление данных приложению.
 | Файл | Описание |
 |------|----------|
-| favicon.svg | Иконка сайта в формате SVG |
-| foto/*.jpg | Фотографии преподавателей |
+| `newsLoader.ts` | Логика загрузки новостей. |
+| `afishaLoader.ts` | Логика загрузки афиши. |
+| `parser.ts` | Общие функции для парсинга Markdown. |
+| `media-manifest.json` | **Манифест для фото.** JSON-файл, описывающий альбомы и фотографии. Используется страницей "Фотогалерея" и загрузчиками для связи `id` с изображениями. |
+| `static/` | Папка со статическими данными (преподаватели, навигация и т.д.), которые не меняются. |
+
+#### Другие папки в `/src`
+- `/src/components`: Переиспользуемые React-компоненты.
+- `/src/pages`: Компоненты-страницы (например, `NewsPage.tsx`).
+- `/src/assets`: Графические ресурсы для UI (иконки, лого и т.д.).
+- `/src/styles`: Глобальные стили.
+- `/src/Docs`: Документация проекта.
 
 ---
 

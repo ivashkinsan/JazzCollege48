@@ -5,7 +5,7 @@ import Lightbox from '../components/Lightbox';
 import styles from './PhotosPage.module.css';
 import type { PhotoAlbum } from '../types/college';
 
-const categories = ['все', 'концерты', 'мастер-классы', 'будни', 'выпускные', 'другое'];
+const categories = ['все', 'концерты', 'мастер-классы', "конкурсы", 'будни', 'выпускные', 'другое'];
 
 // Получение уникальных лет из альбомов
 const getUniqueYears = (albums: PhotoAlbum[]) => {

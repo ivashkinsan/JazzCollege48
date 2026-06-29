@@ -144,8 +144,9 @@
     gap: var(--spacing-sm) var(--spacing-md);
   }
 
-  .footerLogo {
-    height: 40px;
+  .footerLogoLink {
+    flex-direction: column;
+    gap: 0;
   }
 
   .footerLink {

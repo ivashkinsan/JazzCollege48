@@ -9,12 +9,13 @@ const categoryLabels: Record<string, string> = {
   konzert: '🎵 Концерт',
   konkurs: '🏆 Конкурс',
   masterclass: '🎓 Мастер-класс',
-  announcement: '📢 Объявление'
+  announcement: '📢 Объявление',
+  '["news"]': 'Новости'
 };
 
 function NewsPage() {
   const [newsData, setNewsData] = useState<ExtendedNewsItem[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const selectedCategory: string = '["news"]'; // Changed to const
   const [expandedNews, setExpandedNews] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
@@ -24,11 +25,10 @@ function NewsPage() {
     loadNews().then(setNewsData);
   }, []);
 
-  const categories = ['all', ...new Set(newsData.map(n => n.category).filter((cat): cat is string => Boolean(cat)))];
+  // Removed 'categories' variable
+  // const categories = [...new Set(newsData.map(n => n.category).filter((cat): cat is string => Boolean(cat)))];
 
-  const filteredNews = selectedCategory === 'all'
-    ? newsData
-    : newsData.filter(n => n.category === selectedCategory);
+  const filteredNews = newsData.filter(n => n.category === selectedCategory); // Always filter by selectedCategory
 
   const toggleExpand = (id: string) => {
     setExpandedNews(expandedNews === id ? null : id);
@@ -51,22 +51,6 @@ function NewsPage() {
         </div>
       </section>
 
-      <section className={styles.filtersSection}>
-        <div className="container">
-          <div className={styles.categoryFilters}>
-            {categories.map(cat => (
-              <button
-                key={cat}
-                className={`${styles.categoryBtn} ${selectedCategory === cat ? styles.categoryBtnActive : ''}`}
-                onClick={() => setSelectedCategory(cat)}
-              >
-                {cat === 'all' ? 'Все' : categoryLabels[cat] || cat}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className={styles.newsSection}>
         <div className="container">
           <div className={styles.resultsInfo}>
@@ -85,8 +69,9 @@ function NewsPage() {
                   year: 'numeric',
                 });
                 const isExpanded = expandedNews === item.id;
-                const hasGallery = item.gallery && item.gallery.length > 0;
-                
+                // Removed 'hasGallery' variable
+                // const hasGallery = item.gallery && item.gallery.length > 0;
+
                 // FIX: Extract src strings from Photo objects
                 const allImages = [
                   item.cover?.src,

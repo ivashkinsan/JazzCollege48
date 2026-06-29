@@ -142,7 +142,7 @@ export interface Video {
   videoUrl: string;
   thumbnail?: string;
   date: string;
-  source: 'rutube' | 'youtube' | 'vk';
+  source: 'rutube' | 'youtube' | 'vk' | 'yandex';
 }
 
 export interface DaiProgram {

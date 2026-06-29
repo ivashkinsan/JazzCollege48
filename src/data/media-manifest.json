@@ -248,7 +248,7 @@
     "albumId": "pozdravlyaem-pobediteley-2026",
     "albumTitle": "✨ Поздравляем победителей ✨",
     "albumDate": "2026-03-23",
-    "albumCategory": "мастер-классы",
+    "albumCategory": "конкурсы",
     "photos": [
       {
         "id": "pozdravlyaem_pobediteley_2026_01",
@@ -320,19 +320,6 @@
     ]
   },
   {
-    "albumId": "optional-event-slug-NaN",
-    "albumTitle": "Название концерта или события",
-    "albumDate": "YYYY-MM-DD",
-    "albumCategory": "без категории",
-    "photos": [
-      {
-        "id": "optional_event_slug_NaN_01",
-        "src": "/media/NaN/YYYY-MM-DD-optional-event-slug/cover.jpg",
-        "title": "Название концерта или события"
-      }
-    ]
-  },
-  {
     "albumId": "optional-award-slug-NaN",
     "albumTitle": "Название диплома или награды",
     "albumDate": "YYYY-MM-DD",
@@ -346,23 +333,10 @@
     ]
   },
   {
-    "albumId": "optional-news-slug-NaN",
-    "albumTitle": "Заголовок новости",
-    "albumDate": "YYYY-MM-DD",
-    "albumCategory": "без категории",
-    "photos": [
-      {
-        "id": "optional_news_slug_NaN_01",
-        "src": "/media/NaN/YYYY-MM-DD-optional-news-slug/cover.jpg",
-        "title": "Заголовок новости"
-      }
-    ]
-  },
-  {
     "albumId": "dzhaz-kontsert-biblioteka-2021-06-21-2021",
     "albumTitle": "ДЖАЗ КОНZЕРТ",
     "albumDate": "2021-06-21",
-    "albumCategory": "без категории",
+    "albumCategory": "концерты",
     "photos": [
       {
         "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_01",
@@ -463,6 +437,24 @@
         "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_20",
         "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_9.jpg",
         "title": "ДЖАЗ КОНZЕРТ"
+      }
+    ]
+  },
+  {
+    "albumId": "master-klass-merinova-2025",
+    "albumTitle": "Мастер-класс выпускницы Ростовской консерватории Екатерины Мериновой по джазовой импровизации",
+    "albumDate": "2025-10-30",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "merinova_master_klass_2025_01",
+        "src": "/media/2025/2025-10-30-na-spetsialnosti-muzykalnoe-iskusstvo-estrady/ekaterina_01.jpg",
+        "title": "Екатерина Меринова 1"
+      },
+      {
+        "id": "merinova_master_klass_2025_02",
+        "src": "/media/2025/2025-10-30-na-spetsialnosti-muzykalnoe-iskusstvo-estrady/ekaterina_02.jpg",
+        "title": "Екатерина Меринова 2"
       }
     ]
   }
