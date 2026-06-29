@@ -313,5 +313,152 @@
         "title": "Джазовый джем-сейшн в Библиотеке"
       }
     ]
+  },
+  {
+    "albumId": "optional-event-slug-NaN",
+    "albumTitle": "Название концерта или события",
+    "albumDate": "YYYY-MM-DD",
+    "albumCategory": "без категории",
+    "photos": [
+      {
+        "id": "optional_event_slug_NaN_01",
+        "src": "/media/NaN/YYYY-MM-DD-optional-event-slug/cover.jpg",
+        "title": "Название концерта или события"
+      }
+    ]
+  },
+  {
+    "albumId": "optional-award-slug-NaN",
+    "albumTitle": "Название диплома или награды",
+    "albumDate": "YYYY-MM-DD",
+    "albumCategory": "награды",
+    "photos": [
+      {
+        "id": "optional_award_slug_NaN_01",
+        "src": "/media/NaN/YYYY-MM-DD-optional-award-slug/cover.jpg",
+        "title": "Название диплома или награды"
+      }
+    ]
+  },
+  {
+    "albumId": "optional-news-slug-NaN",
+    "albumTitle": "Заголовок новости",
+    "albumDate": "YYYY-MM-DD",
+    "albumCategory": "без категории",
+    "photos": [
+      {
+        "id": "optional_news_slug_NaN_01",
+        "src": "/media/NaN/YYYY-MM-DD-optional-news-slug/cover.jpg",
+        "title": "Заголовок новости"
+      }
+    ]
+  },
+  {
+    "albumId": "dzhaz-kontsert-biblioteka-2021-06-21-2021",
+    "albumTitle": "ДЖАЗ КОНZЕРТ",
+    "albumDate": "2021-06-21",
+    "albumCategory": "без категории",
+    "photos": [
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_01",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/cover.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_02",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_1.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_03",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_10.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_04",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_11.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_05",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_12.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_06",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_13.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_07",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_14.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_08",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_15.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_09",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_16.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_10",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_17.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_11",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_18.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_12",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_19.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_13",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_2.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_14",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_3.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_15",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_4.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_16",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_5.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_17",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_6.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_18",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_7.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_19",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_8.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "id": "dzhaz_kontsert_biblioteka_2021_06_21_2021_20",
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_9.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      }
+    ]
   }
 ]

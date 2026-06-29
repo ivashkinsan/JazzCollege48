@@ -137,24 +137,7 @@ function NewsPage() {
                         {item.content && item.content.length > item.description.length && !isExpanded && '...'}
                       </p>
 
-                      {/* Галерея */}
-                      {hasGallery && isExpanded && (
-                        <div className={styles.newsCardGallery}>
-                          {item.gallery!.map((img, idx) => (
-                            <img
-                              key={img.id}
-                              src={img.src}
-                              alt={`${item.title} - фото ${idx + 1}`}
-                              loading="lazy"
-                              className={styles.newsCardGalleryImage}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                openLightbox(allImages, allImages.indexOf(img.src));
-                              }}
-                            />
-                          ))}
-                        </div>
-                      )}
+
 
                       {/* Кнопка развернуть/свернуть */}
                       {item.content && item.content.length > item.description.length && (

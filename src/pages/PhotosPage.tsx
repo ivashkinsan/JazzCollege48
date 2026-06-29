@@ -25,7 +25,7 @@ function PhotosPage() {
     return (albums as PhotoAlbum[]).filter((album) => {
       const yearMatch = selectedYear === 'all' || new Date(album.albumDate).getFullYear() === selectedYear;
       const categoryMatch = selectedCategory === 'все' || album.albumCategory === selectedCategory;
-      return yearMatch && categoryMatch;
+      return yearMatch && categoryMatch && album.photos.length > 1;
     });
   }, [selectedYear, selectedCategory]);
 
