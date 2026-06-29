@@ -1,7 +1,7 @@
 ---
 title: "12 марта завершился наш джазовый марафон! Концерт «Весна в ритмах джаза» по Пушкинской карте"
 date: 2026-03-12
-category: konzert
+category: ["news"]
 coverImageId: 12_marta_zavershilsya_nash_dzhazovyy_marafon_kontsert_2026_01
 tags: []
 ---\n\n\n\n12марта завершился наш джазовый марафон!На концерте «Весна в ритмах

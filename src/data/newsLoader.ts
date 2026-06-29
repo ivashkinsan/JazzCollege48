@@ -6,8 +6,6 @@ import mediaManifest from './media-manifest.json';
 const allPhotos = (mediaManifest as PhotoAlbum[]).flatMap(album => album.photos);
 const mediaMap = new Map<string, Photo>(allPhotos.map(photo => [photo.id, photo]));
 
-const newsModules = import.meta.glob('../news/**/*.md', { query: '?raw', import: 'default' });
-
 export const news: ExtendedNewsItem[] = [];
 let newsLoaded = false;
 let newsLoading = false;
@@ -26,43 +24,57 @@ export async function loadNews(): Promise<ExtendedNewsItem[]> {
   }
 
   newsLoading = true;
-  const loadedItems: ExtendedNewsItem[] = [];
-  for (const path in newsModules) {
-    const rawContent = await newsModules[path]() as string;
-    const content = rawContent;
-    const parsed = parseMarkdown(content);
+  try {
+    const response = await fetch('/media/manifest.json');
+    if (!response.ok) {
+        throw new Error('Failed to fetch content manifest');
+    }
+    const manifest = await response.json() as string[];
 
-    if (parsed) {
-        const { frontmatter, body } = parsed;
-        const { title, date, category, coverImageId } = frontmatter;
-        
-        const galleryIds = parseGalleryIds(body);
-        const cleanedBody = stripGallery(body);
+    const fetchPromises = manifest.map(path => fetch(path).then(res => res.text()));
+    const allRawContent = await Promise.all(fetchPromises);
+    
+    const loadedItems: ExtendedNewsItem[] = [];
+    for (const rawContent of allRawContent) {
+        const parsed = parseMarkdown(rawContent);
 
-        if (title && date) {
-            // Look up media objects from the manifest
-            const coverPhoto = coverImageId ? mediaMap.get(coverImageId) : undefined;
-            const galleryPhotos = galleryIds
-              .map(id => mediaMap.get(id))
-              .filter((item): item is Photo => !!item);
+        if (parsed && parsed.frontmatter.category?.replace(/[\[\]"]/g, '').split(',').map(c => c.trim()).includes('news')) {
+            const { frontmatter, body } = parsed;
+            const { title, date, category, coverImageId } = frontmatter;
+            
+            const galleryIds = parseGalleryIds(body);
+            const cleanedBody = stripGallery(body);
 
-            loadedItems.push({
-                id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
-                title,
-                date,
-                description: cleanedBody.slice(0, 250).replace(/[#*_~`]/g, '').trim(),
-                content: cleanedBody,
-                category,
-                cover: coverPhoto,
-                gallery: galleryPhotos
-            });
+            if (title && date) {
+                const coverPhoto = coverImageId ? mediaMap.get(coverImageId) : undefined;
+                const galleryPhotos = galleryIds
+                  .map(id => mediaMap.get(id))
+                  .filter((item): item is Photo => !!item);
+
+                loadedItems.push({
+                    id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
+                    title,
+                    date,
+                    description: cleanedBody.slice(0, 250).replace(/[#*_~`]/g, '').trim(),
+                    content: cleanedBody,
+                    category,
+                    cover: coverPhoto,
+                    gallery: galleryPhotos
+                });
+            }
         }
     }
-  }
 
-  loadedItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  news.splice(0, news.length, ...loadedItems);
-  newsLoaded = true;
-  newsLoading = false;
+    loadedItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    news.splice(0, news.length, ...loadedItems);
+    newsLoaded = true;
+
+  } catch (error) {
+    console.error("Error loading news content:", error);
+    newsLoaded = true; // Prevent retries
+  } finally {
+    newsLoading = false;
+  }
+  
   return news;
 }

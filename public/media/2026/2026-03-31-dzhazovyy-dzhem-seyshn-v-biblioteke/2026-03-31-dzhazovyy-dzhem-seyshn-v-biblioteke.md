@@ -1,6 +1,7 @@
 ---
 title: "Джазовый джем-сейшн в Библиотеке"
 date: 2026-03-31
+category: ["afisha"]
 time: "19:00"
 venue: Библиотека, Октябрьская, 28, 3 этаж
 coverImageId: dzhazovyy_dzhem_seyshn_v_biblioteke_2026_01

@@ -1,7 +1,7 @@
 ---
 title: "✨ Поздравляем победителей ✨"
 date: 2026-03-23
-category: konkurs
+category: ["news"]
 coverImageId: pozdravlyaem_pobediteley_2026_01
 tags: []
 ---\n\n\n\nВ Москве в Академии джаза состоялся XII Международный фестиваль-конкурс «Детский триумф джаза».

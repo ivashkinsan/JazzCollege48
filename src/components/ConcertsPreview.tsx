@@ -31,7 +31,14 @@ function ConcertsPreview() {
   // Берём только предстоящие события, сортируем от ближайших к дальним (максимум 3)
   const now = new Date();
   const upcoming = afishaData
-    .filter(a => new Date(a.date) >= now)
+    .filter(a => {
+      // Сравниваем только даты, чтобы избежать проблем с часовыми поясами
+      const eventDate = new Date(a.date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      // Показывать событие, если оно сегодня или в будущем
+      return eventDate >= today;
+    })
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .slice(0, 3);
 

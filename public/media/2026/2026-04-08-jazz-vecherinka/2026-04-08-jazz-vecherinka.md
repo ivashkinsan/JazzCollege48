@@ -1,6 +1,7 @@
 ---
 title: "JAZZ-вечеринка — история и многообразие джаза"
 date: 2026-04-08
+category: ["afisha"]
 time: "19:00"
 venue: Липецкий Дом музыки
 coverImageId: jazz_vecherinka_2026_01

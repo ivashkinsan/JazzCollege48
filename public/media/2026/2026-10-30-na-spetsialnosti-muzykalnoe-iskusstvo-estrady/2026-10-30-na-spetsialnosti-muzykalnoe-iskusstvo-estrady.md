@@ -1,7 +1,7 @@
 ---
 title: "Мастер-класс выпускницы Ростовской консерватории Екатерины Мериновой по джазовой импровизации"
 date: 2026-10-30
-category: masterclass
+category: ["news"]
 cover: /news/images/2026/2026-10-30-master-klass-merinovoy/cover.jpg
 tags: []
 ---

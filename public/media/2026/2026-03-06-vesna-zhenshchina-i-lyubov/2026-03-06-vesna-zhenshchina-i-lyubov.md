@@ -1,6 +1,7 @@
 ---
 title: "6 марта в 14.00 нас ждет настоящий праздник, посвященный весне, женщине и, конечно, любви"
 date: 2026-03-06
+category: ["afisha"]
 time: "14:00"
 venue: "Концертный зал ЛОКИ"
 coverImageId: 6_marta_v_1400_nas_zhdet_nastoyashchiy_prazdnik_posvyashchennyy_vesne_zhenshchine_i_konechno_lyubvi_2026_01

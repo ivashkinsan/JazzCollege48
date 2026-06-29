@@ -1,7 +1,7 @@
 ---
 title: "Глоток свежего \"Джаза в полдень\"🎷🔥🪘🔥🎹🔥🎸🔥🎺: студенты зажигали!"
 date: 2026-01-28
-category: konzert
+category: ["news"]
 coverImageId: dzhaz_v_polden_2026_01
 tags: []
 ---

@@ -1,7 +1,7 @@
 ---
 title: "🎶 Весна пришла в ритме джаза! 🎶"
 date: 2026-03-06
-category: konzert
+category: ["news"]
 coverImageId: vesna_prishla_v_ritme_dzhaza_2026_01
 tags: []
 ---\n\n\n\n🎶 Весна пришла в ритме джаза! 🎶

@@ -1,6 +1,7 @@
 ---
 title: "Фестиваль «JAZZ-48» — молодежные коллективы России в Липецке"
 date: 2024-04-22
+category: ["afisha"]
 time: "18:00"
 venue: Концертный зал «УНИОН»
 coverImageId: festival_jazz_48_molodezhnye_kollektivy_rossii_v_lipeck_2024_01

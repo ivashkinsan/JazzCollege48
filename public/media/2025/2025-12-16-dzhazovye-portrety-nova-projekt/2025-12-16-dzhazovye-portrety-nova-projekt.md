@@ -1,6 +1,7 @@
 ---
 title: "Джазовые портреты. Советский и российский джаз"
 date: 2025-12-16
+category: ["afisha"]
 time: "19:00"
 venue: Концертный зал «Унион» им. Т. Н. Хренникова
 coverImageId: dzhazovye_portrety_sovetskiy_i_rossiyskiy_dzhaz_2025_01

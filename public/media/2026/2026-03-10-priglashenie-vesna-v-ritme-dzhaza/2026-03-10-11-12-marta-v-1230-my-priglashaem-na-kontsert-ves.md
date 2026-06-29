@@ -1,7 +1,7 @@
 ---
 title: "11, 12 марта приглашаем на концерт «Весна в ритмах джаза…» тех, кто не смог 6-го марта"
 date: 2026-03-10
-category: konzert
+category: ["news"]
 coverImageId: 11_12_marta_priglashaem_na_kontsert_vesna_v_ritmakh_2026_01
 tags: []
 ---

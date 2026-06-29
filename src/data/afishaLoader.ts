@@ -6,8 +6,6 @@ import mediaManifest from './media-manifest.json';
 const allPhotos = (mediaManifest as PhotoAlbum[]).flatMap(album => album.photos);
 const mediaMap = new Map<string, Photo>(allPhotos.map(photo => [photo.id, photo]));
 
-const afishaModules = import.meta.glob('../afisha/**/*.md', { query: '?raw', import: 'default' });
-
 export const afisha: AfishaItem[] = [];
 let afishaLoaded = false;
 let afishaLoading = false;
@@ -26,43 +24,56 @@ export async function loadAfisha(): Promise<AfishaItem[]> {
     }
 
     afishaLoading = true;
-    const loadedItems: AfishaItem[] = [];
-    for (const path in afishaModules) {
-        const rawContent = await afishaModules[path]() as string;
-        const parsed = parseMarkdown(rawContent);
+    try {
+        const response = await fetch('/media/manifest.json');
+        if (!response.ok) {
+            throw new Error('Failed to fetch content manifest');
+        }
+        const manifest = await response.json() as string[];
 
-        if (parsed) {
-            const { frontmatter, body } = parsed;
-            const { title, date, time, venue, coverImageId, tags: tagsStr } = frontmatter;
-            
-            const galleryIds = parseGalleryIds(body);
-            const cleanedBody = stripGallery(body);
+        const fetchPromises = manifest.map(path => fetch(path).then(res => res.text()));
+        const allRawContent = await Promise.all(fetchPromises);
 
-            if (title && date) {
-                // Look up media objects from the manifest
-                const coverPhoto = coverImageId ? mediaMap.get(coverImageId) : undefined;
-                const galleryPhotos = galleryIds
-                    .map(id => mediaMap.get(id))
-                    .filter((item): item is Photo => !!item);
+        const loadedItems: AfishaItem[] = [];
+        for (const rawContent of allRawContent) {
+            const parsed = parseMarkdown(rawContent);
 
-                loadedItems.push({
-                    id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
-                    title,
-                    date,
-                    time: time || undefined,
-                    venue: venue || undefined,
-                    cover: coverPhoto,
-                    content: cleanedBody,
-                    gallery: galleryPhotos,
-                    tags: tagsStr ? tagsStr.replace(/[\[\]]/g, '').split(',').map(t => t.trim()).filter(Boolean) : []
-                });
+            if (parsed && parsed.frontmatter.category?.replace(/[\[\]"]/g, '').split(',').map(c => c.trim()).includes('afisha')) {
+                const { frontmatter, body } = parsed;
+                const { title, date, time, venue, coverImageId, tags: tagsStr } = frontmatter;
+                
+                const galleryIds = parseGalleryIds(body);
+                const cleanedBody = stripGallery(body);
+
+                if (title && date) {
+                    const coverPhoto = coverImageId ? mediaMap.get(coverImageId) : undefined;
+                    const galleryPhotos = galleryIds
+                        .map(id => mediaMap.get(id))
+                        .filter((item): item is Photo => !!item);
+
+                    loadedItems.push({
+                        id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
+                        title,
+                        date,
+                        time: time || undefined,
+                        venue: venue || undefined,
+                        cover: coverPhoto,
+                        content: cleanedBody,
+                        gallery: galleryPhotos,
+                        tags: tagsStr ? tagsStr.replace(/[\[\]]/g, '').split(',').map(t => t.trim()).filter(Boolean) : []
+                    });
+                }
             }
         }
-    }
 
-    loadedItems.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    afisha.splice(0, afisha.length, ...loadedItems);
-    afishaLoaded = true;
-    afishaLoading = false;
+        loadedItems.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        afisha.splice(0, afisha.length, ...loadedItems);
+        afishaLoaded = true;
+    } catch (error) {
+        console.error("Error loading afisha content:", error);
+        afishaLoaded = true; // Prevent retries on failure
+    } finally {
+        afishaLoading = false;
+    }
     return afisha;
 }
