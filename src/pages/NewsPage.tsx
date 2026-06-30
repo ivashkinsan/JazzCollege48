@@ -5,6 +5,7 @@ import type { ExtendedNewsItem } from '../types/college';
 import Lightbox from '../components/Lightbox';
 import styles from './NewsPage.module.css';
 import { Helmet } from 'react-helmet-async';
+import { searchNews } from '../utils/search';
 
 const categoryLabels: Record<string, string> = {
   konzert: '🎵 Концерт',
@@ -16,20 +17,23 @@ const categoryLabels: Record<string, string> = {
 
 function NewsPage() {
   const [newsData, setNewsData] = useState<ExtendedNewsItem[]>([]);
-  const selectedCategory: string = '["news"]'; // Changed to const
+  const selectedCategory: string = '["news"]';
   const [expandedNews, setExpandedNews] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState(''); // New state for search query
 
   useEffect(() => {
     loadNews().then(setNewsData);
   }, []);
 
-  // Removed 'categories' variable
-  // const categories = [...new Set(newsData.map(n => n.category).filter((cat): cat is string => Boolean(cat)))];
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
 
-  const filteredNews = newsData.filter(n => n.category === selectedCategory); // Always filter by selectedCategory
+  const filteredByCategory = newsData.filter(n => n.category === selectedCategory);
+  const filteredNews = searchNews(searchQuery, filteredByCategory); // Use searchNews function
 
   const toggleExpand = (id: string) => {
     setExpandedNews(expandedNews === id ? null : id);
@@ -53,6 +57,13 @@ function NewsPage() {
           <p className={styles.subtitle}>
             Концерты, мастер-классы, конкурсы и события эстрадного отделения
           </p>
+          <input
+            type="text"
+            placeholder="Поиск новостей..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className={styles.searchInput}
+          />
         </div>
       </section>
 

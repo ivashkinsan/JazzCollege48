@@ -1,0 +1,58 @@
+.listContainer {
+    width: 100%;
+}
+
+.listContainer h2 {
+    color: #4a90e2;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #aaa;
+}
+
+.error {
+    color: #ff3b30;
+}
+
+.contentTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+.contentTable th, .contentTable td {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.contentTable th {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.contentTable tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.editButton {
+    background-color: #3a6a9e;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.editButton:hover {
+    background-color: #4a90e2;
+}

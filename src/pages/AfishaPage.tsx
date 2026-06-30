@@ -4,28 +4,41 @@ import type { AfishaItem } from '../types/college';
 import Concerts from '../components/Concerts';
 import styles from './AfishaPage.module.css'; // Assuming we'll create this CSS module
 import { Helmet } from 'react-helmet-async';
+import { searchAfisha } from '../utils/search';
 
 function AfishaPage() {
+  const [allAfisha, setAllAfisha] = useState<AfishaItem[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [upcomingAfisha, setUpcomingAfisha] = useState<AfishaItem[]>([]);
   const [pastAfisha, setPastAfisha] = useState<AfishaItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadAfisha().then((data) => {
-      const now = new Date();
-      const upcoming = data
-        .filter(item => new Date(item.date) >= now)
-        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // Oldest to newest
-
-      const past = data
-        .filter(item => new Date(item.date) < now)
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Newest to oldest
-
-      setUpcomingAfisha(upcoming);
-      setPastAfisha(past);
+      setAllAfisha(data);
       setLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    const filteredAfisha = searchAfisha(searchQuery, allAfisha);
+    const now = new Date();
+    
+    const upcoming = filteredAfisha
+      .filter(item => new Date(item.date) >= now)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+    const past = filteredAfisha
+      .filter(item => new Date(item.date) < now)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    setUpcomingAfisha(upcoming);
+    setPastAfisha(past);
+  }, [searchQuery, allAfisha]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
 
   if (loading) {
     return <div className="container">Загрузка афиш...</div>;
@@ -41,6 +54,13 @@ function AfishaPage() {
         <div className="section__header">
           <p className="section__subtitle">Афиша</p>
           <h2 className="section__title">Все события</h2>
+          <input
+            type="text"
+            placeholder="Поиск событий..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className={styles.searchInput}
+          />
         </div>
 
         {upcomingAfisha.length > 0 && (

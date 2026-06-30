@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import Imagemin from 'unplugin-imagemin/vite';
+import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,6 +21,14 @@ export default defineConfig({
       localsConvention: 'camelCaseOnly',
       scopeBehaviour: 'local',
       generateScopedName: '[name]__[local]--[hash:base64:5]',
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        admin: resolve(__dirname, 'admin.html'),
+      },
     },
   },
 })

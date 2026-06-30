@@ -1,0 +1,53 @@
+.previewWrapper {
+    background: #242424;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+}
+
+.previewWrapper h2 {
+    color: #4a90e2;
+    border-bottom: 1px solid #444;
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.previewCover {
+    width: 100%;
+    height: 220px;
+    background-color: #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 1.5rem;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid #444;
+}
+
+.pathPreview {
+    margin-top: 1.5rem;
+    border-top: 1px solid #444;
+    padding-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.pathPreview h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.pathPreview code {
+    background-color: #1a1a1a;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    word-break: break-all;
+}
