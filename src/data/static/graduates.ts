@@ -105,4 +105,18 @@ export const graduates: Graduate[] = [
     workplace: "Ростовский музыкальный театр",
     bio: "Ведущая солистка мюзиклов, гастролирует по России",
   },
+  {
+    id: "7",
+    name: "Кокшин Дмитрий Николаевич",
+    graduationYear: 2003,
+    position: "саксофон",
+    image: asset("/foto/Kokshin.jpg"),
+  },
+  {
+    id: "8",
+    name: "Ивашкин Александр Владимирович",
+    graduationYear: 2004,
+    position: "фортепиано",
+    image: asset("/foto/Ivashkin.jpg"),
+  },
 ];

@@ -2,18 +2,18 @@ import type { NavigationEntry } from "../../types/college";
 
 export const navigation: NavigationEntry[] = [
   { id: "about", label: "О нас", href: "#about" },
-  { id: "specialties", label: "Специальности", href: "#specialties" },
   {
     id: "department",
     label: "Отделение",
     items: [
-      { id: "orchestra", label: "Оркестр", href: "/department" },
+      { id: "specialties", label: "Специальности", href: "#specialties" },
       { id: "teachers", label: "Преподаватели", href: "#teachers" },
+      { id: "orchestra", label: "Оркестр", href: "/department" },
+      { id: "graduates", label: "Выпускники", href: "/graduates" },
       { id: "admin", label: "Администрация", href: "/admin" },
       { id: "dai", label: "ДАИ", href: "/dai" },
     ],
   },
-  { id: "graduates", label: "Выпускники", href: "/graduates" },
   { id: "afisha", label: "Афиша", href: "/afisha" },
   { id: "news", label: "Новости", href: "/news" },
   {

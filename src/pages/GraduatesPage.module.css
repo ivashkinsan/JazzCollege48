@@ -29,16 +29,39 @@
 
 /* Вкладки */
 .tabsSection {
-  padding: var(--spacing-xxl) 0;
+  padding: var(--spacing-md) 0;
   flex: 1;
+  position: sticky;
+  top: var(--header-height);
+  z-index: 10;
+  background-color: var(--color-bg-secondary); /* Add background to avoid content showing through */
+  border-bottom: 1px solid var(--border-color); /* Match PhotosPage */
 }
 
 .tabs {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--spacing-sm);
   justify-content: center;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-md); /* Reduced from var(--spacing-xl) */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+  padding-bottom: 8px; /* Space for scrollbar */
+  margin-bottom: calc(var(--spacing-md) - 8px); /* Compensate for padding */
+}
+
+.tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent);
+  border-radius: 2px;
 }
 
 .tab {
@@ -51,6 +74,8 @@
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .tab:hover:not(:disabled) {
@@ -106,8 +131,8 @@
 
 .imageWrapper {
   position: relative;
-  height: 240px;
   overflow: hidden;
+  aspect-ratio: 4 / 5;
 }
 
 .image {

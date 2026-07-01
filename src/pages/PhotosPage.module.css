@@ -29,9 +29,12 @@
 
 /* Фильтры */
 .filtersSection {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-md) 0;
   background-color: var(--color-bg-secondary);
   border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: var(--header-height);
+  z-index: 10;
 }
 
 .filters {
@@ -44,21 +47,43 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  flex-wrap: wrap;
 }
 
 .filterLabel {
   font-weight: 600;
   color: var(--color-text);
   font-size: 0.95rem;
+  flex-shrink: 0;
 }
 
 .yearButtons,
 .categoryButtons {
   display: flex;
   gap: var(--spacing-sm);
-  flex-wrap: wrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+  padding-bottom: 8px; /* Space for scrollbar */
+  margin-bottom: -8px; /* Compensate for padding */
 }
+
+.yearButtons::-webkit-scrollbar,
+.categoryButtons::-webkit-scrollbar {
+  height: 4px;
+}
+
+.yearButtons::-webkit-scrollbar-track,
+.categoryButtons::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.yearButtons::-webkit-scrollbar-thumb,
+.categoryButtons::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent);
+  border-radius: 2px;
+}
+
 
 .yearButton,
 .categoryButton {
@@ -70,6 +95,8 @@
   font-size: 0.875rem;
   cursor: pointer;
   transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .yearButton:hover,
@@ -227,10 +254,6 @@
 
   .filterGroup {
     width: 100%;
-  }
-
-  .filterButtons {
-    flex-wrap: wrap;
   }
 
   .yearButton,

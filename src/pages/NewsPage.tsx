@@ -57,6 +57,11 @@ function NewsPage() {
           <p className={styles.subtitle}>
             Концерты, мастер-классы, конкурсы и события эстрадного отделения
           </p>
+        </div>
+      </section>
+
+      <section className={styles.searchSection}>
+        <div className="container">
           <input
             type="text"
             placeholder="Поиск новостей..."
