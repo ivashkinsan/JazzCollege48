@@ -9,7 +9,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Specialties from './components/Specialties';
 import Teachers from './components/Teachers';
-import Achievements from './components/Achievements';
+import AchievementsPreview from './components/AchievementsPreview';
 import Graduates from './components/Graduates';
 import ConcertsPreview from './components/ConcertsPreview';
 import NewsPreview from './components/NewsPreview';
@@ -49,7 +49,7 @@ function HomePage() {
       <About department={estradaDepartment} />
       <Specialties department={estradaDepartment} />
       <Teachers teachers={teachers} />
-      <Achievements achievements={achievements} />
+      <AchievementsPreview achievements={achievements} />
       <Graduates graduates={graduates} />
       <ConcertsPreview />
       <NewsPreview news={newsData} />

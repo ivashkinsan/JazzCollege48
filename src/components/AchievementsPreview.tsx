@@ -1,13 +1,17 @@
+import { Link } from 'react-router-dom';
 import type { Achievement } from '../types/college';
-import styles from './Achievements.module.css';
+import styles from './AchievementsPreview.module.css';
 
-interface AchievementsProps {
+interface AchievementsPreviewProps {
   achievements: Achievement[];
 }
 
-function Achievements({ achievements }: AchievementsProps) {
+function AchievementsPreview({ achievements }: AchievementsPreviewProps) {
+  const sortedAchievements = [...achievements].sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime(); // Newest first
+  });
   return (
-    <section id="achievements" className="section section--dark">
+    <section className="section section--dark">
       <div className="container">
         <div className="section__header">
           <p className="section__subtitle">Награды</p>
@@ -17,7 +21,7 @@ function Achievements({ achievements }: AchievementsProps) {
           Студенты эстрадного отделения регулярно становятся лауреатами всероссийских и международных конкурсов
         </p>
         <div className={styles.achievementsGrid}>
-          {achievements.map((achievement) => {
+          {sortedAchievements.slice(0, 6).map((achievement) => { // Limit to 6 items
             const date = new Date(achievement.date);
             const dateStr = date.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
             return (
@@ -34,6 +38,7 @@ function Achievements({ achievements }: AchievementsProps) {
                   </div>
                 )}
                 <div className={styles.achievementCardContent}>
+                  <span className={styles.achievementCardPlace}>{achievement.place}</span>
                   <h3 className={styles.achievementCardTitle}>{achievement.title}</h3>
                   {achievement.studentName && (
                     <p className={styles.achievementCardStudent}>{achievement.studentName}</p>
@@ -48,9 +53,14 @@ function Achievements({ achievements }: AchievementsProps) {
             );
           })}
         </div>
+        <div className={styles.viewAllWrapper}>
+          <Link to="/achievements" className="btn btn-primary">
+            Все награды
+          </Link>
+        </div>
       </div>
     </section>
   );
 }
 
-export default Achievements;
+export default AchievementsPreview;

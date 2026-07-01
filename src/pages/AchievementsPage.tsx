@@ -5,6 +5,9 @@ import Achievements from '../components/Achievements';
 import styles from './AchievementsPage.module.css';
 
 function AchievementsPage() {
+  const sortedAchievements = [...achievements].sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime(); // Newest first
+  });
   return (
     <div className={styles.page}>
       <Helmet>
@@ -21,7 +24,7 @@ function AchievementsPage() {
       
       <section className={styles.contentSection}>
         <div className="container">
-          <Achievements achievements={achievements} />
+          <Achievements achievements={sortedAchievements} />
         </div>
       </section>
 
