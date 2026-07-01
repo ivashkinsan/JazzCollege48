@@ -28,17 +28,38 @@
 
 /* ===== Фильтры ===== */
 .filtersSection {
-  padding: var(--spacing-lg) 0;
-  background: var(--color-bg-primary);
+  padding: var(--spacing-md) 0;
+  background: var(--color-bg-secondary);
   border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: var(--header-height);
+  z-index: 10;
 }
 
 .categoryFilters {
   display: flex;
-  flex-wrap: wrap;
   gap: 0.5rem;
-  justify-content: center;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+  padding-bottom: 8px; /* Space for scrollbar */
+  margin-bottom: -8px; /* Compensate for padding */
 }
+
+.categoryFilters::-webkit-scrollbar {
+  height: 4px;
+}
+
+.categoryFilters::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.categoryFilters::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent);
+  border-radius: 2px;
+}
+
 
 .categoryBtn {
   padding: 0.5rem 1rem;

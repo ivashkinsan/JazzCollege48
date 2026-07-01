@@ -65,22 +65,23 @@
 }
 
 .tab {
-  padding: var(--spacing-sm) var(--spacing-lg);
-  background-color: transparent;
-  border: 2px solid var(--color-accent);
-  color: var(--color-accent);
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-radius: 999px;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--transition-normal);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .tab:hover:not(:disabled) {
-  background-color: var(--color-accent);
-  color: var(--color-black);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: transparent;
 }
 
 .tab:disabled {
@@ -91,8 +92,14 @@
 }
 
 .tabActive {
-  background-color: var(--color-accent);
-  color: var(--color-black);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+.tabActive:hover {
+  background: var(--color-accent-dark, var(--color-accent));
+  color: var(--color-white);
 }
 
 /* Сетка выпускников */

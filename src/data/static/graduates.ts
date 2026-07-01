@@ -88,6 +88,7 @@ export const graduates: Graduate[] = [
     position: "альт-саксофон",
     workplace: "",
     bio: "",
+    image: asset("public/vipuskniki/2026 Шишкина Варвара.jpg"),
   },
   {
     id: "5",
@@ -96,6 +97,7 @@ export const graduates: Graduate[] = [
     position: "Вокалистка",
     workplace: "",
     bio: "",
+    image: asset("public/vipuskniki/2026 Филатова София.jpg"),
   },
   {
     id: "6",
@@ -104,6 +106,7 @@ export const graduates: Graduate[] = [
     position: "Вокалистка",
     workplace: "",
     bio: "",
+    image: asset("public/vipuskniki/2026 Баранова Валерия.jpg"),
   },
   {
     id: "7",

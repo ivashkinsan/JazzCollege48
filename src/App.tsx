@@ -25,6 +25,7 @@ import DepartmentPage from './pages/DepartmentPage';
 import NewsPage from './pages/NewsPage';
 import AfishaPage from './pages/AfishaPage';
 import LibraryPage from './pages/LibraryPage';
+import AchievementsPage from './pages/AchievementsPage';
 import ScrollToHash from './components/ScrollToHash';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -77,6 +78,7 @@ function App() {
             <Route path="/videos" element={<VideosPage />} />
             <Route path="/videos2" element={<VideosPage2 />} />
             <Route path="/library" element={<LibraryPage />} />
+            <Route path="/achievements" element={<AchievementsPage />} />
           </Routes>
         </main>
         <Footer navigation={navigation} />
