@@ -45,8 +45,9 @@ function Footer({ navigation }: FooterProps) {
                 <span className={styles.footerLogoSubtitle}>Липецк</span>
               </div>
             </Link>
-            <p className={styles.footerText}>© {new Date().getFullYear()} ЛОКИ им. К.Н. Игумнова</p>
+            <p className={styles.footerText}>© ЛОКИ им. К.Н. Игумнова, 2026. Все права защищены.</p>
             <p className={styles.footerSubtext}>Эстрадное отделение</p>
+            <p className={styles.footerCreator}>Разработчик: Ивашкин Александр jazzScriptDev 2026г.</p>
           </div>
           <nav className={styles.footerNav}>
             {flatLinks.map((item) => {

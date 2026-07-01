@@ -89,6 +89,11 @@
   letter-spacing: 1px;
 }
 
+.footerCreator {
+  font-size: 0.75rem; /* Slightly smaller than footerText */
+  color: var(--color-text-muted); /* More muted color */
+}
+
 .footerNav {
   display: flex;
   flex-wrap: wrap;

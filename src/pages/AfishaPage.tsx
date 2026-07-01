@@ -45,15 +45,21 @@ function AfishaPage() {
   }
 
   return (
-    <section className="section">
+    <div className={styles.page}>
       <Helmet>
         <title>Афиша мероприятий - JazzCollege48</title>
         <meta name="description" content="Полный список предстоящих и прошедших концертов, мастер-классов и событий эстрадного отделения Липецкого колледжа искусств." />
       </Helmet>
-      <div className="container">
-        <div className="section__header">
-          <p className="section__subtitle">Афиша</p>
-          <h2 className="section__title">Все события</h2>
+      
+      <section className={styles.hero}>
+        <div className="container">
+          <p className={styles.subtitle}>Афиша</p>
+          <h2 className={styles.title}>Все события</h2>
+        </div>
+      </section>
+
+      <section className={styles.searchSection}>
+        <div className="container">
           <input
             type="text"
             placeholder="Поиск событий..."
@@ -62,26 +68,30 @@ function AfishaPage() {
             className={styles.searchInput}
           />
         </div>
+      </section>
+      
+      <section className={styles.eventsSection}>
+        <div className="container">
+          {upcomingAfisha.length > 0 && (
+            <div className={styles.categoryBlock}>
+              <h3 className={styles.categoryTitle}>Предстоящие события</h3>
+              <Concerts concerts={upcomingAfisha} />
+            </div>
+          )}
 
-        {upcomingAfisha.length > 0 && (
-          <div className={styles.categoryBlock}>
-            <h3 className={styles.categoryTitle}>Предстоящие события</h3>
-            <Concerts concerts={upcomingAfisha} />
-          </div>
-        )}
+          {pastAfisha.length > 0 && (
+            <div className={styles.categoryBlock}>
+              <h3 className={styles.categoryTitle}>Прошедшие события</h3>
+              <Concerts concerts={pastAfisha} />
+            </div>
+          )}
 
-        {pastAfisha.length > 0 && (
-          <div className={styles.categoryBlock}>
-            <h3 className={styles.categoryTitle}>Прошедшие события</h3>
-            <Concerts concerts={pastAfisha} />
-          </div>
-        )}
-
-        {upcomingAfisha.length === 0 && pastAfisha.length === 0 && (
-          <p>Нет доступных событий.</p>
-        )}
-      </div>
-    </section>
+          {upcomingAfisha.length === 0 && pastAfisha.length === 0 && (
+            <p>Нет доступных событий.</p>
+          )}
+        </div>
+      </section>
+    </div>
   );
 }
 

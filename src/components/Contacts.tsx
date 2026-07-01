@@ -16,7 +16,14 @@ function Contacts({ collegeInfo }: ContactsProps) {
         <div className={styles.contactsWrapper}>
           <div className={styles.contactItem}>
             <span className={styles.contactIcon}>📍</span>
-            <span className={styles.contactText}>{collegeInfo.address}</span>
+            <a 
+              href="https://yandex.ru/maps/?text=Липецкая%20обл.%2C%20г.%20Липецк%2C%20ул.%20Студенческий%20Городок%2C%20д.%206" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={styles.contactLink}
+            >
+              {collegeInfo.address}
+            </a>
           </div>
           <div className={styles.contactItem}>
             <span className={styles.contactIcon}>📞</span>

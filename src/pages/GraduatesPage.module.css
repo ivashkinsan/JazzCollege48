@@ -261,6 +261,11 @@
     font-size: 1rem;
   }
 
+  .tab {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
   .filters {
     flex-direction: column;
     gap: var(--spacing-md);
