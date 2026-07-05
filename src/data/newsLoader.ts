@@ -1,80 +1,57 @@
-import type { ExtendedNewsItem, Photo, PhotoAlbum } from '../types/college';
-import { parseMarkdown, parseGalleryIds, stripGallery } from './parser';
-import mediaManifest from './media-manifest.json';
+import type { ExtendedNewsItem } from '../types/college';
 
-// Create a lookup map for efficient access to media items by ID.
-const allPhotos = (mediaManifest as PhotoAlbum[]).flatMap(album => album.photos);
-const mediaMap = new Map<string, Photo>(allPhotos.map(photo => [photo.id, photo]));
+const API_BASE_URL = 'http://localhost:4000';
 
-export const news: ExtendedNewsItem[] = [];
-let newsLoaded = false;
-let newsLoading = false;
+// --- In-Memory Cache ---
+const contentCache = new Map<string, ExtendedNewsItem[]>();
+const loadingPromises = new Map<string, Promise<ExtendedNewsItem[]>>();
 
-export async function loadNews(): Promise<ExtendedNewsItem[]> {
-  if (newsLoaded) return news;
-  if (newsLoading) {
-    return new Promise((resolve) => {
-      const interval = setInterval(() => {
-        if (newsLoaded) {
-          clearInterval(interval);
-          resolve(news);
-        }
-      }, 50);
-    });
+/**
+ * A generic function to load content from the API by category.
+ * It includes in-memory caching to avoid redundant fetch calls.
+ * @param category - The category to load (e.g., 'news', 'afisha').
+ */
+function loadContent(category: 'news' | 'afisha'): Promise<ExtendedNewsItem[]> {
+  if (contentCache.has(category)) {
+    return Promise.resolve(contentCache.get(category)!);
   }
 
-  newsLoading = true;
-  try {
-    const response = await fetch('/media/manifest.json');
-    if (!response.ok) {
-        throw new Error('Failed to fetch content manifest');
-    }
-    const manifest = await response.json() as string[];
-
-    const fetchPromises = manifest.map(path => fetch(path).then(res => res.text()));
-    const allRawContent = await Promise.all(fetchPromises);
-    
-    const loadedItems: ExtendedNewsItem[] = [];
-    for (const rawContent of allRawContent) {
-        const parsed = parseMarkdown(rawContent);
-
-        if (parsed && parsed.frontmatter.category?.replace(/[\[\]"]/g, '').split(',').map(c => c.trim()).includes('news')) {
-            const { frontmatter, body } = parsed;
-            const { title, date, category, coverImageId } = frontmatter;
-            
-            const galleryIds = parseGalleryIds(body);
-            const cleanedBody = stripGallery(body);
-
-            if (title && date) {
-                const coverPhoto = coverImageId ? mediaMap.get(coverImageId) : undefined;
-                const galleryPhotos = galleryIds
-                  .map(id => mediaMap.get(id))
-                  .filter((item): item is Photo => !!item);
-
-                loadedItems.push({
-                    id: `${date}-${title.slice(0, 20).toLowerCase().replace(/\s+/g, '-')}`,
-                    title,
-                    date,
-                    description: cleanedBody.slice(0, 250).replace(/[#*_~`]/g, '').trim(),
-                    content: cleanedBody,
-                    category,
-                    cover: coverPhoto,
-                    gallery: galleryPhotos
-                });
-            }
-        }
-    }
-
-    loadedItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    news.splice(0, news.length, ...loadedItems);
-    newsLoaded = true;
-
-  } catch (error) {
-    console.error("Error loading news content:", error);
-    newsLoaded = true; // Prevent retries
-  } finally {
-    newsLoading = false;
+  if (loadingPromises.has(category)) {
+    return loadingPromises.get(category)!;
   }
-  
-  return news;
+
+  const promise = (async () => {
+    try {
+      console.log(`🚀 Fetching '${category}' content from API...`);
+      const response = await fetch(`${API_BASE_URL}/api/${category}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${category}`);
+      }
+      const data = await response.json();
+      contentCache.set(category, data);
+      return data;
+    } catch (error) {
+      console.error(`Error loading '${category}' content from API:`, error);
+      return []; // Return empty array on error
+    } finally {
+      loadingPromises.delete(category);
+    }
+  })();
+
+  loadingPromises.set(category, promise);
+  return promise;
 }
+
+// --- Exported Loader Functions ---
+
+export function loadNews(): Promise<ExtendedNewsItem[]> {
+  return loadContent('news');
+}
+
+export function loadAfisha(): Promise<ExtendedNewsItem[]> {
+  return loadContent('afisha');
+}
+
+// Immediately start loading both for faster perceived performance
+loadNews();
+loadAfisha();

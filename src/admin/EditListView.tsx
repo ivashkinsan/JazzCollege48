@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styles from './EditListView.module.css';
 
-// Define the type for a single content item, based on what the API sends
+// The API now sends a numeric id, which we map to albumId for the frontend.
 interface ContentItem {
-    albumId: string;
+    albumId: number; // Changed from string to number
     albumTitle: string;
     albumDate: string;
     albumCategory: string;
 }
 
 interface EditListProps {
-    onEdit: (albumId: string) => void;
+    onEdit: (albumId: number) => void; // Changed from string to number
 }
 
 const EditListView: React.FC<EditListProps> = ({ onEdit }) => {

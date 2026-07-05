@@ -1,2 +1,1 @@
-export { loadNews, news } from './newsLoader';
-export { loadAfisha, afisha } from './afishaLoader';
+export { loadNews, loadAfisha } from './newsLoader';

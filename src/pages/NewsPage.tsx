@@ -32,8 +32,7 @@ function NewsPage() {
     setSearchQuery(event.target.value);
   };
 
-  const filteredByCategory = newsData.filter(n => n.category === selectedCategory);
-  const filteredNews = searchNews(searchQuery, filteredByCategory); // Use searchNews function
+  const filteredNews = searchNews(searchQuery, newsData); // Use searchNews function directly on newsData
 
   const toggleExpand = (id: string) => {
     setExpandedNews(expandedNews === id ? null : id);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './AdminApp.module.css';
 import PreviewCard from './PreviewCard';
 import EditListView from './EditListView';
@@ -20,11 +20,12 @@ const API_BASE_URL = 'http://localhost:4000';
 
 const AdminApp: React.FC = () => {
   const [mode, setMode] = useState<'create' | 'edit'>('create');
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null); // Use number for ID
 
   const initialFormData = {
-    contentType: 'news',
+    category: 'news',
     title: '',
+    slug: '', // Add slug to form
     date: new Date().toISOString().split('T')[0],
     time: '',
     venue: '',
@@ -40,35 +41,27 @@ const AdminApp: React.FC = () => {
   const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const generatedPaths = useMemo(() => {
-    if (editingId) return { folderPath: 'N/A (editing)', fileName: 'N/A (editing)' };
-    const { title, date } = formData;
-    if (!title || !date) return { folderPath: '', fileName: '' };
-    const albumSlug = createSlug(title);
-    const year = new Date(date).getFullYear().toString();
-    const folderPath = `public/media/${year}/${date}-${albumSlug}/`;
-    const fileName = `${date}-${albumSlug}.md`;
-    return { folderPath, fileName };
-  }, [formData.title, formData.date, editingId]);
-
   useEffect(() => {
     if (coverImage) {
       const newUrl = URL.createObjectURL(coverImage);
       setCoverImageUrl(newUrl);
       return () => URL.revokeObjectURL(newUrl);
-    } else if (editingId) {
-        // Find cover from existing photos
-        const cover = existingPhotos.find(p => p.id.includes('_01')); // Heuristic
-        if (cover) setCoverImageUrl(cover.src);
+    } else {
+      const cover = existingPhotos.find(p => p.src.includes('cover')); // Find cover from existing photos
+      setCoverImageUrl(cover ? cover.src : (existingPhotos[0]?.src || null));
     }
-    else {
-      setCoverImageUrl(null);
-    }
-  }, [coverImage, editingId, existingPhotos]);
-
+  }, [coverImage, existingPhotos]);
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => {
+        const newFormData = { ...prev, [name]: value };
+        // Auto-generate slug from title, but only if creating new content
+        if (name === 'title' && !editingId) {
+            newFormData.slug = createSlug(value);
+        }
+        return newFormData;
+    });
   };
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +76,7 @@ const AdminApp: React.FC = () => {
     setGalleryImages(e.target.files);
   };
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setFormData(initialFormData);
     setCoverImage(null);
     setGalleryImages(null);
@@ -93,26 +86,27 @@ const AdminApp: React.FC = () => {
     const galleryInput = document.getElementById('galleryImages') as HTMLInputElement;
     if (coverInput) coverInput.value = '';
     if (galleryInput) galleryInput.value = '';
-  };
+  }, [initialFormData]);
 
-  const handleEditRequest = async (albumId: string) => {
+  const handleEditRequest = async (id: number) => { // Expect number id
     try {
-        const response = await fetch(`${API_BASE_URL}/api/content/${albumId}`);
+        const response = await fetch(`${API_BASE_URL}/api/content/${id}`); // Fetch by number ID
         if(!response.ok) throw new Error('Failed to fetch content for editing.');
         const data = await response.json();
         
         setFormData({
-            contentType: data.albumCategory || 'news',
-            title: data.albumTitle || '',
-            date: data.albumDate || '',
+            category: data.category || 'news',
+            title: data.title || '',
+            slug: data.slug || '',
+            date: data.date || '',
             time: data.time || '',
             venue: data.venue || '',
-            tags: data.tags || '',
+            tags: data.tags ? JSON.parse(data.tags).join(', ') : '',
             body: data.body || '',
         });
-        setEditingId(albumId);
+        setEditingId(id);
         setExistingPhotos(data.photos || []);
-        setMode('create'); // Switch to form view
+        setMode('create'); // Switch to form view for editing
     } catch (error: any) {
         setStatus({ type: 'error', message: `Ошибка: ${error.message}` });
     }
@@ -124,9 +118,7 @@ const AdminApp: React.FC = () => {
     setStatus(null);
 
     const submissionData = new FormData();
-    // Append form data
     Object.entries(formData).forEach(([key, value]) => submissionData.append(key, value));
-    // Append images if they exist
     if (coverImage) submissionData.append('coverImage', coverImage);
     if (galleryImages) {
       Array.from(galleryImages).forEach(file => submissionData.append('galleryImages', file));
@@ -134,8 +126,8 @@ const AdminApp: React.FC = () => {
 
     try {
       const url = editingId 
-        ? `${API_BASE_URL}/api/content/${editingId}` // UPDATE endpoint (to be created)
-        : `${API_BASE_URL}/api/add-content`;         // CREATE endpoint
+        ? `${API_BASE_URL}/api/content/${editingId}` // UPDATE endpoint with number ID
+        : `${API_BASE_URL}/api/content`;             // CREATE endpoint
       
       const response = await fetch(url, { method: 'POST', body: submissionData });
       const result = await response.json();
@@ -153,6 +145,15 @@ const AdminApp: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+  
+  const handleSetMode = (newMode: 'create' | 'edit') => {
+    if (mode !== newMode) {
+      resetForm();
+      setMode(newMode);
+    } else if (newMode === 'create') {
+      resetForm(); // Allow resetting the create form
+    }
+  }
 
   const renderCurrentView = () => {
     if (mode === 'edit') {
@@ -168,31 +169,28 @@ const AdminApp: React.FC = () => {
                     <div className={styles.formGroup}>
                         <label>Тип контента</label>
                         <div className={styles.radioGroup}>
-                            <label><input type="radio" name="contentType" value="news" checked={formData.contentType === 'news'} onChange={handleInputChange} /> Новость</label>
-                            <label><input type="radio" name="contentType" value="afisha" checked={formData.contentType === 'afisha'} onChange={handleInputChange} /> Афиша</label>
-                            <label><input type="radio" name="contentType" value="photoalbum" checked={formData.contentType === 'photoalbum'} onChange={handleInputChange} /> Фотоальбом</label>
+                            <label><input type="radio" name="category" value="news" checked={formData.category === 'news'} onChange={handleInputChange} /> Новость</label>
+                            <label><input type="radio" name="category" value="afisha" checked={formData.category === 'afisha'} onChange={handleInputChange} /> Афиша</label>
                         </div>
                     </div>
-                    <div className={styles.formGroup}><label htmlFor="title">Заголовок</label><input type="text" id="title" name="title" value={formData.title} onChange={handleInputChange} required disabled={!!editingId} /></div>
-                    <div className={styles.formGroup}><label htmlFor="date">Дата</label><input type="date" id="date" name="date" value={formData.date} onChange={handleInputChange} required disabled={!!editingId} /></div>
-                    {formData.contentType === 'afisha' && (
+                    <div className={styles.formGroup}><label htmlFor="title">Заголовок</label><input type="text" id="title" name="title" value={formData.title} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label htmlFor="slug">URL (slug)</label><input type="text" id="slug" name="slug" value={formData.slug} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label htmlFor="date">Дата</label><input type="date" id="date" name="date" value={formData.date} onChange={handleInputChange} required /></div>
+                    {formData.category === 'afisha' && (
                         <div className={styles.afishaFields}>
                             <div className={styles.formGroup}><label htmlFor="time">Время</label><input type="time" id="time" name="time" value={formData.time} onChange={handleInputChange} /></div>
                             <div className={styles.formGroup}><label htmlFor="venue">Место</label><input type="text" id="venue" name="venue" value={formData.venue} onChange={handleInputChange} /></div>
-                            <div className={styles.formGroup}><label htmlFor="tags">Теги</label><input type="text" id="tags" name="tags" value={formData.tags} onChange={handleInputChange} /></div>
+                            <div className={styles.formGroup}><label htmlFor="tags">Теги (через запятую)</label><input type="text" id="tags" name="tags" value={formData.tags} onChange={handleInputChange} /></div>
                         </div>
                     )}
-                    <div className={styles.formGroup}><label htmlFor="body">Основной текст</label><textarea id="body" name="body" value={formData.body} onChange={handleInputChange} required={formData.contentType !== 'photoalbum'}></textarea></div>
+                    <div className={styles.formGroup}><label htmlFor="body">Основной текст</label><textarea id="body" name="body" value={formData.body} onChange={handleInputChange} rows={10}></textarea></div>
                     <div className={styles.formGroup}><label htmlFor="coverImage">Обложка</label><input type="file" id="coverImage" name="coverImage" onChange={handleCoverImageChange} accept="image/*" /></div>
                     <div className={styles.formGroup}><label htmlFor="galleryImages">Галерея</label><input type="file" id="galleryImages" name="galleryImages" onChange={handleGalleryImagesChange} accept="image/*" multiple /></div>
                     
                     <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Загрузка...' : (editingId ? 'Сохранить изменения' : 'Добавить контент')}</button>
-                    {editingId && <button type="button" onClick={resetForm} className={styles.cancelButton}>Отмена</button>}
+                    {editingId && <button type="button" onClick={() => handleSetMode('edit')} className={styles.cancelButton}>Отмена</button>}
                 </form>
                 {status && <div className={status.type === 'success' ? styles.statusSuccess : styles.statusError}>{status.message}</div>}
-            </div>
-            <div className={styles.previewContainer}>
-                <PreviewCard formData={formData} coverImageUrl={coverImageUrl} generatedPaths={generatedPaths} />
             </div>
         </div>
     );
@@ -201,8 +199,8 @@ const AdminApp: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.viewToggle}>
-          <button onClick={() => { setMode('create'); resetForm(); }} disabled={mode === 'create' && !editingId}>Создать</button>
-          <button onClick={() => setMode('edit')} disabled={mode === 'edit'}>Редактировать</button>
+          <button onClick={() => handleSetMode('create')} disabled={mode === 'create' && !editingId}>Создать</button>
+          <button onClick={() => handleSetMode('edit')} disabled={mode === 'edit'}>Редактировать</button>
       </div>
       {renderCurrentView()}
     </div>

@@ -10,10 +10,15 @@
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "deploy": "npm run build && node scripts/deploy.js",
-    "admin": "ts-node scripts/admin-server.ts"
+    "admin": "ts-node scripts/admin-server.ts",
+    "db:setup": "ts-node scripts/db-setup.ts",
+    "db:migrate": "ts-node scripts/db-migrate.ts",
+    "db:cleanup": "ts-node scripts/db-cleanup.ts",
+    "db:add-subcategory": "ts-node scripts/db-add-subcategory.ts"
   },
   "dependencies": {
     "@types/cors": "^2.8.19",
+    "better-sqlite3": "^12.11.1",
     "cors": "^2.8.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -22,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/express": "^5.0.6",
     "@types/multer": "^2.1.0",
     "@types/react": "^19.2.14",
