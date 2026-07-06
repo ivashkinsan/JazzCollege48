@@ -159,7 +159,17 @@ app.get('/api/admin/list/:manager', (req, res) => {
         if (tableName === 'content') {
             // If the manager is specifically for photoalbum, filter by category
             if (manager === 'photoalbum') {
-                query = `SELECT id, title, date, category FROM ${tableName} WHERE category = 'photoalbum' ORDER BY date DESC`;
+                query = `
+                    SELECT id, title, date, category
+                    FROM ${tableName}
+                    WHERE category = 'photoalbum'
+                    AND id NOT IN (
+                        SELECT linked_photoalbum_id
+                        FROM content
+                        WHERE category = 'news' AND linked_photoalbum_id IS NOT NULL
+                    )
+                    ORDER BY date DESC
+                `;
             } else {
                 // For general content manager (news/afisha), return all content items
                 // The frontend will then filter by activeTab (news or afisha)
@@ -579,15 +589,28 @@ app.post('/api/content/:id', upload.fields([{ name: 'coverImage', maxCount: 1 },
         
         const updateStmt = db.prepare(`
             UPDATE content
-            SET title = ?, slug = ?, date = ?, category = ?, body = ?, time = ?, venue = ?, tags = ?, cover_image_src = ?, linked_photoalbum_id = ?
+            SET title = ?, slug = ?, date = ?, category = ?, subcategory = ?, body = ?, time = ?, venue = ?, tags = ?, cover_image_src = ?, linked_photoalbum_id = ?
             WHERE id = ?
         `);
         
-        updateStmt.run(title, slug, date, category, body, time, venue, 
-            tags ? JSON.stringify(tags.split(',')) : JSON.stringify([]), 
-            coverImageSrc, 
-            linked_photoalbum_id === '' ? null : linked_photoalbum_id, // Store null if empty string
-            id);
+        const params = [
+            title,
+            slug,
+            date,
+            Array.isArray(category) ? category[0] : category, // FIX: Ensure category is a single string
+            subcategory,
+            body,
+            time,
+            venue,
+            tags ? JSON.stringify(tags.split(',')) : JSON.stringify([]),
+            coverImageSrc,
+            linked_photoalbum_id === '' ? null : linked_photoalbum_id,
+            id // This is the last parameter for WHERE id = ?
+        ];
+        
+        console.log('SQL Query:', updateStmt.source);
+        console.log('Params Array:', params);
+        updateStmt.run(...params);
         
         res.status(200).json({ success: true, message: 'Content successfully updated.' });
     } catch (error) {

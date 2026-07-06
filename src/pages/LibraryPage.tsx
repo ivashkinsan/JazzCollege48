@@ -1,15 +1,4 @@
-import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
-import styles from './LibraryPage.module.css';
-import { useState, useEffect, useMemo } from 'react';
-
-interface LibraryLink {
-  id: number;
-  title: string;
-  url: string;
-  description: string;
-  category: string;
-}
+import LibraryLinkCard from '../components/LibraryLinkCard';
 
 function LibraryPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('Все');
@@ -88,8 +77,7 @@ function LibraryPage() {
               </button>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
       <section className={styles.librarySection}>
         <div className="container">
@@ -101,17 +89,7 @@ function LibraryPage() {
                 <h2 className={styles.categoryTitle}>{category}</h2>
                 <div className={styles.linksGrid}>
                   {categoryLinks.map((link) => (
-                    <a
-                      key={link.id}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.linkCard}
-                    >
-                      <h3 className={styles.linkTitle}>{link.title}</h3>
-                      <p className={styles.linkDescription}>{link.description}</p>
-                      <span className={styles.linkUrl}>{new URL(link.url).hostname}</span>
-                    </a>
+                    <LibraryLinkCard key={link.id} link={link} />
                   ))}
                 </div>
               </div>

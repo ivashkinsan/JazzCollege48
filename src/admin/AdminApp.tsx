@@ -3,7 +3,8 @@ import styles from './AdminApp.module.css';
 import NewsPreview from '../components/NewsPreview';
 import Achievements from '../components/Achievements';
 import concertCardStyles from '../components/ConcertsPreview.module.css';
-import { Achievement, Video } from '../types/college';
+import LibraryLinkCard from '../components/LibraryLinkCard';
+import { Achievement, Video, LibraryLink } from '../types/college';
 import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 const API_BASE_URL = 'http://localhost:4000';
@@ -23,7 +24,12 @@ const PreviewPane: React.FC<{ activeTab: TabType; formData: any }> = ({ activeTa
     const renderPreview = () => {
         switch (activeTab) {
             case 'news': {
-                const newsItem = { ...formData, cover: { src: formData.cover_image_src }, description: formData.body?.slice(0, 150) };
+                const newsItem = {
+                    ...formData,
+                    cover: { src: formData.cover_image_src },
+                    description: formData.body ? formData.body.slice(0, 150) + (formData.body.length > 150 ? '...' : '') : '', // Ensure truncation for description
+                    content: formData.body || '' // Full content
+                };
                 return <NewsPreview news={[newsItem]} />;
             }
             case 'afisha': {
@@ -173,6 +179,12 @@ const AdminApp: React.FC = () => {
         try {
             const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`);
             const data = await response.json();
+            // Ensure linked_photoalbum_id is a string for the select element's value
+            if (data.linked_photoalbum_id !== null && data.linked_photoalbum_id !== undefined) {
+                data.linked_photoalbum_id = String(data.linked_photoalbum_id);
+            } else {
+                data.linked_photoalbum_id = ''; // Default to empty string
+            }
             setFormData(data);
             setEditingId(id);
             setMode('form');
@@ -203,7 +215,12 @@ const AdminApp: React.FC = () => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prev: any) => {
-            const newFormData = { ...prev, [name]: value };
+            const newFormData = { ...prev };
+            if (name === 'linked_photoalbum_id') {
+                newFormData[name] = value === '' ? '' : String(value); // Explicitly ensure string for linked_photoalbum_id
+            } else {
+                newFormData[name] = value;
+            }
             if (name === 'title' && !editingId) {
                 newFormData.slug = createSlug(value);
             }
@@ -219,22 +236,32 @@ const AdminApp: React.FC = () => {
         try {
             const dataToSend = new FormData();
 
-            // Append all existing form data (text fields)
+            // Append all non-file related form data, excluding specific keys for special handling
             for (const key in formData) {
                 if (Object.prototype.hasOwnProperty.call(formData, key)) {
                     // Skip image_src if a new file is selected to avoid sending old path with new file
                     if (key === 'image_src' && activeTab === 'achievements' && selectedFiles.has('image')) {
                         continue;
                     }
-                    // Append linked_photoalbum_id only if it's not empty and for relevant tabs
-                    if (key === 'linked_photoalbum_id' && (activeTab === 'news' || activeTab === 'afisha') && formData[key] !== '') {
-                        dataToSend.append(key, formData[key]);
-                    } else if (key !== 'linked_photoalbum_id') { // Ensure linked_photoalbum_id is not appended twice
-                        dataToSend.append(key, formData[key]);
+                    // Exclude linked_photoalbum_id and category from general append, as they are handled explicitly
+                    if (key === 'linked_photoalbum_id' || key === 'category') {
+                        continue;
                     }
+                    dataToSend.append(key, formData[key]);
                 }
             }
-            // Append category based on activeTab
+
+            // Explicitly handle linked_photoalbum_id for news/afisha
+            if ((activeTab === 'news' || activeTab === 'afisha') && formData.linked_photoalbum_id !== undefined) {
+                // Send empty string if "— Нет —" selected, backend will convert to null.
+                // Otherwise, send the string representation of the number.
+                const albumIdToAppend = formData.linked_photoalbum_id === '' 
+                    ? '' 
+                    : String(Number(formData.linked_photoalbum_id));
+                dataToSend.append('linked_photoalbum_id', albumIdToAppend);
+            }
+
+            // Ensure category is explicitly appended as a single string
             dataToSend.append('category', activeTab);
 
             // Append image files
@@ -331,12 +358,12 @@ const AdminApp: React.FC = () => {
                             <label>Связанный фотоальбом</label>
                             <select
                                 name="linked_photoalbum_id"
-                                value={formData.linked_photoalbum_id || ''}
-                                onChange={(e) => handleInputChange({ ...e, target: { ...e.target, value: e.target.value === '' ? '' : Number(e.target.value) } as HTMLSelectElement })}
+                                value={String(formData.linked_photoalbum_id || '')} // Keep this as String for display
+                                onChange={handleInputChange} // Change this line: pass event directly
                             >
                                 <option value="">— Нет —</option>
                                 {photoAlbumsForSelection.map(album => (
-                                    <option key={album.value} value={album.value}>{album.label}</option>
+                                    <option key={album.value} value={String(album.value)}>{album.label}</option> // Ensure string value for HTML option
                                 ))}
                             </select>
                         </div>
