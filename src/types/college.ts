@@ -13,6 +13,7 @@ export interface Achievement {
   competition: string;
   date: string;
   place: string;
+  city?: string;
   category: string;
   image?: string;
 }

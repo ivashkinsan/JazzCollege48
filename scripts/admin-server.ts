@@ -178,7 +178,7 @@ app.get('/api/admin/list/:manager', (req, res) => {
         } else if (tableName === 'library_links') {
             query = `SELECT id, title, category FROM ${tableName} ORDER BY title ASC`;
         } else if (tableName === 'achievements') { // Specific query for achievements
-            query = `SELECT id, title, student_name, competition, date, place, category FROM ${tableName} ORDER BY date DESC`;
+            query = `SELECT id, title, student_name, competition, date, place, category, city FROM ${tableName} ORDER BY date DESC`;
         }
         else {
             query = `SELECT id, title, date FROM ${tableName} ORDER BY date DESC`;
@@ -212,7 +212,7 @@ app.get('/api/achievements/:id', (req, res) => {
 
 app.post('/api/achievements', upload.single('image'), async (req, res) => {
     try {
-        const { title, student_name, competition, date, place, category } = req.body;
+        const { title, student_name, competition, date, place, category, city } = req.body;
         let image_src = req.body.image_src; // Preserve existing image_src if no new file uploaded
 
         if (req.file) {
@@ -222,10 +222,10 @@ app.post('/api/achievements', upload.single('image'), async (req, res) => {
         }
 
         const stmt = db.prepare(`
-            INSERT INTO achievements (title, student_name, competition, date, place, category, image_src)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO achievements (title, student_name, competition, date, place, category, image_src, city)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `);
-        const result = stmt.run(title, student_name, competition, date, place, category, image_src);
+        const result = stmt.run(title, student_name, competition, date, place, category, image_src, city);
         res.status(201).json({ success: true, id: result.lastInsertRowid });
     } catch (error) {
         console.error('Error creating achievement:', error);
