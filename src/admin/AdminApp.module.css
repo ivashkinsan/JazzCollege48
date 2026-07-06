@@ -260,17 +260,90 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
-    color: var(--text-color); /* Ensure table text color changes */
+    color: var(--text-color);
+    table-layout: fixed; /* Add this line */
 }
 
 .adminListTable th,
 .adminListTable td {
-    border: 1px solid var(--border-color); /* Use variable */
+    border: 1px solid var(--border-color);
     padding: 8px;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Base column widths for all tables if not overridden */
+.adminListTable th:nth-child(1), /* ID column */
+.adminListTable td:nth-child(1) {
+    width: 50px;
+}
+
+.adminListTable th:last-child, /* Actions column */
+.adminListTable td:last-child {
+    width: 220px; /* Adjusted from 180px to 220px */
+}
+
+/* Specific column widths for graduatesTable */
+.graduatesTable th:nth-child(2), /* Имя */
+.graduatesTable td:nth-child(2) {
+    width: 20%;
+}
+.graduatesTable th:nth-child(3), /* Год выпуска */
+.graduatesTable td:nth-child(3) {
+    width: 80px;
+}
+.graduatesTable th:nth-child(4), /* Должность */
+.graduatesTable td:nth-child(4) {
+    width: 20%;
+}
+.graduatesTable th:nth-child(5), /* Место работы */
+.graduatesTable td:nth-child(5) {
+    width: 25%;
+}
+.graduatesTable th:nth-child(6), /* Дата (which is now only displayed for other tabs) */
+.graduatesTable td:nth-child(6) {
+    width: 120px;
+}
+
+/* Specific column widths for achievementsTable */
+.achievementsTable th:nth-child(2), /* Студент/Участник */
+.achievementsTable td:nth-child(2) {
+    width: 15%;
+}
+.achievementsTable th:nth-child(3), /* Конкурс/Событие */
+.achievementsTable td:nth-child(3) {
+    width: 20%;
+}
+.achievementsTable th:nth-child(4), /* Место/Награда */
+.achievementsTable td:nth-child(4) {
+    width: 15%;
+}
+.achievementsTable th:nth-child(5), /* Город */
+.achievementsTable td:nth-child(5) {
+    width: 10%;
+}
+.achievementsTable th:nth-child(6), /* Дата */
+.achievementsTable td:nth-child(6) {
+    width: 120px;
+}
+
+/* Column widths for tables with 'Заголовок' (news, afisha, videos, library, photoalbum) */
+/* Assuming order: ID, Заголовок, Дата/Категория, Действия */
+.newsTable th:nth-child(2), .newsTable td:nth-child(2),
+.afishaTable th:nth-child(2), .afishaTable td:nth-child(2),
+.videosTable th:nth-child(2), .videosTable td:nth-child(2),
+.libraryTable th:nth-child(2), .libraryTable td:nth-child(2),
+.photoalbumTable th:nth-child(2), .photoalbumTable td:nth-child(2) {
+    width: auto; /* Let content fill remaining space */
+}
+.newsTable th:nth-child(3), .newsTable td:nth-child(3),
+.afishaTable th:nth-child(3), .afishaTable td:nth-child(3),
+.videosTable th:nth-child(3), .videosTable td:nth-child(3),
+.libraryTable th:nth-child(3), .libraryTable td:nth-child(3),
+.photoalbumTable th:nth-child(3), .photoalbumTable td:nth-child(3) {
+    width: 120px; /* Date/Category column */
 }
 
 .adminListTable th {

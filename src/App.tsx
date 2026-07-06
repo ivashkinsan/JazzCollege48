@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { loadNews } from './data';
+import { loadNews, loadGraduates } from './data';
 import { loadAchievements } from './data/achievementsLoader';
-import { navigation, collegeInfo, estradaDepartment, teachers, graduates } from './data/static';
-import type { ExtendedNewsItem } from './types/college';
+import { navigation, collegeInfo, estradaDepartment, teachers } from './data/static';
+import type { ExtendedNewsItem, Graduate } from './types/college';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
@@ -36,6 +36,7 @@ const baseName = import.meta.env.BASE_URL;
 function HomePage() {
   const [newsData, setNewsData] = useState<ExtendedNewsItem[]>([]);
   const [achievementsData, setAchievementsData] = useState<any[]>([]);
+  const [graduatesData, setGraduatesData] = useState<Graduate[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -50,6 +51,11 @@ function HomePage() {
       if (!cancelled) setAchievementsData(data);
     });
 
+    // Load Graduates
+    loadGraduates().then((data) => {
+      if (!cancelled) setGraduatesData(data);
+    });
+
     return () => { cancelled = true; };
   }, []);
 
@@ -60,7 +66,7 @@ function HomePage() {
       <Specialties department={estradaDepartment} />
       <Teachers teachers={teachers} />
       <AchievementsPreview achievements={achievementsData} />
-      <Graduates graduates={graduates} />
+      <Graduates graduates={graduatesData} />
       <ConcertsPreview />
       <NewsPreview news={newsData} />
       <Admission collegeInfo={collegeInfo} />

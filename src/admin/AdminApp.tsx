@@ -9,8 +9,8 @@ import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 const API_BASE_URL = 'http://localhost:4000';
 
-type TabType = 'news' | 'afisha' | 'achievements' | 'videos' | 'library' | 'photoalbum';
-type ManagerType = 'content' | 'achievements' | 'videos' | 'library' | 'photoalbum';
+type TabType = 'news' | 'afisha' | 'achievements' | 'graduates' | 'videos' | 'library' | 'photoalbum';
+type ManagerType = 'content' | 'achievements' | 'graduates' | 'videos' | 'library' | 'photoalbum';
 
 // --- Helper Functions ---
 function createSlug(text: string): string {
@@ -111,6 +111,7 @@ const AdminApp: React.FC = () => {
 
     const manager = useMemo<ManagerType>(() => {
         if (activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum') return 'content';
+        if (activeTab === 'graduates') return 'graduates'; // Handle graduates
         return activeTab;
     }, [activeTab]);
 
@@ -137,6 +138,13 @@ const AdminApp: React.FC = () => {
                         studentName: item.student_name,
                         image: item.image_src,
                         city: item.city
+                    };
+                } else if (manager === 'graduates') {
+                    return {
+                        ...item,
+                        graduationYear: item.graduation_year,
+                        image: item.image_src,
+                        isFeatured: !!item.is_featured,
                     };
                 }
                 return item;
@@ -190,6 +198,7 @@ const AdminApp: React.FC = () => {
             case 'news': return { ...common, category: 'news', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
             case 'afisha': return { ...common, category: 'afisha', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
             case 'achievements': return { ...common, student_name: '', competition: '', place: '', category: '', image_src: '', city: '' };
+            case 'graduates': return { ...common, name: '', graduation_year: new Date().getFullYear(), position: '', workplace: '', image_src: '', bio: '', is_featured: false };
             case 'videos': return { ...common, description: '', video_url: '', source: 'rutube' };
             case 'library': return { ...common, description: '', url: '', category: 'Видео-уроки и каналы' };
             case 'photoalbum': return { ...common, category: 'photoalbum', slug: '', title: '', body: '' };
@@ -232,6 +241,10 @@ const AdminApp: React.FC = () => {
             if (data.date) {
                 data.date = formatDateToYYYYMMDD(data.date);
             }
+            if (activeTab === 'graduates') {
+                // Ensure is_featured is boolean
+                data.is_featured = !!data.is_featured;
+            }
             setFormData(data);
             setEditingId(id);
             setMode('form');
@@ -260,11 +273,13 @@ const AdminApp: React.FC = () => {
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target as HTMLInputElement;
         setFormData((prev: any) => {
             const newFormData = { ...prev };
             if (name === 'linked_photoalbum_id') {
-                newFormData[name] = value === '' ? '' : String(value); // Explicitly ensure string for linked_photoalbum_id
+                newFormData[name] = value === '' ? '' : String(value);
+            } else if (type === 'checkbox') {
+                newFormData[name] = checked;
             } else {
                 newFormData[name] = value;
             }
@@ -287,15 +302,21 @@ const AdminApp: React.FC = () => {
             for (const key in formData) {
                 if (Object.prototype.hasOwnProperty.call(formData, key)) {
                     // Skip image_src if a new file is selected to avoid sending old path with new file
-                    if (key === 'image_src' && activeTab === 'achievements' && selectedFiles.has('image')) {
+                    if ((key === 'image_src' && activeTab === 'achievements' && selectedFiles.has('image')) ||
+                        (key === 'image_src' && activeTab === 'graduates' && selectedFiles.has('image'))) {
                         continue;
                     }
                     // Exclude linked_photoalbum_id and category from general append, as they are handled explicitly
                     if (key === 'linked_photoalbum_id' || key === 'category') {
                         continue;
                     }
-                    dataToSend.append(key, formData[key]);
-                }
+                    // Handle boolean for is_featured
+                    if (key === 'is_featured' && activeTab === 'graduates') {
+                        dataToSend.append(key, formData[key] ? '1' : '0'); // Convert boolean to '1' or '0'
+                    } else {
+                        dataToSend.append(key, formData[key]);
+                    }
+                        }
             }
 
             // Explicitly handle linked_photoalbum_id for news/afisha
@@ -314,7 +335,7 @@ const AdminApp: React.FC = () => {
             // Append image files
             if ((activeTab === 'news' || activeTab === 'afisha') && selectedFiles.has('coverImage')) {
                 dataToSend.append('coverImage', selectedFiles.get('coverImage')![0]);
-            } else if (activeTab === 'achievements' && selectedFiles.has('image')) {
+            } else if ((activeTab === 'achievements' || activeTab === 'graduates') && selectedFiles.has('image')) {
                 dataToSend.append('image', selectedFiles.get('image')![0]);
             } else if (activeTab === 'photoalbum' && selectedFiles.has('galleryImages')) {
                 selectedFiles.get('galleryImages')!.forEach((file: File) => {
@@ -348,16 +369,20 @@ const AdminApp: React.FC = () => {
         return (
             <div>
                 <button className={styles.addButton} onClick={() => { resetForm(); setMode('form'); }}>Добавить новую запись</button>
-                <table className={styles.adminListTable}>
+                <table className={`${styles.adminListTable} ${styles[activeTab + 'Table']}`}>
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Заголовок</th>
+                            {!['graduates', 'achievements'].includes(activeTab) && <th>Заголовок</th>}
                             {activeTab === 'achievements' && <th>Студент/Участник</th>}
                             {activeTab === 'achievements' && <th>Конкурс/Событие</th>}
                             {activeTab === 'achievements' && <th>Место/Награда</th>}
                             {activeTab === 'achievements' && <th>Город</th>}
-                            <th>{isLibrary ? 'Категория' : 'Дата'}</th>
+                            {activeTab === 'graduates' && <th>Имя</th>}
+                            {activeTab === 'graduates' && <th>Год выпуска</th>}
+                            {activeTab === 'graduates' && <th>Должность</th>}
+                            {activeTab === 'graduates' && <th>Место работы</th>}
+                            {activeTab !== 'graduates' && <th>{isLibrary ? 'Категория' : 'Дата'}</th>}
                             <th>Действия</th>
                         </tr>
                     </thead>
@@ -365,15 +390,21 @@ const AdminApp: React.FC = () => {
                         {(filteredItems || []).map(item => (
                             <tr key={item.id}>
                                 <td>{item.id}</td>
-                                <td>{item.title}</td>
+                                {!['graduates', 'achievements'].includes(activeTab) && <td>{item.title || item.name}</td>} {/* Use item.name for graduates */}
                                 {activeTab === 'achievements' && <td>{item.studentName || 'N/A'}</td>}
                                 {activeTab === 'achievements' && <td>{item.competition || 'N/A'}</td>}
                                 {activeTab === 'achievements' && <td>{item.place || 'N/A'}</td>}
                                 {activeTab === 'achievements' && <td>{item.city || 'N/A'}</td>}
-                                <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>
+                                {activeTab === 'graduates' && <td>{item.name || 'N/A'}</td>}
+                                {activeTab === 'graduates' && <td>{item.graduationYear || 'N/A'}</td>}
+                                {activeTab === 'graduates' && <td>{item.position || 'N/A'}</td>}
+                                {activeTab === 'graduates' && <td>{item.workplace || 'N/A'}</td>}
+                                {activeTab !== 'graduates' && <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>}
                                 <td>
-                                    <button onClick={() => handleEditRequest(item.id)} className={`${styles.actionButton} ${styles.editButton}`}>Редактировать</button>
-                                    <button onClick={() => handleDeleteRequest(item.id)} className={`${styles.actionButton} ${styles.deleteButton}`}>Удалить</button>
+                                    <div style={{ display: 'flex', gap: '5px' }}> {/* Add this div for flexbox layout */}
+                                        <button onClick={() => handleEditRequest(item.id)} className={`${styles.actionButton} ${styles.editButton}`}>Редактировать</button>
+                                        <button onClick={() => handleDeleteRequest(item.id)} className={`${styles.actionButton} ${styles.deleteButton}`}>Удалить</button>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -441,6 +472,32 @@ const AdminApp: React.FC = () => {
                             </div>
                         )}
                         <input type="file" name="image" onChange={handleFileChange} />
+                    </div>
+                </>
+            );
+            case 'graduates': return (
+                <>
+                    <div className={styles.formGroup}><label>Имя</label><input type="text" name="name" value={formData.name || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Год выпуска</label><input type="number" name="graduation_year" value={formData.graduation_year || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Должность</label><input type="text" name="position" value={formData.position || ''} onChange={handleInputChange} /></div>
+                    <div className={styles.formGroup}><label>Место работы</label><input type="text" name="workplace" value={formData.workplace || ''} onChange={handleInputChange} /></div>
+                    <div className={styles.formGroup}>
+                        <label>Фотография</label>
+                        {formData.image_src && (
+                            <div>
+                                <img src={getVersionedAssetUrl(formData.image_src)} alt="Текущее фото" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
+                                <p>Текущий путь: {formData.image_src}</p>
+                            </div>
+                        )}
+                        <input type="file" name="image" onChange={handleFileChange} />
+                    </div>
+                    <div className={styles.formGroup}><label>Биография</label><textarea name="bio" value={formData.bio || ''} onChange={handleInputChange} rows={5}></textarea></div>
+                    <div className={styles.formGroup}>
+                        <label>Выдающийся выпускник</label>
+                        <input type="checkbox" name="is_featured" checked={formData.is_featured || false} onChange={(e) => {
+                            const { name, checked } = e.target;
+                            setFormData(prev => ({ ...prev, [name]: checked }));
+                        }} />
                     </div>
                 </>
             );
@@ -513,6 +570,7 @@ const AdminApp: React.FC = () => {
         { key: 'news', label: 'Новости' },
         { key: 'afisha', label: 'Афиши' },
         { key: 'achievements', label: 'Достижения' },
+        { key: 'graduates', label: 'Выпускники' }, // Added graduates tab
         { key: 'videos', label: 'Видео' },
         { key: 'library', label: 'Библиотека' },
         { key: 'photoalbum', label: 'Фотоальбомы' },

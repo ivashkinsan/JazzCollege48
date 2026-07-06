@@ -1,0 +1,132 @@
+[
+  {
+    "id": "6",
+    "name": "Коротков Максим",
+    "graduationYear": 2026,
+    "position": "саксофон",
+    "workplace": "null",
+    "image": "null",
+    "bio": "null",
+    "isFeatured": true
+  },
+  {
+    "id": "7",
+    "name": "Курдюкова Мария",
+    "graduationYear": 2026,
+    "position": "труба",
+    "workplace": null,
+    "image": null,
+    "bio": null,
+    "isFeatured": false
+  },
+  {
+    "id": "8",
+    "name": "Хрюкин Иван",
+    "graduationYear": 2026,
+    "position": "гитара",
+    "workplace": null,
+    "image": null,
+    "bio": null,
+    "isFeatured": false
+  },
+  {
+    "id": "9",
+    "name": "Шишкина Варвара",
+    "graduationYear": 2026,
+    "position": "альт-саксофон",
+    "workplace": null,
+    "image": "/public/vipuskniki/2026 Шишкина Варвара.jpg",
+    "bio": null,
+    "isFeatured": false
+  },
+  {
+    "id": "10",
+    "name": "Филатова София",
+    "graduationYear": 2026,
+    "position": "Вокалистка",
+    "workplace": null,
+    "image": "/public/vipuskniki/2026 Филатова София.jpg",
+    "bio": null,
+    "isFeatured": false
+  },
+  {
+    "id": "11",
+    "name": "Баранова Валерия",
+    "graduationYear": 2026,
+    "position": "Вокалистка",
+    "workplace": null,
+    "image": "/public/vipuskniki/2026 Баранова Валерия.jpg",
+    "bio": null,
+    "isFeatured": false
+  },
+  {
+    "id": "3",
+    "name": "Чага Иван",
+    "graduationYear": 2023,
+    "position": "Барабанщик, студент",
+    "workplace": "Академия музыки им. Гнесиных",
+    "image": "/foto_nasha_gordost/Chaga.jpg",
+    "bio": "Талантливый барабанщик, студент академии музыки им. Гнесиных. Лауреат международных и всероссийских конкурсов.",
+    "isFeatured": true
+  },
+  {
+    "id": "5",
+    "name": "Меринова Екатерина",
+    "graduationYear": 2018,
+    "position": "Саксофонистка, вокалистка, лауреат международных конкурсов",
+    "workplace": "Эстрадно-джазовый оркестр им. Кима Назаретова, РГК им. С.В. Рахманинова",
+    "image": "/foto_nasha_gordost/Merinova.jpg",
+    "bio": "Выпускница Ростовской государственной консерватории им. С.В. Рахманинова. Артистка эстрадно-джазового оркестра им. Кима Назаретова, преподаватель детской музыкальной школы им. П.И. Чайковского г. Ростова-на-Дону. Лауреат международных и всероссийских конкурсов.",
+    "isFeatured": true
+  },
+  {
+    "id": "4",
+    "name": "Стульнев Дмитрий Андреевич",
+    "graduationYear": 2016,
+    "position": "Дирижёр, бэнд-лидер, руководитель Липецкого джазового оркестра. Лауреат международных и всероссийских конкурсов.",
+    "workplace": "Липецкий джазовый оркестр, Липецкий Дом музыки",
+    "image": "/foto_nasha_gordost/Stulnev.jpg",
+    "bio": "Художественный руководитель Липецкого джазового оркестра.",
+    "isFeatured": true
+  },
+  {
+    "id": "1",
+    "name": "Мельников Денис",
+    "graduationYear": 2015,
+    "position": "Саксофонист, аранжировщик, бэнд-лидер, педагог",
+    "workplace": "Академия джаза (г. Москва)",
+    "image": "/foto_nasha_gordost/Melnikov.jpg",
+    "bio": "Заведующий эстрадно-джазовым отделом и педагог по классу саксофона и ансамбля в Академии джаза. Руководитель Jazz Academy Big Band. Лауреат международных и всероссийских конкурсов.",
+    "isFeatured": true
+  },
+  {
+    "id": "13",
+    "name": "Ивашкин Александр Владимирович",
+    "graduationYear": 2004,
+    "position": "фортепиано",
+    "workplace": null,
+    "image": "/foto/Ivashkin.jpg",
+    "bio": null,
+    "isFeatured": false
+  },
+  {
+    "id": "2",
+    "name": "Окунев Владислав",
+    "graduationYear": 2003,
+    "position": "Джазовый гитарист-виртуоз, аранжировщик, преподаватель. Лауреат международных и всероссийских конкурсов.",
+    "workplace": "Kim Nazaretov Big Band, РГК им. С.В. Рахманинова",
+    "image": "/foto_nasha_gordost/Okunev.jpg",
+    "bio": "Известный гитарист-виртуоз, работает в Kim Nazaretov Big Band. Сессионный музыкант.",
+    "isFeatured": true
+  },
+  {
+    "id": "12",
+    "name": "Кокшин Дмитрий Николаевич",
+    "graduationYear": 2003,
+    "position": "саксофон",
+    "workplace": null,
+    "image": "/foto/Kokshin.jpg",
+    "bio": null,
+    "isFeatured": false
+  }
+]

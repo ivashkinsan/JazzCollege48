@@ -43,11 +43,27 @@ CREATE TABLE IF NOT EXISTS gallery_images (
 );
 `;
 
+const createGraduatesTable = `
+CREATE TABLE IF NOT EXISTS graduates (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    graduation_year INTEGER NOT NULL,
+    position TEXT,
+    workplace TEXT,
+    image_src TEXT,
+    bio TEXT,
+    is_featured INTEGER
+);
+`;
+
 db.exec(createContentTable);
 console.log('✅ Table "content" created or already exists.');
 
 db.exec(createGalleryImagesTable);
 console.log('✅ Table "gallery_images" created or already exists.');
+
+db.exec(createGraduatesTable);
+console.log('✅ Table "graduates" created or already exists.');
 
 db.close();
 console.log('🎉 Database setup complete. Database file is at src/data/database.db');

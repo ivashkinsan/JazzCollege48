@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import Database from "better-sqlite3";
+import type { Achievement, Video, Graduate } from "../types/college"; // ADDED Graduate type
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,6 +34,13 @@ const ACHIEVEMENTS_TARGET_ROOT = path.resolve(
   "public/Diploms",
 );
 fs.mkdir(ACHIEVEMENTS_TARGET_ROOT, { recursive: true });
+
+const GRADUATES_TARGET_ROOT = path.resolve(
+  __dirname,
+  "..",
+  "public/vipuskniki",
+);
+fs.mkdir(GRADUATES_TARGET_ROOT, { recursive: true });
 
 function createSlug(text: string): string {
   const a = {
@@ -80,6 +88,14 @@ function createSlug(text: string): string {
     .replace(/^-|-$/g, "");
 }
 
+function stripPublicPrefix(imgPath: string | undefined): string | null {
+  if (!imgPath) return null;
+  if (imgPath.startsWith('/public/')) {
+    return imgPath.substring('/public'.length); // Keep the leading '/'
+  }
+  return imgPath;
+}
+
 const upload = multer({
   storage: multer.diskStorage({
     destination: STAGING_ROOT,
@@ -87,6 +103,37 @@ const upload = multer({
       cb(null, Buffer.from(file.originalname, "latin1").toString("utf8")),
   }),
 });
+
+// --- STATIC DATA GENERATION ---
+// This function will generate static JSON files from the database
+async function generateGraduatesJson() {
+  try {
+    const stmt = db.prepare("SELECT * FROM graduates ORDER BY graduation_year DESC");
+    const graduatesFromDb = stmt.all() as Graduate[];
+    
+    const adaptedGraduates = graduatesFromDb.map((item: any) => ({
+      id: item.id.toString(),
+      name: item.name,
+      graduationYear: item.graduation_year,
+      position: item.position || null,
+      workplace: item.workplace || null,
+      image: item.image_src || null, // Frontend expects 'image', DB has 'image_src'
+      bio: item.bio || null,
+      isFeatured: !!item.is_featured, // Convert INTEGER (0 or 1) to boolean
+    }));
+
+    const filePath = path.resolve(__dirname, "..", "public/data/graduates.json");
+    await fs.writeFile(filePath, JSON.stringify(adaptedGraduates, null, 2), "utf-8");
+    console.log(`✅ Generated ${filePath}`);
+  } catch (error) {
+    console.error("❌ Error generating graduates.json:", error);
+  }
+}
+// --- END STATIC DATA GENERATION ---
+
+// Call static data generation on server startup
+generateGraduatesJson();
+
 
 // --- PUBLIC API ENDPOINTS ---
 
@@ -200,6 +247,23 @@ app.get("/api/library", (req, res) => {
   }
 });
 
+app.get("/api/graduates", (req, res) => {
+  try {
+    const stmt = db.prepare("SELECT * FROM graduates ORDER BY graduation_year DESC");
+    const graduates = stmt.all();
+    // The frontend expects the 'image' property, but the DB has 'image_src'. Adapt it.
+    const adaptedGraduates = graduates.map((item: any) => ({
+      ...item,
+      image: item.image_src,
+      isFeatured: !!item.is_featured, // Convert INTEGER (0 or 1) to boolean
+    }));
+    res.json(adaptedGraduates);
+  } catch (error) {
+    console.error(`Error fetching graduates:`, error);
+    res.status(500).json([]);
+  }
+});
+
 // --- ADMIN API ENDPOINTS ---
 
 // Generic list endpoint for admin tables
@@ -211,6 +275,7 @@ app.get("/api/admin/list/:manager", (req, res) => {
     videos: "videos",
     library: "library_links",
     photoalbum: "content", // Photo albums are also stored in the content table
+    graduates: "graduates",
   };
   const tableName = tableMap[manager];
 
@@ -246,6 +311,9 @@ app.get("/api/admin/list/:manager", (req, res) => {
     } else if (tableName === "achievements") {
       // Specific query for achievements
       query = `SELECT id, title, student_name, competition, date, place, category, city FROM ${tableName} ORDER BY date DESC`;
+    } else if (tableName === "graduates") {
+      // Specific query for graduates
+      query = `SELECT id, name, graduation_year, position, workplace, image_src, bio, is_featured FROM ${tableName} ORDER BY graduation_year DESC`;
     } else {
       query = `SELECT id, title, date FROM ${tableName} ORDER BY date DESC`;
     }
@@ -383,6 +451,122 @@ app.delete("/api/achievements/:id", (req, res) => {
   }
 });
 
+// Graduates CRUD
+app.get("/api/graduates/:id", (req, res) => {
+  try {
+    const stmt = db.prepare("SELECT * FROM graduates WHERE id = ?");
+    const graduate = stmt.get(req.params.id);
+    if (graduate) {
+      res.json({ ...graduate, is_featured: !!(graduate as any).is_featured });
+    } else {
+      res.status(404).json({ success: false, message: "Graduate not found" });
+    }
+  } catch (error) {
+    console.error(`Error fetching graduate ${req.params.id}:`, error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+app.post("/api/graduates", upload.single("image"), async (req, res) => {
+  try {
+    const { name, graduation_year, position, workplace, bio, is_featured } =
+      req.body;
+    let image_src = req.body.image_src; // Preserve existing image_src if no new file uploaded
+
+    if (req.file) {
+      const targetPath = path.join(
+        GRADUATES_TARGET_ROOT,
+        req.file.originalname,
+      );
+      await fs.rename(req.file.path, targetPath);
+      image_src = path
+        .join("/vipuskniki", req.file.originalname)
+        .replace(/\\/g, "/");
+    }
+
+    const stmt = db.prepare(`
+            INSERT INTO graduates (name, graduation_year, position, workplace, image_src, bio, is_featured)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        `);
+    const result = stmt.run(
+      name,
+      graduation_year,
+      position,
+      workplace,
+      image_src,
+      bio,
+      is_featured ? 1 : 0, // Convert boolean to INTEGER
+    );
+    res.status(201).json({ success: true, id: result.lastInsertRowid });
+  } catch (error) {
+    console.error("Error creating graduate:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to create graduate" });
+  }
+});
+
+app.post("/api/graduates/:id", upload.single("image"), async (req, res) => {
+  try {
+    const { name, graduation_year, position, workplace, bio, is_featured } =
+      req.body;
+    let image_src = req.body.image_src; // Preserve existing image_src if no new file uploaded
+
+    if (req.file) {
+      const targetPath = path.join(
+        GRADUATES_TARGET_ROOT,
+        req.file.originalname,
+      );
+      await fs.rename(req.file.path, targetPath);
+      image_src = path
+        .join("/vipuskniki", req.file.originalname)
+        .replace(/\\/g, "/");
+    }
+    const stmt = db.prepare(`
+            UPDATE graduates 
+            SET name = ?, graduation_year = ?, position = ?, workplace = ?, image_src = ?, bio = ?, is_featured = ?
+            WHERE id = ?
+        `);
+    const result = stmt.run(
+      name,
+      graduation_year,
+      position,
+      workplace,
+      image_src,
+      bio,
+      is_featured ? 1 : 0, // Convert boolean to INTEGER
+      req.params.id,
+    );
+    if (result.changes > 0) {
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ success: false, message: "Graduate not found" });
+    }
+  } catch (error) {
+    console.error(`Error updating graduate ${req.params.id}:`, error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update graduate" });
+  }
+});
+
+app.delete("/api/graduates/:id", (req, res) => {
+  try {
+    const stmt = db.prepare("DELETE FROM graduates WHERE id = ?");
+    const result = stmt.run(req.params.id);
+    if (result.changes > 0) {
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ success: false, message: "Graduate not found" });
+    }
+  } catch (error) {
+    console.error(`Error deleting graduate ${req.params.id}:`, error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to delete graduate" });
+  }
+});
+
 // Videos CRUD
 app.get("/api/videos/:id", (req, res) => {
   try {
@@ -451,7 +635,9 @@ app.delete("/api/videos/:id", (req, res) => {
     }
   } catch (error) {
     console.error(`Error deleting video ${req.params.id}:`, error);
-    res.status(500).json({ success: false, message: "Failed to delete video" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to delete video" });
   }
 });
 

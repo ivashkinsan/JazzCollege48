@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { graduates } from '../data/static';
+import { useState, useEffect } from 'react';
+import { loadGraduates } from '../data';
 import type { Graduate } from '../types/college';
 import { asset } from '../utils/asset';
 import styles from './GraduatesPage.module.css';
@@ -31,6 +31,7 @@ const groupByFiveYears = (graduatesList: Graduate[]) => {
 };
 
 const decades = [
+  'Все', // Добавлена опция "Все"
   '1981-1985',
   '1986-1990',
   '1991-1995',
@@ -44,8 +45,20 @@ const decades = [
 ];
 
 function GraduatesPage() {
-  const [activeDecade, setActiveDecade] = useState<string>('1981-1985');
-  const groupedGraduates = groupByFiveYears(graduates);
+  const [activeDecade, setActiveDecade] = useState<string>('Все'); // Активное десятилетие по умолчанию - "Все"
+  const [graduatesList, setGraduatesList] = useState<Graduate[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadGraduates().then((data) => {
+      if (!cancelled) setGraduatesList(data);
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  const groupedGraduates = groupByFiveYears(graduatesList);
+  const graduatesToDisplay = activeDecade === 'Все' ? graduatesList : groupedGraduates[activeDecade];
+  const isEmpty = !graduatesToDisplay || graduatesToDisplay.length === 0;
 
   return (
     <div className={styles.page}>
@@ -64,13 +77,14 @@ function GraduatesPage() {
         <div className="container">
           <div className={styles.tabs}>
             {decades.map((decade) => {
-              const hasGraduates = groupedGraduates[decade] && groupedGraduates[decade].length > 0;
+              const hasGraduatesForDecade = groupedGraduates[decade] && groupedGraduates[decade].length > 0;
+              const isDisabled = decade !== 'Все' && !hasGraduatesForDecade; // 'Все' всегда включено
               return (
                 <button
                   key={decade}
                   className={`${styles.tab} ${activeDecade === decade ? styles.tabActive : ''}`}
                   onClick={() => setActiveDecade(decade)}
-                  disabled={!hasGraduates}
+                  disabled={isDisabled}
                 >
                   {decade}
                 </button>
@@ -79,7 +93,7 @@ function GraduatesPage() {
           </div>
 
           <div className={styles.graduatesGrid}>
-            {groupedGraduates[activeDecade]?.map((graduate) => (
+            {graduatesToDisplay?.map((graduate) => (
               <article key={graduate.id} className={styles.graduateCard}>
                 <div className={styles.imageWrapper}>
                   <img
@@ -106,7 +120,7 @@ function GraduatesPage() {
             ))}
           </div>
 
-          {(!groupedGraduates[activeDecade] || groupedGraduates[activeDecade].length === 0) && (
+          {isEmpty && (
             <p className={styles.empty}>
               В этот период информация о выпускниках уточняется
             </p>
