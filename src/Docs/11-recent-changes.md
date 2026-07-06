@@ -74,3 +74,24 @@ This document summarizes the significant modifications and enhancements implemen
 ### Build Errors Resolution
 -   **Description:** Addressed TypeScript compilation errors related to unused imports and typos introduced during refactoring.
 -   **Files Affected:** `src/components/AchievementsPreview.tsx` (fixed `classNameclassName` typo and missing `Link` import).
+
+## 4. Admin Panel Enhancements & Bug Fixes
+
+### Admin Panel Dark Theme
+-   **Description:** Implemented a dark theme for the entire admin panel by setting the `data-theme='dark'` attribute on the document's root element (`<html>`), utilizing predefined CSS variables in `AdminApp.module.css`.
+-   **Files Affected:** `src/admin/AdminApp.tsx`, `src/admin/AdminApp.module.css`
+
+### Achievement Data Display & Editing Enhancements
+-   **Description:**
+    *   **"Город" (City) Column:** Added a new "Город" column to the achievements list in the admin panel and introduced a corresponding input field in the achievement editing form.
+    *   **Separated "Место/Награда":** The previously combined "Место/Награда" field is now split into distinct "Место проведения" (City) and "Награда" (Award) input fields in the editing form for better clarity and data management.
+    *   **`student_name` Client-Side Adaptation:** Corrected an issue where the "Студент/Участник" column was not displaying data due to a snake_case (`student_name`) to camelCase (`studentName`) mismatch during client-side data processing.
+    *   **Date Format Correction:** Implemented client-side date formatting to ensure `input type="date"` fields correctly display dates in `yyyy-MM-dd` format, resolving previous warnings.
+-   **Files Affected:** `src/admin/AdminApp.tsx`, `src/types/college.ts`
+
+### API & Database Updates for Achievements
+-   **Description:**
+    *   **`city` Column in Database:** The `achievements` table in the database now includes a `city` column.
+    *   **API Endpoints Updated:** The API endpoints (`/api/admin/list/achievements`, `/api/achievements`, `/api/achievements/:id`) have been updated to support the new `city` field in `SELECT`, `INSERT`, and `UPDATE` operations.
+    *   **`TypeError: Cannot destructure property 'title' of 'req.body'` Fix:** Resolved a server-side error during achievement updates by ensuring the `multer` middleware is correctly applied to the update endpoint, allowing proper parsing of `multipart/form-data` requests.
+-   **Files Affected:** `scripts/db-create-achievements-table.ts`, `scripts/admin-server.ts`

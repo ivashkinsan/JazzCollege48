@@ -102,6 +102,13 @@ const AdminApp: React.FC = () => {
     const [selectedFiles, setSelectedFiles] = useState<Map<string, File[]>>(new Map());
     const [photoAlbumsForSelection, setPhotoAlbumsForSelection] = useState<{ value: number; label: string }[]>([]);
 
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        return () => {
+            document.documentElement.removeAttribute('data-theme');
+        };
+    }, []);
+
     const manager = useMemo<ManagerType>(() => {
         if (activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum') return 'content';
         return activeTab;
@@ -128,7 +135,8 @@ const AdminApp: React.FC = () => {
                     return {
                         ...item,
                         studentName: item.student_name,
-                        image: item.image_src
+                        image: item.image_src,
+                        city: item.city
                     };
                 }
                 return item;
@@ -181,7 +189,7 @@ const AdminApp: React.FC = () => {
         switch (activeTab) {
             case 'news': return { ...common, category: 'news', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
             case 'afisha': return { ...common, category: 'afisha', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
-            case 'achievements': return { ...common, student_name: '', competition: '', place: '', category: '', image_src: '' };
+            case 'achievements': return { ...common, student_name: '', competition: '', place: '', category: '', image_src: '', city: '' };
             case 'videos': return { ...common, description: '', video_url: '', source: 'rutube' };
             case 'library': return { ...common, description: '', url: '', category: 'Видео-уроки и каналы' };
             case 'photoalbum': return { ...common, category: 'photoalbum', slug: '', title: '', body: '' };
@@ -348,6 +356,7 @@ const AdminApp: React.FC = () => {
                             {activeTab === 'achievements' && <th>Студент/Участник</th>}
                             {activeTab === 'achievements' && <th>Конкурс/Событие</th>}
                             {activeTab === 'achievements' && <th>Место/Награда</th>}
+                            {activeTab === 'achievements' && <th>Город</th>}
                             {activeTab === 'achievements' && <th>Категория</th>}
                             <th>{isLibrary ? 'Категория' : 'Дата'}</th>
                             <th>Действия</th>
@@ -361,6 +370,7 @@ const AdminApp: React.FC = () => {
                                 {activeTab === 'achievements' && <td>{item.studentName || 'N/A'}</td>}
                                 {activeTab === 'achievements' && <td>{item.competition || 'N/A'}</td>}
                                 {activeTab === 'achievements' && <td>{item.place || 'N/A'}</td>}
+                                {activeTab === 'achievements' && <td>{item.city || 'N/A'}</td>}
                                 {activeTab === 'achievements' && <td>{item.category || 'N/A'}</td>}
                                 <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>
                                 <td>
@@ -422,7 +432,8 @@ const AdminApp: React.FC = () => {
                     <div className={styles.formGroup}><label>Студент/Участник</label><input type="text" name="student_name" value={formData.student_name || ''} onChange={handleInputChange} /></div>
                     <div className={styles.formGroup}><label>Конкурс/Событие</label><input type="text" name="competition" value={formData.competition || ''} onChange={handleInputChange} /></div>
                     <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Место/Награда</label><input type="text" name="place" value={formData.place || ''} onChange={handleInputChange} /></div>
+                    <div className={styles.formGroup}><label>Место проведения</label><input type="text" name="city" value={formData.city || ''} onChange={handleInputChange} /></div>
+                    <div className={styles.formGroup}><label>Награда</label><input type="text" name="place" value={formData.place || ''} onChange={handleInputChange} /></div>
                     <div className={styles.formGroup}>
                         <label>Изображение (диплом/сертификат)</label>
                         {formData.image_src && (
