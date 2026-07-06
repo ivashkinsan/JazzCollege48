@@ -1,0 +1,152 @@
+/* src/admin/admin-preview-news.css */
+
+:root {
+  --color-bg-tertiary: #2a2a2a;
+  --color-accent: #ffc107;
+  --color-text-muted: #999;
+  --color-white: #fff;
+  --color-text-secondary: #ccc;
+  --border-color: #444;
+  --transition-normal: 0.3s;
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.newsCard {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  transition: all var(--transition-normal);
+}
+
+.newsCardCover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 160px;
+  overflow: hidden;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.newsCardCover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.newsCardContent {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.newsCardMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 10px;
+}
+
+.newsCardCategory {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: rgba(255, 193, 7, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.newsCardDate {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.newsCardTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--color-white);
+}
+
+.newsCardDescription {
+  line-height: 1.7;
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+}
+
+/* Achievement Preview Styles */
+.achievementCard {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-tertiary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  width: 100%;
+}
+.achievementCardImageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.414;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.achievementCardContent {
+  padding: 20px;
+  max-height: 25vh;
+  overflow-y: auto;
+}
+.achievementCardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.achievementCardPlace {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  background-color: var(--color-accent);
+  color: var(--color-black);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+.achievementCardContent {
+  padding: 20px;
+}
+
+.achievementCardTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 5px;
+  color: var(--color-white);
+}
+
+.achievementCardStudent {
+  font-size: 0.9375rem;
+  color: var(--color-accent);
+  margin-bottom: 5px;
+}
+
+.achievementCardCompetition {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+

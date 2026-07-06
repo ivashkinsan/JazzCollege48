@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { TabType, ManagerType } from './types';
+import PreviewPane from './components/PreviewPane';
+import AdminList from './components/AdminList';
+import AdminFormFields from './components/AdminFormFields';
 import styles from './AdminApp.module.css';
-import NewsPreview from '../components/NewsPreview';
-import Achievements from '../components/Achievements';
-import concertCardStyles from '../components/ConcertsPreview.module.css';
-import VideoCard from '../components/VideoCard';
-import { Achievement, Video } from '../types/college';
-import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 const API_BASE_URL = 'http://localhost:4000';
-
-type TabType = 'news' | 'afisha' | 'achievements' | 'graduates' | 'videos' | 'library' | 'photoalbum';
-type ManagerType = 'content' | 'achievements' | 'graduates' | 'videos' | 'library' | 'photoalbum';
 
 // --- Helper Functions ---
 function createSlug(text: string): string {
@@ -19,7 +14,6 @@ function createSlug(text: string): string {
   return text.toLowerCase().split('').map(char => a[char] || char).join('').replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 }
 
-// Helper to format date to YYYY-MM-DD for input type="date"
 function formatDateToYYYYMMDD(dateString: string): string {
     if (!dateString) return '';
     try {
@@ -33,62 +27,6 @@ function formatDateToYYYYMMDD(dateString: string): string {
         return '';
     }
 }
-
-// --- Preview Pane Component ---
-const PreviewPane: React.FC<{ activeTab: TabType; formData: any }> = ({ activeTab, formData }) => {
-    const renderPreview = () => {
-        switch (activeTab) {
-            case 'news': {
-                const newsItem = {
-                    ...formData,
-                    cover: { src: formData.cover_image_src },
-                    description: formData.body ? formData.body.slice(0, 150) + (formData.body.length > 150 ? '...' : '') : '', // Ensure truncation for description
-                    content: formData.body || '' // Full content
-                };
-                return <NewsPreview news={[newsItem]} />;
-            }
-            case 'afisha': {
-                const concertItem = { ...formData, content: formData.body || '', cover: { src: formData.cover_image_src } };
-                const date = new Date(concertItem.date);
-                const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
-                return (
-                    <article className={concertCardStyles.concertCard}>
-                        <div className={concertCardStyles.concertCardCover}>
-                            {concertItem.cover?.src ? <img src={getVersionedAssetUrl(concertItem.cover.src)} alt={concertItem.title} /> : <div className={concertCardStyles.concertCardCoverPlaceholder}><span className={concertCardStyles.coverPlaceholderIcon}>🎵</span></div>}
-                        </div>
-                        <div className={concertCardStyles.concertCardContent}>
-                            <div className={concertCardStyles.concertCardMeta}><span className={concertCardStyles.concertCardCategory}>Афиша</span><div className={concertCardStyles.concertCardDateText}>{dateStr}</div></div>
-                            <h3 className={concertCardStyles.concertCardTitle}>{concertItem.title || 'Название события'}</h3>
-                            {concertItem.venue && <p className={concertCardStyles.concertCardVenue}>📍 {concertItem.venue}</p>}
-                            {concertItem.time && <p className={concertCardStyles.concertCardTime}>🕐 {concertItem.time}</p>}
-                            <p className={concertCardStyles.concertCardDescription}>{(concertItem.content || '').slice(0, 150)}{(concertItem.content || '').length > 150 && '...'}</p>
-                        </div>
-                    </article>
-                );
-            }
-            case 'achievements': {
-                const achievementItem: Achievement = { id: 'preview', studentName: formData.student_name, image: formData.image_src, ...formData };
-                return <div style={{ transform: 'scale(0.9)', transformOrigin: 'top left' }}><Achievements achievements={[achievementItem]} /></div>;
-            }
-            case 'videos': {
-                const videoItemPreview: Video = {
-                    id: formData.id || 'preview-id', // Use existing ID or a placeholder
-                    title: formData.title || '',
-                    description: formData.description || '',
-                    videoUrl: formData.video_url || '',
-                    source: formData.source || 'youtube', // Default source
-                    date: formData.date || new Date().toISOString().split('T')[0]
-                };
-                return <VideoCard video={videoItemPreview} />;
-            }
-            case 'library':
-                return <div className={styles.linkPreview}><h4>{formData.title}</h4><p>{formData.description}</p><a href={formData.url} target="_blank" rel="noopener noreferrer">{formData.url}</a><span>Категория: {formData.category}</span></div>;
-            default:
-                return <p>Предпросмотр для этого раздела еще не реализован.</p>;
-        }
-    };
-    return <div className={styles.previewBox}><h3>Предпросмотр</h3>{renderPreview()}</div>;
-};
 
 // --- Main Admin App ---
 const AdminApp: React.FC = () => {
@@ -111,12 +49,12 @@ const AdminApp: React.FC = () => {
 
     const manager = useMemo<ManagerType>(() => {
         if (activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum') return 'content';
-        if (activeTab === 'graduates') return 'graduates'; // Handle graduates
+        if (activeTab === 'graduates') return 'graduates';
         return activeTab;
     }, [activeTab]);
 
     const apiEndpoint = useMemo(() => {
-        if (manager === 'photoalbum') return '/api/content'; // Photo albums use the generic content endpoint for CRUD
+        if (manager === 'photoalbum') return '/api/content';
         return `/api/${manager}`;
     }, [manager]);
     const adminListEndpoint = useMemo(() => `/api/admin/list/${manager}`, [manager]);
@@ -149,9 +87,6 @@ const AdminApp: React.FC = () => {
                 }
                 return item;
             });
-            if (manager === 'achievements') {
-                console.log('Client-side adapted achievements data:', adaptedData);
-            }
             setItems(adaptedData);
         } catch (error) {
             console.error(`Failed to fetch items for ${manager}`, error);
@@ -169,8 +104,6 @@ const AdminApp: React.FC = () => {
                 try {
                     const response = await fetch(API_BASE_URL + '/api/admin/list/photoalbum');
                     if (!response.ok) {
-                        const errorData = await response.json().catch(() => ({ message: 'No error message from server.' }));
-                        console.error(`Failed to fetch photo albums for selection. Status: ${response.status}. Error: ${errorData.message}`);
                         setPhotoAlbumsForSelection([]);
                         return;
                     }
@@ -187,10 +120,9 @@ const AdminApp: React.FC = () => {
             };
             fetchPhotoAlbums();
         } else {
-            // Clear photo album selection when not in news/afisha form mode
             setPhotoAlbumsForSelection([]);
         }
-    }, [activeTab, mode]); // Depend on activeTab and mode
+    }, [activeTab, mode]);
 
     const getInitialFormData = useCallback(() => {
         const common = { title: '', date: new Date().toISOString().split('T')[0] };
@@ -198,7 +130,7 @@ const AdminApp: React.FC = () => {
             case 'news': return { ...common, category: 'news', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
             case 'afisha': return { ...common, category: 'afisha', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
             case 'achievements': return { ...common, student_name: '', competition: '', place: '', category: '', image_src: '', city: '' };
-            case 'graduates': return { ...common, name: '', graduation_year: new Date().getFullYear(), position: '', workplace: '', image_src: '', bio: '', is_featured: false };
+            case 'graduates': return { ...common, name: '', graduation_year: new Date().getFullYear(), instrument: '', workplace: '', image_src: '', bio: '', is_featured: false };
             case 'videos': return { ...common, description: '', video_url: '', source: 'rutube' };
             case 'library': return { ...common, description: '', url: '', category: 'Видео-уроки и каналы' };
             case 'photoalbum': return { ...common, category: 'photoalbum', slug: '', title: '', body: '' };
@@ -209,7 +141,7 @@ const AdminApp: React.FC = () => {
     const resetForm = useCallback(() => {
         setFormData(getInitialFormData());
         setEditingId(null);
-        setSelectedFiles(new Map()); // Clear selected files on form reset
+        setSelectedFiles(new Map());
     }, [getInitialFormData]);
     
     useEffect(resetForm, [activeTab]);
@@ -231,18 +163,15 @@ const AdminApp: React.FC = () => {
         try {
             const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`);
             const data = await response.json();
-            // Ensure linked_photoalbum_id is a string for the select element's value
             if (data.linked_photoalbum_id !== null && data.linked_photoalbum_id !== undefined) {
                 data.linked_photoalbum_id = String(data.linked_photoalbum_id);
             } else {
-                data.linked_photoalbum_id = ''; // Default to empty string
+                data.linked_photoalbum_id = '';
             }
-            // Format date to YYYY-MM-DD
             if (data.date) {
                 data.date = formatDateToYYYYMMDD(data.date);
             }
             if (activeTab === 'graduates') {
-                // Ensure is_featured is boolean
                 data.is_featured = !!data.is_featured;
             }
             setFormData(data);
@@ -255,18 +184,14 @@ const AdminApp: React.FC = () => {
         if (window.confirm('Вы уверены, что хотите удалить эту запись?')) {
             try {
                 const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`, { method: 'DELETE' });
-
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({ message: 'No error message from server.' }));
-                    console.error(`Failed to delete item for ${manager}. Status: ${response.status}. Error: ${errorData.message}`);
                     setStatus({ type: 'error', message: `Ошибка при удалении: ${errorData.message || response.statusText}` });
                     return;
                 }
-
                 setStatus({ type: 'success', message: 'Запись успешно удалена!' });
                 fetchItems();
             } catch (error: any) {
-                console.error('Failed to delete item', error);
                 setStatus({ type: 'error', message: `Ошибка при удалении: ${error.message}` });
             }
         }
@@ -297,42 +222,32 @@ const AdminApp: React.FC = () => {
         
         try {
             const dataToSend = new FormData();
-
-            // Append all non-file related form data, excluding specific keys for special handling
             for (const key in formData) {
                 if (Object.prototype.hasOwnProperty.call(formData, key)) {
-                    // Skip image_src if a new file is selected to avoid sending old path with new file
                     if ((key === 'image_src' && activeTab === 'achievements' && selectedFiles.has('image')) ||
                         (key === 'image_src' && activeTab === 'graduates' && selectedFiles.has('image'))) {
                         continue;
                     }
-                    // Exclude linked_photoalbum_id and category from general append, as they are handled explicitly
                     if (key === 'linked_photoalbum_id' || key === 'category') {
                         continue;
                     }
-                    // Handle boolean for is_featured
                     if (key === 'is_featured' && activeTab === 'graduates') {
-                        dataToSend.append(key, formData[key] ? '1' : '0'); // Convert boolean to '1' or '0'
+                        dataToSend.append(key, formData[key] ? '1' : '0');
                     } else {
                         dataToSend.append(key, formData[key]);
                     }
-                        }
+                }
             }
 
-            // Explicitly handle linked_photoalbum_id for news/afisha
             if ((activeTab === 'news' || activeTab === 'afisha') && formData.linked_photoalbum_id !== undefined) {
-                // Send empty string if "— Нет —" selected, backend will convert to null.
-                // Otherwise, send the string representation of the number.
                 const albumIdToAppend = formData.linked_photoalbum_id === '' 
                     ? '' 
                     : String(Number(formData.linked_photoalbum_id));
                 dataToSend.append('linked_photoalbum_id', albumIdToAppend);
             }
 
-            // Ensure category is explicitly appended as a single string
             dataToSend.append('category', activeTab);
 
-            // Append image files
             if ((activeTab === 'news' || activeTab === 'afisha') && selectedFiles.has('coverImage')) {
                 dataToSend.append('coverImage', selectedFiles.get('coverImage')![0]);
             } else if ((activeTab === 'achievements' || activeTab === 'graduates') && selectedFiles.has('image')) {
@@ -344,12 +259,7 @@ const AdminApp: React.FC = () => {
             }
 
             const url = editingId ? `${API_BASE_URL}${apiEndpoint}/${editingId}` : API_BASE_URL + apiEndpoint;
-            const response = await fetch(url, {
-                method: 'POST',
-                // DO NOT set Content-Type header manually for FormData.
-                // The browser will set it automatically with the correct boundary.
-                body: dataToSend,
-            });
+            const response = await fetch(url, { method: 'POST', body: dataToSend, });
             const result = await response.json();
             if (!response.ok) throw new Error(result.message || 'Server error');
             
@@ -363,214 +273,11 @@ const AdminApp: React.FC = () => {
         }
     };
 
-    const renderList = () => {
-        const filteredItems = manager === 'content' ? items.filter(item => item.category === activeTab) : items;
-        const isLibrary = activeTab === 'library';
-        return (
-            <div>
-                <button className={styles.addButton} onClick={() => { resetForm(); setMode('form'); }}>Добавить новую запись</button>
-                <table className={`${styles.adminListTable} ${styles[activeTab + 'Table']}`}>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            {!['graduates', 'achievements'].includes(activeTab) && <th>Заголовок</th>}
-                            {activeTab === 'achievements' && <th>Студент/Участник</th>}
-                            {activeTab === 'achievements' && <th>Конкурс/Событие</th>}
-                            {activeTab === 'achievements' && <th>Место/Награда</th>}
-                            {activeTab === 'achievements' && <th>Город</th>}
-                            {activeTab === 'graduates' && <th>Имя</th>}
-                            {activeTab === 'graduates' && <th>Год выпуска</th>}
-                            {activeTab === 'graduates' && <th>Должность</th>}
-                            {activeTab === 'graduates' && <th>Место работы</th>}
-                            {activeTab !== 'graduates' && <th>{isLibrary ? 'Категория' : 'Дата'}</th>}
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {(filteredItems || []).map(item => (
-                            <tr key={item.id}>
-                                <td>{item.id}</td>
-                                {!['graduates', 'achievements'].includes(activeTab) && <td>{item.title || item.name}</td>} {/* Use item.name for graduates */}
-                                {activeTab === 'achievements' && <td>{item.studentName || 'N/A'}</td>}
-                                {activeTab === 'achievements' && <td>{item.competition || 'N/A'}</td>}
-                                {activeTab === 'achievements' && <td>{item.place || 'N/A'}</td>}
-                                {activeTab === 'achievements' && <td>{item.city || 'N/A'}</td>}
-                                {activeTab === 'graduates' && <td>{item.name || 'N/A'}</td>}
-                                {activeTab === 'graduates' && <td>{item.graduationYear || 'N/A'}</td>}
-                                {activeTab === 'graduates' && <td>{item.position || 'N/A'}</td>}
-                                {activeTab === 'graduates' && <td>{item.workplace || 'N/A'}</td>}
-                                {activeTab !== 'graduates' && <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>}
-                                <td>
-                                    <div style={{ display: 'flex', gap: '5px' }}> {/* Add this div for flexbox layout */}
-                                        <button onClick={() => handleEditRequest(item.id)} className={`${styles.actionButton} ${styles.editButton}`}>Редактировать</button>
-                                        <button onClick={() => handleDeleteRequest(item.id)} className={`${styles.actionButton} ${styles.deleteButton}`}>Удалить</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        );
-    }
-
-    const renderFormFields = () => {
-        switch (activeTab) {
-            case 'news':
-            case 'afisha':
-                return (
-                    <>
-                        <div className={styles.formGroup}><label>Заголовок</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
-                        <div className={styles.formGroup}><label>URL (slug)</label><input type="text" name="slug" value={formData.slug || ''} onChange={handleInputChange} required /></div>
-                        <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
-                        {activeTab === 'afisha' && (
-                            <>
-                                <div className={styles.formGroup}><label>Время</label><input type="text" name="time" value={formData.time || ''} onChange={handleInputChange} /></div>
-                                <div className={styles.formGroup}><label>Место</label><input type="text" name="venue" value={formData.venue || ''} onChange={handleInputChange} /></div>
-                            </>
-                        )}
-                        <div className={styles.formGroup}>
-                            <label>Изображение обложки</label>
-                            {formData.cover_image_src && (
-                                <div>
-                                    <img src={getVersionedAssetUrl(formData.cover_image_src)} alt="Текущая обложка" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
-                                    <p>Текущий путь: {formData.cover_image_src}</p>
-                                </div>
-                            )}
-                            <input type="file" name="coverImage" onChange={handleFileChange} />
-                        </div>
-                        <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
-                        <div className={styles.formGroup}>
-                            <label>Связанный фотоальбом</label>
-                            <select
-                                name="linked_photoalbum_id"
-                                value={String(formData.linked_photoalbum_id || '')} // Keep this as String for display
-                                onChange={handleInputChange} // Change this line: pass event directly
-                            >
-                                <option value="">— Нет —</option>
-                                {photoAlbumsForSelection.map(album => (
-                                    <option key={album.value} value={String(album.value)}>{album.label}</option> // Ensure string value for HTML option
-                                ))}
-                            </select>
-                        </div>
-                    </>
-                );
-            case 'achievements': return (
-                <>
-                    <div className={styles.formGroup}><label>Название</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Студент/Участник</label><input type="text" name="student_name" value={formData.student_name || ''} onChange={handleInputChange} /></div>
-                    <div className={styles.formGroup}><label>Конкурс/Событие</label><input type="text" name="competition" value={formData.competition || ''} onChange={handleInputChange} /></div>
-                    <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Место проведения</label><input type="text" name="city" value={formData.city || ''} onChange={handleInputChange} /></div>
-                    <div className={styles.formGroup}><label>Награда</label><input type="text" name="place" value={formData.place || ''} onChange={handleInputChange} /></div>
-                    <div className={styles.formGroup}>
-                        <label>Изображение (диплом/сертификат)</label>
-                        {formData.image_src && (
-                            <div>
-                                <img src={getVersionedAssetUrl(formData.image_src)} alt="Текущее изображение" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
-                                <p>Текущий путь: {formData.image_src}</p>
-                            </div>
-                        )}
-                        <input type="file" name="image" onChange={handleFileChange} />
-                    </div>
-                </>
-            );
-            case 'graduates': return (
-                <>
-                    <div className={styles.formGroup}><label>Имя</label><input type="text" name="name" value={formData.name || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Год выпуска</label><input type="number" name="graduation_year" value={formData.graduation_year || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Должность</label><input type="text" name="position" value={formData.position || ''} onChange={handleInputChange} /></div>
-                    <div className={styles.formGroup}><label>Место работы</label><input type="text" name="workplace" value={formData.workplace || ''} onChange={handleInputChange} /></div>
-                    <div className={styles.formGroup}>
-                        <label>Фотография</label>
-                        {formData.image_src && (
-                            <div>
-                                <img src={getVersionedAssetUrl(formData.image_src)} alt="Текущее фото" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
-                                <p>Текущий путь: {formData.image_src}</p>
-                            </div>
-                        )}
-                        <input type="file" name="image" onChange={handleFileChange} />
-                    </div>
-                    <div className={styles.formGroup}><label>Биография</label><textarea name="bio" value={formData.bio || ''} onChange={handleInputChange} rows={5}></textarea></div>
-                    <div className={styles.formGroup}>
-                        <label>Выдающийся выпускник</label>
-                        <input type="checkbox" name="is_featured" checked={formData.is_featured || false} onChange={(e) => {
-                            const { name, checked } = e.target;
-                            setFormData(prev => ({ ...prev, [name]: checked }));
-                        }} />
-                    </div>
-                </>
-            );
-            case 'videos': return (
-                <>
-                    <div className={styles.formGroup}><label>Название</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Источник</label><select name="source" value={formData.source || 'rutube'} onChange={handleInputChange}><option value="rutube">Rutube</option><option value="youtube">YouTube</option><option value="vk">VK</option><option value="yandex">Yandex</option></select></div>
-                    <div className={styles.formGroup}><label>URL Видео</label><input type="url" name="video_url" value={formData.video_url || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Описание</label><textarea name="description" value={formData.description || ''} onChange={handleInputChange} rows={5}></textarea></div>
-                </>
-            );
-            case 'library': return (
-                <>
-                    <div className={styles.formGroup}><label>Название</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Категория</label><input type="text" name="category" value={formData.category || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>URL</label><input type="url" name="url" value={formData.url || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Описание</label><textarea name="description" value={formData.description || ''} onChange={handleInputChange} rows={3}></textarea></div>
-                </>
-            );
-            case 'photoalbum': return (
-                <>
-                    <div className={styles.formGroup}><label>Заголовок</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>URL (slug)</label><input type="text" name="slug" value={formData.slug || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
-                    <div className={styles.formGroup}>
-                        <label>Фотографии для галереи (до 100)</label>
-                        {/* Display existing gallery images */}
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '10px' }}>
-                            {formData.photos && formData.photos.map((photo: any, index: number) => (
-                                <div key={photo.src || index} style={{ display: 'inline-block', border: '1px solid #ccc', padding: '5px' }}>
-                                    <img src={getVersionedAssetUrl(photo.src)} alt={`Галерея ${index}`} style={{ maxWidth: '80px', maxHeight: '80px', display: 'block' }} />
-                                    {/* Potentially add a delete button for existing images */}
-                                </div>
-                            ))}
-                            {/* Display new selected images */}
-                            {selectedFiles.get('galleryImages') && selectedFiles.get('galleryImages')!.map((file, index) => (
-                                <div key={file.name + index} style={{ display: 'inline-block', border: '1px solid #ccc', padding: '5px' }}>
-                                    <img src={URL.createObjectURL(file)} alt={`Новая ${file.name}`} style={{ maxWidth: '80px', maxHeight: '80px', display: 'block' }} onLoad={() => URL.revokeObjectURL(file.name)} />
-                                </div>
-                            ))}
-                        </div>
-                        <input type="file" name="galleryImages" multiple onChange={handleFileChange} accept="image/*" />
-                    </div>
-                </>
-            );
-            default: return <p>Форма для этого раздела еще не реализована.</p>;
-        }
-    };
-    
-    const renderForm = () => (
-        <div className={styles.createViewContainer}>
-            <div className={styles.formWrapper}>
-                <h1>{editingId ? `Редактировать` : `Создать`}</h1>
-                <form onSubmit={handleSubmit}>
-                    {renderFormFields()}
-                    <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Сохранение...' : 'Сохранить'}</button>
-                    <button type="button" onClick={() => { setMode('list'); resetForm(); }} className={styles.cancelButton}>Вернуться к списку</button>
-                </form>
-
-            </div>
-            <div className={styles.previewContainer}>
-                <PreviewPane activeTab={activeTab} formData={formData} />
-            </div>
-        </div>
-    );
-
     const TABS: { key: TabType, label: string }[] = [
         { key: 'news', label: 'Новости' },
         { key: 'afisha', label: 'Афиши' },
         { key: 'achievements', label: 'Достижения' },
-        { key: 'graduates', label: 'Выпускники' }, // Added graduates tab
+        { key: 'graduates', label: 'Выпускники' },
         { key: 'videos', label: 'Видео' },
         { key: 'library', label: 'Библиотека' },
         { key: 'photoalbum', label: 'Фотоальбомы' },
@@ -592,7 +299,38 @@ const AdminApp: React.FC = () => {
                 ))}
             </div>
             <hr className={styles.divider} />
-            {mode === 'list' ? renderList() : renderForm()}
+            {mode === 'list' ? (
+                <AdminList 
+                    activeTab={activeTab} 
+                    items={items} 
+                    handleEditRequest={handleEditRequest} 
+                    handleDeleteRequest={handleDeleteRequest} 
+                    resetForm={resetForm} 
+                    setMode={setMode} 
+                />
+            ) : (
+                <div className={styles.createViewContainer}>
+                    <div className={styles.formWrapper}>
+                        <h1>{editingId ? `Редактировать` : `Создать`}</h1>
+                        <form onSubmit={handleSubmit}>
+                            <AdminFormFields 
+                                activeTab={activeTab}
+                                formData={formData}
+                                selectedFiles={selectedFiles}
+                                handleInputChange={handleInputChange}
+                                handleFileChange={handleFileChange}
+                                photoAlbumsForSelection={photoAlbumsForSelection}
+                                setFormData={setFormData}
+                            />
+                            <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Сохранение...' : 'Сохранить'}</button>
+                            <button type="button" onClick={() => { setMode('list'); resetForm(); }} className={styles.cancelButton}>Вернуться к списку</button>
+                        </form>
+                    </div>
+                    <div className={styles.previewContainer}>
+                        <PreviewPane activeTab={activeTab} formData={formData} selectedFiles={selectedFiles} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

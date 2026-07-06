@@ -313,7 +313,7 @@ app.get("/api/admin/list/:manager", (req, res) => {
       query = `SELECT id, title, student_name, competition, date, place, category, city FROM ${tableName} ORDER BY date DESC`;
     } else if (tableName === "graduates") {
       // Specific query for graduates
-      query = `SELECT id, name, graduation_year, position, workplace, image_src, bio, is_featured FROM ${tableName} ORDER BY graduation_year DESC`;
+      query = `SELECT id, name, graduation_year, instrument, workplace, image_src, bio, is_featured FROM ${tableName} ORDER BY graduation_year DESC`;
     } else {
       query = `SELECT id, title, date FROM ${tableName} ORDER BY date DESC`;
     }
@@ -349,7 +349,7 @@ app.post("/api/achievements", upload.single("image"), async (req, res) => {
   try {
     const { title, student_name, competition, date, place, category, city } =
       req.body;
-    let image_src = req.body.image_src; // Preserve existing image_src if no new file uploaded
+    let image_src = stripPublicPrefix(req.body.image_src);
 
     if (req.file) {
       const targetPath = path.join(
@@ -389,7 +389,7 @@ app.post("/api/achievements/:id", upload.single("image"), async (req, res) => {
   try {
     const { title, student_name, competition, date, place, category, city } =
       req.body;
-    let image_src = req.body.image_src; // Preserve existing image_src if no new file uploaded
+    let image_src = stripPublicPrefix(req.body.image_src);
 
     if (req.file) {
       const targetPath = path.join(
@@ -469,29 +469,30 @@ app.get("/api/graduates/:id", (req, res) => {
 
 app.post("/api/graduates", upload.single("image"), async (req, res) => {
   try {
-    const { name, graduation_year, position, workplace, bio, is_featured } =
+    const { name, graduation_year, instrument, workplace, bio, is_featured } =
       req.body;
-    let image_src = req.body.image_src; // Preserve existing image_src if no new file uploaded
+    let image_src = stripPublicPrefix(req.body.image_src);
 
     if (req.file) {
       const targetPath = path.join(
         GRADUATES_TARGET_ROOT,
         req.file.originalname,
       );
-      await fs.rename(req.file.path, targetPath);
+      await fs.copyFile(req.file.path, targetPath);
+      await fs.unlink(req.file.path);
       image_src = path
         .join("/vipuskniki", req.file.originalname)
         .replace(/\\/g, "/");
     }
 
     const stmt = db.prepare(`
-            INSERT INTO graduates (name, graduation_year, position, workplace, image_src, bio, is_featured)
+            INSERT INTO graduates (name, graduation_year, instrument, workplace, image_src, bio, is_featured)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         `);
     const result = stmt.run(
       name,
       graduation_year,
-      position,
+      instrument,
       workplace,
       image_src,
       bio,
@@ -508,29 +509,30 @@ app.post("/api/graduates", upload.single("image"), async (req, res) => {
 
 app.post("/api/graduates/:id", upload.single("image"), async (req, res) => {
   try {
-    const { name, graduation_year, position, workplace, bio, is_featured } =
+    const { name, graduation_year, instrument, workplace, bio, is_featured } =
       req.body;
-    let image_src = req.body.image_src; // Preserve existing image_src if no new file uploaded
+    let image_src = stripPublicPrefix(req.body.image_src);
 
     if (req.file) {
       const targetPath = path.join(
         GRADUATES_TARGET_ROOT,
         req.file.originalname,
       );
-      await fs.rename(req.file.path, targetPath);
+      await fs.copyFile(req.file.path, targetPath);
+      await fs.unlink(req.file.path);
       image_src = path
         .join("/vipuskniki", req.file.originalname)
         .replace(/\\/g, "/");
     }
     const stmt = db.prepare(`
             UPDATE graduates 
-            SET name = ?, graduation_year = ?, position = ?, workplace = ?, image_src = ?, bio = ?, is_featured = ?
+            SET name = ?, graduation_year = ?, instrument = ?, workplace = ?, image_src = ?, bio = ?, is_featured = ?
             WHERE id = ?
         `);
     const result = stmt.run(
       name,
       graduation_year,
-      position,
+      instrument,
       workplace,
       image_src,
       bio,
@@ -841,7 +843,8 @@ app.post(
       let coverImageSrc = null;
       if (coverImageFile) {
         const newPath = path.join(imageDirPath, coverImageFile.originalname);
-        await fs.rename(coverImageFile.path, newPath);
+        await fs.copyFile(coverImageFile.path, newPath);
+        await fs.unlink(coverImageFile.path);
         coverImageSrc = path
           .join("/media", imageDir, coverImageFile.originalname)
           .replace(/\\/g, "/");
@@ -875,7 +878,8 @@ app.post(
 
       for (const imageFile of galleryImageFiles) {
         const newPath = path.join(imageDirPath, imageFile.originalname);
-        await fs.rename(imageFile.path, newPath);
+        await fs.copyFile(imageFile.path, newPath);
+        await fs.unlink(imageFile.path);
         const imageSrc = path
           .join("/media", imageDir, imageFile.originalname)
           .replace(/\\/g, "/");
@@ -937,7 +941,8 @@ app.post(
         await fs.mkdir(imageDirPath, { recursive: true });
 
         const newPath = path.join(imageDirPath, coverImageFile.originalname);
-        await fs.rename(coverImageFile.path, newPath);
+        await fs.copyFile(coverImageFile.path, newPath);
+        await fs.unlink(coverImageFile.path);
         coverImageSrc = path
           .join("/media", imageDir, coverImageFile.originalname)
           .replace(/\\/g, "/");
@@ -959,7 +964,8 @@ app.post(
             `);
         for (const imageFile of galleryImageFiles) {
           const newPath = path.join(imageDirPath, imageFile.originalname);
-          await fs.rename(imageFile.path, newPath);
+          await fs.copyFile(imageFile.path, newPath);
+        await fs.unlink(imageFile.path);
           const imageSrc = path
             .join("/media", imageDir, imageFile.originalname)
             .replace(/\\/g, "/");
