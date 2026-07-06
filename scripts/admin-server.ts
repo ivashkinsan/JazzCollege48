@@ -172,7 +172,6 @@ app.get('/api/admin/list/:manager', (req, res) => {
         }
         const stmt = db.prepare(query);
         const items = stmt.all();
-        console.log(`Backend: /api/admin/list/${manager} returning items:`, items);
         res.json(items);
     } catch (error) {
         console.error(`Error fetching list for ${manager}:`, error);
@@ -539,24 +538,84 @@ app.post('/api/content/:id', upload.fields([{ name: 'coverImage', maxCount: 1 },
     const { id } = req.params;
     console.log(`🚀 Received request to update content id: ${id}`);
     try {
-        const { title, date, category, subcategory, body, time, venue, tags } = req.body;
+        const { title, date, category, subcategory, body, time, venue, tags, linked_photoalbum_id } = req.body; // Added linked_photoalbum_id
         const slug = createSlug(title); // Create a new slug from the potentially new title
+        let coverImageSrc = req.body.cover_image_src; // Preserve existing cover_image_src
 
+        // Handle cover image upload if a new one is provided
+        const coverImageFile = req.files.coverImage ? req.files.coverImage[0] : null;
+        if (coverImageFile) {
+            const year = new Date(date).getFullYear().toString();
+            const imageDir = path.join(year, `${date}-${slug}`);
+            const imageDirPath = path.join(MEDIA_TARGET_ROOT, imageDir);
+            await fs.mkdir(imageDirPath, { recursive: true });
+
+            const newPath = path.join(imageDirPath, coverImageFile.originalname);
+            await fs.rename(coverImageFile.path, newPath);
+            coverImageSrc = path.join('/media', imageDir, coverImageFile.originalname).replace(/\\/g, '/');
+        }
+
+        // Check if galleryImages files are provided for photoalbum update
+        const galleryImageFiles = req.files.galleryImages || [];
+        if (category === 'photoalbum' && galleryImageFiles.length > 0) {
+            const year = new Date(date).getFullYear().toString();
+            const imageDir = path.join(year, `${date}-${slug}`);
+            const imageDirPath = path.join(MEDIA_TARGET_ROOT, imageDir);
+            await fs.mkdir(imageDirPath, { recursive: true });
+
+            // Clear existing gallery images for this content_id if new ones are uploaded
+            db.prepare('DELETE FROM gallery_images WHERE content_id = ?').run(id);
+
+            const insertGalleryImageStmt = db.prepare(`
+                INSERT INTO gallery_images (content_id, src, title) VALUES (?, ?, ?)
+            `);
+            for (const imageFile of galleryImageFiles) {
+                const newPath = path.join(imageDirPath, imageFile.originalname);
+                await fs.rename(imageFile.path, newPath);
+                const imageSrc = path.join('/media', imageDir, imageFile.originalname).replace(/\\/g, '/');
+                insertGalleryImageStmt.run(id, imageSrc, title);
+            }
+        }
+        
         const updateStmt = db.prepare(`
             UPDATE content
-            SET title = ?, slug = ?, date = ?, category = ?, body = ?, time = ?, venue = ?, tags = ?
+            SET title = ?, slug = ?, date = ?, category = ?, body = ?, time = ?, venue = ?, tags = ?, cover_image_src = ?, linked_photoalbum_id = ?
             WHERE id = ?
         `);
         
-        updateStmt.run(title, slug, date, category, body, time, venue, tags ? JSON.stringify(tags.split(',')) : JSON.stringify([]), id);
+        updateStmt.run(title, slug, date, category, body, time, venue, 
+            tags ? JSON.stringify(tags.split(',')) : JSON.stringify([]), 
+            coverImageSrc, 
+            linked_photoalbum_id === '' ? null : linked_photoalbum_id, // Store null if empty string
+            id);
         
-        // Image handling can be added here (deleting old ones, adding new ones)
-        // For now, we focus on making text content editable.
-
         res.status(200).json({ success: true, message: 'Content successfully updated.' });
     } catch (error) {
         console.error(`❌ Error updating content for id ${id}:`, error);
         res.status(500).json({ success: false, message: 'Failed to update content.' });
+    }
+});
+
+app.delete('/api/content/:id', (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Delete associated gallery images first
+        const deleteGalleryStmt = db.prepare('DELETE FROM gallery_images WHERE content_id = ?');
+        deleteGalleryStmt.run(id);
+
+        // Then delete the content itself
+        const deleteContentStmt = db.prepare('DELETE FROM content WHERE id = ?');
+        const result = deleteContentStmt.run(id);
+
+        if (result.changes > 0) {
+            res.json({ success: true, message: 'Content and associated gallery images deleted successfully.' });
+        } else {
+            res.status(404).json({ success: false, message: 'Content not found' });
+        }
+    } catch (error) {
+        console.error(`❌ Error deleting content ${req.params.id}:`, error);
+        res.status(500).json({ success: false, message: 'Failed to delete content and associated gallery images.' });
     }
 });
 

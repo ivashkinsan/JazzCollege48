@@ -1,16 +1,18 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import albums from '../data/media-manifest.json';
 import Lightbox from '../components/Lightbox';
 import styles from './PhotosPage.module.css';
 import type { PhotoAlbum } from '../types/college';
 import { Helmet } from 'react-helmet-async';
+import { getVersionedAssetUrl } from '../utils/assetVersion';
+
+const API_BASE_URL = 'http://localhost:4000'; // Define API base URL
 
 const categories = ['все', 'концерты', 'мастер-классы', "конкурсы", 'будни', 'выпускные', 'другое'];
 
 // Получение уникальных лет из альбомов
-const getUniqueYears = (albums: PhotoAlbum[]) => {
-  const years = albums.map(a => new Date(a.albumDate).getFullYear());
+const getUniqueYears = (albums: PhotoAlbum[]): number[] => {
+  const years = albums.map(a => new Date(a.albumDate).getFullYear()).filter(year => !isNaN(year));
   return [...new Set(years)].sort((a, b) => b - a);
 };
 
@@ -19,22 +21,59 @@ function PhotosPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('все');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [albums, setAlbums] = useState<PhotoAlbum[]>([]); // New state for albums
+  const [loading, setLoading] = useState(true); // New state for loading
 
-  const uniqueYears = useMemo(() => getUniqueYears(albums as PhotoAlbum[]), []);
+  const uniqueYears = useMemo(() => getUniqueYears(albums), [albums]);
+
+  useEffect(() => {
+    const fetchPhotoAlbums = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${API_BASE_URL}/api/photoalbums`);
+        if (!response.ok) {
+          console.error('Failed to fetch photo albums:', response.statusText);
+          setAlbums([]);
+          return;
+        }
+        const data: PhotoAlbum[] = await response.json();
+        setAlbums(data);
+      } catch (error) {
+        console.error('Error fetching photo albums:', error);
+        setAlbums([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPhotoAlbums();
+  }, []); // Empty dependency array means this runs once on mount
 
   const filteredAlbums = useMemo(() => {
-    return (albums as PhotoAlbum[]).filter((album) => {
+    return albums.filter((album) => {
       const yearMatch = selectedYear === 'all' || new Date(album.albumDate).getFullYear() === selectedYear;
       const categoryMatch = selectedCategory === 'все' || album.albumCategory === selectedCategory;
       return yearMatch && categoryMatch && album.photos.length > 1;
     });
-  }, [selectedYear, selectedCategory]);
+  }, [albums, selectedYear, selectedCategory]);
 
   const openLightbox = (album: PhotoAlbum) => {
-    const allImages = album.photos.map(p => p.src);
+    const allImages = album.photos.map(p => getVersionedAssetUrl(p.src));
     setLightboxImages(allImages);
     setLightboxOpen(true);
   };
+
+  if (loading) {
+    return (
+        <div className={styles.page}>
+            <section className={styles.hero}>
+                <div className="container">
+                    <h1 className={styles.title}>Фотогалерея</h1>
+                    <p className={styles.subtitle}>Загрузка фотоальбомов...</p>
+                </div>
+            </section>
+        </div>
+    );
+  }
 
   return (
     <div className={styles.page}>
@@ -113,7 +152,7 @@ function PhotosPage() {
                 >
                   <div className={styles.photoWrapper}>
                     <img
-                      src={album.photos[0]?.src}
+                      src={getVersionedAssetUrl(album.photos[0]?.src)}
                       alt={album.albumTitle}
                       className={styles.photo}
                       loading="lazy"

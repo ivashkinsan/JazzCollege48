@@ -4,11 +4,12 @@ import NewsPreview from '../components/NewsPreview';
 import Achievements from '../components/Achievements';
 import concertCardStyles from '../components/ConcertsPreview.module.css';
 import { Achievement, Video } from '../types/college';
+import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 const API_BASE_URL = 'http://localhost:4000';
 
 type TabType = 'news' | 'afisha' | 'achievements' | 'videos' | 'library' | 'photoalbum';
-type ManagerType = 'content' | 'achievements' | 'videos' | 'library';
+type ManagerType = 'content' | 'achievements' | 'videos' | 'library' | 'photoalbum';
 
 // --- Helper Functions ---
 function createSlug(text: string): string {
@@ -32,7 +33,7 @@ const PreviewPane: React.FC<{ activeTab: TabType; formData: any }> = ({ activeTa
                 return (
                     <article className={concertCardStyles.concertCard}>
                         <div className={concertCardStyles.concertCardCover}>
-                            {concertItem.cover?.src ? <img src={concertItem.cover.src} alt={concertItem.title} /> : <div className={concertCardStyles.concertCardCoverPlaceholder}><span className={concertCardStyles.coverPlaceholderIcon}>🎵</span></div>}
+                            {concertItem.cover?.src ? <img src={getVersionedAssetUrl(concertItem.cover.src)} alt={concertItem.title} /> : <div className={concertCardStyles.concertCardCoverPlaceholder}><span className={concertCardStyles.coverPlaceholderIcon}>🎵</span></div>}
                         </div>
                         <div className={concertCardStyles.concertCardContent}>
                             <div className={concertCardStyles.concertCardMeta}><span className={concertCardStyles.concertCardCategory}>Афиша</span><div className={concertCardStyles.concertCardDateText}>{dateStr}</div></div>
@@ -46,7 +47,7 @@ const PreviewPane: React.FC<{ activeTab: TabType; formData: any }> = ({ activeTa
             }
             case 'achievements': {
                 const achievementItem: Achievement = { id: 'preview', studentName: formData.student_name, image: formData.image_src, ...formData };
-                return <div style={{ transform: 'scale(0.9)', origin: 'top left' }}><Achievements achievements={[achievementItem]} /></div>;
+                return <div style={{ transform: 'scale(0.9)', transformOrigin: 'top left' }}><Achievements achievements={[achievementItem]} /></div>;
             }
             case 'videos': {
                  const videoItem: Video = { id: 'preview', videoUrl: formData.video_url, ...formData };
@@ -71,13 +72,17 @@ const AdminApp: React.FC = () => {
     const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<Map<string, File[]>>(new Map());
+    const [photoAlbumsForSelection, setPhotoAlbumsForSelection] = useState<{ value: number; label: string }[]>([]);
 
     const manager = useMemo<ManagerType>(() => {
-        if (activeTab === 'news' || activeTab === 'afisha') return 'content';
+        if (activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum') return 'content';
         return activeTab;
     }, [activeTab]);
 
-    const apiEndpoint = useMemo(() => `/api/${manager}`, [manager]);
+    const apiEndpoint = useMemo(() => {
+        if (manager === 'photoalbum') return '/api/content'; // Photo albums use the generic content endpoint for CRUD
+        return `/api/${manager}`;
+    }, [manager]);
     const adminListEndpoint = useMemo(() => `/api/admin/list/${manager}`, [manager]);
 
     const fetchItems = useCallback(async () => {
@@ -101,11 +106,40 @@ const AdminApp: React.FC = () => {
         fetchItems();
     }, [fetchItems]);
 
+    useEffect(() => {
+        if ((activeTab === 'news' || activeTab === 'afisha') && mode === 'form') {
+            const fetchPhotoAlbums = async () => {
+                try {
+                    const response = await fetch(API_BASE_URL + '/api/admin/list/photoalbum');
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({ message: 'No error message from server.' }));
+                        console.error(`Failed to fetch photo albums for selection. Status: ${response.status}. Error: ${errorData.message}`);
+                        setPhotoAlbumsForSelection([]);
+                        return;
+                    }
+                    const data = await response.json();
+                    const formattedAlbums = data.map((album: any) => ({
+                        value: album.id,
+                        label: album.title,
+                    }));
+                    setPhotoAlbumsForSelection(formattedAlbums);
+                } catch (error) {
+                    console.error('Error fetching photo albums for selection:', error);
+                    setPhotoAlbumsForSelection([]);
+                }
+            };
+            fetchPhotoAlbums();
+        } else {
+            // Clear photo album selection when not in news/afisha form mode
+            setPhotoAlbumsForSelection([]);
+        }
+    }, [activeTab, mode]); // Depend on activeTab and mode
+
     const getInitialFormData = useCallback(() => {
         const common = { title: '', date: new Date().toISOString().split('T')[0] };
         switch (activeTab) {
-            case 'news': return { ...common, category: 'news', slug: '', body: '', time: '', venue: '', tags: '' };
-            case 'afisha': return { ...common, category: 'afisha', slug: '', body: '', time: '', venue: '', tags: '' };
+            case 'news': return { ...common, category: 'news', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
+            case 'afisha': return { ...common, category: 'afisha', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
             case 'achievements': return { ...common, student_name: '', competition: '', place: '', category: '', image_src: '' };
             case 'videos': return { ...common, description: '', video_url: '', source: 'rutube' };
             case 'library': return { ...common, description: '', url: '', category: 'Видео-уроки и каналы' };
@@ -148,9 +182,21 @@ const AdminApp: React.FC = () => {
     const handleDeleteRequest = async (id: number) => {
         if (window.confirm('Вы уверены, что хотите удалить эту запись?')) {
             try {
-                await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`, { method: 'DELETE' });
+                const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`, { method: 'DELETE' });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ message: 'No error message from server.' }));
+                    console.error(`Failed to delete item for ${manager}. Status: ${response.status}. Error: ${errorData.message}`);
+                    setStatus({ type: 'error', message: `Ошибка при удалении: ${errorData.message || response.statusText}` });
+                    return;
+                }
+
+                setStatus({ type: 'success', message: 'Запись успешно удалена!' });
                 fetchItems();
-            } catch (error) { console.error('Failed to delete item', error); }
+            } catch (error: any) {
+                console.error('Failed to delete item', error);
+                setStatus({ type: 'error', message: `Ошибка при удалении: ${error.message}` });
+            }
         }
     };
 
@@ -177,10 +223,15 @@ const AdminApp: React.FC = () => {
             for (const key in formData) {
                 if (Object.prototype.hasOwnProperty.call(formData, key)) {
                     // Skip image_src if a new file is selected to avoid sending old path with new file
-                    if (key === 'image_src' && activeTab === 'achievements' && selectedFiles.image) {
+                    if (key === 'image_src' && activeTab === 'achievements' && selectedFiles.has('image')) {
                         continue;
                     }
-                    dataToSend.append(key, formData[key]);
+                    // Append linked_photoalbum_id only if it's not empty and for relevant tabs
+                    if (key === 'linked_photoalbum_id' && (activeTab === 'news' || activeTab === 'afisha') && formData[key] !== '') {
+                        dataToSend.append(key, formData[key]);
+                    } else if (key !== 'linked_photoalbum_id') { // Ensure linked_photoalbum_id is not appended twice
+                        dataToSend.append(key, formData[key]);
+                    }
                 }
             }
             // Append category based on activeTab
@@ -269,13 +320,26 @@ const AdminApp: React.FC = () => {
                             <label>Изображение обложки</label>
                             {formData.cover_image_src && (
                                 <div>
-                                    <img src={formData.cover_image_src} alt="Текущая обложка" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
+                                    <img src={getVersionedAssetUrl(formData.cover_image_src)} alt="Текущая обложка" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
                                     <p>Текущий путь: {formData.cover_image_src}</p>
                                 </div>
                             )}
                             <input type="file" name="coverImage" onChange={handleFileChange} />
                         </div>
                         <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
+                        <div className={styles.formGroup}>
+                            <label>Связанный фотоальбом</label>
+                            <select
+                                name="linked_photoalbum_id"
+                                value={formData.linked_photoalbum_id || ''}
+                                onChange={(e) => handleInputChange({ ...e, target: { ...e.target, value: e.target.value === '' ? '' : Number(e.target.value) } as HTMLSelectElement })}
+                            >
+                                <option value="">— Нет —</option>
+                                {photoAlbumsForSelection.map(album => (
+                                    <option key={album.value} value={album.value}>{album.label}</option>
+                                ))}
+                            </select>
+                        </div>
                     </>
                 );
             case 'achievements': return (
@@ -289,7 +353,7 @@ const AdminApp: React.FC = () => {
                         <label>Изображение (диплом/сертификат)</label>
                         {formData.image_src && (
                             <div>
-                                <img src={formData.image_src} alt="Текущее изображение" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
+                                <img src={getVersionedAssetUrl(formData.image_src)} alt="Текущее изображение" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
                                 <p>Текущий путь: {formData.image_src}</p>
                             </div>
                         )}
@@ -326,7 +390,7 @@ const AdminApp: React.FC = () => {
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '10px' }}>
                             {formData.photos && formData.photos.map((photo: any, index: number) => (
                                 <div key={photo.src || index} style={{ display: 'inline-block', border: '1px solid #ccc', padding: '5px' }}>
-                                    <img src={photo.src} alt={`Галерея ${index}`} style={{ maxWidth: '80px', maxHeight: '80px', display: 'block' }} />
+                                    <img src={getVersionedAssetUrl(photo.src)} alt={`Галерея ${index}`} style={{ maxWidth: '80px', maxHeight: '80px', display: 'block' }} />
                                     {/* Potentially add a delete button for existing images */}
                                 </div>
                             ))}
@@ -352,9 +416,9 @@ const AdminApp: React.FC = () => {
                 <form onSubmit={handleSubmit}>
                     {renderFormFields()}
                     <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Сохранение...' : 'Сохранить'}</button>
-                    <button type="button" onClick={() => { setMode('list'); resetForm(); }} className={styles.cancelButton}>Отмена</button>
+                    <button type="button" onClick={() => { setMode('list'); resetForm(); }} className={styles.cancelButton}>Вернуться к списку</button>
                 </form>
-                {status && <div className={status.type === 'success' ? styles.statusSuccess : styles.statusError}>{status.message}</div>}
+
             </div>
             <div className={styles.previewContainer}>
                 <PreviewPane activeTab={activeTab} formData={formData} />
@@ -374,6 +438,7 @@ const AdminApp: React.FC = () => {
     return (
         <div className={styles.container}>
             <h1>Админ-панель</h1>
+            {status && <div className={status.type === 'success' ? styles.statusSuccess : styles.statusError}>{status.message}</div>}
             <div className={styles.tabsContainer}>
                 {TABS.map(tab => (
                     <button

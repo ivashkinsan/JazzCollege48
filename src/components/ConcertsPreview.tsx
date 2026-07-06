@@ -4,6 +4,7 @@ import { loadAfisha } from '../data';
 import type { AfishaItem } from '../types/college';
 import styles from './ConcertsPreview.module.css';
 import Lightbox from './Lightbox'; // Import Lightbox
+import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 const categoryLabels: Record<string, string> = {
   концерты: '🎵 Концерт',
@@ -73,7 +74,7 @@ function ConcertsPreview() {
                 >
                   {item.cover?.src ? (
                     <>
-                      <img src={item.cover.src} alt={item.title} loading="lazy" />
+                      <img src={getVersionedAssetUrl(item.cover.src)} alt={item.title} loading="lazy" />
                       <div className={styles.coverOverlay}>
                         <span>🔍</span>
                       </div>
@@ -102,8 +103,8 @@ function ConcertsPreview() {
                   {item.venue && <p className={styles.concertCardVenue}>📍 {item.venue}</p>}
                   {item.time && <p className={styles.concertCardTime}>🕐 {item.time}</p>}
                   <p className={styles.concertCardDescription}>
-                    {item.content.slice(0, 180)}
-                    {item.content.length > 180 && '...'}
+                    {(item.content || '').slice(0, 180)}
+                    {(item.content || '').length > 180 && '...'}
                   </p>
                 </div>
               </article>

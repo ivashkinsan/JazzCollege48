@@ -1,5 +1,6 @@
 import type { Achievement } from '../types/college';
 import styles from './Achievements.module.css';
+import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 interface AchievementsProps {
   achievements: Achievement[];
@@ -24,7 +25,7 @@ function Achievements({ achievements }: AchievementsProps) {
               <article key={achievement.id} className={styles.achievementCard}>
                 {achievement.image ? (
                   <div className={styles.achievementCardImageWrapper}>
-                    <img src={achievement.image} alt={achievement.title} className={styles.achievementCardImage} />
+                    <img src={getVersionedAssetUrl(achievement.image)} alt={achievement.title} className={styles.achievementCardImage} />
                     <span className={styles.achievementCardPlace}>{achievement.place}</span>
                   </div>
                 ) : (

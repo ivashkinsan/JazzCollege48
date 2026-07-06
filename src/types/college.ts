@@ -170,7 +170,7 @@ export interface AfishaItem {
   time?: string;
   venue?: string;
   cover?: Photo;
-  content: string;
+  content?: string;
   gallery?: Photo[];
   tags?: string[];
 }

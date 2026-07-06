@@ -6,6 +6,7 @@ import Lightbox from '../components/Lightbox';
 import styles from './NewsPage.module.css';
 import { Helmet } from 'react-helmet-async';
 import { searchNews } from '../utils/search';
+import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 const categoryLabels: Record<string, string> = {
   konzert: '🎵 Концерт',
@@ -17,7 +18,7 @@ const categoryLabels: Record<string, string> = {
 
 function NewsPage() {
   const [newsData, setNewsData] = useState<ExtendedNewsItem[]>([]);
-  const selectedCategory: string = '["news"]';
+
   const [expandedNews, setExpandedNews] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
@@ -93,10 +94,10 @@ function NewsPage() {
                 // const hasGallery = item.gallery && item.gallery.length > 0;
 
                 // FIX: Extract src strings from Photo objects
-                const allImages = [
+                const allImages = Array.from(new Set([
                   item.cover?.src,
                   ...(item.gallery?.map(p => p.src) || [])
-                ].filter((src): src is string => !!src);
+                ].filter((src): src is string => !!src))).map(img => getVersionedAssetUrl(img));
 
                 return (
                   <article key={item.id} className={styles.newsCard}>
@@ -106,7 +107,7 @@ function NewsPage() {
                       onClick={() => allImages.length > 0 && openLightbox(allImages, 0)}
                     >
                       {item.cover?.src ? (
-                        <img src={item.cover.src} alt={item.title} loading="lazy" />
+                        <img src={getVersionedAssetUrl(item.cover.src)} alt={item.title} loading="lazy" />
                       ) : (
                         <div className={styles.newsCardCoverPlaceholder}>
                           <span className={styles.coverPlaceholderIcon}>
