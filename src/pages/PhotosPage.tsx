@@ -6,8 +6,6 @@ import type { PhotoAlbum } from '../types/college';
 import { Helmet } from 'react-helmet-async';
 import { getVersionedAssetUrl } from '../utils/assetVersion';
 
-const API_BASE_URL = 'http://localhost:4000'; // Define API base URL
-
 const categories = ['все', 'концерты', 'мастер-классы', "конкурсы", 'будни', 'выпускные', 'другое'];
 
 // Получение уникальных лет из альбомов
@@ -30,7 +28,7 @@ function PhotosPage() {
     const fetchPhotoAlbums = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/api/photoalbums`);
+        const response = await fetch(`/data/photoalbums.json`);
         if (!response.ok) {
           console.error('Failed to fetch photo albums:', response.statusText);
           setAlbums([]);

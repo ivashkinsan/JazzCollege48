@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import type { Video } from '../types/college';
+import { loadVideos } from '../data/videosLoader';
 import styles from './VideosPage.module.css';
 
 // Helper to get embed URL based on video source
@@ -44,14 +45,10 @@ function VideosPage() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/videos');
-        if (!response.ok) {
-          throw new Error('Failed to fetch videos');
-        }
-        const data = await response.json();
+        const data = await loadVideos();
         setVideos(data);
       } catch (error) {
-        console.error(error);
+        console.error("Failed to fetch videos:", error);
       } finally {
         setLoading(false);
       }

@@ -1,13 +1,11 @@
 import type { ExtendedNewsItem } from '../types/college';
 
-const API_BASE_URL = 'http://localhost:4000';
-
 // --- In-Memory Cache ---
 const contentCache = new Map<string, ExtendedNewsItem[]>();
 const loadingPromises = new Map<string, Promise<ExtendedNewsItem[]>>();
 
 /**
- * A generic function to load content from the API by category.
+ * A generic function to load content from static JSON files by category.
  * It includes in-memory caching to avoid redundant fetch calls.
  * @param category - The category to load (e.g., 'news', 'afisha').
  */
@@ -22,16 +20,15 @@ function loadContent(category: 'news' | 'afisha'): Promise<ExtendedNewsItem[]> {
 
   const promise = (async () => {
     try {
-      console.log(`🚀 Fetching '${category}' content from API...`);
-      const response = await fetch(`${API_BASE_URL}/api/${category}`);
+      const response = await fetch(`/data/${category}.json`);
       if (!response.ok) {
-        throw new Error(`Failed to fetch ${category}`);
+        throw new Error(`Failed to fetch static ${category} data. Status: ${response.status}`);
       }
       const data = await response.json();
       contentCache.set(category, data);
       return data;
     } catch (error) {
-      console.error(`Error loading '${category}' content from API:`, error);
+      console.error(`Error loading static '${category}' content:`, error);
       return []; // Return empty array on error
     } finally {
       loadingPromises.delete(category);

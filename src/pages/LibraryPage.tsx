@@ -21,18 +21,25 @@ function LibraryPage() {
     const fetchLibraryData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:4000/api/library?category=${encodeURIComponent(selectedCategory)}`);
+        const response = await fetch(`/data/library.json`); // Fetch static JSON
         if (!response.ok) {
           throw new Error('Failed to fetch library data');
         }
-        const data = await response.json();
+        const fullData = await response.json(); // Get all data
 
+        const categoriesFromData = fullData.categories || [];
         // On first load, also set the categories for the filter buttons
-        if (allCategories.length === 1 && data.categories) {
-          setAllCategories(['Все', ...data.categories]);
+        if (allCategories.length === 1) { // Check if 'Все' is the only category
+          setAllCategories(['Все', ...categoriesFromData]);
         }
-        
-        setLinks(data.links || []);
+
+        // Filter links based on selectedCategory AFTER fetching all data
+        const filteredLinks = selectedCategory === 'Все'
+          ? fullData.links
+          : fullData.links.filter((link: LibraryLink) => link.category === selectedCategory);
+
+        setLinks(filteredLinks || []);
+
       } catch (error) {
         console.error(error);
       } finally {

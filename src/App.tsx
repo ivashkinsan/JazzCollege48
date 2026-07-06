@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { loadNews } from './data';
+import { loadAchievements } from './data/achievementsLoader';
 import { navigation, collegeInfo, estradaDepartment, teachers, graduates } from './data/static';
 import type { ExtendedNewsItem } from './types/college';
 import Header from './components/Header';
@@ -45,18 +46,9 @@ function HomePage() {
     });
 
     // Load Achievements
-    const fetchAchievements = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/api/achievements');
-        const data = await response.json();
-        if (!cancelled) {
-          setAchievementsData(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch achievements for preview:", error);
-      }
-    };
-    fetchAchievements();
+    loadAchievements().then((data) => {
+      if (!cancelled) setAchievementsData(data);
+    });
 
     return () => { cancelled = true; };
   }, []);

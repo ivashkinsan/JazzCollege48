@@ -1,0 +1,102 @@
+[
+  {
+    "id": 10,
+    "legacy_id": "v9-yandex-test",
+    "title": "Тестовое видео с Яндекс.Диска",
+    "description": "Это видео загружается напрямую с Яндекс.Диска с помощью кастомной логики.",
+    "video_url": "https://disk.yandex.ru/i/QhkWtEsbbsTLSQ",
+    "date": "2026-06-25",
+    "source": "yandex",
+    "videoUrl": "https://disk.yandex.ru/i/QhkWtEsbbsTLSQ"
+  },
+  {
+    "id": 7,
+    "legacy_id": "v6",
+    "title": "Эстрадно-джазовый оркестр ЛОКИ им.К.Н.Игумнова / Moscow Jazz Festival 2026 / ВДНХ",
+    "description": "Добавлено новое видео с Rutube.",
+    "video_url": "https://rutube.ru/video/60acab378434f02887c90ff7b321894c/",
+    "date": "2026-06-09",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/60acab378434f02887c90ff7b321894c/"
+  },
+  {
+    "id": 8,
+    "legacy_id": "v7",
+    "title": "GORDON GOODWIN - THE JAZZ POLICE",
+    "description": "Солисты: Никита Полетавкин (альт саксофон) Герман Денисенко (гитара)",
+    "video_url": "https://rutube.ru/video/45fc9a7df80b344cf865c8661f9bdb14/",
+    "date": "2026-03-06",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/45fc9a7df80b344cf865c8661f9bdb14/"
+  },
+  {
+    "id": 9,
+    "legacy_id": "v8",
+    "title": "ARTURO SANDOVAL - SANDUNGA",
+    "description": "Солисты: Никита Полетавкин (альт саксофон) Герман Денисенко (гитара)",
+    "video_url": "https://rutube.ru/video/c8e7b162920f25da4b97dfee3aac59bc/",
+    "date": "2026-03-06",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/c8e7b162920f25da4b97dfee3aac59bc/"
+  },
+  {
+    "id": 1,
+    "legacy_id": "v0",
+    "title": "Белановская Наталья",
+    "description": "Видеозапись выступления в культурном пространстве - \"Библиотека\"",
+    "video_url": "https://rutube.ru/video/private/5ebdfc5c594d14d955a9548f7f09205d/?p=BKH7oE6fUOzlk7J4gZy_cg",
+    "date": "2023-04-01",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/private/5ebdfc5c594d14d955a9548f7f09205d/?p=BKH7oE6fUOzlk7J4gZy_cg"
+  },
+  {
+    "id": 2,
+    "legacy_id": "v1",
+    "title": "Белановская Наталья",
+    "description": "Видеозапись выступления в культурном пространстве - \"Библиотека\"",
+    "video_url": "https://rutube.ru/video/private/dff1fb966a2550db07ec69253545ab6a/?p=3Qm5XxY4eiOtVr0zUUpx9w",
+    "date": "2023-04-01",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/private/dff1fb966a2550db07ec69253545ab6a/?p=3Qm5XxY4eiOtVr0zUUpx9w"
+  },
+  {
+    "id": 3,
+    "legacy_id": "v2",
+    "title": "Елисеева Анна",
+    "description": "Видеозапись выступления в культурном пространстве - \"Библиотека\"",
+    "video_url": "https://rutube.ru/video/private/ad0d8d1151c62b9cf39dda243dfa398d/?p=_9VIWlVmWtQo1b0Ttwt-yw",
+    "date": "2023-04-01",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/private/ad0d8d1151c62b9cf39dda243dfa398d/?p=_9VIWlVmWtQo1b0Ttwt-yw"
+  },
+  {
+    "id": 4,
+    "legacy_id": "v3",
+    "title": "Елисеева Анна",
+    "description": "Видеозапись выступления в культурном пространстве - \"Библиотека\"",
+    "video_url": "https://rutube.ru/video/private/418be9e01aff8278af3e1b8146dbc056/?p=MpTKcr3Fphrj5jtjuoFm2w",
+    "date": "2023-04-01",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/private/418be9e01aff8278af3e1b8146dbc056/?p=MpTKcr3Fphrj5jtjuoFm2w"
+  },
+  {
+    "id": 5,
+    "legacy_id": "v4",
+    "title": "Боев Андрей",
+    "description": "Видеозапись выступления в культурном пространстве - \"Библиотека\"",
+    "video_url": "https://rutube.ru/video/private/50d80ca34cf13210587d292a20aa2c39/?p=l2vwpxU9Fr46rjruCPGr9Q",
+    "date": "2023-04-01",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/private/50d80ca34cf13210587d292a20aa2c39/?p=l2vwpxU9Fr46rjruCPGr9Q"
+  },
+  {
+    "id": 6,
+    "legacy_id": "v5",
+    "title": "Боев Андрей",
+    "description": "Видеозапись выступления в культурном пространстве - \"Библиотека\"",
+    "video_url": "https://rutube.ru/video/private/715a683082bfa193ed81496538d3c6b3/?p=ecdwJgspoI54dUhMljUALg",
+    "date": "2023-04-01",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/private/715a683082bfa193ed81496538d3c6b3/?p=ecdwJgspoI54dUhMljUALg"
+  }
+]
