@@ -160,3 +160,41 @@
 .statusError {
     background-color: #ff3b30;
 }
+
+/* New styles for adminListTable */
+.adminListTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.adminListTable th,
+.adminListTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap; /* Prevent wrapping for fixed width */
+    overflow: hidden;    /* Hide overflow content */
+    text-overflow: ellipsis; /* Add ellipsis for overflow */
+}
+
+.adminListTable th:nth-child(1), /* ID */
+.adminListTable td:nth-child(1) {
+    width: 5%;
+}
+
+.adminListTable th:nth-child(2), /* Заголовок */
+.adminListTable td:nth-child(2) {
+    width: 45%;
+}
+
+.adminListTable th:nth-child(3), /* Дата / Категория */
+.adminListTable td:nth-child(3) {
+    width: 20%;
+}
+
+.adminListTable th:nth-child(4), /* Действия */
+.adminListTable td:nth-child(4) {
+    width: 30%;
+    text-align: center;
+}

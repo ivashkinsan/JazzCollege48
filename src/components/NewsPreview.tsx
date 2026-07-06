@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { ExtendedNewsItem } from '../types/college';
-import { Link } from 'react-router-dom';
 import Lightbox from './Lightbox';
 import styles from './NewsPreview.module.css';
 
@@ -141,9 +140,9 @@ function NewsPreview({ news }: NewsPreviewProps) {
         </div>
 
         <div className={styles.moreLink}>
-          <Link to="/news" className={styles.moreButton}>
+          <div className={styles.moreButton}>
             Все новости →
-          </Link>
+          </div>
         </div>
       </div>
 
