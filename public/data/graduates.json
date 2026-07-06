@@ -15,7 +15,7 @@
     "graduationYear": 2026,
     "position": null,
     "workplace": null,
-    "image": "/vipuskniki/Hrykin.jpg",
+    "image": "/vipuskniki/2026 Hryukin Ivan.jpg",
     "bio": null,
     "isFeatured": true
   },
@@ -25,9 +25,9 @@
     "graduationYear": 2026,
     "position": null,
     "workplace": null,
-    "image": "/vipuskniki/2026 Шишкина Варвара.jpg",
+    "image": "/vipuskniki/2026 Shishkina Varvara.jpg",
     "bio": null,
-    "isFeatured": false
+    "isFeatured": true
   },
   {
     "id": "10",
@@ -35,9 +35,9 @@
     "graduationYear": 2026,
     "position": null,
     "workplace": null,
-    "image": "/vipuskniki/2026 Филатова София.jpg",
+    "image": "/vipuskniki/2026 Filatova Sofia.jpg",
     "bio": null,
-    "isFeatured": false
+    "isFeatured": true
   },
   {
     "id": "11",
@@ -45,9 +45,9 @@
     "graduationYear": 2026,
     "position": null,
     "workplace": null,
-    "image": "/public/vipuskniki/2026 Баранова Валерия.jpg",
+    "image": "/vipuskniki/2026 Baranova Valeria.jpg",
     "bio": null,
-    "isFeatured": false
+    "isFeatured": true
   },
   {
     "id": "16",
@@ -60,13 +60,243 @@
     "isFeatured": true
   },
   {
-    "id": "3",
-    "name": "Чага Иван",
+    "id": "36",
+    "name": "Ерохина Анна",
+    "graduationYear": 2025,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2025 Erohina Anna.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "37",
+    "name": "Фролова Ангелина",
+    "graduationYear": 2025,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2025 Frolova Angelina.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "38",
+    "name": "Горбунов Даниил",
+    "graduationYear": 2025,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2025 Gorbunov Daniil.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "39",
+    "name": "Ильина Виктория",
+    "graduationYear": 2025,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2025 Ilina Viktoria.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "40",
+    "name": "Логунова Алёна",
+    "graduationYear": 2025,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2025 Logunova Alyona.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "41",
+    "name": "Морозов Даниил",
+    "graduationYear": 2025,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2025 Morozov Daniil.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "42",
+    "name": "Верфель Роман",
+    "graduationYear": 2025,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2025 Verfel Roman.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "27",
+    "name": "Елисеева Анна",
+    "graduationYear": 2024,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2022 Eliseeva Anna.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "30",
+    "name": "Тернюк Полина",
+    "graduationYear": 2024,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2023 Ternuk Polina.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "34",
+    "name": "Семьянинов Алексей",
+    "graduationYear": 2024,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2024 Semyaninov Alexey.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "35",
+    "name": "Щукина (Вишнякова) Ирина",
+    "graduationYear": 2024,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2024 Vishnyakova Irina.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "28",
+    "name": "Виктория Терехова",
     "graduationYear": 2023,
     "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2023 Terehova Victoria.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "29",
+    "name": "Курганников Дмитрий",
+    "graduationYear": 2023,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2023 Kurgannikov Dmitriy.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "31",
+    "name": "Коротеев Виталий",
+    "graduationYear": 2023,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2023 Koroteev Vitaliy.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "33",
+    "name": "Шишкин Роман",
+    "graduationYear": 2023,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2023 Shishkin Roman.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "3",
+    "name": "Чага Иван",
+    "graduationYear": 2022,
+    "position": null,
     "workplace": "Академия музыки им. Гнесиных",
-    "image": "/foto_nasha_gordost/Chaga.jpg",
+    "image": "/vipuskniki/Chaga.jpg",
     "bio": "Талантливый барабанщик, студент академии музыки им. Гнесиных. Лауреат международных и всероссийских конкурсов.",
+    "isFeatured": true
+  },
+  {
+    "id": "24",
+    "name": "Белановская Наталья",
+    "graduationYear": 2022,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2022 Belanovskaya Natalya.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "25",
+    "name": "Лунёв Павел",
+    "graduationYear": 2022,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2022 Lunev Pavel.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "26",
+    "name": "Ушков Александр",
+    "graduationYear": 2022,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2022 Ushkov Alexandr.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "19",
+    "name": "Антипова Валерия",
+    "graduationYear": 2021,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2021 Antipova Valeria.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "20",
+    "name": "Киселёв Владимир",
+    "graduationYear": 2021,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2021 Kiselev Vladimir.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "21",
+    "name": "Пышин Алексей",
+    "graduationYear": 2021,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2021 Pishin Alexey.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "22",
+    "name": "Самсонов Илья",
+    "graduationYear": 2021,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2021 Samsonov Ilya.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "23",
+    "name": "Уладова Ульяна",
+    "graduationYear": 2021,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2021 Uladova Ulyana.jpg",
+    "bio": null,
     "isFeatured": true
   },
   {
@@ -77,6 +307,26 @@
     "workplace": "Эстрадно-джазовый оркестр им. Кима Назаретова, РГК им. С.В. Рахманинова",
     "image": "/foto_nasha_gordost/Merinova.jpg",
     "bio": "Выпускница Ростовской государственной консерватории им. С.В. Рахманинова. Артистка эстрадно-джазового оркестра им. Кима Назаретова, преподаватель детской музыкальной школы им. П.И. Чайковского г. Ростова-на-Дону. Лауреат международных и всероссийских конкурсов.",
+    "isFeatured": true
+  },
+  {
+    "id": "17",
+    "name": "Корчагин Павел",
+    "graduationYear": 2018,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2018 Korchagin Pavel.jpg",
+    "bio": null,
+    "isFeatured": true
+  },
+  {
+    "id": "18",
+    "name": "Залозных Яков",
+    "graduationYear": 2018,
+    "position": null,
+    "workplace": null,
+    "image": "/vipuskniki/2018 Zaloznih Yakov.jpg",
+    "bio": null,
     "isFeatured": true
   },
   {

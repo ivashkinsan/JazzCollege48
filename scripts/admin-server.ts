@@ -91,8 +91,9 @@ function createSlug(text: string): string {
 function stripPublicPrefix(imgPath: string | undefined): string | null {
   if (!imgPath) return null;
   if (imgPath.startsWith('/public/')) {
-    return imgPath.substring('/public'.length); // Keep the leading '/'
+    return imgPath.substring('/public'.length);
   }
+  if (imgPath === '/public') return '/';
   return imgPath;
 }
 
