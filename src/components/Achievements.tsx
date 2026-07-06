@@ -4,19 +4,24 @@ import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 interface AchievementsProps {
   achievements: Achievement[];
+  hideTitle?: boolean;
 }
 
-function Achievements({ achievements }: AchievementsProps) {
+function Achievements({ achievements, hideTitle }: AchievementsProps) {
   return (
     <section id="achievements" className="section section--dark">
       <div className="container">
-        <div className="section__header">
-          <p className="section__subtitle">Награды</p>
-          <h2 className="section__title">Наши достижения</h2>
-        </div>
-        <p className={styles.sectionIntro}>
-          Студенты эстрадного отделения регулярно становятся лауреатами всероссийских и международных конкурсов
-        </p>
+        {!hideTitle && (
+          <>
+            <div className="section__header">
+              <p className="section__subtitle">Награды</p>
+              <h2 className="section__title">Наши достижения</h2>
+            </div>
+            <p className={styles.sectionIntro}>
+              Студенты эстрадного отделения регулярно становятся лауреатами всероссийских и международных конкурсов
+            </p>
+          </>
+        )}
         <div className={styles.achievementsGrid}>
           {achievements.map((achievement) => {
             const date = new Date(achievement.date);

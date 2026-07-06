@@ -347,7 +347,7 @@ const AdminApp: React.FC = () => {
         const isLibrary = activeTab === 'library';
         return (
             <div>
-                <button onClick={() => { resetForm(); setMode('form'); }}>Добавить новую запись</button>
+                <button className={styles.addButton} onClick={() => { resetForm(); setMode('form'); }}>Добавить новую запись</button>
                 <table className={styles.adminListTable}>
                     <thead>
                         <tr>
@@ -357,7 +357,6 @@ const AdminApp: React.FC = () => {
                             {activeTab === 'achievements' && <th>Конкурс/Событие</th>}
                             {activeTab === 'achievements' && <th>Место/Награда</th>}
                             {activeTab === 'achievements' && <th>Город</th>}
-                            {activeTab === 'achievements' && <th>Категория</th>}
                             <th>{isLibrary ? 'Категория' : 'Дата'}</th>
                             <th>Действия</th>
                         </tr>
@@ -371,11 +370,10 @@ const AdminApp: React.FC = () => {
                                 {activeTab === 'achievements' && <td>{item.competition || 'N/A'}</td>}
                                 {activeTab === 'achievements' && <td>{item.place || 'N/A'}</td>}
                                 {activeTab === 'achievements' && <td>{item.city || 'N/A'}</td>}
-                                {activeTab === 'achievements' && <td>{item.category || 'N/A'}</td>}
                                 <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>
                                 <td>
-                                    <button onClick={() => handleEditRequest(item.id)}>Редактировать</button>
-                                    <button onClick={() => handleDeleteRequest(item.id)}>Удалить</button>
+                                    <button onClick={() => handleEditRequest(item.id)} className={`${styles.actionButton} ${styles.editButton}`}>Редактировать</button>
+                                    <button onClick={() => handleDeleteRequest(item.id)} className={`${styles.actionButton} ${styles.deleteButton}`}>Удалить</button>
                                 </td>
                             </tr>
                         ))}

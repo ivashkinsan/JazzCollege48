@@ -15,8 +15,9 @@ export async function loadAchievements(): Promise<Achievement[]> {
     }
 
     const promise = (async () => {
+        const baseURL = import.meta.env.BASE_URL;
         try {
-            const response = await fetch('/data/achievements.json');
+            const response = await fetch(`${baseURL}data/achievements.json`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch static achievements data. Status: ${response.status}`);
             }

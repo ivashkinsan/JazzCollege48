@@ -1,18 +1,5 @@
 [
   {
-    "albumId": "dzhazovyy-dzhem-eyshn-v-biblioteke",
-    "albumTitle": "Джазовый джем-сейшн в Библиотеке",
-    "albumDate": "2026-03-31",
-    "albumCategory": "photoalbum",
-    "photos": [
-      {
-        "id": "",
-        "src": "/media/2026/2026-03-31-dzhazovyy-dzhem-seyshn-v-biblioteke/cover.jpg",
-        "title": "Джазовый джем-сейшн в Библиотеке"
-      }
-    ]
-  },
-  {
     "albumId": "pozd-avlyaem-pobediteley",
     "albumTitle": "✨ Поздравляем победителей ✨",
     "albumDate": "2026-03-23",
@@ -55,19 +42,6 @@
         "id": "",
         "src": "/media/2026/2026-03-12-marafon-zavershenie/gallery-2.jpg",
         "title": "12 марта завершился наш джазовый марафон! Концерт «Весна в ритмах джаза» по Пушкинской карте"
-      }
-    ]
-  },
-  {
-    "albumId": "11-12-ma-ta-p-iglashaem-na-kontse-t-ve-na-v-itmakh-dzhaza-tekh-kto-ne-mog-6-go-ma-ta",
-    "albumTitle": "11, 12 марта приглашаем на концерт «Весна в ритмах джаза…» тех, кто не смог 6-го марта",
-    "albumDate": "2026-03-10",
-    "albumCategory": "photoalbum",
-    "photos": [
-      {
-        "id": "",
-        "src": "/media/2026/2026-03-10-priglashenie-vesna-v-ritme-dzhaza/cover.jpg",
-        "title": "11, 12 марта приглашаем на концерт «Весна в ритмах джаза…» тех, кто не смог 6-го марта"
       }
     ]
   },
@@ -167,19 +141,6 @@
     ]
   },
   {
-    "albumId": "dzhazovye-po-t-ety-ovet-kiy-i-o-iy-kiy-dzhaz",
-    "albumTitle": "Джазовые портреты. Советский и российский джаз",
-    "albumDate": "2025-12-16",
-    "albumCategory": "photoalbum",
-    "photos": [
-      {
-        "id": "",
-        "src": "/media/2025/2025-12-16-dzhazovye-portrety-nova-projekt/cover.jpg",
-        "title": "Джазовые портреты. Советский и российский джаз"
-      }
-    ]
-  },
-  {
     "albumId": "21-noyab-ya-tudenty-petsial-no-ti-muzykal-noe-i-ku-tvo-e-t-ady-vy-tupili-v-kolledzhe-indu-t-ii-e-vi-a",
     "albumTitle": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса",
     "albumDate": "2025-11-23",
@@ -267,20 +228,7 @@
     ]
   },
   {
-    "albumId": "fe-tival-jazz-48-molodezhnye-kollektivy-o-ii-v-lipetske",
-    "albumTitle": "Фестиваль «JAZZ-48» — молодежные коллективы России в Липецке",
-    "albumDate": "2024-04-22",
-    "albumCategory": "photoalbum",
-    "photos": [
-      {
-        "id": "",
-        "src": "/media/2024/2024-04-22-dzhazovyy-festival-soberet-molodezhnye-kollektivy-rossii-v-l/cover.jpg",
-        "title": "Фестиваль «JAZZ-48» — молодежные коллективы России в Липецке"
-      }
-    ]
-  },
-  {
-    "albumId": "ma-te-kla-tudentov-gk-im-akhmaninova",
+    "albumId": "master-klass-studentov-rgk-im-rakhmaninova",
     "albumTitle": "Мастер-класс студентов РГК им. Рахманинова",
     "albumDate": "2024-02-06",
     "albumCategory": "photoalbum",
@@ -338,8 +286,8 @@
     ]
   },
   {
-    "albumId": "dzhaz-konze-t",
-    "albumTitle": "ДЖАЗ КОНZЕРТ",
+    "albumId": "fotootchet-dzhaz-konzert",
+    "albumTitle": "фотоотчет - ДЖАЗ КОНZЕРТ",
     "albumDate": "2021-06-21",
     "albumCategory": "photoalbum",
     "photos": [

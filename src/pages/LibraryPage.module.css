@@ -6,7 +6,7 @@
 }
 
 .hero {
-  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
+  background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-secondary) 100%);
   padding: var(--spacing-xxl) 0;
   text-align: center;
   border-bottom: 1px solid var(--border-color);
@@ -16,7 +16,7 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: var(--spacing-sm);
-  color: var(--color-text);
+  color: var(--color-accent); /* Unified color */
 }
 
 .subtitle {

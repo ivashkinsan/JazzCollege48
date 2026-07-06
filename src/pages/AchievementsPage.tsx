@@ -12,7 +12,8 @@ function AchievementsPage() {
   useEffect(() => {
     const fetchAchievements = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/achievements');
+        const apiBase = import.meta.env.PROD ? window.location.origin : 'http://localhost:4000';
+        const response = await fetch(`${apiBase}/api/achievements`);
         if (!response.ok) {
           throw new Error('Failed to fetch achievements');
         }
@@ -48,7 +49,7 @@ function AchievementsPage() {
           {loading ? (
             <p>Загрузка достижений...</p>
           ) : (
-            <Achievements achievements={achievementsData} />
+            <Achievements achievements={achievementsData} hideTitle={true} />
           )}
         </div>
       </section>
