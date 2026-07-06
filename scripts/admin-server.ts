@@ -78,8 +78,296 @@ app.get('/api/afisha', (req, res) => {
     getPublicContent('afisha', res);
 });
 
+app.get('/api/achievements', (req, res) => {
+    try {
+        const stmt = db.prepare('SELECT * FROM achievements ORDER BY date DESC');
+        const achievements = stmt.all();
+        // The frontend expects the 'image' property, but the DB has 'image_src'. Adapt it.
+        const adaptedAchievements = achievements.map((item: any) => ({
+            ...item,
+            image: item.image_src
+        }));
+        res.json(adaptedAchievements);
+    } catch (error) {
+        console.error(`Error fetching achievements:`, error);
+        res.status(500).json([]);
+    }
+});
+
+app.get('/api/videos', (req, res) => {
+    try {
+        const stmt = db.prepare('SELECT * FROM videos ORDER BY date DESC');
+        const videos = stmt.all();
+        // The frontend expects `videoUrl`, but the DB has `video_url`.
+        const adaptedVideos = videos.map((item: any) => ({
+            ...item,
+            videoUrl: item.video_url
+        }));
+        res.json(adaptedVideos);
+    } catch (error) {
+        console.error(`Error fetching videos:`, error);
+        res.status(500).json([]);
+    }
+});
+
+app.get('/api/library', (req, res) => {
+    const category = req.query.category as string;
+    try {
+        let links;
+        if (category && category !== 'Все') {
+            const stmt = db.prepare('SELECT * FROM library_links WHERE category = ? ORDER BY title');
+            links = stmt.all(category);
+        } else {
+            const stmt = db.prepare('SELECT * FROM library_links ORDER BY category, title');
+            links = stmt.all();
+        }
+
+        const categoryStmt = db.prepare('SELECT DISTINCT category FROM library_links ORDER BY category');
+        const categories = categoryStmt.all().map((cat: any) => cat.category);
+        
+        res.json({ links, categories });
+    } catch (error) {
+        console.error(`Error fetching library links:`, error);
+        res.status(500).json({ links: [], categories: [] });
+    }
+});
+
+
 
 // --- ADMIN API ENDPOINTS ---
+
+// Generic list endpoint for admin tables
+app.get('/api/admin/list/:manager', (req, res) => {
+    const manager = req.params.manager;
+    const tableMap: Record<string, string> = {
+        content: 'content',
+        achievements: 'achievements',
+        videos: 'videos',
+        library: 'library_links'
+    };
+    const tableName = tableMap[manager];
+
+    if (!tableName) {
+        return res.status(400).json({ success: false, message: 'Invalid manager type' });
+    }
+
+    try {
+        let query;
+        if (tableName === 'content') {
+            query = `SELECT id, title, date, category FROM ${tableName} ORDER BY date DESC`;
+        } else if (tableName === 'library_links') {
+            query = `SELECT id, title, category FROM ${tableName} ORDER BY title ASC`;
+        } else {
+            query = `SELECT id, title, date FROM ${tableName} ORDER BY date DESC`;
+        }
+        const stmt = db.prepare(query);
+        const items = stmt.all();
+        res.json(items);
+    } catch (error) {
+        console.error(`Error fetching list for ${manager}:`, error);
+        res.status(500).json([]);
+    }
+});
+
+
+// Achievements CRUD
+app.get('/api/achievements/:id', (req, res) => {
+    try {
+        const stmt = db.prepare('SELECT * FROM achievements WHERE id = ?');
+        const achievement = stmt.get(req.params.id);
+        if (achievement) {
+            res.json(achievement);
+        } else {
+            res.status(404).json({ success: false, message: 'Achievement not found' });
+        }
+    } catch (error) {
+        console.error(`Error fetching achievement ${req.params.id}:`, error);
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+app.post('/api/achievements', (req, res) => {
+    try {
+        const { title, student_name, competition, date, place, category, image_src } = req.body;
+        const stmt = db.prepare(`
+            INSERT INTO achievements (title, student_name, competition, date, place, category, image_src)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        `);
+        const result = stmt.run(title, student_name, competition, date, place, category, image_src);
+        res.status(201).json({ success: true, id: result.lastInsertRowid });
+    } catch (error) {
+        console.error('Error creating achievement:', error);
+        res.status(500).json({ success: false, message: 'Failed to create achievement' });
+    }
+});
+
+app.post('/api/achievements/:id', (req, res) => {
+    try {
+        const { title, student_name, competition, date, place, category, image_src } = req.body;
+        const stmt = db.prepare(`
+            UPDATE achievements 
+            SET title = ?, student_name = ?, competition = ?, date = ?, place = ?, category = ?, image_src = ?
+            WHERE id = ?
+        `);
+        const result = stmt.run(title, student_name, competition, date, place, category, image_src, req.params.id);
+        if (result.changes > 0) {
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ success: false, message: 'Achievement not found' });
+        }
+    } catch (error) {
+        console.error(`Error updating achievement ${req.params.id}:`, error);
+        res.status(500).json({ success: false, message: 'Failed to update achievement' });
+    }
+});
+
+app.delete('/api/achievements/:id', (req, res) => {
+    try {
+        const stmt = db.prepare('DELETE FROM achievements WHERE id = ?');
+        const result = stmt.run(req.params.id);
+        if (result.changes > 0) {
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ success: false, message: 'Achievement not found' });
+        }
+    } catch (error) {
+        console.error(`Error deleting achievement ${req.params.id}:`, error);
+        res.status(500).json({ success: false, message: 'Failed to delete achievement' });
+    }
+});
+
+// Videos CRUD
+app.get('/api/videos/:id', (req, res) => {
+    try {
+        const stmt = db.prepare('SELECT * FROM videos WHERE id = ?');
+        const video = stmt.get(req.params.id);
+        if (video) {
+            res.json(video);
+        } else {
+            res.status(404).json({ success: false, message: 'Video not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+app.post('/api/videos', (req, res) => {
+    try {
+        const { title, description, video_url, date, source } = req.body;
+        const stmt = db.prepare(`
+            INSERT INTO videos (title, description, video_url, date, source)
+            VALUES (?, ?, ?, ?, ?)
+        `);
+        const result = stmt.run(title, description, video_url, date, source);
+        res.status(201).json({ success: true, id: result.lastInsertRowid });
+    } catch (error) {
+        console.error('Error creating video:', error);
+        res.status(500).json({ success: false, message: 'Failed to create video' });
+    }
+});
+
+app.post('/api/videos/:id', (req, res) => {
+    try {
+        const { title, description, video_url, date, source } = req.body;
+        const stmt = db.prepare(`
+            UPDATE videos 
+            SET title = ?, description = ?, video_url = ?, date = ?, source = ?
+            WHERE id = ?
+        `);
+        const result = stmt.run(title, description, video_url, date, source, req.params.id);
+        if (result.changes > 0) {
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ success: false, message: 'Video not found' });
+        }
+    } catch (error) {
+        console.error(`Error updating video ${req.params.id}:`, error);
+        res.status(500).json({ success: false, message: 'Failed to update video' });
+    }
+});
+
+app.delete('/api/videos/:id', (req, res) => {
+    try {
+        const stmt = db.prepare('DELETE FROM videos WHERE id = ?');
+        const result = stmt.run(req.params.id);
+        if (result.changes > 0) {
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ success: false, message: 'Video not found' });
+        }
+    } catch (error) {
+        console.error(`Error deleting video ${req.params.id}:`, error);
+        res.status(500).json({ success: false, message: 'Failed to delete video' });
+    }
+});
+
+// Library Links CRUD
+app.get('/api/library/:id', (req, res) => {
+    try {
+        const stmt = db.prepare('SELECT * FROM library_links WHERE id = ?');
+        const link = stmt.get(req.params.id);
+        if (link) {
+            res.json(link);
+        } else {
+            res.status(404).json({ success: false, message: 'Link not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
+app.post('/api/library', (req, res) => {
+    try {
+        const { title, description, url, category } = req.body;
+        const stmt = db.prepare(`
+            INSERT INTO library_links (title, description, url, category)
+            VALUES (?, ?, ?, ?)
+        `);
+        const result = stmt.run(title, description, url, category);
+        res.status(201).json({ success: true, id: result.lastInsertRowid });
+    } catch (error) {
+        console.error('Error creating library link:', error);
+        res.status(500).json({ success: false, message: 'Failed to create library link' });
+    }
+});
+
+app.post('/api/library/:id', (req, res) => {
+    try {
+        const { title, description, url, category } = req.body;
+        const stmt = db.prepare(`
+            UPDATE library_links 
+            SET title = ?, description = ?, url = ?, category = ?
+            WHERE id = ?
+        `);
+        const result = stmt.run(title, description, url, category, req.params.id);
+        if (result.changes > 0) {
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ success: false, message: 'Link not found' });
+        }
+    } catch (error) {
+        console.error(`Error updating library link ${req.params.id}:`, error);
+        res.status(500).json({ success: false, message: 'Failed to update library link' });
+    }
+});
+
+app.delete('/api/library/:id', (req, res) => {
+    try {
+        const stmt = db.prepare('DELETE FROM library_links WHERE id = ?');
+        const result = stmt.run(req.params.id);
+        if (result.changes > 0) {
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ success: false, message: 'Link not found' });
+        }
+    } catch (error) {
+        console.error(`Error deleting library link ${req.params.id}:`, error);
+        res.status(500).json({ success: false, message: 'Failed to delete library link' });
+    }
+});
+
+
+
 
 // GET /api/content - List all content
 app.get('/api/content', (req, res) => {

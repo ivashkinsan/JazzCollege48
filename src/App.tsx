@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { loadNews } from './data';
-import { navigation, collegeInfo, estradaDepartment, teachers, achievements, graduates } from './data/static';
+import { navigation, collegeInfo, estradaDepartment, teachers, graduates } from './data/static';
 import type { ExtendedNewsItem } from './types/college';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -34,12 +34,30 @@ const baseName = import.meta.env.BASE_URL;
 // Главная страница с секциями
 function HomePage() {
   const [newsData, setNewsData] = useState<ExtendedNewsItem[]>([]);
+  const [achievementsData, setAchievementsData] = useState<any[]>([]);
 
   useEffect(() => {
     let cancelled = false;
+    
+    // Load News
     loadNews().then((data) => {
       if (!cancelled) setNewsData(data);
     });
+
+    // Load Achievements
+    const fetchAchievements = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/achievements');
+        const data = await response.json();
+        if (!cancelled) {
+          setAchievementsData(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch achievements for preview:", error);
+      }
+    };
+    fetchAchievements();
+
     return () => { cancelled = true; };
   }, []);
 
@@ -49,7 +67,7 @@ function HomePage() {
       <About department={estradaDepartment} />
       <Specialties department={estradaDepartment} />
       <Teachers teachers={teachers} />
-      <AchievementsPreview achievements={achievements} />
+      <AchievementsPreview achievements={achievementsData} />
       <Graduates graduates={graduates} />
       <ConcertsPreview />
       <NewsPreview news={newsData} />

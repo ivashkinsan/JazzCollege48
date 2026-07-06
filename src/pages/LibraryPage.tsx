@@ -1,17 +1,55 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { libraryCategories } from '../data/static/libraryLinks';
 import styles from './LibraryPage.module.css';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+
+interface LibraryLink {
+  id: number;
+  title: string;
+  url: string;
+  description: string;
+  category: string;
+}
 
 function LibraryPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('Все');
+  const [allCategories, setAllCategories] = useState<string[]>(['Все']);
+  const [links, setLinks] = useState<LibraryLink[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const allCategories = ['Все', ...libraryCategories.map(c => c.categoryTitle)];
+  useEffect(() => {
+    const fetchLibraryData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`http://localhost:4000/api/library?category=${encodeURIComponent(selectedCategory)}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch library data');
+        }
+        const data = await response.json();
 
-  const filteredCategories = selectedCategory === 'Все'
-    ? libraryCategories
-    : libraryCategories.filter(c => c.categoryTitle === selectedCategory);
+        // On first load, also set the categories for the filter buttons
+        if (allCategories.length === 1 && data.categories) {
+          setAllCategories(['Все', ...data.categories]);
+        }
+        
+        setLinks(data.links || []);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLibraryData();
+  }, [selectedCategory]); // Re-fetch when selectedCategory changes
+
+  // Group links by category for rendering
+  const groupedLinks = useMemo(() => {
+    return links.reduce((acc, link) => {
+      (acc[link.category] = acc[link.category] || []).push(link);
+      return acc;
+    }, {} as Record<string, LibraryLink[]>);
+  }, [links]);
 
   return (
     <div className={styles.page}>
@@ -37,6 +75,7 @@ function LibraryPage() {
                 key={cat}
                 className={`${styles.categoryBtn} ${selectedCategory === cat ? styles.categoryBtnActive : ''}`}
                 onClick={() => setSelectedCategory(cat)}
+                disabled={loading}
               >
                 {cat}
               </button>
@@ -47,26 +86,32 @@ function LibraryPage() {
 
       <section className={styles.librarySection}>
         <div className="container">
-          {filteredCategories.map((category) => (
-            <div key={category.categoryTitle} className={styles.categoryWrapper}>
-              <h2 className={styles.categoryTitle}>{category.categoryTitle}</h2>
-              <div className={styles.linksGrid}>
-                {category.links.map((link) => (
-                  <a
-                    key={link.url}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.linkCard}
-                  >
-                    <h3 className={styles.linkTitle}>{link.title}</h3>
-                    <p className={styles.linkDescription}>{link.description}</p>
-                    <span className={styles.linkUrl}>{new URL(link.url).hostname}</span>
-                  </a>
-                ))}
+          {loading ? (
+            <p>Загрузка...</p>
+          ) : Object.keys(groupedLinks).length > 0 ? (
+            Object.entries(groupedLinks).map(([category, categoryLinks]) => (
+              <div key={category} className={styles.categoryWrapper}>
+                <h2 className={styles.categoryTitle}>{category}</h2>
+                <div className={styles.linksGrid}>
+                  {categoryLinks.map((link) => (
+                    <a
+                      key={link.id}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.linkCard}
+                    >
+                      <h3 className={styles.linkTitle}>{link.title}</h3>
+                      <p className={styles.linkDescription}>{link.description}</p>
+                      <span className={styles.linkUrl}>{new URL(link.url).hostname}</span>
+                    </a>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>Нет ссылок в данной категории.</p>
+          )}
         </div>
       </section>
 
@@ -80,6 +125,5 @@ function LibraryPage() {
     </div>
   );
 }
-
 
 export default LibraryPage;

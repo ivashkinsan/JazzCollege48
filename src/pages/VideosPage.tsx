@@ -1,6 +1,5 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { videos as staticVideos } from '../data/static/videos';
 import type { Video } from '../types/college';
 import styles from './VideosPage.module.css';
 
@@ -40,15 +39,25 @@ const getEmbedUrl = (video: Video) => {
 
 function VideosPage() {
   const [videos, setVideos] = useState<Video[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // We are using static data, but this mimics loading
-    setVideos(staticVideos);
+    const fetchVideos = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/videos');
+        if (!response.ok) {
+          throw new Error('Failed to fetch videos');
+        }
+        const data = await response.json();
+        setVideos(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchVideos();
   }, []);
-
-  const sortedVideos = useMemo(() => {
-    return [...videos].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, [videos]);
 
   return (
     <div className={styles.page}>
@@ -63,36 +72,40 @@ function VideosPage() {
 
       <section className={styles.videosSection}>
         <div className="container">
-          <div className={styles.videosGrid}>
-            {sortedVideos.map((video) => (
-              <article key={video.id} className={styles.videoCard}>
-                <div className={styles.videoContainer}>
-                  <iframe
-                    src={getEmbedUrl(video)}
-                    title={video.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className={styles.videoFrame}
-                  ></iframe>
-                </div>
-                <div className={styles.videoInfo}>
-                  <h3 className={styles.videoTitle}>{video.title}</h3>
-                  <p className={styles.videoDescription}>{video.description}</p>
-                  <div className={styles.videoMeta}>
-                    <span className={styles.videoDate}>
-                      {new Date(video.date).toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                      })}
-                    </span>
-                    <span className={styles.sourceBadge}>{video.source}</span>
+          {loading ? (
+            <p>Загрузка видео...</p>
+          ) : (
+            <div className={styles.videosGrid}>
+              {videos.map((video) => (
+                <article key={video.id} className={styles.videoCard}>
+                  <div className={styles.videoContainer}>
+                    <iframe
+                      src={getEmbedUrl(video)}
+                      title={video.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className={styles.videoFrame}
+                    ></iframe>
                   </div>
-                </div>
-              </article>
-            ))}
-          </div>
+                  <div className={styles.videoInfo}>
+                    <h3 className={styles.videoTitle}>{video.title}</h3>
+                    <p className={styles.videoDescription}>{video.description}</p>
+                    <div className={styles.videoMeta}>
+                      <span className={styles.videoDate}>
+                        {new Date(video.date).toLocaleDateString('ru-RU', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric'
+                        })}
+                      </span>
+                      <span className={styles.sourceBadge}>{video.source}</span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

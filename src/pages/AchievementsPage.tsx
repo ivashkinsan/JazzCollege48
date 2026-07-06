@@ -1,13 +1,34 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { achievements } from '../data/static';
+import { useState, useEffect } from 'react';
+import type { Achievement } from '../types/college';
 import Achievements from '../components/Achievements';
 import styles from './AchievementsPage.module.css';
 
 function AchievementsPage() {
-  const sortedAchievements = [...achievements].sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime(); // Newest first
-  });
+  const [achievementsData, setAchievementsData] = useState<Achievement[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/achievements');
+        if (!response.ok) {
+          throw new Error('Failed to fetch achievements');
+        }
+        const data = await response.json();
+        // The data is already sorted by date on the server, no need to sort again.
+        setAchievementsData(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAchievements();
+  }, []);
+
   return (
     <div className={styles.page}>
       <Helmet>
@@ -24,7 +45,11 @@ function AchievementsPage() {
       
       <section className={styles.contentSection}>
         <div className="container">
-          <Achievements achievements={sortedAchievements} />
+          {loading ? (
+            <p>Загрузка достижений...</p>
+          ) : (
+            <Achievements achievements={achievementsData} />
+          )}
         </div>
       </section>
 

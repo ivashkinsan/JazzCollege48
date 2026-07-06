@@ -1,210 +1,299 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styles from './AdminApp.module.css';
-import PreviewCard from './PreviewCard';
-import EditListView from './EditListView';
-
-// Helper function to generate URL-friendly slugs
-function createSlug(text: string): string {
-  if (!text) return '';
-  const a = {
-    'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo', 'ж': 'zh',
-    'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o',
-    'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts',
-    'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya'
-  };
-  return text.toLowerCase().split('').map(char => (a as any)[char] || char).join('')
-    .replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-}
+import NewsPreview from '../components/NewsPreview';
+import Achievements from '../components/Achievements';
+import concertCardStyles from '../components/ConcertsPreview.module.css';
+import { Achievement, Video } from '../types/college';
 
 const API_BASE_URL = 'http://localhost:4000';
 
-const AdminApp: React.FC = () => {
-  const [mode, setMode] = useState<'create' | 'edit'>('create');
-  const [editingId, setEditingId] = useState<number | null>(null); // Use number for ID
+type TabType = 'news' | 'afisha' | 'achievements' | 'videos' | 'library';
+type ManagerType = 'content' | 'achievements' | 'videos' | 'library';
 
-  const initialFormData = {
-    category: 'news',
-    title: '',
-    slug: '', // Add slug to form
-    date: new Date().toISOString().split('T')[0],
-    time: '',
-    venue: '',
-    tags: '',
-    body: '',
-  };
+// --- Helper Functions ---
+function createSlug(text: string): string {
+  if (!text) return '';
+  const a: Record<string, string> = {'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo','ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya'};
+  return text.toLowerCase().split('').map(char => a[char] || char).join('').replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+}
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [coverImage, setCoverImage] = useState<File | null>(null);
-  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
-  const [existingPhotos, setExistingPhotos] = useState<any[]>([]);
-  const [galleryImages, setGalleryImages] = useState<FileList | null>(null);
-  const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (coverImage) {
-      const newUrl = URL.createObjectURL(coverImage);
-      setCoverImageUrl(newUrl);
-      return () => URL.revokeObjectURL(newUrl);
-    } else {
-      const cover = existingPhotos.find(p => p.src.includes('cover')); // Find cover from existing photos
-      setCoverImageUrl(cover ? cover.src : (existingPhotos[0]?.src || null));
-    }
-  }, [coverImage, existingPhotos]);
-  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => {
-        const newFormData = { ...prev, [name]: value };
-        // Auto-generate slug from title, but only if creating new content
-        if (name === 'title' && !editingId) {
-            newFormData.slug = createSlug(value);
+// --- Preview Pane Component ---
+const PreviewPane: React.FC<{ activeTab: TabType; formData: any }> = ({ activeTab, formData }) => {
+    const renderPreview = () => {
+        switch (activeTab) {
+            case 'news': {
+                const newsItem = { ...formData, cover: { src: formData.cover_image_src }, description: formData.body?.slice(0, 150) };
+                return <NewsPreview news={[newsItem]} />;
+            }
+            case 'afisha': {
+                const concertItem = { ...formData, content: formData.body || '', cover: { src: formData.cover_image_src } };
+                const date = new Date(concertItem.date);
+                const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+                return (
+                    <article className={concertCardStyles.concertCard}>
+                        <div className={concertCardStyles.concertCardCover}>
+                            {concertItem.cover?.src ? <img src={concertItem.cover.src} alt={concertItem.title} /> : <div className={concertCardStyles.concertCardCoverPlaceholder}><span className={concertCardStyles.coverPlaceholderIcon}>🎵</span></div>}
+                        </div>
+                        <div className={concertCardStyles.concertCardContent}>
+                            <div className={concertCardStyles.concertCardMeta}><span className={concertCardStyles.concertCardCategory}>Афиша</span><div className={concertCardStyles.concertCardDateText}>{dateStr}</div></div>
+                            <h3 className={concertCardStyles.concertCardTitle}>{concertItem.title || 'Название события'}</h3>
+                            {concertItem.venue && <p className={concertCardStyles.concertCardVenue}>📍 {concertItem.venue}</p>}
+                            {concertItem.time && <p className={concertCardStyles.concertCardTime}>🕐 {concertItem.time}</p>}
+                            <p className={concertCardStyles.concertCardDescription}>{(concertItem.content || '').slice(0, 150)}{(concertItem.content || '').length > 150 && '...'}</p>
+                        </div>
+                    </article>
+                );
+            }
+            case 'achievements': {
+                const achievementItem: Achievement = { id: 'preview', studentName: formData.student_name, image: formData.image_src, ...formData };
+                return <div style={{ transform: 'scale(0.9)', origin: 'top left' }}><Achievements achievements={[achievementItem]} /></div>;
+            }
+            case 'videos': {
+                 const videoItem: Video = { id: 'preview', videoUrl: formData.video_url, ...formData };
+                 return <div className={styles.videoPreview}><h4>{videoItem.title}</h4><p>{videoItem.description}</p><span>{videoItem.source} - {videoItem.date}</span></div>;
+            }
+            case 'library':
+                return <div className={styles.linkPreview}><h4>{formData.title}</h4><p>{formData.description}</p><a href={formData.url} target="_blank" rel="noopener noreferrer">{formData.url}</a><span>Категория: {formData.category}</span></div>;
+            default:
+                return <p>Предпросмотр для этого раздела еще не реализован.</p>;
         }
-        return newFormData;
-    });
-  };
+    };
+    return <div className={styles.previewBox}><h3>Предпросмотр</h3>{renderPreview()}</div>;
+};
 
-  const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setCoverImage(e.target.files[0]);
-    } else {
-      setCoverImage(null);
-    }
-  };
+// --- Main Admin App ---
+const AdminApp: React.FC = () => {
+    const [activeTab, setActiveTab] = useState<TabType>('news');
+    const [mode, setMode] = useState<'list' | 'form'>('list');
+    const [editingId, setEditingId] = useState<number | null>(null);
+    const [items, setItems] = useState<any[]>([]);
+    const [formData, setFormData] = useState<any>({});
+    const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleGalleryImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGalleryImages(e.target.files);
-  };
+    const manager = useMemo<ManagerType>(() => {
+        if (activeTab === 'news' || activeTab === 'afisha') return 'content';
+        return activeTab;
+    }, [activeTab]);
 
-  const resetForm = useCallback(() => {
-    setFormData(initialFormData);
-    setCoverImage(null);
-    setGalleryImages(null);
-    setEditingId(null);
-    setExistingPhotos([]);
-    const coverInput = document.getElementById('coverImage') as HTMLInputElement;
-    const galleryInput = document.getElementById('galleryImages') as HTMLInputElement;
-    if (coverInput) coverInput.value = '';
-    if (galleryInput) galleryInput.value = '';
-  }, [initialFormData]);
+    const apiEndpoint = useMemo(() => `/api/${manager}`, [manager]);
+    const adminListEndpoint = useMemo(() => `/api/admin/list/${manager}`, [manager]);
 
-  const handleEditRequest = async (id: number) => { // Expect number id
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/content/${id}`); // Fetch by number ID
-        if(!response.ok) throw new Error('Failed to fetch content for editing.');
-        const data = await response.json();
-        
-        setFormData({
-            category: data.category || 'news',
-            title: data.title || '',
-            slug: data.slug || '',
-            date: data.date || '',
-            time: data.time || '',
-            venue: data.venue || '',
-            tags: data.tags ? JSON.parse(data.tags).join(', ') : '',
-            body: data.body || '',
+    const fetchItems = useCallback(async () => {
+        try {
+            const response = await fetch(API_BASE_URL + adminListEndpoint);
+            const data = await response.json();
+            setItems(data);
+        } catch (error) {
+            console.error(`Failed to fetch items for ${manager}`, error);
+            setItems([]);
+        }
+    }, [adminListEndpoint, manager]);
+
+    useEffect(() => {
+        fetchItems();
+    }, [fetchItems]);
+
+    const getInitialFormData = useCallback(() => {
+        const common = { title: '', date: new Date().toISOString().split('T')[0] };
+        switch (activeTab) {
+            case 'news': return { ...common, category: 'news', slug: '', body: '', time: '', venue: '', tags: '' };
+            case 'afisha': return { ...common, category: 'afisha', slug: '', body: '', time: '', venue: '', tags: '' };
+            case 'achievements': return { ...common, student_name: '', competition: '', place: '', category: '', image_src: '' };
+            case 'videos': return { ...common, description: '', video_url: '', source: 'rutube' };
+            case 'library': return { ...common, description: '', url: '', category: 'Видео-уроки и каналы' };
+            default: return {};
+        }
+    }, [activeTab]);
+
+    const resetForm = useCallback(() => {
+        setFormData(getInitialFormData());
+        setEditingId(null);
+    }, [getInitialFormData]);
+    
+    useEffect(resetForm, [activeTab]);
+
+    const handleEditRequest = async (id: number) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`);
+            const data = await response.json();
+            setFormData(data);
+            setEditingId(id);
+            setMode('form');
+        } catch (error) { console.error('Failed to fetch item for editing', error); }
+    };
+
+    const handleDeleteRequest = async (id: number) => {
+        if (window.confirm('Вы уверены, что хотите удалить эту запись?')) {
+            try {
+                await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`, { method: 'DELETE' });
+                fetchItems();
+            } catch (error) { console.error('Failed to delete item', error); }
+        }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev: any) => {
+            const newFormData = { ...prev, [name]: value };
+            if (name === 'title' && !editingId) {
+                newFormData.slug = createSlug(value);
+            }
+            return newFormData;
         });
-        setEditingId(id);
-        setExistingPhotos(data.photos || []);
-        setMode('create'); // Switch to form view for editing
-    } catch (error: any) {
-        setStatus({ type: 'error', message: `Ошибка: ${error.message}` });
-    }
-  };
+    };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setStatus(null);
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setStatus(null);
+        
+        try {
+            const payload = { ...formData, category: activeTab };
+            const url = editingId ? `${API_BASE_URL}${apiEndpoint}/${editingId}` : API_BASE_URL + apiEndpoint;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.message || 'Server error');
+            
+            setStatus({ type: 'success', message: 'Успешно сохранено!' });
+            setMode('list');
+            fetchItems();
+        } catch (error: any) {
+            setStatus({ type: 'error', message: error.message });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
-    const submissionData = new FormData();
-    Object.entries(formData).forEach(([key, value]) => submissionData.append(key, value));
-    if (coverImage) submissionData.append('coverImage', coverImage);
-    if (galleryImages) {
-      Array.from(galleryImages).forEach(file => submissionData.append('galleryImages', file));
+    const renderList = () => {
+        const filteredItems = manager === 'content' ? items.filter(item => item.category === activeTab) : items;
+        const isLibrary = activeTab === 'library';
+        return (
+            <div>
+                <button onClick={() => { resetForm(); setMode('form'); }}>Добавить новую запись</button>
+                <table className={styles.adminListTable}>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Заголовок</th>
+                            <th>{isLibrary ? 'Категория' : 'Дата'}</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredItems.map(item => (
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.title}</td>
+                                <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>
+                                <td>
+                                    <button onClick={() => handleEditRequest(item.id)}>Редактировать</button>
+                                    <button onClick={() => handleDeleteRequest(item.id)}>Удалить</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
     }
 
-    try {
-      const url = editingId 
-        ? `${API_BASE_URL}/api/content/${editingId}` // UPDATE endpoint with number ID
-        : `${API_BASE_URL}/api/content`;             // CREATE endpoint
-      
-      const response = await fetch(url, { method: 'POST', body: submissionData });
-      const result = await response.json();
-
-      if (response.ok) {
-        setStatus({ type: 'success', message: `Успешно! ${result.message}` });
-        resetForm();
-        if(editingId) setMode('edit'); // Go back to the list after editing
-      } else {
-        throw new Error(result.message || 'Произошла ошибка');
-      }
-    } catch (error: any) {
-      setStatus({ type: 'error', message: `Ошибка: ${error.message}` });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-  
-  const handleSetMode = (newMode: 'create' | 'edit') => {
-    if (mode !== newMode) {
-      resetForm();
-      setMode(newMode);
-    } else if (newMode === 'create') {
-      resetForm(); // Allow resetting the create form
-    }
-  }
-
-  const renderCurrentView = () => {
-    if (mode === 'edit') {
-        return <EditListView onEdit={handleEditRequest} />;
-    }
-    // 'create' mode serves for both creating and editing
-    return (
+    const renderFormFields = () => {
+        switch (activeTab) {
+            case 'news':
+            case 'afisha':
+                return (
+                    <>
+                        <div className={styles.formGroup}><label>Заголовок</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
+                        <div className={styles.formGroup}><label>URL (slug)</label><input type="text" name="slug" value={formData.slug || ''} onChange={handleInputChange} required /></div>
+                        <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
+                        {activeTab === 'afisha' && (
+                            <>
+                                <div className={styles.formGroup}><label>Время</label><input type="text" name="time" value={formData.time || ''} onChange={handleInputChange} /></div>
+                                <div className={styles.formGroup}><label>Место</label><input type="text" name="venue" value={formData.venue || ''} onChange={handleInputChange} /></div>
+                            </>
+                        )}
+                        <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
+                    </>
+                );
+            case 'achievements': return (
+                <>
+                    <div className={styles.formGroup}><label>Название</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Студент/Участник</label><input type="text" name="student_name" value={formData.student_name || ''} onChange={handleInputChange} /></div>
+                    <div className={styles.formGroup}><label>Конкурс/Событие</label><input type="text" name="competition" value={formData.competition || ''} onChange={handleInputChange} /></div>
+                    <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Место/Награда</label><input type="text" name="place" value={formData.place || ''} onChange={handleInputChange} /></div>
+                    <div className={styles.formGroup}><label>Путь к изображению</label><input type="text" name="image_src" value={formData.image_src || ''} onChange={handleInputChange} placeholder="/Diploms/image.jpg" /></div>
+                </>
+            );
+            case 'videos': return (
+                <>
+                    <div className={styles.formGroup}><label>Название</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Источник</label><select name="source" value={formData.source || 'rutube'} onChange={handleInputChange}><option value="rutube">Rutube</option><option value="youtube">YouTube</option><option value="vk">VK</option><option value="yandex">Yandex</option></select></div>
+                    <div className={styles.formGroup}><label>URL Видео</label><input type="url" name="video_url" value={formData.video_url || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Описание</label><textarea name="description" value={formData.description || ''} onChange={handleInputChange} rows={5}></textarea></div>
+                </>
+            );
+            case 'library': return (
+                <>
+                    <div className={styles.formGroup}><label>Название</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Категория</label><input type="text" name="category" value={formData.category || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>URL</label><input type="url" name="url" value={formData.url || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Описание</label><textarea name="description" value={formData.description || ''} onChange={handleInputChange} rows={3}></textarea></div>
+                </>
+            );
+            default: return <p>Форма для этого раздела еще не реализована.</p>;
+        }
+    };
+    
+    const renderForm = () => (
         <div className={styles.createViewContainer}>
             <div className={styles.formWrapper}>
-                <h1>{editingId ? 'Редактировать контент' : 'Добавить новый контент'}</h1>
+                <h1>{editingId ? `Редактировать` : `Создать`}</h1>
                 <form onSubmit={handleSubmit}>
-                    {/* Form groups */}
-                    <div className={styles.formGroup}>
-                        <label>Тип контента</label>
-                        <div className={styles.radioGroup}>
-                            <label><input type="radio" name="category" value="news" checked={formData.category === 'news'} onChange={handleInputChange} /> Новость</label>
-                            <label><input type="radio" name="category" value="afisha" checked={formData.category === 'afisha'} onChange={handleInputChange} /> Афиша</label>
-                        </div>
-                    </div>
-                    <div className={styles.formGroup}><label htmlFor="title">Заголовок</label><input type="text" id="title" name="title" value={formData.title} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label htmlFor="slug">URL (slug)</label><input type="text" id="slug" name="slug" value={formData.slug} onChange={handleInputChange} required /></div>
-                    <div className={styles.formGroup}><label htmlFor="date">Дата</label><input type="date" id="date" name="date" value={formData.date} onChange={handleInputChange} required /></div>
-                    {formData.category === 'afisha' && (
-                        <div className={styles.afishaFields}>
-                            <div className={styles.formGroup}><label htmlFor="time">Время</label><input type="time" id="time" name="time" value={formData.time} onChange={handleInputChange} /></div>
-                            <div className={styles.formGroup}><label htmlFor="venue">Место</label><input type="text" id="venue" name="venue" value={formData.venue} onChange={handleInputChange} /></div>
-                            <div className={styles.formGroup}><label htmlFor="tags">Теги (через запятую)</label><input type="text" id="tags" name="tags" value={formData.tags} onChange={handleInputChange} /></div>
-                        </div>
-                    )}
-                    <div className={styles.formGroup}><label htmlFor="body">Основной текст</label><textarea id="body" name="body" value={formData.body} onChange={handleInputChange} rows={10}></textarea></div>
-                    <div className={styles.formGroup}><label htmlFor="coverImage">Обложка</label><input type="file" id="coverImage" name="coverImage" onChange={handleCoverImageChange} accept="image/*" /></div>
-                    <div className={styles.formGroup}><label htmlFor="galleryImages">Галерея</label><input type="file" id="galleryImages" name="galleryImages" onChange={handleGalleryImagesChange} accept="image/*" multiple /></div>
-                    
-                    <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Загрузка...' : (editingId ? 'Сохранить изменения' : 'Добавить контент')}</button>
-                    {editingId && <button type="button" onClick={() => handleSetMode('edit')} className={styles.cancelButton}>Отмена</button>}
+                    {renderFormFields()}
+                    <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Сохранение...' : 'Сохранить'}</button>
+                    <button type="button" onClick={() => { setMode('list'); resetForm(); }} className={styles.cancelButton}>Отмена</button>
                 </form>
                 {status && <div className={status.type === 'success' ? styles.statusSuccess : styles.statusError}>{status.message}</div>}
             </div>
+            <div className={styles.previewContainer}>
+                <PreviewPane activeTab={activeTab} formData={formData} />
+            </div>
         </div>
     );
-  }
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.viewToggle}>
-          <button onClick={() => handleSetMode('create')} disabled={mode === 'create' && !editingId}>Создать</button>
-          <button onClick={() => handleSetMode('edit')} disabled={mode === 'edit'}>Редактировать</button>
-      </div>
-      {renderCurrentView()}
-    </div>
-  );
+    const TABS: { key: TabType, label: string }[] = [
+        { key: 'news', label: 'Новости' },
+        { key: 'afisha', label: 'Афиши' },
+        { key: 'achievements', label: 'Достижения' },
+        { key: 'videos', label: 'Видео' },
+        { key: 'library', label: 'Библиотека' },
+    ];
+
+    return (
+        <div className={styles.container}>
+            <h1>Админ-панель</h1>
+            <div className={styles.tabsContainer}>
+                {TABS.map(tab => (
+                    <button
+                        key={tab.key}
+                        className={`${styles.tabButton} ${activeTab === tab.key ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab(tab.key)}
+                    >
+                        {tab.label}
+                    </button>
+                ))}
+            </div>
+            <hr className={styles.divider} />
+            {mode === 'list' ? renderList() : renderForm()}
+        </div>
+    );
 };
 
 export default AdminApp;

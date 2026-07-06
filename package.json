@@ -14,7 +14,13 @@
     "db:setup": "ts-node scripts/db-setup.ts",
     "db:migrate": "ts-node scripts/db-migrate.ts",
     "db:cleanup": "ts-node scripts/db-cleanup.ts",
-    "db:add-subcategory": "ts-node scripts/db-add-subcategory.ts"
+    "db:add-subcategory": "ts-node scripts/db-add-subcategory.ts",
+    "db:create-achievements": "ts-node scripts/db-create-achievements-table.ts",
+    "db:migrate-achievements": "ts-node scripts/db-migrate-achievements.ts",
+    "db:create-videos": "ts-node scripts/db-create-videos-table.ts",
+    "db:migrate-videos": "ts-node scripts/db-migrate-videos.ts",
+    "db:create-library": "ts-node scripts/db-create-library-table.ts",
+    "db:migrate-library": "ts-node scripts/db-migrate-library.ts"
   },
   "dependencies": {
     "@types/cors": "^2.8.19",
