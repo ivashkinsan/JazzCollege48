@@ -3,8 +3,8 @@ import styles from './AdminApp.module.css';
 import NewsPreview from '../components/NewsPreview';
 import Achievements from '../components/Achievements';
 import concertCardStyles from '../components/ConcertsPreview.module.css';
-import LibraryLinkCard from '../components/LibraryLinkCard';
-import { Achievement, Video, LibraryLink } from '../types/college';
+import VideoCard from '../components/VideoCard';
+import { Achievement, Video } from '../types/college';
 import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 const API_BASE_URL = 'http://localhost:4000';
@@ -15,8 +15,23 @@ type ManagerType = 'content' | 'achievements' | 'videos' | 'library' | 'photoalb
 // --- Helper Functions ---
 function createSlug(text: string): string {
   if (!text) return '';
-  const a: Record<string, string> = {'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo','ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya'};
+  const a: Record<string, string> = {'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo','ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'м','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya'};
   return text.toLowerCase().split('').map(char => a[char] || char).join('').replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+}
+
+// Helper to format date to YYYY-MM-DD for input type="date"
+function formatDateToYYYYMMDD(dateString: string): string {
+    if (!dateString) return '';
+    try {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    } catch (e) {
+        console.error("Failed to format date:", dateString, e);
+        return '';
+    }
 }
 
 // --- Preview Pane Component ---
@@ -56,8 +71,15 @@ const PreviewPane: React.FC<{ activeTab: TabType; formData: any }> = ({ activeTa
                 return <div style={{ transform: 'scale(0.9)', transformOrigin: 'top left' }}><Achievements achievements={[achievementItem]} /></div>;
             }
             case 'videos': {
-                 const videoItem: Video = { id: 'preview', videoUrl: formData.video_url, ...formData };
-                 return <div className={styles.videoPreview}><h4>{videoItem.title}</h4><p>{videoItem.description}</p><span>{videoItem.source} - {videoItem.date}</span></div>;
+                const videoItemPreview: Video = {
+                    id: formData.id || 'preview-id', // Use existing ID or a placeholder
+                    title: formData.title || '',
+                    description: formData.description || '',
+                    videoUrl: formData.video_url || '',
+                    source: formData.source || 'youtube', // Default source
+                    date: formData.date || new Date().toISOString().split('T')[0]
+                };
+                return <VideoCard video={videoItemPreview} />;
             }
             case 'library':
                 return <div className={styles.linkPreview}><h4>{formData.title}</h4><p>{formData.description}</p><a href={formData.url} target="_blank" rel="noopener noreferrer">{formData.url}</a><span>Категория: {formData.category}</span></div>;
@@ -101,7 +123,20 @@ const AdminApp: React.FC = () => {
                 return;
             }
             const data = await response.json();
-            setItems(data);
+            const adaptedData = data.map((item: any) => {
+                if (manager === 'achievements') {
+                    return {
+                        ...item,
+                        studentName: item.student_name,
+                        image: item.image_src
+                    };
+                }
+                return item;
+            });
+            if (manager === 'achievements') {
+                console.log('Client-side adapted achievements data:', adaptedData);
+            }
+            setItems(adaptedData);
         } catch (error) {
             console.error(`Failed to fetch items for ${manager}`, error);
             setItems([]);
@@ -184,6 +219,10 @@ const AdminApp: React.FC = () => {
                 data.linked_photoalbum_id = String(data.linked_photoalbum_id);
             } else {
                 data.linked_photoalbum_id = ''; // Default to empty string
+            }
+            // Format date to YYYY-MM-DD
+            if (data.date) {
+                data.date = formatDateToYYYYMMDD(data.date);
             }
             setFormData(data);
             setEditingId(id);
@@ -306,6 +345,10 @@ const AdminApp: React.FC = () => {
                         <tr>
                             <th>ID</th>
                             <th>Заголовок</th>
+                            {activeTab === 'achievements' && <th>Студент/Участник</th>}
+                            {activeTab === 'achievements' && <th>Конкурс/Событие</th>}
+                            {activeTab === 'achievements' && <th>Место/Награда</th>}
+                            {activeTab === 'achievements' && <th>Категория</th>}
                             <th>{isLibrary ? 'Категория' : 'Дата'}</th>
                             <th>Действия</th>
                         </tr>
@@ -315,6 +358,10 @@ const AdminApp: React.FC = () => {
                             <tr key={item.id}>
                                 <td>{item.id}</td>
                                 <td>{item.title}</td>
+                                {activeTab === 'achievements' && <td>{item.studentName || 'N/A'}</td>}
+                                {activeTab === 'achievements' && <td>{item.competition || 'N/A'}</td>}
+                                {activeTab === 'achievements' && <td>{item.place || 'N/A'}</td>}
+                                {activeTab === 'achievements' && <td>{item.category || 'N/A'}</td>}
                                 <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>
                                 <td>
                                     <button onClick={() => handleEditRequest(item.id)}>Редактировать</button>

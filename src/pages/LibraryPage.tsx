@@ -1,3 +1,8 @@
+import { useState, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { LibraryLink } from '../types/college';
+import styles from './LibraryPage.module.css';
 import LibraryLinkCard from '../components/LibraryLinkCard';
 
 function LibraryPage() {
@@ -77,7 +82,8 @@ function LibraryPage() {
               </button>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
       <section className={styles.librarySection}>
         <div className="container">

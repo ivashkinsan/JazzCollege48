@@ -145,6 +145,14 @@ export interface Video {
   source: 'rutube' | 'youtube' | 'vk' | 'yandex';
 }
 
+export interface LibraryLink {
+  id: number;
+  title: string;
+  description: string;
+  url: string;
+  category: string;
+}
+
 export interface DaiProgram {
   id: string;
   name: string;

@@ -177,11 +177,15 @@ app.get('/api/admin/list/:manager', (req, res) => {
             }
         } else if (tableName === 'library_links') {
             query = `SELECT id, title, category FROM ${tableName} ORDER BY title ASC`;
-        } else {
+        } else if (tableName === 'achievements') { // Specific query for achievements
+            query = `SELECT id, title, student_name, competition, date, place, category FROM ${tableName} ORDER BY date DESC`;
+        }
+        else {
             query = `SELECT id, title, date FROM ${tableName} ORDER BY date DESC`;
         }
         const stmt = db.prepare(query);
         const items = stmt.all();
+        console.log(`Fetched items for ${manager}:`, items); // Add this line for debugging
         res.json(items);
     } catch (error) {
         console.error(`Error fetching list for ${manager}:`, error);
@@ -229,9 +233,16 @@ app.post('/api/achievements', upload.single('image'), async (req, res) => {
     }
 });
 
-app.post('/api/achievements/:id', (req, res) => {
+app.post('/api/achievements/:id', upload.single('image'), async (req, res) => {
     try {
-        const { title, student_name, competition, date, place, category, image_src } = req.body;
+        const { title, student_name, competition, date, place, category } = req.body;
+        let image_src = req.body.image_src; // Preserve existing image_src if no new file uploaded
+
+        if (req.file) {
+            const targetPath = path.join(ACHIEVEMENTS_TARGET_ROOT, req.file.originalname);
+            await fs.rename(req.file.path, targetPath);
+            image_src = path.join('/Diploms', req.file.originalname).replace(/\\/g, '/');
+        }
         const stmt = db.prepare(`
             UPDATE achievements 
             SET title = ?, student_name = ?, competition = ?, date = ?, place = ?, category = ?, image_src = ?
