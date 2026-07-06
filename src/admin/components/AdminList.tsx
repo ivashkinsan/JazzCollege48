@@ -33,6 +33,7 @@ const AdminList: React.FC<AdminListProps> = ({ activeTab, items, handleEditReque
                         {activeTab === 'graduates' && <th>Инструмент</th>}
                         {activeTab === 'graduates' && <th>Место работы/учебы</th>}
                         {activeTab === 'graduates' && <th>Биография</th>}
+                        {activeTab === 'graduates' && <th>Наша гордость</th>}
                         {activeTab !== 'graduates' && <th>{isLibrary ? 'Категория' : 'Дата'}</th>}
                         <th>Действия</th>
                     </tr>
@@ -51,6 +52,7 @@ const AdminList: React.FC<AdminListProps> = ({ activeTab, items, handleEditReque
                             {activeTab === 'graduates' && <td>{item.instrument || 'N/A'}</td>}
                             {activeTab === 'graduates' && <td>{item.workplace || 'N/A'}</td>}
                             {activeTab === 'graduates' && <td>{item.bio ? item.bio.substring(0, 30) + '...' : 'N/A'}</td>}
+                            {activeTab === 'graduates' && <td>{item.isFeatured ? 'Да' : 'Нет'}</td>}
                             {activeTab !== 'graduates' && <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>}
                             <td>
                                 <div style={{ display: 'flex', gap: '5px' }}>

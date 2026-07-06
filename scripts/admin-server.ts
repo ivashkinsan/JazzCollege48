@@ -537,7 +537,7 @@ app.post("/api/graduates/:id", upload.single("image"), async (req, res) => {
       workplace,
       image_src,
       bio,
-      is_featured ? 1 : 0, // Convert boolean to INTEGER
+      (is_featured === 'true' || is_featured === '1' || is_featured === true) ? 1 : 0,
       req.params.id,
     );
     if (result.changes > 0) {

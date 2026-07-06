@@ -217,6 +217,7 @@ const AdminApp: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log('Submitting formData:', formData); // ADDED DEBUG
         setIsSubmitting(true);
         setStatus(null);
         

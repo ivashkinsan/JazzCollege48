@@ -17,7 +17,7 @@
     "workplace": null,
     "image": "/vipuskniki/2026 Hryukin Ivan.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "9",
@@ -27,7 +27,7 @@
     "workplace": null,
     "image": "/vipuskniki/2026 Shishkina Varvara.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "10",
@@ -37,7 +37,7 @@
     "workplace": null,
     "image": "/vipuskniki/2026 Filatova Sofia.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "11",
@@ -47,7 +47,7 @@
     "workplace": null,
     "image": "/vipuskniki/2026 Baranova Valeria.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "16",
@@ -57,7 +57,7 @@
     "workplace": null,
     "image": "/vipuskniki/Korotkov.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "36",
@@ -67,7 +67,7 @@
     "workplace": null,
     "image": "/vipuskniki/2025 Erohina Anna.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "37",
@@ -77,7 +77,7 @@
     "workplace": null,
     "image": "/vipuskniki/2025 Frolova Angelina.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "38",
@@ -87,7 +87,7 @@
     "workplace": null,
     "image": "/vipuskniki/2025 Gorbunov Daniil.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "39",
@@ -97,7 +97,7 @@
     "workplace": null,
     "image": "/vipuskniki/2025 Ilina Viktoria.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "40",
@@ -107,7 +107,7 @@
     "workplace": null,
     "image": "/vipuskniki/2025 Logunova Alyona.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "41",
@@ -117,7 +117,7 @@
     "workplace": null,
     "image": "/vipuskniki/2025 Morozov Daniil.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "42",
@@ -127,7 +127,7 @@
     "workplace": null,
     "image": "/vipuskniki/2025 Verfel Roman.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "27",
@@ -137,7 +137,7 @@
     "workplace": null,
     "image": "/vipuskniki/2022 Eliseeva Anna.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "30",
@@ -147,7 +147,7 @@
     "workplace": null,
     "image": "/vipuskniki/2023 Ternuk Polina.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "34",
@@ -157,7 +157,7 @@
     "workplace": null,
     "image": "/vipuskniki/2024 Semyaninov Alexey.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "35",
@@ -167,7 +167,7 @@
     "workplace": null,
     "image": "/vipuskniki/2024 Vishnyakova Irina.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "28",
@@ -177,7 +177,7 @@
     "workplace": null,
     "image": "/vipuskniki/2023 Terehova Victoria.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "29",
@@ -187,7 +187,7 @@
     "workplace": null,
     "image": "/vipuskniki/2023 Kurgannikov Dmitriy.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "31",
@@ -197,7 +197,7 @@
     "workplace": null,
     "image": "/vipuskniki/2023 Koroteev Vitaliy.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "33",
@@ -207,7 +207,7 @@
     "workplace": null,
     "image": "/vipuskniki/2023 Shishkin Roman.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "3",
@@ -227,7 +227,7 @@
     "workplace": null,
     "image": "/vipuskniki/2022 Belanovskaya Natalya.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "25",
@@ -237,7 +237,7 @@
     "workplace": null,
     "image": "/vipuskniki/2022 Lunev Pavel.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "26",
@@ -247,7 +247,7 @@
     "workplace": null,
     "image": "/vipuskniki/2022 Ushkov Alexandr.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "19",
@@ -257,7 +257,7 @@
     "workplace": null,
     "image": "/vipuskniki/2021 Antipova Valeria.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "20",
@@ -267,7 +267,7 @@
     "workplace": null,
     "image": "/vipuskniki/2021 Kiselev Vladimir.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "21",
@@ -277,7 +277,7 @@
     "workplace": null,
     "image": "/vipuskniki/2021 Pishin Alexey.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "22",
@@ -287,7 +287,7 @@
     "workplace": null,
     "image": "/vipuskniki/2021 Samsonov Ilya.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "23",
@@ -297,7 +297,7 @@
     "workplace": null,
     "image": "/vipuskniki/2021 Uladova Ulyana.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "5",
@@ -317,7 +317,7 @@
     "workplace": null,
     "image": "/vipuskniki/2018 Korchagin Pavel.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "18",
@@ -327,7 +327,7 @@
     "workplace": null,
     "image": "/vipuskniki/2018 Zaloznih Yakov.jpg",
     "bio": null,
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "id": "4",
