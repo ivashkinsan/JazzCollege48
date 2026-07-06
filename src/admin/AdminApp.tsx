@@ -7,7 +7,7 @@ import { Achievement, Video } from '../types/college';
 
 const API_BASE_URL = 'http://localhost:4000';
 
-type TabType = 'news' | 'afisha' | 'achievements' | 'videos' | 'library';
+type TabType = 'news' | 'afisha' | 'achievements' | 'videos' | 'library' | 'photoalbum';
 type ManagerType = 'content' | 'achievements' | 'videos' | 'library';
 
 // --- Helper Functions ---
@@ -70,6 +70,7 @@ const AdminApp: React.FC = () => {
     const [formData, setFormData] = useState<any>({});
     const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [selectedFiles, setSelectedFiles] = useState<Map<string, File[]>>(new Map());
 
     const manager = useMemo<ManagerType>(() => {
         if (activeTab === 'news' || activeTab === 'afisha') return 'content';
@@ -82,6 +83,12 @@ const AdminApp: React.FC = () => {
     const fetchItems = useCallback(async () => {
         try {
             const response = await fetch(API_BASE_URL + adminListEndpoint);
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({ message: 'No error message from server.' }));
+                console.error(`Failed to fetch items for ${manager}. Status: ${response.status}. Error: ${errorData.message}`);
+                setItems([]);
+                return;
+            }
             const data = await response.json();
             setItems(data);
         } catch (error) {
@@ -102,6 +109,7 @@ const AdminApp: React.FC = () => {
             case 'achievements': return { ...common, student_name: '', competition: '', place: '', category: '', image_src: '' };
             case 'videos': return { ...common, description: '', video_url: '', source: 'rutube' };
             case 'library': return { ...common, description: '', url: '', category: 'Видео-уроки и каналы' };
+            case 'photoalbum': return { ...common, category: 'photoalbum', slug: '', title: '', body: '' };
             default: return {};
         }
     }, [activeTab]);
@@ -109,9 +117,23 @@ const AdminApp: React.FC = () => {
     const resetForm = useCallback(() => {
         setFormData(getInitialFormData());
         setEditingId(null);
+        setSelectedFiles(new Map()); // Clear selected files on form reset
     }, [getInitialFormData]);
     
     useEffect(resetForm, [activeTab]);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, files } = e.target;
+        setSelectedFiles(prev => {
+            const newMap = new Map(prev);
+            if (files && files.length > 0) {
+                newMap.set(name, Array.from(files));
+            } else {
+                newMap.delete(name);
+            }
+            return newMap;
+        });
+    };
 
     const handleEditRequest = async (id: number) => {
         try {
@@ -149,12 +171,38 @@ const AdminApp: React.FC = () => {
         setStatus(null);
         
         try {
-            const payload = { ...formData, category: activeTab };
+            const dataToSend = new FormData();
+
+            // Append all existing form data (text fields)
+            for (const key in formData) {
+                if (Object.prototype.hasOwnProperty.call(formData, key)) {
+                    // Skip image_src if a new file is selected to avoid sending old path with new file
+                    if (key === 'image_src' && activeTab === 'achievements' && selectedFiles.image) {
+                        continue;
+                    }
+                    dataToSend.append(key, formData[key]);
+                }
+            }
+            // Append category based on activeTab
+            dataToSend.append('category', activeTab);
+
+            // Append image files
+            if ((activeTab === 'news' || activeTab === 'afisha') && selectedFiles.has('coverImage')) {
+                dataToSend.append('coverImage', selectedFiles.get('coverImage')![0]);
+            } else if (activeTab === 'achievements' && selectedFiles.has('image')) {
+                dataToSend.append('image', selectedFiles.get('image')![0]);
+            } else if (activeTab === 'photoalbum' && selectedFiles.has('galleryImages')) {
+                selectedFiles.get('galleryImages')!.forEach((file: File) => {
+                    dataToSend.append('galleryImages', file);
+                });
+            }
+
             const url = editingId ? `${API_BASE_URL}${apiEndpoint}/${editingId}` : API_BASE_URL + apiEndpoint;
             const response = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
+                // DO NOT set Content-Type header manually for FormData.
+                // The browser will set it automatically with the correct boundary.
+                body: dataToSend,
             });
             const result = await response.json();
             if (!response.ok) throw new Error(result.message || 'Server error');
@@ -185,7 +233,7 @@ const AdminApp: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredItems.map(item => (
+                        {(filteredItems || []).map(item => (
                             <tr key={item.id}>
                                 <td>{item.id}</td>
                                 <td>{item.title}</td>
@@ -217,6 +265,16 @@ const AdminApp: React.FC = () => {
                                 <div className={styles.formGroup}><label>Место</label><input type="text" name="venue" value={formData.venue || ''} onChange={handleInputChange} /></div>
                             </>
                         )}
+                        <div className={styles.formGroup}>
+                            <label>Изображение обложки</label>
+                            {formData.cover_image_src && (
+                                <div>
+                                    <img src={formData.cover_image_src} alt="Текущая обложка" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
+                                    <p>Текущий путь: {formData.cover_image_src}</p>
+                                </div>
+                            )}
+                            <input type="file" name="coverImage" onChange={handleFileChange} />
+                        </div>
                         <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
                     </>
                 );
@@ -227,7 +285,16 @@ const AdminApp: React.FC = () => {
                     <div className={styles.formGroup}><label>Конкурс/Событие</label><input type="text" name="competition" value={formData.competition || ''} onChange={handleInputChange} /></div>
                     <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
                     <div className={styles.formGroup}><label>Место/Награда</label><input type="text" name="place" value={formData.place || ''} onChange={handleInputChange} /></div>
-                    <div className={styles.formGroup}><label>Путь к изображению</label><input type="text" name="image_src" value={formData.image_src || ''} onChange={handleInputChange} placeholder="/Diploms/image.jpg" /></div>
+                    <div className={styles.formGroup}>
+                        <label>Изображение (диплом/сертификат)</label>
+                        {formData.image_src && (
+                            <div>
+                                <img src={formData.image_src} alt="Текущее изображение" style={{ maxWidth: '100px', maxHeight: '100px', marginBottom: '10px' }} />
+                                <p>Текущий путь: {formData.image_src}</p>
+                            </div>
+                        )}
+                        <input type="file" name="image" onChange={handleFileChange} />
+                    </div>
                 </>
             );
             case 'videos': return (
@@ -245,6 +312,33 @@ const AdminApp: React.FC = () => {
                     <div className={styles.formGroup}><label>Категория</label><input type="text" name="category" value={formData.category || ''} onChange={handleInputChange} required /></div>
                     <div className={styles.formGroup}><label>URL</label><input type="url" name="url" value={formData.url || ''} onChange={handleInputChange} required /></div>
                     <div className={styles.formGroup}><label>Описание</label><textarea name="description" value={formData.description || ''} onChange={handleInputChange} rows={3}></textarea></div>
+                </>
+            );
+            case 'photoalbum': return (
+                <>
+                    <div className={styles.formGroup}><label>Заголовок</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>URL (slug)</label><input type="text" name="slug" value={formData.slug || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
+                    <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
+                    <div className={styles.formGroup}>
+                        <label>Фотографии для галереи (до 100)</label>
+                        {/* Display existing gallery images */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '10px' }}>
+                            {formData.photos && formData.photos.map((photo: any, index: number) => (
+                                <div key={photo.src || index} style={{ display: 'inline-block', border: '1px solid #ccc', padding: '5px' }}>
+                                    <img src={photo.src} alt={`Галерея ${index}`} style={{ maxWidth: '80px', maxHeight: '80px', display: 'block' }} />
+                                    {/* Potentially add a delete button for existing images */}
+                                </div>
+                            ))}
+                            {/* Display new selected images */}
+                            {selectedFiles.get('galleryImages') && selectedFiles.get('galleryImages')!.map((file, index) => (
+                                <div key={file.name + index} style={{ display: 'inline-block', border: '1px solid #ccc', padding: '5px' }}>
+                                    <img src={URL.createObjectURL(file)} alt={`Новая ${file.name}`} style={{ maxWidth: '80px', maxHeight: '80px', display: 'block' }} onLoad={() => URL.revokeObjectURL(file.name)} />
+                                </div>
+                            ))}
+                        </div>
+                        <input type="file" name="galleryImages" multiple onChange={handleFileChange} accept="image/*" />
+                    </div>
                 </>
             );
             default: return <p>Форма для этого раздела еще не реализована.</p>;
@@ -274,6 +368,7 @@ const AdminApp: React.FC = () => {
         { key: 'achievements', label: 'Достижения' },
         { key: 'videos', label: 'Видео' },
         { key: 'library', label: 'Библиотека' },
+        { key: 'photoalbum', label: 'Фотоальбомы' },
     ];
 
     return (

@@ -28,6 +28,8 @@ const STAGING_ROOT = path.join(__dirname, 'staging');
 fs.mkdir(STAGING_ROOT, { recursive: true });
 
 const MEDIA_TARGET_ROOT = path.resolve(__dirname, '..', 'public/media');
+const ACHIEVEMENTS_TARGET_ROOT = path.resolve(__dirname, '..', 'public/Diploms');
+fs.mkdir(ACHIEVEMENTS_TARGET_ROOT, { recursive: true });
 
 function createSlug(text: string): string {
   const a = {'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo','ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya'};
@@ -143,7 +145,8 @@ app.get('/api/admin/list/:manager', (req, res) => {
         content: 'content',
         achievements: 'achievements',
         videos: 'videos',
-        library: 'library_links'
+        library: 'library_links',
+        photoalbum: 'content' // Photo albums are also stored in the content table
     };
     const tableName = tableMap[manager];
 
@@ -154,7 +157,14 @@ app.get('/api/admin/list/:manager', (req, res) => {
     try {
         let query;
         if (tableName === 'content') {
-            query = `SELECT id, title, date, category FROM ${tableName} ORDER BY date DESC`;
+            // If the manager is specifically for photoalbum, filter by category
+            if (manager === 'photoalbum') {
+                query = `SELECT id, title, date, category FROM ${tableName} WHERE category = 'photoalbum' ORDER BY date DESC`;
+            } else {
+                // For general content manager (news/afisha), return all content items
+                // The frontend will then filter by activeTab (news or afisha)
+                query = `SELECT id, title, date, category FROM ${tableName} ORDER BY date DESC`;
+            }
         } else if (tableName === 'library_links') {
             query = `SELECT id, title, category FROM ${tableName} ORDER BY title ASC`;
         } else {
@@ -162,6 +172,7 @@ app.get('/api/admin/list/:manager', (req, res) => {
         }
         const stmt = db.prepare(query);
         const items = stmt.all();
+        console.log(`Backend: /api/admin/list/${manager} returning items:`, items);
         res.json(items);
     } catch (error) {
         console.error(`Error fetching list for ${manager}:`, error);
@@ -186,9 +197,17 @@ app.get('/api/achievements/:id', (req, res) => {
     }
 });
 
-app.post('/api/achievements', (req, res) => {
+app.post('/api/achievements', upload.single('image'), async (req, res) => {
     try {
-        const { title, student_name, competition, date, place, category, image_src } = req.body;
+        const { title, student_name, competition, date, place, category } = req.body;
+        let image_src = req.body.image_src; // Preserve existing image_src if no new file uploaded
+
+        if (req.file) {
+            const targetPath = path.join(ACHIEVEMENTS_TARGET_ROOT, req.file.originalname);
+            await fs.rename(req.file.path, targetPath);
+            image_src = path.join('/Diploms', req.file.originalname).replace(/\\/g, '/');
+        }
+
         const stmt = db.prepare(`
             INSERT INTO achievements (title, student_name, competition, date, place, category, image_src)
             VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -368,6 +387,42 @@ app.delete('/api/library/:id', (req, res) => {
 
 
 
+
+// GET /api/photoalbums - List all photo albums with their gallery images
+app.get('/api/photoalbums', (req, res) => {
+    try {
+        const albumsStmt = db.prepare(`
+            SELECT id, slug, title, date, category
+            FROM content
+            WHERE category = 'photoalbum'
+            ORDER BY date DESC
+        `);
+        const albumsFromDb = albumsStmt.all();
+
+        const galleryStmt = db.prepare('SELECT src, title FROM gallery_images WHERE content_id = ?');
+
+        const formattedAlbums = albumsFromDb.map((album: any) => {
+            const photos = galleryStmt.all(album.id).map((photo: any) => ({
+                id: '', // Not available in DB, can be generated or left empty
+                src: photo.src,
+                title: photo.title
+            }));
+
+            // Reconstruct the structure to match PhotoAlbum interface
+            return {
+                albumId: album.slug, // Use slug as albumId
+                albumTitle: album.title,
+                albumDate: album.date,
+                albumCategory: album.category,
+                photos: photos,
+            };
+        });
+        res.json(formattedAlbums);
+    } catch (error) {
+        console.error('Error fetching photo albums:', error);
+        res.status(500).json([]);
+    }
+});
 
 // GET /api/content - List all content
 app.get('/api/content', (req, res) => {
