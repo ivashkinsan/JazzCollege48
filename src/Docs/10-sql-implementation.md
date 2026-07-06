@@ -45,6 +45,23 @@ CREATE TABLE IF NOT EXISTS gallery_images (
 );
 ```
 
+### Таблица `achievements`
+Хранит информацию о достижениях (дипломах, наградах).
+```sql
+CREATE TABLE IF NOT EXISTS achievements (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    legacy_id TEXT,
+    title TEXT NOT NULL,
+    student_name TEXT,
+    competition TEXT NOT NULL,
+    date TEXT NOT NULL,
+    place TEXT,
+    city TEXT, -- Город, где проходило событие
+    category TEXT,
+    image_src TEXT
+);
+```
+
 ## 5. Интеграция с приложением
 
 ### 5.1. API-сервер
