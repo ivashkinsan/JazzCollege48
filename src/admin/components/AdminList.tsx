@@ -34,7 +34,8 @@ const AdminList: React.FC<AdminListProps> = ({ activeTab, items, handleEditReque
                         {activeTab === 'graduates' && <th>Место работы/учебы</th>}
                         {activeTab === 'graduates' && <th>Биография</th>}
                         {activeTab === 'graduates' && <th>Наша гордость</th>}
-                        {activeTab !== 'graduates' && <th>{isLibrary ? 'Категория' : 'Дата'}</th>}
+                        {!['graduates', 'photoalbum'].includes(activeTab) && <th>{isLibrary ? 'Категория' : 'Дата'}</th>}
+                        {activeTab === 'photoalbum' && <th>Подкатегория</th>}
                         <th>Действия</th>
                     </tr>
                 </thead>
@@ -53,7 +54,8 @@ const AdminList: React.FC<AdminListProps> = ({ activeTab, items, handleEditReque
                             {activeTab === 'graduates' && <td>{item.workplace || 'N/A'}</td>}
                             {activeTab === 'graduates' && <td>{item.bio ? item.bio.substring(0, 30) + '...' : 'N/A'}</td>}
                             {activeTab === 'graduates' && <td>{item.isFeatured ? 'Да' : 'Нет'}</td>}
-                            {activeTab !== 'graduates' && <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>}
+                            {!['graduates', 'photoalbum'].includes(activeTab) && <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>}
+                            {activeTab === 'photoalbum' && <td>{(item.subcategory && item.subcategory !== 'null') ? item.subcategory : 'другое'}</td>}
                             <td>
                                 <div style={{ display: 'flex', gap: '5px' }}>
                                     <button onClick={() => handleEditRequest(item.id)} className={`${styles.actionButton} ${styles.editButton}`}>Редактировать</button>

@@ -23,6 +23,7 @@ export interface Graduate {
   name: string;
   graduationYear: number;
   position: string;
+  instrument?: string;
   workplace?: string;
   image?: string;
   bio?: string;

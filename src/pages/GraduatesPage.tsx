@@ -75,21 +75,23 @@ function GraduatesPage() {
       <section className={styles.tabsSection}>
         
         <div className="container">
-          <div className={styles.tabs}>
-            {decades.map((decade) => {
-              const hasGraduatesForDecade = groupedGraduates[decade] && groupedGraduates[decade].length > 0;
-              const isDisabled = decade !== 'Все' && !hasGraduatesForDecade; // 'Все' всегда включено
-              return (
-                <button
-                  key={decade}
-                  className={`${styles.tab} ${activeDecade === decade ? styles.tabActive : ''}`}
-                  onClick={() => setActiveDecade(decade)}
-                  disabled={isDisabled}
-                >
-                  {decade}
-                </button>
-              );
-            })}
+          <div className={styles.tabsStickyWrapper}>
+            <div className={styles.tabs}>
+              {decades.map((decade) => {
+                const hasGraduatesForDecade = groupedGraduates[decade] && groupedGraduates[decade].length > 0;
+                const isDisabled = decade !== 'Все' && !hasGraduatesForDecade; // 'Все' всегда включено
+                return (
+                  <button
+                    key={decade}
+                    className={`${styles.tab} ${activeDecade === decade ? styles.tabActive : ''}`}
+                    onClick={() => setActiveDecade(decade)}
+                    disabled={isDisabled}
+                  >
+                    {decade}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <div className={styles.graduatesGrid}>
@@ -101,13 +103,16 @@ function GraduatesPage() {
                     alt={graduate.name}
                     className={styles.image}
                   />
+                  <div className={styles.year}>{graduate.graduationYear}</div>
                   {graduate.isFeatured && (
                     <span className={styles.featuredBadge}>★</span>
                   )}
                 </div>
                 <div className={styles.content}>
-                  <div className={styles.year}>{graduate.graduationYear}</div>
                   <h3 className={styles.name}>{graduate.name}</h3>
+                  {graduate.instrument && (
+                    <p className={styles.instrument}>{graduate.instrument}</p>
+                  )}
                   <p className={styles.position}>{graduate.position}</p>
                   {graduate.workplace && (
                     <p className={styles.workplace}>{graduate.workplace}</p>
@@ -135,9 +140,9 @@ function GraduatesPage() {
             <p className={styles.ctaText}>
               Расскажите о себе! Мы будем рады обновить информацию о наших выпускниках.
             </p>
-            <a href="#contacts" className="btn btn--primary">
+            <Link to="/#contacts" className="btn btn--primary">
               Связаться с нами
-            </a>
+            </Link>
           </div>
         </div>
       </section>

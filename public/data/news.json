@@ -1,25 +1,5 @@
 [
   {
-    "id": "36",
-    "slug": "testovaya-novost",
-    "title": "Тестовая новость",
-    "date": "2026-07-06",
-    "description": "вывоалыоврлаоырвлоиилифам\r\nфвам\r\nфвам\r\nф\r\nвамфвам\r\n\r\nфвам\r\nфва\r\nфвам",
-    "content": "вывоалыоврлаоырвлоиилифам\r\nфвам\r\nфвам\r\nф\r\nвамфвам\r\n\r\nфвам\r\nфва\r\nфвам\r\n",
-    "category": "news",
-    "cover": {
-      "src": "/media/2026/2026-07-06-testovaya-novost/123.jpg",
-      "title": "Тестовая новость"
-    },
-    "gallery": [
-      {
-        "src": "/media/2026/2026-07-06-testovaya-novost/123.jpg",
-        "title": "Тестовая новость"
-      }
-    ],
-    "linked_photoalbum_id": null
-  },
-  {
     "id": "11",
     "slug": "pozdravlyaem-pobediteley",
     "title": "✨ Поздравляем победителей ✨",

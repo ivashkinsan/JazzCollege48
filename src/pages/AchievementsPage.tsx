@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import type { Achievement } from '../types/college';
 import Achievements from '../components/Achievements';
 import styles from './AchievementsPage.module.css';
+import { loadAchievements } from '../data/achievementsLoader';
 
 function AchievementsPage() {
   const [achievementsData, setAchievementsData] = useState<Achievement[]>([]);
@@ -12,16 +13,10 @@ function AchievementsPage() {
   useEffect(() => {
     const fetchAchievements = async () => {
       try {
-        const apiBase = import.meta.env.PROD ? window.location.origin : 'http://localhost:4000';
-        const response = await fetch(`${apiBase}/api/achievements`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch achievements');
-        }
-        const data = await response.json();
-        // The data is already sorted by date on the server, no need to sort again.
+        const data = await loadAchievements();
         setAchievementsData(data);
       } catch (error) {
-        console.error(error);
+        console.error('Failed to load achievements:', error);
       } finally {
         setLoading(false);
       }

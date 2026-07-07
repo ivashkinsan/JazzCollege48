@@ -1,5 +1,6 @@
 import type { CollegeInfo } from '../types/college';
 import styles from './Contacts.module.css';
+import ContactForm from './ContactForm';
 
 interface ContactsProps {
   collegeInfo: CollegeInfo;
@@ -14,6 +15,7 @@ function Contacts({ collegeInfo }: ContactsProps) {
           <h2 className="section__title">Контакты</h2>
         </div>
         <div className={styles.contactsWrapper}>
+          {/* ... существующие элементы контактов ... */}
           <div className={styles.contactItem}>
             <span className={styles.contactIcon}>📍</span>
             <a 
@@ -42,6 +44,10 @@ function Contacts({ collegeInfo }: ContactsProps) {
             <a href={`http://${collegeInfo.website}`} target="_blank" rel="noopener noreferrer" className={styles.contactLink}>
               {collegeInfo.website}
             </a>
+          </div>
+          
+          <div className={styles.contactFormWrapper}>
+            <ContactForm formspreeEndpoint="https://formspree.io/f/mykqvbzr" />
           </div>
         </div>
       </div>

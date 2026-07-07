@@ -45,6 +45,11 @@
   color: var(--color-accent-hover);
 }
 
+.contactFormWrapper {
+  width: 100%;
+  margin-top: var(--spacing-md);
+}
+
 /* Адаптивность для мобильных */
 @media (max-width: 640px) {
   .contactsWrapper {

@@ -137,6 +137,14 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                 <div className={styles.formGroup}><label>Заголовок</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
                 <div className={styles.formGroup}><label>URL (slug)</label><input type="text" name="slug" value={formData.slug || ''} onChange={handleInputChange} required /></div>
                 <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
+                <div className={styles.formGroup}>
+                    <label>Категория</label>
+                    <select name="category" value={formData.category || 'другое'} onChange={handleInputChange}>
+                        {['концерты', 'мастер-классы', 'конкурсы', 'будни', 'выпускные', 'другое'].map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                    </select>
+                </div>
                 <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
                 <div className={styles.formGroup}>
                     <label>Фотографии для галереи (до 100)</label>

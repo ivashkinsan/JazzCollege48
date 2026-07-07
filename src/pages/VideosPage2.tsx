@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import type { Video } from '../types/college';
 import styles from './VideosPage.module.css';
+import { loadVideos } from '../data/videosLoader';
 
 // Helper to get embed URL based on video source
 const getEmbedUrl = (video: Video) => {
@@ -37,14 +38,10 @@ function VideosPage2() {
     const fetchVideos = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:4000/api/videos');
-        if (!response.ok) {
-          throw new Error('Failed to fetch videos');
-        }
-        const data = await response.json();
+        const data = await loadVideos();
         setVideos(data);
       } catch (error) {
-        console.error(error);
+        console.error('Failed to load videos:', error);
       } finally {
         setLoading(false);
       }

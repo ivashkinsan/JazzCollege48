@@ -292,7 +292,7 @@ app.get("/api/admin/list/:manager", (req, res) => {
       // If the manager is specifically for photoalbum, filter by category
       if (manager === "photoalbum") {
         query = `
-                    SELECT id, title, date, category
+                    SELECT id, title, date, category, subcategory
                     FROM ${tableName}
                     WHERE category = 'photoalbum'
                     AND id NOT IN (
@@ -305,7 +305,7 @@ app.get("/api/admin/list/:manager", (req, res) => {
       } else {
         // For general content manager (news/afisha), return all content items
         // The frontend will then filter by activeTab (news or afisha)
-        query = `SELECT id, title, date, category FROM ${tableName} ORDER BY date DESC`;
+        query = `SELECT id, title, date, category, subcategory FROM ${tableName} ORDER BY date DESC`;
       }
     } else if (tableName === "library_links") {
       query = `SELECT id, title, category FROM ${tableName} ORDER BY title ASC`;
@@ -917,7 +917,8 @@ app.post(
     const { id } = req.params;
     console.log(`🚀 Received request to update content id: ${id}`);
     try {
-      const {
+      console.log("Request Body:", req.body);
+      let {
         title,
         date,
         category,
@@ -928,6 +929,11 @@ app.post(
         tags,
         linked_photoalbum_id,
       } = req.body; // Added linked_photoalbum_id
+      
+      // Ensure category and subcategory are strings
+      category = Array.isArray(category) ? category[0] : category;
+      subcategory = Array.isArray(subcategory) ? subcategory[0] : subcategory;
+      
       const slug = createSlug(title); // Create a new slug from the potentially new title
       let coverImageSrc = req.body.cover_image_src; // Preserve existing cover_image_src
 
@@ -974,30 +980,38 @@ app.post(
         }
       }
 
+      // Ensure slug uniqueness: if slug is taken by another record, append ID
+      let finalSlug = slug;
+      const currentContent = db.prepare("SELECT slug FROM content WHERE id = ?").get(id);
+      
+      if (currentContent && currentContent.slug !== slug) {
+          const existingSlugStmt = db.prepare("SELECT id FROM content WHERE slug = ? AND id != ?");
+          const existingSlug = existingSlugStmt.get(slug, id);
+          if (existingSlug) {
+              finalSlug = `${slug}-${id}`;
+          }
+      }
+
       const updateStmt = db.prepare(`
             UPDATE content
-            SET title = ?, slug = ?, date = ?, category = ?, subcategory = ?, body = ?, time = ?, venue = ?, tags = ?, cover_image_src = ?, linked_photoalbum_id = ?
-            WHERE id = ?
+            SET slug = @slug, title = @title, date = @date, category = @category, subcategory = @subcategory, body = @body, time = @time, venue = @venue, tags = @tags, cover_image_src = @cover_image_src, linked_photoalbum_id = @linked_photoalbum_id
+            WHERE id = @id
         `);
 
-      const params = [
+      updateStmt.run({
+        slug: finalSlug,
         title,
-        slug,
         date,
-        Array.isArray(category) ? category[0] : category, // FIX: Ensure category is a single string
-        subcategory,
+        category: Array.isArray(category) ? category[0] : category,
+        subcategory: subcategory || null,
         body,
-        time,
-        venue,
-        tags ? JSON.stringify(tags.split(",")) : JSON.stringify([]),
-        coverImageSrc,
-        linked_photoalbum_id === "" ? null : linked_photoalbum_id,
-        id, // This is the last parameter for WHERE id = ?
-      ];
-
-      console.log("SQL Query:", updateStmt.source);
-      console.log("Params Array:", params);
-      updateStmt.run(...params);
+        time: time || null,
+        venue: venue || null,
+        tags: tags ? JSON.stringify(tags.split(",")) : JSON.stringify([]),
+        cover_image_src: coverImageSrc || null,
+        linked_photoalbum_id: linked_photoalbum_id ? String(linked_photoalbum_id) : null,
+        id, 
+      });
 
       res
         .status(200)

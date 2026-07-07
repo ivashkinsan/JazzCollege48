@@ -5,7 +5,7 @@
     "graduationYear": 2026,
     "position": null,
     "workplace": null,
-    "image": null,
+    "image": "/vipuskniki/null.jpg",
     "bio": null,
     "isFeatured": false
   },
@@ -55,7 +55,7 @@
     "graduationYear": 2026,
     "position": null,
     "workplace": null,
-    "image": "/vipuskniki/Korotkov.jpg",
+    "image": "/vipuskniki/null.jpg",
     "bio": null,
     "isFeatured": false
   },

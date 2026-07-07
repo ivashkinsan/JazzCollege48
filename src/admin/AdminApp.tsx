@@ -61,7 +61,7 @@ const AdminApp: React.FC = () => {
 
     const fetchItems = useCallback(async () => {
         try {
-            const response = await fetch(API_BASE_URL + adminListEndpoint);
+            const response = await fetch(API_BASE_URL + adminListEndpoint, { cache: 'no-store' });
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({ message: 'No error message from server.' }));
                 console.error(`Failed to fetch items for ${manager}. Status: ${response.status}. Error: ${errorData.message}`);
@@ -171,6 +171,9 @@ const AdminApp: React.FC = () => {
             if (data.date) {
                 data.date = formatDateToYYYYMMDD(data.date);
             }
+            if (activeTab === 'photoalbum') {
+                data.category = (data.subcategory && data.subcategory !== 'photoalbum') ? data.subcategory : 'другое';
+            }
             if (activeTab === 'graduates') {
                 data.is_featured = !!data.is_featured;
             }
@@ -234,6 +237,9 @@ const AdminApp: React.FC = () => {
                     }
                     if (key === 'is_featured' && activeTab === 'graduates') {
                         dataToSend.append(key, formData[key] ? '1' : '0');
+                    } else if (key === 'subcategory' && (formData[key] === 'null' || !formData[key])) {
+                        // Skip subcategory if it's null/empty
+                        continue;
                     } else {
                         dataToSend.append(key, formData[key]);
                     }
@@ -247,7 +253,17 @@ const AdminApp: React.FC = () => {
                 dataToSend.append('linked_photoalbum_id', albumIdToAppend);
             }
 
-            dataToSend.append('category', activeTab);
+            // Принудительно очистим subcategory, если он уже есть в dataToSend (хотя FormData так не умеет, но для верности)
+            if (activeTab === 'photoalbum') {
+                dataToSend.append('category', 'photoalbum');
+                // Ensure subcategory is a single string
+                let subcatValue = formData.category;
+                if (Array.isArray(subcatValue)) subcatValue = subcatValue[0];
+                subcatValue = String(subcatValue || 'другое');
+                dataToSend.set('subcategory', subcatValue); 
+            } else {
+                dataToSend.append('category', activeTab);
+            }
 
             if ((activeTab === 'news' || activeTab === 'afisha') && selectedFiles.has('coverImage')) {
                 dataToSend.append('coverImage', selectedFiles.get('coverImage')![0]);

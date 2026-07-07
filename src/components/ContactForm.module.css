@@ -1,0 +1,50 @@
+.wrapper {
+  margin-top: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.toggleBtn {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-bg-secondary);
+  border: none;
+  cursor: pointer;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.form {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input, .textarea {
+  padding: 0.5rem;
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--color-text);
+  border-radius: var(--border-radius);
+}
+
+.textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.submitBtn {
+  padding: 0.5rem;
+  background: var(--color-accent);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.success { color: green; }
+.error { color: red; }
