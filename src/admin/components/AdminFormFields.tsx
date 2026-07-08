@@ -46,6 +46,34 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                         )}
                         <input type="file" name="coverImage" onChange={handleFileChange} />
                     </div>
+                    <div className={styles.formGroup}>
+                        <label>Дополнительные фото для галереи</label>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '10px' }}>
+                            {formData.photos && formData.photos.map((photo: any) => {
+                                if (photo.src === formData.cover_image_src) return null; // Don't show cover image here
+                                return (
+                                    <div key={photo.id} className={styles.thumbnailContainer}>
+                                        <img src={getVersionedAssetUrl(photo.src)} alt={`Фото ${photo.id}`} className={styles.thumbnail} />
+                                        <button 
+                                            type="button" 
+                                            className={styles.deleteButton} 
+                                            onClick={() => handleDeleteImage(photo.id)}
+                                            title="Удалить изображение"
+                                        >
+                                            &times;
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                            {selectedFiles.get('galleryImages') && selectedFiles.get('galleryImages')!.map((file, index) => (
+                                <div key={file.name + index} className={styles.thumbnailContainer}>
+                                    <img src={URL.createObjectURL(file)} alt={`Новая ${file.name}`} className={styles.thumbnail} onLoad={() => URL.revokeObjectURL(file.name)} />
+                                    <span className={styles.newFileIndicator}>Новое</span>
+                                </div>
+                            ))}
+                        </div>
+                        <input type="file" name="galleryImages" multiple onChange={handleFileChange} accept="image/*" />
+                    </div>
                     <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
                     <div className={styles.formGroup}>
                         <label>Связанный фотоальбом</label>

@@ -143,7 +143,29 @@ function NewsPage() {
                         {item.content && item.content.length > item.description.length && !isExpanded && '...'}
                       </p>
 
-
+                      {/* Gallery Thumbnails */}
+                      {isExpanded && item.gallery && item.gallery.length > 1 && (
+                        <div className={styles.newsCardGallery}>
+                          {item.gallery.map((photo, idx) => {
+                            // Skip the cover image if it's also in the gallery
+                            if (photo.src === item.cover?.src) return null;
+                            
+                            const imagePath = getVersionedAssetUrl(photo.src);
+                            const imageIndexInGallery = allImages.findIndex(src => src === imagePath);
+                            
+                            return (
+                              <img
+                                key={photo.src}
+                                src={imagePath}
+                                alt={`${item.title} - фото ${idx + 1}`}
+                                className={styles.newsCardGalleryImage}
+                                onClick={() => openLightbox(allImages, imageIndexInGallery)}
+                                loading="lazy"
+                              />
+                            );
+                          })}
+                        </div>
+                      )}
 
                       {/* Кнопка развернуть/свернуть */}
                       {item.content && item.content.length > item.description.length && (
