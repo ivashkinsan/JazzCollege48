@@ -9,12 +9,13 @@ interface AdminFormFieldsProps {
     selectedFiles: Map<string, File[]>;
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleDeleteImage: (imageId: number) => void;
     photoAlbumsForSelection: { value: number; label: string }[];
     setFormData: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const AdminFormFields: React.FC<AdminFormFieldsProps> = ({ 
-    activeTab, formData, selectedFiles, handleInputChange, handleFileChange, photoAlbumsForSelection, setFormData 
+    activeTab, formData, selectedFiles, handleInputChange, handleFileChange, handleDeleteImage, photoAlbumsForSelection, setFormData 
 }) => {
     switch (activeTab) {
         case 'news':
@@ -148,15 +149,24 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                 <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
                 <div className={styles.formGroup}>
                     <label>Фотографии для галереи (до 100)</label>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '10px' }}>
-                        {formData.photos && formData.photos.map((photo: any, index: number) => (
-                            <div key={photo.src || index} style={{ display: 'inline-block', border: '1px solid #ccc', padding: '5px' }}>
-                                <img src={getVersionedAssetUrl(photo.src)} alt={`Галерея ${index}`} style={{ maxWidth: '80px', maxHeight: '80px', display: 'block' }} />
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '10px' }}>
+                        {formData.photos && formData.photos.map((photo: any) => (
+                            <div key={photo.id} className={styles.thumbnailContainer}>
+                                <img src={getVersionedAssetUrl(photo.src)} alt={`Фото ${photo.id}`} className={styles.thumbnail} />
+                                <button 
+                                    type="button" 
+                                    className={styles.deleteButton} 
+                                    onClick={() => handleDeleteImage(photo.id)}
+                                    title="Удалить изображение"
+                                >
+                                    &times;
+                                </button>
                             </div>
                         ))}
                         {selectedFiles.get('galleryImages') && selectedFiles.get('galleryImages')!.map((file, index) => (
-                            <div key={file.name + index} style={{ display: 'inline-block', border: '1px solid #ccc', padding: '5px' }}>
-                                <img src={URL.createObjectURL(file)} alt={`Новая ${file.name}`} style={{ maxWidth: '80px', maxHeight: '80px', display: 'block' }} onLoad={() => URL.revokeObjectURL(file.name)} />
+                            <div key={file.name + index} className={styles.thumbnailContainer}>
+                                <img src={URL.createObjectURL(file)} alt={`Новая ${file.name}`} className={styles.thumbnail} onLoad={() => URL.revokeObjectURL(file.name)} />
+                                <span className={styles.newFileIndicator}>Новое</span>
                             </div>
                         ))}
                     </div>

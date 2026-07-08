@@ -200,6 +200,28 @@ const AdminApp: React.FC = () => {
         }
     };
 
+    const handleDeleteImage = async (imageId: number) => {
+        if (!window.confirm('Удалить это изображение?')) return;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/gallery-images/${imageId}`, { method: 'DELETE' });
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || 'Не удалось удалить изображение.');
+            }
+
+            setFormData((prev: any) => ({
+                ...prev,
+                photos: prev.photos.filter((p: any) => p.id !== imageId),
+            }));
+            setStatus({ type: 'success', message: 'Изображение успешно удалено.' });
+
+        } catch (error: any) {
+            setStatus({ type: 'error', message: `Ошибка: ${error.message}` });
+        }
+    };
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type, checked } = e.target as HTMLInputElement;
         setFormData((prev: any) => {
@@ -336,6 +358,7 @@ const AdminApp: React.FC = () => {
                                 selectedFiles={selectedFiles}
                                 handleInputChange={handleInputChange}
                                 handleFileChange={handleFileChange}
+                                handleDeleteImage={handleDeleteImage}
                                 photoAlbumsForSelection={photoAlbumsForSelection}
                                 setFormData={setFormData}
                             />

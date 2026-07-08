@@ -394,3 +394,49 @@
     width: 100%;
     box-sizing: border-box;
 }
+
+.thumbnailContainer {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #444;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #2a2a2a;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    display: block;
+}
+
+.deleteButton {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.newFileIndicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 100, 255, 0.8);
+    color: white;
+    padding: 2px 4px;
+    font-size: 10px;
+    border-bottom-right-radius: 4px;
+}

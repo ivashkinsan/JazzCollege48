@@ -7,22 +7,27 @@
     "photos": [
       {
         "id": "",
-        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026-1783541696602/13-06-2026_Kokshin_MJF2026_4.jpg",
+        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_5.jpg",
         "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
       },
       {
         "id": "",
-        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026-1783541696602/13-06-2026_Kokshin_MJF2026_3.jpg",
+        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_4.jpg",
         "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
       },
       {
         "id": "",
-        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026-1783541696602/13-06-2026_Kokshin_MJF2026_2.jpg",
+        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_3.jpg",
         "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
       },
       {
         "id": "",
-        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026-1783541696602/13-06-2026_Kokshin_MJF2026_1.jpg",
+        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_2.jpg",
+        "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
+      },
+      {
+        "id": "",
+        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_1.jpg",
         "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
       }
     ]
@@ -220,6 +225,75 @@
     ]
   },
   {
+    "albumId": "detskiy-triumf-dzhaza",
+    "albumTitle": "Детский триумф джаза",
+    "albumDate": "2025-03-08",
+    "albumCategory": "конкурсы",
+    "photos": [
+      {
+        "id": "",
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_1.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "id": "",
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_2.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "id": "",
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_3.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "id": "",
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_4.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "id": "",
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_5.jpg",
+        "title": "Детский триумф джаза"
+      }
+    ]
+  },
+  {
+    "albumId": "dzhaz-v-polden-42",
+    "albumTitle": "Джаз в полдень",
+    "albumDate": "2024-12-29",
+    "albumCategory": "концерты",
+    "photos": [
+      {
+        "id": "",
+        "src": "/media/2025/2025-12-29-dzhaz-v-polden-1783547224515/2025-12_Jazz_v_polden_1.jpg",
+        "title": "Джаз в полдень"
+      },
+      {
+        "id": "",
+        "src": "/media/2025/2025-12-29-dzhaz-v-polden-1783547224515/2025-12_Jazz_v_polden_2.jpg",
+        "title": "Джаз в полдень"
+      }
+    ]
+  },
+  {
+    "albumId": "detskiy-triumf-dzhaza-1783547754363",
+    "albumTitle": "Детский триумф джаза",
+    "albumDate": "2024-03-09",
+    "albumCategory": "конкурсы",
+    "photos": [
+      {
+        "id": "",
+        "src": "/media/2024/2024-03-09-detskiy-triumf-dzhaza-1783547754363/2024-03-09_DTJ_1.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "id": "",
+        "src": "/media/2024/2024-03-09-detskiy-triumf-dzhaza-1783547754363/2024-03-09_DTJ_2.jpg",
+        "title": "Детский триумф джаза"
+      }
+    ]
+  },
+  {
     "albumId": "master-klass-studentov-rgk-im-rakhmaninova",
     "albumTitle": "Мастер-класс студентов РГК им. Рахманинова",
     "albumDate": "2024-02-06",
@@ -274,6 +348,29 @@
         "id": "",
         "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/gallery-9.jpg",
         "title": "Финальный аккорд"
+      }
+    ]
+  },
+  {
+    "albumId": "master-klass-denisa-mel-nikova-i-pavla-brucheeva-1783548013293",
+    "albumTitle": "Мастер-класс Дениса Мельникова и Павла Бручеева",
+    "albumDate": "2023-05-24",
+    "albumCategory": "мастер-классы",
+    "photos": [
+      {
+        "id": "",
+        "src": "/media/2023/2023-05-24-master-klass-denisa-mel-nikova-i-pavla-brucheeva-1783548013293/2024-05-24_masterclass_Melnikov_3.jpg",
+        "title": "Мастер-класс Дениса Мельникова и Павла Бручеева"
+      },
+      {
+        "id": "",
+        "src": "/media/2023/2023-05-24-master-klass-denisa-mel-nikova-i-pavla-brucheeva-1783548013293/2024-05-24_masterclass_Melnikov_2.jpg",
+        "title": "Мастер-класс Дениса Мельникова и Павла Бручеева"
+      },
+      {
+        "id": "",
+        "src": "/media/2023/2023-05-24-master-klass-denisa-mel-nikova-i-pavla-brucheeva-1783548013293/2024-05-24_masterclass_Melnikov_1.jpg",
+        "title": "Мастер-класс Дениса Мельникова и Павла Бручеева"
       }
     ]
   },
