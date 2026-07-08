@@ -1,9 +1,37 @@
 [
   {
+    "albumId": "dmitriy-nikolaevich-na-forume-pedagogov-mjf2026-38",
+    "albumTitle": "Дмитрий Николаевич на форуме педагогов MJF2026",
+    "albumDate": "2026-06-13",
+    "albumCategory": "другое",
+    "photos": [
+      {
+        "id": "",
+        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026-1783541696602/13-06-2026_Kokshin_MJF2026_4.jpg",
+        "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
+      },
+      {
+        "id": "",
+        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026-1783541696602/13-06-2026_Kokshin_MJF2026_3.jpg",
+        "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
+      },
+      {
+        "id": "",
+        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026-1783541696602/13-06-2026_Kokshin_MJF2026_2.jpg",
+        "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
+      },
+      {
+        "id": "",
+        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026-1783541696602/13-06-2026_Kokshin_MJF2026_1.jpg",
+        "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
+      }
+    ]
+  },
+  {
     "albumId": "12-marta-zavershilsya-nash-dzhazovyy-marafon-kontsert-vesna-v-ritmakh-dzhaza-po-pushkinskoy-karte-27",
     "albumTitle": "12 марта завершился наш джазовый марафон! Концерт «Весна в ритмах джаза» по Пушкинской карте",
     "albumDate": "2026-03-12",
-    "albumCategory": "photoalbum",
+    "albumCategory": "концерты",
     "photos": [
       {
         "id": "",
@@ -26,7 +54,7 @@
     "albumId": "vesna-prishla-v-ritme-dzhaza-25",
     "albumTitle": "🎶 Весна пришла в ритме джаза! 🎶",
     "albumDate": "2026-03-06",
-    "albumCategory": "photoalbum",
+    "albumCategory": "концерты",
     "photos": [
       {
         "id": "",
@@ -56,23 +84,10 @@
     ]
   },
   {
-    "albumId": "6-marta-v-14-00-nas-zhdet-nastoyashchiy-prazdnik-posvyashchennyy-vesne-zhenshchine-i-konechno-lyubvi",
-    "albumTitle": "6 марта в 14.00 нас ждет настоящий праздник, посвященный весне, женщине и, конечно, любви",
-    "albumDate": "2026-03-06",
-    "albumCategory": "photoalbum",
-    "photos": [
-      {
-        "id": "",
-        "src": "/media/2026/2026-03-06-vesna-zhenshchina-i-lyubov/cover.jpg",
-        "title": "6 марта в 14.00 нас ждет настоящий праздник, посвященный весне, женщине и, конечно, любви"
-      }
-    ]
-  },
-  {
-    "albumId": "glotok-vezhego-dzhaza-v-polden",
+    "albumId": "glotok-svezhego-dzhaza-v-polden",
     "albumTitle": "Глоток свежего 'Джаза в полдень'",
     "albumDate": "2026-01-28",
-    "albumCategory": "photoalbum",
+    "albumCategory": "концерты",
     "photos": [
       {
         "id": "",
@@ -82,10 +97,10 @@
     ]
   },
   {
-    "albumId": "jazz-veche-inka-v-dome-muzyki",
+    "albumId": "jazz-vecherinka-v-dome-muzyki",
     "albumTitle": "JAZZ-вечеринка в Доме музыки",
     "albumDate": "2026-01-26",
-    "albumCategory": "photoalbum",
+    "albumCategory": "концерты",
     "photos": [
       {
         "id": "",
@@ -103,7 +118,7 @@
     "albumId": "v-kolledzhe-iskusstv-sostoyalsya-master-klass-ivana-chagi-pobeditelya-xx-mezhdunarodnogo-konkursa",
     "albumTitle": "В колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса",
     "albumDate": "2025-12-17",
-    "albumCategory": "photoalbum",
+    "albumCategory": "мастер-классы",
     "photos": [
       {
         "id": "",
@@ -118,10 +133,10 @@
     ]
   },
   {
-    "albumId": "21-noyab-ya-tudenty-petsial-no-ti-muzykal-noe-i-ku-tvo-e-t-ady-vy-tupili-v-kolledzhe-indu-t-ii-e-vi-a",
+    "albumId": "21-noyabrya-studenty-spetsial-nosti-muzykal-noe-iskusstvo-estrady-vystupili-v-kolledzhe-industrii-servisa",
     "albumTitle": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса",
     "albumDate": "2025-11-23",
-    "albumCategory": "photoalbum",
+    "albumCategory": "концерты",
     "photos": [
       {
         "id": "",
@@ -151,10 +166,10 @@
     ]
   },
   {
-    "albumId": "ma-te-kla-vypu-knitsy-o-tov-koy-kon-e-vato-ii-ekate-iny-me-inovoy-po-dzhazovoy-imp-ovizatsii",
+    "albumId": "master-klass-vypusknitsy-rostovskoy-konservatorii-ekateriny-merinovoy-po-dzhazovoy-improvizatsii",
     "albumTitle": "Мастер-класс выпускницы Ростовской консерватории Екатерины Мериновой по джазовой импровизации",
     "albumDate": "2025-10-30",
-    "albumCategory": "photoalbum",
+    "albumCategory": "мастер-классы",
     "photos": [
       {
         "id": "",
@@ -169,10 +184,10 @@
     ]
   },
   {
-    "albumId": "kontse-tnoy-p-og-ammy-v-che-t-obla-tnogo-lyota-vete-anov-voyny-i-t-uda-e-eb-yanyy-volontyo",
+    "albumId": "kontsertnoy-programmy-v-chest-oblastnogo-slyota-veteranov-voyny-i-truda-serebryanyy-volontyor",
     "albumTitle": "концертной программы в честь Областного слёта ветеранов войны и труда Серебряный волонтёр",
     "albumDate": "2025-10-29",
-    "albumCategory": "photoalbum",
+    "albumCategory": "концерты",
     "photos": [
       {
         "id": "",
@@ -182,10 +197,10 @@
     ]
   },
   {
-    "albumId": "vale-iya-ba-anova-ucha-tnitsa-o-iy-koy-tudenche-koy-ve-ny-v-tav-opole",
+    "albumId": "valeriya-baranova-uchastnitsa-rossiyskoy-studencheskoy-vesny-v-stavropole",
     "albumTitle": "Валерия Баранова — участница Российской студенческой весны в Ставрополе",
     "albumDate": "2025-10-06",
-    "albumCategory": "photoalbum",
+    "albumCategory": "конкурсы",
     "photos": [
       {
         "id": "",
@@ -208,7 +223,7 @@
     "albumId": "master-klass-studentov-rgk-im-rakhmaninova",
     "albumTitle": "Мастер-класс студентов РГК им. Рахманинова",
     "albumDate": "2024-02-06",
-    "albumCategory": "photoalbum",
+    "albumCategory": "мастер-классы",
     "photos": [
       {
         "id": "",
@@ -266,7 +281,7 @@
     "albumId": "fotootchet-dzhaz-konzert",
     "albumTitle": "фотоотчет - ДЖАЗ КОНZЕРТ",
     "albumDate": "2021-06-21",
-    "albumCategory": "photoalbum",
+    "albumCategory": "концерты",
     "photos": [
       {
         "id": "",

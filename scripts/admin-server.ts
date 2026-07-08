@@ -5,7 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import Database from "better-sqlite3";
-import type { Achievement, Video, Graduate } from "../types/college"; // ADDED Graduate type
+import { generateStaticData } from "./generate-static-data.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -105,35 +105,8 @@ const upload = multer({
   }),
 });
 
-// --- STATIC DATA GENERATION ---
-// This function will generate static JSON files from the database
-async function generateGraduatesJson() {
-  try {
-    const stmt = db.prepare("SELECT * FROM graduates ORDER BY graduation_year DESC");
-    const graduatesFromDb = stmt.all() as Graduate[];
-    
-    const adaptedGraduates = graduatesFromDb.map((item: any) => ({
-      id: item.id.toString(),
-      name: item.name,
-      graduationYear: item.graduation_year,
-      position: item.position || null,
-      workplace: item.workplace || null,
-      image: item.image_src || null, // Frontend expects 'image', DB has 'image_src'
-      bio: item.bio || null,
-      isFeatured: !!item.is_featured, // Convert INTEGER (0 or 1) to boolean
-    }));
-
-    const filePath = path.resolve(__dirname, "..", "public/data/graduates.json");
-    await fs.writeFile(filePath, JSON.stringify(adaptedGraduates, null, 2), "utf-8");
-    console.log(`✅ Generated ${filePath}`);
-  } catch (error) {
-    console.error("❌ Error generating graduates.json:", error);
-  }
-}
-// --- END STATIC DATA GENERATION ---
-
 // Call static data generation on server startup
-generateGraduatesJson();
+generateStaticData();
 
 
 // --- PUBLIC API ENDPOINTS ---
@@ -153,7 +126,10 @@ const getPublicContent = (
     const mainContent = contentStmt.all(category);
 
     const result = mainContent.map((item: any) => {
-      const gallery = galleryStmt.all(item.id);
+      // If a photo album is linked, use its ID to fetch the gallery. Otherwise, fall back to the news item's own ID.
+      const gallerySourceId = item.linked_photoalbum_id || item.id;
+      const gallery = galleryStmt.all(gallerySourceId);
+
       const cover =
         gallery.find((p) => p.src === item.cover_image_src) ||
         gallery[0] ||
@@ -295,11 +271,6 @@ app.get("/api/admin/list/:manager", (req, res) => {
                     SELECT id, title, date, category, subcategory
                     FROM ${tableName}
                     WHERE category = 'photoalbum'
-                    AND id NOT IN (
-                        SELECT linked_photoalbum_id
-                        FROM content
-                        WHERE category = 'news' AND linked_photoalbum_id IS NOT NULL
-                    )
                     ORDER BY date DESC
                 `;
       } else {
@@ -377,6 +348,7 @@ app.post("/api/achievements", upload.single("image"), async (req, res) => {
       image_src,
       city,
     );
+    await generateStaticData();
     res.status(201).json({ success: true, id: result.lastInsertRowid });
   } catch (error) {
     console.error("Error creating achievement:", error);
@@ -419,6 +391,7 @@ app.post("/api/achievements/:id", upload.single("image"), async (req, res) => {
       req.params.id,
     );
     if (result.changes > 0) {
+      await generateStaticData();
       res.json({ success: true });
     } else {
       res
@@ -433,11 +406,12 @@ app.post("/api/achievements/:id", upload.single("image"), async (req, res) => {
   }
 });
 
-app.delete("/api/achievements/:id", (req, res) => {
+app.delete("/api/achievements/:id", async (req, res) => {
   try {
     const stmt = db.prepare("DELETE FROM achievements WHERE id = ?");
     const result = stmt.run(req.params.id);
     if (result.changes > 0) {
+      await generateStaticData();
       res.json({ success: true });
     } else {
       res
@@ -499,6 +473,7 @@ app.post("/api/graduates", upload.single("image"), async (req, res) => {
       bio,
       is_featured ? 1 : 0, // Convert boolean to INTEGER
     );
+    await generateStaticData();
     res.status(201).json({ success: true, id: result.lastInsertRowid });
   } catch (error) {
     console.error("Error creating graduate:", error);
@@ -541,6 +516,7 @@ app.post("/api/graduates/:id", upload.single("image"), async (req, res) => {
       req.params.id,
     );
     if (result.changes > 0) {
+      await generateStaticData();
       res.json({ success: true });
     } else {
       res.status(404).json({ success: false, message: "Graduate not found" });
@@ -553,11 +529,12 @@ app.post("/api/graduates/:id", upload.single("image"), async (req, res) => {
   }
 });
 
-app.delete("/api/graduates/:id", (req, res) => {
+app.delete("/api/graduates/:id", async (req, res) => {
   try {
     const stmt = db.prepare("DELETE FROM graduates WHERE id = ?");
     const result = stmt.run(req.params.id);
     if (result.changes > 0) {
+      await generateStaticData();
       res.json({ success: true });
     } else {
       res.status(404).json({ success: false, message: "Graduate not found" });
@@ -585,7 +562,7 @@ app.get("/api/videos/:id", (req, res) => {
   }
 });
 
-app.post("/api/videos", (req, res) => {
+app.post("/api/videos", async (req, res) => {
   try {
     const { title, description, video_url, date, source } = req.body;
     const stmt = db.prepare(`
@@ -593,6 +570,7 @@ app.post("/api/videos", (req, res) => {
             VALUES (?, ?, ?, ?, ?)
         `);
     const result = stmt.run(title, description, video_url, date, source);
+    await generateStaticData();
     res.status(201).json({ success: true, id: result.lastInsertRowid });
   } catch (error) {
     console.error("Error creating video:", error);
@@ -600,7 +578,7 @@ app.post("/api/videos", (req, res) => {
   }
 });
 
-app.post("/api/videos/:id", (req, res) => {
+app.post("/api/videos/:id", async (req, res) => {
   try {
     const { title, description, video_url, date, source } = req.body;
     const stmt = db.prepare(`
@@ -617,6 +595,7 @@ app.post("/api/videos/:id", (req, res) => {
       req.params.id,
     );
     if (result.changes > 0) {
+      await generateStaticData();
       res.json({ success: true });
     } else {
       res.status(404).json({ success: false, message: "Video not found" });
@@ -627,11 +606,12 @@ app.post("/api/videos/:id", (req, res) => {
   }
 });
 
-app.delete("/api/videos/:id", (req, res) => {
+app.delete("/api/videos/:id", async (req, res) => {
   try {
     const stmt = db.prepare("DELETE FROM videos WHERE id = ?");
     const result = stmt.run(req.params.id);
     if (result.changes > 0) {
+      await generateStaticData();
       res.json({ success: true });
     } else {
       res.status(404).json({ success: false, message: "Video not found" });
@@ -659,7 +639,7 @@ app.get("/api/library/:id", (req, res) => {
   }
 });
 
-app.post("/api/library", (req, res) => {
+app.post("/api/library", async (req, res) => {
   try {
     const { title, description, url, category } = req.body;
     const stmt = db.prepare(`
@@ -667,6 +647,7 @@ app.post("/api/library", (req, res) => {
             VALUES (?, ?, ?, ?)
         `);
     const result = stmt.run(title, description, url, category);
+    await generateStaticData();
     res.status(201).json({ success: true, id: result.lastInsertRowid });
   } catch (error) {
     console.error("Error creating library link:", error);
@@ -676,7 +657,7 @@ app.post("/api/library", (req, res) => {
   }
 });
 
-app.post("/api/library/:id", (req, res) => {
+app.post("/api/library/:id", async (req, res) => {
   try {
     const { title, description, url, category } = req.body;
     const stmt = db.prepare(`
@@ -686,6 +667,7 @@ app.post("/api/library/:id", (req, res) => {
         `);
     const result = stmt.run(title, description, url, category, req.params.id);
     if (result.changes > 0) {
+      await generateStaticData();
       res.json({ success: true });
     } else {
       res.status(404).json({ success: false, message: "Link not found" });
@@ -698,11 +680,12 @@ app.post("/api/library/:id", (req, res) => {
   }
 });
 
-app.delete("/api/library/:id", (req, res) => {
+app.delete("/api/library/:id", async (req, res) => {
   try {
     const stmt = db.prepare("DELETE FROM library_links WHERE id = ?");
     const result = stmt.run(req.params.id);
     if (result.changes > 0) {
+      await generateStaticData();
       res.json({ success: true });
     } else {
       res.status(404).json({ success: false, message: "Link not found" });
@@ -829,11 +812,18 @@ app.post(
     try {
       const { title, date, category, subcategory, body, time, venue, tags } =
         req.body;
-      const slug = createSlug(title);
+      let slug = createSlug(title);
       const coverImageFile = req.files.coverImage
         ? req.files.coverImage[0]
         : null;
       const galleryImageFiles = req.files.galleryImages || [];
+
+      // Ensure slug is unique before inserting
+      const existingSlugStmt = db.prepare("SELECT id FROM content WHERE slug = ?");
+      let existingSlug = existingSlugStmt.get(slug);
+      if (existingSlug) {
+        slug = `${slug}-${Date.now()}`;
+      }
 
       // For simplicity, we still save images to a path based on date and slug.
       const year = new Date(date).getFullYear().toString();
@@ -886,7 +876,8 @@ app.post(
           .replace(/\\/g, "/");
         insertGalleryImageStmt.run(newContentId, imageSrc, title);
       }
-
+      
+      await generateStaticData();
       res
         .status(201)
         .json({
@@ -1013,6 +1004,7 @@ app.post(
         id, 
       });
 
+      await generateStaticData();
       res
         .status(200)
         .json({ success: true, message: "Content successfully updated." });
@@ -1025,7 +1017,7 @@ app.post(
   },
 );
 
-app.delete("/api/content/:id", (req, res) => {
+app.delete("/api/content/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -1040,6 +1032,7 @@ app.delete("/api/content/:id", (req, res) => {
     const result = deleteContentStmt.run(id);
 
     if (result.changes > 0) {
+      await generateStaticData();
       res.json({
         success: true,
         message: "Content and associated gallery images deleted successfully.",

@@ -13,7 +13,7 @@ const STATIC_DATA_DIR = path.resolve(__dirname, '../public/data');
 
 console.log('🚀 Starting static data generation...');
 
-async function generateStaticData() {
+export async function generateStaticData() {
     let db: Database.Database | null = null;
     try {
         db = new Database(dbPath);
@@ -40,18 +40,21 @@ async function generateStaticData() {
         console.log('Generating news.json...');
         const newsContentStmt = db.prepare('SELECT * FROM content WHERE category = \'news\' ORDER BY date DESC');
         const rawNews = newsContentStmt.all();
-        const newsData = rawNews.map((item: any) => ({
-            id: item.id.toString(),
-            slug: item.slug,
-            title: item.title,
-            date: item.date,
-            description: item.body?.slice(0, 250).replace(/[#*_~`]/g, '').trim() || '',
-            content: item.body,
-            category: item.category,
-            cover: item.cover_image_src ? { src: item.cover_image_src, title: item.title } : undefined,
-            gallery: getGalleryImages(item.id),
-            linked_photoalbum_id: item.linked_photoalbum_id
-        }));
+        const newsData = rawNews.map((item: any) => {
+            const gallerySourceId = item.linked_photoalbum_id || item.id;
+            return {
+                id: item.id.toString(),
+                slug: item.slug,
+                title: item.title,
+                date: item.date,
+                description: item.body?.slice(0, 250).replace(/[#*_~`]/g, '').trim() || '',
+                content: item.body,
+                category: item.category,
+                cover: item.cover_image_src ? { src: item.cover_image_src, title: item.title } : undefined,
+                gallery: getGalleryImages(gallerySourceId),
+                linked_photoalbum_id: item.linked_photoalbum_id
+            };
+        });
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'news.json'), JSON.stringify(newsData, null, 2));
         console.log('✅ news.json generated.');
 
@@ -108,7 +111,7 @@ async function generateStaticData() {
         // --- Generate Photo Albums Data ---
         console.log('Generating photoalbums.json...');
         const albumsStmt = db.prepare(`
-            SELECT id, slug, title, date, category
+            SELECT id, slug, title, date, category, subcategory
             FROM content
             WHERE category = 'photoalbum'
             ORDER BY date DESC
@@ -120,7 +123,7 @@ async function generateStaticData() {
                 albumId: album.slug,
                 albumTitle: album.title,
                 albumDate: album.date,
-                albumCategory: album.category,
+                albumCategory: album.subcategory || album.category, // Use subcategory, fallback to category
                 photos: photos,
             };
         });
@@ -139,5 +142,3 @@ async function generateStaticData() {
         }
     }
 }
-
-generateStaticData();

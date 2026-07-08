@@ -6,9 +6,6 @@ import type { PhotoAlbum } from '../types/college';
 import { Helmet } from 'react-helmet-async';
 import { getVersionedAssetUrl } from '../utils/assetVersion';
 
-const categories = ['все', 'концерты', 'мастер-классы', "конкурсы", 'будни', 'выпускные', 'другое'];
-
-// Получение уникальных лет из альбомов
 const getUniqueYears = (albums: PhotoAlbum[]): number[] => {
   const years = albums.map(a => new Date(a.albumDate).getFullYear()).filter(year => !isNaN(year));
   return [...new Set(years)].sort((a, b) => b - a);
@@ -23,6 +20,12 @@ function PhotosPage() {
   const [loading, setLoading] = useState(true); // New state for loading
 
   const uniqueYears = useMemo(() => getUniqueYears(albums), [albums]);
+  
+  const dynamicCategories = useMemo(() => {
+    const allCats = albums.map(a => a.albumCategory).filter(Boolean); // Filter out null/undefined
+    const uniqueCats = [...new Set(allCats)].sort();
+    return ['все', ...uniqueCats];
+  }, [albums]);
 
   useEffect(() => {
     const fetchPhotoAlbums = async () => {
@@ -115,7 +118,7 @@ function PhotosPage() {
             <div className={styles.filterGroup}>
               <span className={styles.filterLabel}>Категория:</span>
               <div className={styles.categoryButtons}>
-                {categories.map((category) => (
+                {dynamicCategories.map((category) => (
                   <button
                     key={category}
                     className={`${styles.categoryButton} ${selectedCategory === category ? styles.categoryButtonActive : ''}`}
