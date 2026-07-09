@@ -130,6 +130,18 @@ export async function generateStaticData() {
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'photoalbums.json'), JSON.stringify(photoalbumsData, null, 2));
         console.log('✅ photoalbums.json generated.');
 
+        // --- Generate Graduates Data ---
+        console.log('Generating graduates.json...');
+        const graduatesStmt = db.prepare('SELECT * FROM graduates ORDER BY graduation_year DESC, name ASC');
+        const graduatesData = graduatesStmt.all().map((item: any) => ({
+            ...item,
+            graduationYear: item.graduation_year, // Fix property name
+            image: item.image_src, // Adapt to frontend expectation
+            isFeatured: Boolean(item.is_featured)
+        }));
+        await fs.writeFile(path.join(STATIC_DATA_DIR, 'graduates.json'), JSON.stringify(graduatesData, null, 2));
+        console.log('✅ graduates.json generated.');
+
         console.log('🎉 Static data generation complete.');
 
     } catch (error) {
