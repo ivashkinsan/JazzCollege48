@@ -49,7 +49,7 @@ async function migratePhotoAlbums() {
         `);
 
         // Check if content table has existing photoalbum entries and delete them to prevent duplicates
-        const existingPhotoAlbumsCount = db.prepare("SELECT COUNT(*) FROM content WHERE category = 'photoalbum'").get()['COUNT(*)'];
+        const existingPhotoAlbumsCount = (db.prepare("SELECT COUNT(*) FROM content WHERE category = 'photoalbum'").get() as any)['COUNT(*)'];
         if (existingPhotoAlbumsCount > 0) {
             console.warn(`Found ${existingPhotoAlbumsCount} existing 'photoalbum' entries. Deleting them before migration.`);
             db.prepare("DELETE FROM gallery_images WHERE content_id IN (SELECT id FROM content WHERE category = 'photoalbum')").run();

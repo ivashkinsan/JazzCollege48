@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs'; // Added fs import
 import { fileURLToPath } from 'url';
 // import { graduates as staticGraduates } from '../src/data/static/graduates.ts'; // Removed direct import
-import type { Graduate } from '../src/types/college';
+import type { Graduate } from '../src/types/college.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

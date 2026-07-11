@@ -97,7 +97,7 @@ export const useAdminStore = create<AdminState>((set, get) => ({
 
     fetchItems: async () => {
         const activeTab = get().activeTab;
-        const manager = (activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum') ? 'content' : activeTab;
+        const manager = activeTab; // Simplified: manager is the same as the active tab
         const adminListEndpoint = `/api/admin/list/${manager}`;
         try {
             const response = await fetch(API_BASE_URL + adminListEndpoint, { cache: 'no-store' });

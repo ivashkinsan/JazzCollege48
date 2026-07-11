@@ -411,7 +411,7 @@
     display: block;
 }
 
-.deleteButton {
+.deleteThumbnailButton {
     position: absolute;
     top: -5px;
     right: -5px;

@@ -56,7 +56,7 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                                         <img src={getVersionedAssetUrl(photo.src)} alt={`Фото ${photo.id}`} className={styles.thumbnail} />
                                         <button 
                                             type="button" 
-                                            className={styles.deleteButton} 
+                                            className={styles.deleteThumbnailButton} 
                                             onClick={() => handleDeleteImage(photo.id)}
                                             title="Удалить изображение"
                                         >
@@ -183,7 +183,7 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                                 <img src={getVersionedAssetUrl(photo.src)} alt={`Фото ${photo.id}`} className={styles.thumbnail} />
                                 <button 
                                     type="button" 
-                                    className={styles.deleteButton} 
+                                    className={styles.deleteThumbnailButton} 
                                     onClick={() => handleDeleteImage(photo.id)}
                                     title="Удалить изображение"
                                 >

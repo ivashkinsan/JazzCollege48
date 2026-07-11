@@ -12,7 +12,7 @@ console.log('🚀 Altering "content" table to add "subcategory" column...');
 
 try {
     // Check if the column already exists to make the script re-runnable
-    const columns = db.pragma('table_info(content)');
+    const columns = db.pragma('table_info(content)') as any[];
     const columnExists = columns.some((col: any) => col.name === 'subcategory');
 
     if (!columnExists) {

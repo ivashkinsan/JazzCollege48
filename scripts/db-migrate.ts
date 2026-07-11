@@ -84,7 +84,7 @@ async function migrate() {
                 console.warn(`   - No photos found for "${album.albumTitle}", cannot determine file path. Body will be empty.`);
             }
 
-            const coverImage = album.photos.find(p => p.id.includes('_01')) || album.photos[0];
+            const coverImage = album.photos.find((p: any) => p.id.includes('_01')) || album.photos[0];
 
             const result = insertContentStmt.run({
                 slug: slug,

@@ -1,14 +1,10 @@
 import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs/promises';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // --- Configuration ---
-const dbPath = path.resolve(__dirname, '../src/data/database.db');
-const STATIC_DATA_DIR = path.resolve(__dirname, '../public/data');
+const dbPath = path.resolve(process.cwd(), 'src/data/database.db');
+const STATIC_DATA_DIR = path.resolve(process.cwd(), 'public/data');
 // --- End Configuration ---
 
 console.log('🚀 Starting static data generation...');
@@ -38,7 +34,7 @@ export async function generateStaticData() {
 
         // --- Generate News Data ---
         console.log('Generating news.json...');
-        const newsContentStmt = db.prepare('SELECT * FROM content WHERE category = \'news\' ORDER BY date DESC');
+        const newsContentStmt = db.prepare("SELECT * FROM content WHERE category = 'news' ORDER BY date DESC");
         const rawNews = newsContentStmt.all();
         const newsData = rawNews.map((item: any) => {
             const gallerySourceId = item.linked_photoalbum_id || item.id;
@@ -60,7 +56,7 @@ export async function generateStaticData() {
 
         // --- Generate Afisha Data ---
         console.log('Generating afisha.json...');
-        const afishaContentStmt = db.prepare('SELECT * FROM content WHERE category = \'afisha\' ORDER BY date DESC');
+        const afishaContentStmt = db.prepare("SELECT * FROM content WHERE category = 'afisha' ORDER BY date DESC");
         const rawAfisha = afishaContentStmt.all();
         const afishaData = rawAfisha.map((item: any) => ({
             id: item.id.toString(),
