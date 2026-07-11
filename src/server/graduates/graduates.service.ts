@@ -33,7 +33,7 @@ export class GraduatesService {
     return { ...graduate, is_featured: !!(graduate as any).is_featured };
   }
 
-  async create(body: any, file: Express.Multer.File) {
+  async create(body: any, file?: Express.Multer.File) {
     const { name, graduation_year, instrument, workplace, bio, is_featured } = body;
     let image_src = stripPublicPrefix(body.image_src);
 
@@ -53,7 +53,7 @@ export class GraduatesService {
     return { id: result.lastInsertRowid };
   }
 
-  async update(id: string, body: any, file: Express.Multer.File) {
+  async update(id: string, body: any, file?: Express.Multer.File) {
     const { name, graduation_year, instrument, workplace, bio, is_featured } = body;
     let image_src = stripPublicPrefix(body.image_src);
 

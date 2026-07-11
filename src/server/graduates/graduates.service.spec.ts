@@ -15,7 +15,7 @@ jest.mock('../utils/generate-static-data', () => ({
 }));
 
 const mockDb = {
-  prepare: jest.fn(),
+  prepare: jest.fn(() => mockStmt),
 };
 const mockStmt = {
   all: jest.fn(),
