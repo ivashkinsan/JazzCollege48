@@ -25,7 +25,7 @@ function Ensembles({ ensembles }: EnsemblesProps) {
                 <div className={styles.ensembleCardMembers}>
                   <h4>В составе:</h4>
                   <ul>
-                    {ensemble.members.map((member, i) => (
+                    {ensemble.members.map((member: any, i: any) => (
                       <li key={i}>{member}</li>
                     ))}
                   </ul>

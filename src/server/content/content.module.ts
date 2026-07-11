@@ -2,9 +2,9 @@
 import { Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { ContentController } from './content.controller';
-import { ContentService } from './content.service';
-import { DatabaseModule } from '../database/database.module';
+import { ContentController } from './content.controller.js';
+import { ContentService } from './content.service.js';
+import { DatabaseModule } from '../database/database.module.js';
 
 @Module({
   imports: [

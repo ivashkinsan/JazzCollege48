@@ -1,0 +1,243 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { Injectable, Inject, NotFoundException, BadRequestException } from '@nestjs/common';
+import { createSlug } from '../utils/utils.js';
+import { generateStaticData } from '../utils/generate-static-data.js';
+import * as path from 'path';
+import * as fs from 'fs/promises';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const MEDIA_TARGET_ROOT = path.resolve(__dirname, '../../../../public/media');
+let ContentService = class ContentService {
+    db;
+    constructor(db) {
+        this.db = db;
+    }
+    // --- Public Content Services ---
+    getPublicContent(category) {
+        const contentStmt = this.db.prepare('SELECT * FROM content WHERE category = ? ORDER BY date DESC');
+        const galleryStmt = this.db.prepare('SELECT src, title FROM gallery_images WHERE content_id = ?');
+        const mainContent = contentStmt.all(category);
+        return mainContent.map((item) => {
+            const gallerySourceId = item.linked_photoalbum_id || item.id;
+            const gallery = galleryStmt.all(gallerySourceId);
+            const cover = gallery.find((p) => p.src === item.cover_image_src) || gallery[0] || null;
+            return {
+                id: item.id.toString(),
+                slug: item.slug,
+                title: item.title,
+                date: item.date,
+                description: item.body?.slice(0, 250).replace(/[#*_~`]/g, '').trim() || '',
+                content: item.body,
+                category: item.category,
+                cover: cover,
+                gallery: gallery,
+            };
+        });
+    }
+    getPhotoAlbums() {
+        const albumsStmt = this.db.prepare(`
+        SELECT id, slug, title, date, category
+        FROM content
+        WHERE category = 'photoalbum'
+        ORDER BY date DESC
+    `);
+        const albumsFromDb = albumsStmt.all();
+        const galleryStmt = this.db.prepare("SELECT src, title FROM gallery_images WHERE content_id = ?");
+        return albumsFromDb.map((album) => {
+            const photos = galleryStmt.all(album.id).map((photo) => ({
+                id: "",
+                src: photo.src,
+                title: photo.title,
+            }));
+            return {
+                albumId: album.slug,
+                albumTitle: album.title,
+                albumDate: album.date,
+                albumCategory: album.category,
+                photos: photos,
+            };
+        });
+    }
+    // --- Admin Content Services ---
+    getAdminList(manager) {
+        const tableMap = {
+            news: "content",
+            afisha: "content",
+            achievements: "achievements",
+            videos: "videos",
+            library: "library_links",
+            photoalbum: "content",
+            graduates: "graduates",
+        };
+        const tableName = tableMap[manager];
+        if (!tableName) {
+            throw new BadRequestException("Invalid manager type");
+        }
+        let query = `SELECT * FROM ${tableName}`;
+        let params = [];
+        // Add WHERE clauses
+        if (manager === "news" || manager === "afisha" || manager === "photoalbum") {
+            query += ` WHERE category = ?`;
+            params.push(manager);
+        }
+        // Add ORDER BY clauses
+        if (tableName === "graduates") {
+            query += ` ORDER BY graduation_year DESC`;
+        }
+        else if (tableName === "library_links") {
+            query += ` ORDER BY category, title`;
+        }
+        else {
+            query += ` ORDER BY date DESC`;
+        }
+        const stmt = this.db.prepare(query);
+        return stmt.all(...params);
+    }
+    getContentById(id) {
+        const contentStmt = this.db.prepare("SELECT * FROM content WHERE id = ?");
+        const content = contentStmt.get(id);
+        if (!content) {
+            throw new NotFoundException('Content not found');
+        }
+        const galleryStmt = this.db.prepare("SELECT * FROM gallery_images WHERE content_id = ?");
+        content.photos = galleryStmt.all(id);
+        return content;
+    }
+    async createContent(body, files) {
+        const { title, date, category, subcategory, body: contentBody, time, venue, tags } = body;
+        let slug = createSlug(title);
+        const coverImageFile = files?.coverImage ? files.coverImage[0] : null;
+        const galleryImageFiles = files?.galleryImages || [];
+        const existingSlugStmt = this.db.prepare("SELECT id FROM content WHERE slug = ?");
+        if (existingSlugStmt.get(slug)) {
+            slug = `${slug}-${Date.now()}`;
+        }
+        const year = new Date(date).getFullYear().toString();
+        const imageDir = path.join(year, `${date}-${slug}`);
+        const imageDirPath = path.join(MEDIA_TARGET_ROOT, imageDir);
+        await fs.mkdir(imageDirPath, { recursive: true });
+        let coverImageSrc = null;
+        if (coverImageFile) {
+            const newPath = path.join(imageDirPath, coverImageFile.originalname);
+            await fs.copyFile(coverImageFile.path, newPath);
+            await fs.unlink(coverImageFile.path);
+            coverImageSrc = path.join("/media", imageDir, coverImageFile.originalname).replace(/\\/g, "/");
+        }
+        const insertContentStmt = this.db.prepare(`
+        INSERT INTO content (slug, title, date, category, time, venue, tags, body, cover_image_src, subcategory)
+        VALUES (@slug, @title, @date, @category, @time, @venue, @tags, @body, @cover_image_src, @subcategory)
+    `);
+        const result = insertContentStmt.run({
+            slug, title, date, category,
+            body: contentBody, time: time || null, venue: venue || null,
+            tags: tags ? JSON.stringify(tags.split(",")) : JSON.stringify([]),
+            cover_image_src: coverImageSrc, subcategory: subcategory || null,
+        });
+        const newContentId = result.lastInsertRowid;
+        const insertGalleryImageStmt = this.db.prepare(`INSERT INTO gallery_images (content_id, src, title) VALUES (?, ?, ?)`);
+        if (coverImageSrc) {
+            insertGalleryImageStmt.run(newContentId, coverImageSrc, title);
+        }
+        for (const imageFile of galleryImageFiles) {
+            const newPath = path.join(imageDirPath, imageFile.originalname);
+            await fs.copyFile(imageFile.path, newPath);
+            await fs.unlink(imageFile.path);
+            const imageSrc = path.join("/media", imageDir, imageFile.originalname).replace(/\\/g, "/");
+            insertGalleryImageStmt.run(newContentId, imageSrc, title);
+        }
+        await generateStaticData();
+        return newContentId;
+    }
+    async updateContent(id, body, files) {
+        let { title, date, category, subcategory, body: contentBody, time, venue, tags, linked_photoalbum_id } = body;
+        category = Array.isArray(category) ? category[0] : category;
+        subcategory = Array.isArray(subcategory) ? subcategory[0] : subcategory;
+        const slug = createSlug(title);
+        let coverImageSrc = body.cover_image_src;
+        const coverImageFile = files?.coverImage ? files.coverImage[0] : null;
+        if (coverImageFile) {
+            const year = new Date(date).getFullYear().toString();
+            const imageDir = path.join(year, `${date}-${slug}`);
+            const imageDirPath = path.join(MEDIA_TARGET_ROOT, imageDir);
+            await fs.mkdir(imageDirPath, { recursive: true });
+            const newPath = path.join(imageDirPath, coverImageFile.originalname);
+            await fs.copyFile(coverImageFile.path, newPath);
+            await fs.unlink(coverImageFile.path);
+            coverImageSrc = path.join("/media", imageDir, coverImageFile.originalname).replace(/\\/g, "/");
+        }
+        const galleryImageFiles = files?.galleryImages || [];
+        if (category === "photoalbum" && galleryImageFiles.length > 0) {
+            const year = new Date(date).getFullYear().toString();
+            const imageDir = path.join(year, `${date}-${slug}`);
+            const imageDirPath = path.join(MEDIA_TARGET_ROOT, imageDir);
+            await fs.mkdir(imageDirPath, { recursive: true });
+            const insertGalleryImageStmt = this.db.prepare(`INSERT INTO gallery_images (content_id, src, title) VALUES (?, ?, ?)`);
+            for (const imageFile of galleryImageFiles) {
+                const newPath = path.join(imageDirPath, imageFile.originalname);
+                await fs.copyFile(imageFile.path, newPath);
+                await fs.unlink(imageFile.path);
+                const imageSrc = path.join("/media", imageDir, imageFile.originalname).replace(/\\/g, "/");
+                insertGalleryImageStmt.run(id, imageSrc, title);
+            }
+        }
+        let finalSlug = slug;
+        const currentContent = this.db.prepare("SELECT slug FROM content WHERE id = ?").get(id);
+        if (currentContent && currentContent.slug !== slug) {
+            const existingSlugStmt = this.db.prepare("SELECT id FROM content WHERE slug = ? AND id != ?");
+            if (existingSlugStmt.get(slug, id)) {
+                finalSlug = `${slug}-${id}`;
+            }
+        }
+        const updateStmt = this.db.prepare(`
+        UPDATE content SET slug = @slug, title = @title, date = @date, category = @category, 
+        subcategory = @subcategory, body = @body, time = @time, venue = @venue, tags = @tags, 
+        cover_image_src = @cover_image_src, linked_photoalbum_id = @linked_photoalbum_id
+        WHERE id = @id
+    `);
+        updateStmt.run({
+            slug: finalSlug, title, date, category, subcategory: subcategory || null,
+            body: contentBody, time: time || null, venue: venue || null,
+            tags: tags ? JSON.stringify(tags.split(",")) : JSON.stringify([]),
+            cover_image_src: coverImageSrc || null,
+            linked_photoalbum_id: linked_photoalbum_id ? String(linked_photoalbum_id) : null,
+            id,
+        });
+        await generateStaticData();
+        return { success: true };
+    }
+    async deleteContent(id) {
+        const deleteGalleryStmt = this.db.prepare("DELETE FROM gallery_images WHERE content_id = ?");
+        deleteGalleryStmt.run(id);
+        const deleteContentStmt = this.db.prepare("DELETE FROM content WHERE id = ?");
+        const result = deleteContentStmt.run(id);
+        if (result.changes > 0)
+            await generateStaticData();
+        return result.changes;
+    }
+    async deleteGalleryImage(id) {
+        const stmt = this.db.prepare("DELETE FROM gallery_images WHERE id = ?");
+        const result = stmt.run(id);
+        if (result.changes > 0)
+            await generateStaticData();
+        return result.changes;
+    }
+};
+ContentService = __decorate([
+    Injectable(),
+    __param(0, Inject('DATABASE_CONNECTION')),
+    __metadata("design:paramtypes", [Object])
+], ContentService);
+export { ContentService };
+//# sourceMappingURL=content.service.js.map

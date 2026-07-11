@@ -2,6 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import Imagemin from 'unplugin-imagemin/vite';
 import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,7 +19,10 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      '@nestjs/testing': path.resolve(__dirname, 'node_modules/@nestjs/testing'),
+    },
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'],
   },
   css: {
     modules: {
@@ -32,4 +40,3 @@ export default defineConfig({
     },
   },
 })
-

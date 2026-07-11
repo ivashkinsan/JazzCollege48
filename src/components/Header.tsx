@@ -147,7 +147,7 @@ function Header({ navigation }: HeaderProps) {
           </button>
           {dropdownOpen && (
             <div className={styles.mobileDropdownMenu}>
-              {item.items.map(child => {
+              {item.items.map((child: any) => {
                 const props = getLinkProps(child, true);
                 if (props.to) {
                   return (

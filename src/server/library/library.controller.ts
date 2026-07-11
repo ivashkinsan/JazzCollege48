@@ -1,6 +1,6 @@
 
 import { Controller, Get, Post, Body, Param, Delete, Query } from '@nestjs/common';
-import { LibraryService } from './library.service';
+import { LibraryService } from './library.service.js';
 
 @Controller('api/library')
 export class LibraryController {

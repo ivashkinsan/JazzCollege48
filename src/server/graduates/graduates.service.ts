@@ -1,11 +1,14 @@
 
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import type { Database } from 'better-sqlite3';
-import { generateStaticData } from '../utils/generate-static-data';
+import { generateStaticData } from '../utils/generate-static-data.js';
 import * as path from 'path';
 import * as fs from 'fs/promises';
-import { stripPublicPrefix } from '../utils/utils';
+import { stripPublicPrefix } from '../utils/utils.js';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const GRADUATES_TARGET_ROOT = path.resolve(__dirname, '../../../../public/vipuskniki');
 
 @Injectable()

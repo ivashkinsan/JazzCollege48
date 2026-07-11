@@ -1,9 +1,14 @@
 
 import 'reflect-metadata';
-const { NestFactory } = require('@nestjs/core');
-const { AppModule } = require('./app.module');
-const { ExpressAdapter } = require('@nestjs/platform-express');
-const express = require('express');
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module.js';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import express from 'express';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function bootstrap() {
   const server = express();

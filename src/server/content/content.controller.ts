@@ -1,7 +1,7 @@
 
 import { Controller, Get, Param, Post, Delete, Body, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { ContentService } from './content.service';
+import { ContentService } from './content.service.js';
 
 @Controller('api') // Base path for all routes in this controller
 export class ContentController {

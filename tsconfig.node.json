@@ -2,19 +2,21 @@
   "compilerOptions": {
     "composite": true,
     "skipLibCheck": true,
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "types": ["jest", "node"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true,
-    "target": "ES2020",
+    "target": "ES2022",
     "sourceMap": true,
     "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "rootDir": "src",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "ignoreDeprecations": "6.0"
   },
-  "include": ["vite.config.js", "src/server/**/*.ts", "src/types/**/*.ts"],
+  "include": ["src/server/**/*.ts", "src/types/**/*.ts"],
   "exclude": ["**/*.spec.ts"]
 }

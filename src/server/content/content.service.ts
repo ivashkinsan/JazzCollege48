@@ -1,11 +1,14 @@
 
 import { Injectable, Inject, NotFoundException, BadRequestException } from '@nestjs/common';
 import type { Database } from 'better-sqlite3';
-import { createSlug } from '../utils/utils';
-import { generateStaticData } from '../utils/generate-static-data';
+import { createSlug } from '../utils/utils.js';
+import { generateStaticData } from '../utils/generate-static-data.js';
 import * as path from 'path';
 import * as fs from 'fs/promises';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const MEDIA_TARGET_ROOT = path.resolve(__dirname, '../../../../public/media');
 
 @Injectable()

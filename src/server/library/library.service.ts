@@ -1,7 +1,7 @@
 
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import type { Database } from 'better-sqlite3';
-import { generateStaticData } from '../utils/generate-static-data';
+import { generateStaticData } from '../utils/generate-static-data.js';
 
 @Injectable()
 export class LibraryService {

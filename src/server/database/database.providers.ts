@@ -6,7 +6,8 @@ export const databaseProviders = [
   {
     provide: 'DATABASE_CONNECTION',
     useFactory: (): Database.Database => {
-      const dbPath = path.resolve(process.cwd(), 'src/data/database.db');
+      const dbFileName = process.env.NODE_ENV === 'test' ? 'test.database.db' : 'database.db';
+      const dbPath = path.resolve(process.cwd(), `src/data/${dbFileName}`);
       const db = new Database(dbPath);
       db.pragma('journal_mode = WAL');
       return db;

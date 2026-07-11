@@ -1,6 +1,6 @@
 
 import { create } from 'zustand';
-import { TabType, ManagerType } from './types';
+import { TabType } from './types';
 
 const API_BASE_URL = 'http://localhost:4000';
 
@@ -154,8 +154,8 @@ export const useAdminStore = create<AdminState>((set, get) => ({
 
     requestEdit: async (id) => {
         const { activeTab } = get();
-        const manager = (activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum') ? 'content' : activeTab;
-        const apiEndpoint = manager === 'photoalbum' ? '/api/content' : `/api/${manager}`;
+        const isContentManager = activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum';
+        const apiEndpoint = isContentManager ? '/api/content' : `/api/${activeTab}`;
         try {
             const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`);
             const data = await response.json();
@@ -174,8 +174,8 @@ export const useAdminStore = create<AdminState>((set, get) => ({
     requestDelete: async (id) => {
         if (!window.confirm('Вы уверены, что хотите удалить эту запись?')) return;
         const { activeTab } = get();
-        const manager = (activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum') ? 'content' : activeTab;
-        const apiEndpoint = manager === 'photoalbum' ? '/api/content' : `/api/${manager}`;
+        const isContentManager = activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum';
+        const apiEndpoint = isContentManager ? '/api/content' : `/api/${activeTab}`;
         try {
             const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`, { method: 'DELETE' });
             if (!response.ok) {
@@ -220,8 +220,8 @@ export const useAdminStore = create<AdminState>((set, get) => ({
                 files.forEach(file => dataToSend.append(name, file));
             });
 
-            const manager = (activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum') ? 'content' : activeTab;
-            const apiEndpoint = manager === 'photoalbum' ? '/api/content' : `/api/${manager}`;
+            const isContentManager = activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum';
+            const apiEndpoint = isContentManager ? '/api/content' : `/api/${activeTab}`;
             const url = editingId ? `${API_BASE_URL}${apiEndpoint}/${editingId}` : API_BASE_URL + apiEndpoint;
             
             const response = await fetch(url, { method: 'POST', body: dataToSend });

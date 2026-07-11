@@ -1,11 +1,11 @@
 
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ContentModule } from './content/content.module';
-import { DatabaseModule } from './database/database.module';
-import { GraduatesModule } from './graduates/graduates.module';
-import { LibraryModule } from './library/library.module';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
+import { ContentModule } from './content/content.module.js';
+import { DatabaseModule } from './database/database.module.js';
+import { GraduatesModule } from './graduates/graduates.module.js';
+import { LibraryModule } from './library/library.module.js';
 
 @Module({
   imports: [DatabaseModule, ContentModule, GraduatesModule, LibraryModule],

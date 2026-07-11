@@ -1,7 +1,7 @@
 
 import { Controller, Get, Post, Body, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { GraduatesService } from './graduates.service';
+import { GraduatesService } from './graduates.service.js';
 
 @Controller('api/graduates')
 export class GraduatesController {

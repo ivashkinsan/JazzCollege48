@@ -1,8 +1,8 @@
 
 import { Module } from '@nestjs/common';
-import { LibraryService } from './library.service';
-import { LibraryController } from './library.controller';
-import { DatabaseModule } from '../database/database.module';
+import { LibraryService } from './library.service.js';
+import { LibraryController } from './library.controller.js';
+import { DatabaseModule } from '../database/database.module.js';
 
 @Module({
   imports: [DatabaseModule],

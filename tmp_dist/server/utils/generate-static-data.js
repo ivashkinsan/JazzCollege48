@@ -1,0 +1,143 @@
+import Database from 'better-sqlite3';
+import path from 'path';
+import fs from 'fs/promises';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// --- Configuration ---
+const dbPath = path.resolve(process.cwd(), 'src/data/database.db');
+const STATIC_DATA_DIR = path.resolve(process.cwd(), 'public/data');
+// --- End Configuration ---
+console.log('🚀 Starting static data generation...');
+export async function generateStaticData() {
+    let db = null;
+    try {
+        db = new Database(dbPath);
+        db.pragma('journal_mode = WAL');
+        await fs.mkdir(STATIC_DATA_DIR, { recursive: true });
+        // --- Helper functions to extract data ---
+        const getGalleryImages = (contentId) => {
+            const galleryStmt = db.prepare('SELECT src, title FROM gallery_images WHERE content_id = ?');
+            return galleryStmt.all(contentId);
+        };
+        const getPhotoalbumPhotos = (albumId) => {
+            const galleryStmt = db.prepare('SELECT src, title FROM gallery_images WHERE content_id = ?');
+            return galleryStmt.all(albumId).map((photo) => ({
+                id: '', // Frontend expects ID, but not in DB for now
+                src: photo.src,
+                title: photo.title
+            }));
+        };
+        // --- Generate News Data ---
+        console.log('Generating news.json...');
+        const newsContentStmt = db.prepare("SELECT * FROM content WHERE category = 'news' ORDER BY date DESC");
+        const rawNews = newsContentStmt.all();
+        const newsData = rawNews.map((item) => {
+            const gallerySourceId = item.linked_photoalbum_id || item.id;
+            return {
+                id: item.id.toString(),
+                slug: item.slug,
+                title: item.title,
+                date: item.date,
+                description: item.body?.slice(0, 250).replace(/[#*_~`]/g, '').trim() || '',
+                content: item.body,
+                category: item.category,
+                cover: item.cover_image_src ? { src: item.cover_image_src, title: item.title } : undefined,
+                gallery: getGalleryImages(gallerySourceId),
+                linked_photoalbum_id: item.linked_photoalbum_id
+            };
+        });
+        await fs.writeFile(path.join(STATIC_DATA_DIR, 'news.json'), JSON.stringify(newsData, null, 2));
+        console.log('✅ news.json generated.');
+        // --- Generate Afisha Data ---
+        console.log('Generating afisha.json...');
+        const afishaContentStmt = db.prepare("SELECT * FROM content WHERE category = 'afisha' ORDER BY date DESC");
+        const rawAfisha = afishaContentStmt.all();
+        const afishaData = rawAfisha.map((item) => ({
+            id: item.id.toString(),
+            slug: item.slug,
+            title: item.title,
+            date: item.date,
+            time: item.time,
+            venue: item.venue,
+            content: item.body,
+            category: item.category,
+            cover: item.cover_image_src ? { src: item.cover_image_src, title: item.title } : undefined,
+            gallery: getGalleryImages(item.id),
+            linked_photoalbum_id: item.linked_photoalbum_id
+        }));
+        await fs.writeFile(path.join(STATIC_DATA_DIR, 'afisha.json'), JSON.stringify(afishaData, null, 2));
+        console.log('✅ afisha.json generated.');
+        // --- Generate Achievements Data ---
+        console.log('Generating achievements.json...');
+        const achievementsStmt = db.prepare('SELECT * FROM achievements ORDER BY date DESC');
+        const achievementsData = achievementsStmt.all().map((item) => ({
+            ...item,
+            image: item.image_src // Adapt to frontend expectation
+        }));
+        await fs.writeFile(path.join(STATIC_DATA_DIR, 'achievements.json'), JSON.stringify(achievementsData, null, 2));
+        console.log('✅ achievements.json generated.');
+        // --- Generate Videos Data ---
+        console.log('Generating videos.json...');
+        const videosStmt = db.prepare('SELECT * FROM videos ORDER BY date DESC');
+        const videosData = videosStmt.all().map((item) => ({
+            ...item,
+            videoUrl: item.video_url // Adapt to frontend expectation
+        }));
+        await fs.writeFile(path.join(STATIC_DATA_DIR, 'videos.json'), JSON.stringify(videosData, null, 2));
+        console.log('✅ videos.json generated.');
+        // --- Generate Library Data ---
+        console.log('Generating library.json...');
+        const libraryLinksStmt = db.prepare('SELECT * FROM library_links ORDER BY category, title');
+        const libraryLinks = libraryLinksStmt.all();
+        const categoryStmt = db.prepare('SELECT DISTINCT category FROM library_links ORDER BY category');
+        const categories = categoryStmt.all().map((cat) => cat.category);
+        const libraryData = { links: libraryLinks, categories: categories };
+        await fs.writeFile(path.join(STATIC_DATA_DIR, 'library.json'), JSON.stringify(libraryData, null, 2));
+        console.log('✅ library.json generated.');
+        // --- Generate Photo Albums Data ---
+        console.log('Generating photoalbums.json...');
+        const albumsStmt = db.prepare(`
+            SELECT id, slug, title, date, category, subcategory
+            FROM content
+            WHERE category = 'photoalbum'
+            ORDER BY date DESC
+        `);
+        const albumsFromDb = albumsStmt.all();
+        const photoalbumsData = albumsFromDb.map((album) => {
+            const photos = getPhotoalbumPhotos(album.id);
+            return {
+                albumId: album.slug,
+                albumTitle: album.title,
+                albumDate: album.date,
+                albumCategory: album.subcategory || album.category, // Use subcategory, fallback to category
+                photos: photos,
+            };
+        });
+        await fs.writeFile(path.join(STATIC_DATA_DIR, 'photoalbums.json'), JSON.stringify(photoalbumsData, null, 2));
+        console.log('✅ photoalbums.json generated.');
+        // --- Generate Graduates Data ---
+        console.log('Generating graduates.json...');
+        const graduatesStmt = db.prepare('SELECT * FROM graduates ORDER BY graduation_year DESC, name ASC');
+        const graduatesData = graduatesStmt.all().map((item) => ({
+            ...item,
+            graduationYear: item.graduation_year, // Fix property name
+            image: item.image_src, // Adapt to frontend expectation
+            isFeatured: Boolean(item.is_featured)
+        }));
+        await fs.writeFile(path.join(STATIC_DATA_DIR, 'graduates.json'), JSON.stringify(graduatesData, null, 2));
+        console.log('✅ graduates.json generated.');
+        console.log('🎉 Static data generation complete.');
+    }
+    catch (error) {
+        console.error('❌ Error generating static data:', error);
+        process.exit(1); // Exit with error code
+    }
+    finally {
+        if (db) {
+            db.close();
+            console.log('Database connection closed.');
+        }
+    }
+}
+//# sourceMappingURL=generate-static-data.js.map
