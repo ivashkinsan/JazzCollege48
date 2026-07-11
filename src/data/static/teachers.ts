@@ -50,7 +50,7 @@ export const teachers: Teacher[] = [
     id: "6",
     name: "Колупаев Вячеслав Иванович",
     position: "Преподаватель по классу фортепиано",
-    image: asset("/foto/Kolupaew.jpeg"),
+    image: asset("/foto/Kolupaew.jpg"),
     bio: "звания",
   },
   {
