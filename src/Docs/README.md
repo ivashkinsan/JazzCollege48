@@ -24,6 +24,7 @@
 | 14 | [Миграция на NestJS](./14-backend-nestjs-migration.md) | `14-backend-nestjs-migration.md` | Переход бэкенда на NestJS |
 | 15 | [Управление контентом](./15-content-media-workflow.md) | `15-content-media-workflow.md` | Рабочий процесс с контентом и медиа |
 | 16 | [Фильтры новостей](./16-news-page-filters.md) | `16-news-page-filters.md` | Реализация UI и поведения фильтров |
+| 17 | [Роутинг API админки](./17-admin-api-routing.md) | `17-admin-api-routing.md` | Архитектура получения списков в админ-панели |
 
 ---
 

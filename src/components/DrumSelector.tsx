@@ -13,7 +13,7 @@ const SCROLL_DEBOUNCE_DELAY = 150;
 
 const DrumSelector: React.FC<DrumSelectorProps> = ({ options, value, onChange, label }) => {
   const listRef = useRef<HTMLUListElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollTimeoutRef = useRef<number | null>(null);
   const isWheeling = useRef(false);
 
   const getInitialIndex = () => Math.max(0, options.indexOf(value));

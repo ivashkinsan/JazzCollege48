@@ -10,12 +10,11 @@ interface AdminFormFieldsProps {
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleDeleteImage: (imageId: number) => void;
-    photoAlbumsForSelection: { value: number; label: string }[];
     setFormData: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const AdminFormFields: React.FC<AdminFormFieldsProps> = ({ 
-    activeTab, formData, selectedFiles, handleInputChange, handleFileChange, handleDeleteImage, photoAlbumsForSelection, setFormData 
+    activeTab, formData, selectedFiles, handleInputChange, handleFileChange, handleDeleteImage, setFormData 
 }) => {
     switch (activeTab) {
         case 'news':
@@ -82,11 +81,10 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                     </div>
                     <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
                     <div className={styles.formGroup}>
-                        <label>Связанный фотоальбом</label>
-                        <select name="linked_photoalbum_id" value={String(formData.linked_photoalbum_id || '')} onChange={handleInputChange}>
-                            <option value="">— Нет —</option>
-                            {photoAlbumsForSelection.map(album => (
-                                <option key={album.value} value={String(album.value)}>{album.label}</option>
+                        <label>Категория</label>
+                        <select name="subcategory" value={formData.subcategory || 'разное'} onChange={handleInputChange}>
+                            {['разное', 'концерты', 'мастер-классы', 'конкурсы', 'будни', 'выпускные'].map(cat => (
+                                <option key={cat} value={cat}>{cat}</option>
                             ))}
                         </select>
                     </div>

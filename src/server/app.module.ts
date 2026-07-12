@@ -7,8 +7,10 @@ import { DatabaseModule } from './database/database.module.js';
 import { GraduatesModule } from './graduates/graduates.module.js';
 import { LibraryModule } from './library/library.module.js';
 
+import { AdminModule } from './admin/admin.module.js';
+
 @Module({
-  imports: [DatabaseModule, ContentModule, GraduatesModule, LibraryModule],
+  imports: [DatabaseModule, ContentModule, GraduatesModule, LibraryModule, AdminModule],
   controllers: [AppController],
   providers: [AppService],
 })

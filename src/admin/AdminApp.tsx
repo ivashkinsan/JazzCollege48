@@ -26,7 +26,6 @@ const AdminApp: React.FC = () => {
         status,
         isSubmitting,
         selectedFiles,
-        photoAlbumsForSelection,
         setActiveTab,
         setMode,
         resetForm,
@@ -91,7 +90,6 @@ const AdminApp: React.FC = () => {
                                 handleInputChange={handleInputChange}
                                 handleFileChange={handleFileChange}
                                 handleDeleteImage={handleDeleteImage}
-                                photoAlbumsForSelection={photoAlbumsForSelection}
                                 setFormData={setFormData}
                             />
                             <button type="submit" disabled={isSubmitting}>

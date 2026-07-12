@@ -166,8 +166,10 @@ export interface DaiProgram {
 
 // Расширенный интерфейс новости для динамической загрузки
 export interface ExtendedNewsItem extends NewsItem {
+  slug?: string;
   content?: string;
   category?: string;
+  subcategory?: string;
   cover?: Photo;
   gallery?: Photo[];
 }

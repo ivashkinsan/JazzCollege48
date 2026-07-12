@@ -18,7 +18,7 @@
       }
     ],
     "linked_photoalbum_id": 38,
-    "subcategory": null
+    "subcategory": "разное"
   },
   {
     "id": "11",
@@ -47,7 +47,7 @@
       }
     ],
     "linked_photoalbum_id": 28,
-    "subcategory": "null"
+    "subcategory": "конкурсы"
   },
   {
     "id": "10",
@@ -76,7 +76,7 @@
       }
     ],
     "linked_photoalbum_id": 27,
-    "subcategory": "null"
+    "subcategory": "концерты"
   },
   {
     "id": "9",
@@ -97,7 +97,7 @@
       }
     ],
     "linked_photoalbum_id": 25,
-    "subcategory": "null"
+    "subcategory": "концерты"
   },
   {
     "id": "8",
@@ -133,12 +133,12 @@
         "title": "🎶 Весна пришла в ритме джаза! 🎶"
       }
     ],
-    "linked_photoalbum_id": null,
-    "subcategory": null
+    "linked_photoalbum_id": "null",
+    "subcategory": "концерты"
   },
   {
     "id": "3",
-    "slug": "dzhaz-v-polden-2026-01",
+    "slug": "glotok-svezhego-dzhaza-v-polden",
     "title": "Глоток свежего 'Джаза в полдень'",
     "date": "2026-01-28",
     "description": "Глоток свежего \"Джаза в полдень\"🎷🔥🪘🔥🎹🔥🎸🔥🎺: студенты зажигали!\r\nВзрывная смесь таланта и драйва!💥 Энергия била ключом с первой до последней ноты! 💥Огромное впечатление оставили яркие импровизации: саксофонисты, пианисты, гитаристы, ударники",
@@ -154,16 +154,16 @@
         "title": "Студенты и преподаватели на сцене"
       }
     ],
-    "linked_photoalbum_id": null,
-    "subcategory": null
+    "linked_photoalbum_id": "null",
+    "subcategory": "концерты"
   },
   {
     "id": "7",
-    "slug": "v-kolledzhe-iskusstv-sostoyalsya-master-klass-ivana-ch",
+    "slug": "v-kolledzhe-iskusstv-sostoyalsya-master-klass-ivana-chagi-pobeditelya-xx-mezhdunarodnogo-konkursa",
     "title": "В колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса",
     "date": "2025-12-17",
     "description": "\\n\\n\\n\\nВ колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса и фестиваля \"Мир джаза.Иван - выпускник Липецкого областного колледжа искусств специальности Музыкальное искусство эстрады, сегодня он- студент РАМ и",
-    "content": "\\n\\n\\n\\nВ колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса и фестиваля \"Мир джаза.Иван - выпускник Липецкого областного колледжа искусств специальности Музыкальное искусство эстрады, сегодня он- студент РАМ им. Гнесиных. В ходе мастер-класса были затронуты вопросы аккомпанемента в джазовом ансамбле, профессиональные навыки и приёмы игры на ударной установке в различных джазовых стилях. Студенты с интересом слушали старшего товарища, мастер - класс был проведен на профессиональном уровне.\r\n\r\n<!-- gallery -->\r\n- /news/images/2025/2025-12-17-v-kolledzhe-iskusstv-sostoyalsya-master-klass-ivana-ch/gallery-1.jpg\r\n\r\n<!-- gallery -->\r\n- v_kolledzhe_iskusstv_sostoyalsya_master_klass_ivana_ch_2025_02\r\n\r\n<!-- gallery -->\r\n- v_kolledzhe_iskusstv_sostoyalsya_master_klass_ivana_ch_2025_02\\n\\n<!-- gallery -->\\n- v_kolledzhe_iskusstv_sostoyalsya_master_klass_ivana_ch_2025_02\\n\\n<!-- gallery -->\\n- v_kolledzhe_iskusstv_sostoyalsya_master_klass_ivana_ch_2025_02",
+    "content": "\\n\\n\\n\\nВ колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса и фестиваля \"Мир джаза.Иван - выпускник Липецкого областного колледжа искусств специальности Музыкальное искусство эстрады, сегодня он- студент РАМ им. Гнесиных. В ходе мастер-класса были затронуты вопросы аккомпанемента в джазовом ансамбле, профессиональные навыки и приёмы игры на ударной установке в различных джазовых стилях. Студенты с интересом слушали старшего товарища, мастер - класс был проведен на профессиональном уровне.",
     "category": "news",
     "cover": {
       "src": "/media/2025/2025-12-17-master-klass-ivan-chaga/cover.jpg",
@@ -179,12 +179,12 @@
         "title": "В колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса"
       }
     ],
-    "linked_photoalbum_id": null,
-    "subcategory": null
+    "linked_photoalbum_id": "null",
+    "subcategory": "мастер-классы"
   },
   {
     "id": "6",
-    "slug": "21-noyabrya-studenty-spetsial-nosti-muzykal-noe-iskusstvo-estrady-vystupili-v-kolledzhe-industrii-servisa-6",
+    "slug": "21-noyabrya-studenty-spetsial-nosti-muzykal-noe-iskusstvo-estrady-vystupili-v-kolledzhe-industrii-servisa",
     "title": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса",
     "date": "2025-11-23",
     "description": "\\n\\n\\n\\n21ноября студенты специальности Музыкальное искусство эстрады (Эстрадное пение) побывали в гостях в Липецком колледже индустрии сервиса, они выступили на этой площадке с концертной программой. \"Наш дом - Россия\", подготовленной Н. В. ВОЛКОВОЙ",
@@ -216,16 +216,16 @@
         "title": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса"
       }
     ],
-    "linked_photoalbum_id": null,
-    "subcategory": null
+    "linked_photoalbum_id": "null",
+    "subcategory": "концерты"
   },
   {
     "id": "17",
-    "slug": "master-klass-merinova",
+    "slug": "master-klass-vypusknitsy-rostovskoy-konservatorii-ekateriny-merinovoy-po-dzhazovoy-improvizatsii",
     "title": "Мастер-класс выпускницы Ростовской консерватории Екатерины Мериновой по джазовой импровизации",
     "date": "2025-10-30",
     "description": "На специальности « Музыкальное искусство эстрады» состоялся мастер- класс выпускницы Ростовской государственной консерватории имени С.В. Рахманинова Мериновой Екатерины, сегодня она- артистка эстрадно-джазового оркестра им. Кима Назаретова, преподава",
-    "content": "На специальности « Музыкальное искусство эстрады» состоялся мастер- класс выпускницы Ростовской государственной консерватории имени С.В. Рахманинова Мериновой Екатерины, сегодня она- артистка эстрадно-джазового оркестра им. Кима Назаретова, преподаватель эстрадного отделения детской музыкальной школы им. П.И. Чайковского г. Ростова-на-Дону. Выпускница нашего колледжа по классу саксофона, (преподаватель Д.Н. Кокшин) Екатерина на родном отделении на мастер- классе по джазовой импровизации, поделилась со студентами секретами системного подхода к занятиям по специальности. Студенты и преподаватели с нескрываемым интересом слушали молодого педагога.\r\n\r\n<!-- gallery -->\r\n- merinova_master_klass_2025_02",
+    "content": "На специальности « Музыкальное искусство эстрады» состоялся мастер- класс выпускницы Ростовской государственной консерватории имени С.В. Рахманинова Мериновой Екатерины, сегодня она- артистка эстрадно-джазового оркестра им. Кима Назаретова, преподаватель эстрадного отделения детской музыкальной школы им. П.И. Чайковского г. Ростова-на-Дону. Выпускница нашего колледжа по классу саксофона, (преподаватель Д.Н. Кокшин) Екатерина на родном отделении на мастер- классе по джазовой импровизации, поделилась со студентами секретами системного подхода к занятиям по специальности. Студенты и преподаватели с нескрываемым интересом слушали молодого педагога.",
     "category": "news",
     "cover": {
       "src": "/media/2025/2025-10-30-na-spetsialnosti-muzykalnoe-iskusstvo-estrady/ekaterina_01.jpg",
@@ -241,12 +241,12 @@
         "title": "Екатерина Меринова 2"
       }
     ],
-    "linked_photoalbum_id": null,
-    "subcategory": null
+    "linked_photoalbum_id": "null",
+    "subcategory": "мастер-классы"
   },
   {
     "id": "5",
-    "slug": "kontsertnoy-programmy-v-chest-oblastnogo-slyota-vete",
+    "slug": "kontsertnoy-programmy-v-chest-oblastnogo-slyota-veteranov-voyny-i-truda-serebryanyy-volontyor",
     "title": "концертной программы в честь Областного слёта ветеранов войны и труда Серебряный волонтёр",
     "date": "2025-10-29",
     "description": "30 сентября студенты и преподаватель специальности Музыкальное искусство эстрады Н.В. Волкова стали участниками концертной программы в честь Областного слёта ветеранов войны и труда \"Серебряный волонтёр\", посвященного поддержке участников СВО. Слёт п",
@@ -262,16 +262,16 @@
         "title": "концертной программы в честь Областного слёта ветеранов войны и труда Серебряный волонтёр"
       }
     ],
-    "linked_photoalbum_id": null,
-    "subcategory": null
+    "linked_photoalbum_id": "null",
+    "subcategory": "концерты"
   },
   {
     "id": "4",
-    "slug": "valeriya-baranova-uchastnitsa-rossiyskoy-studenchesk",
+    "slug": "valeriya-baranova-uchastnitsa-rossiyskoy-studencheskoy-vesny-v-stavropole",
     "title": "Валерия Баранова — участница Российской студенческой весны в Ставрополе",
     "date": "2025-10-06",
     "description": "\\n\\n\\n\\nСтудентка 4 курса специальности \"Музыкальное искусство эстрады\" Липецкого областного колледжа искусств Валерия Баранова в составе делегации Липецкой области приняла участие в Российской студенческой весне среди профессиональных образовательны",
-    "content": "\\n\\n\\n\\nСтудентка 4 курса специальности \"Музыкальное искусство эстрады\" Липецкого областного колледжа искусств Валерия Баранова в составе делегации Липецкой области приняла участие в Российской студенческой весне среди профессиональных образовательных организаций. В этом году фестиваль проходил в г.Ставрополе . Участниками стали 2000 человек из 70 регионов России. Нашу область представляли 35 студентов. Ребята демонстрировали свои таланты в театральном, вокальном, танцевальном направлениях, моде и съемке видео. Липецкая область впервые завоевала Гран-при Российской Студенческой весны.\r\n\r\n«Липецкая молодежь потрясающая – яркая, талантливая, смелая, целеустремленная. Поздравляю ребят с победами и желаю дальнейших успехов как в творчестве, так и в той профессии, которую они осваивают в учебных заведениях», – отметил губернатор Липецкой области Игорь Артамонов.\r\n\r\n<!-- gallery -->\r\n- /news/images/2025/2025-10-06-valeriya-baranova-rossiyskaya-studencheskaya-vesna/gallery-1.jpg\r\n- /news/images/2025/2025-10-06-valeriya-baranova-rossiyskaya-studencheskaya-vesna/gallery-2.jpg\r\n\r\n<!-- gallery -->\r\n- valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_02\\n- valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_03\r\n\r\n<!-- gallery -->\r\n- valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_02\\n- valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_03\\n\\n<!-- gallery -->\\n- valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_02\\n- valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_03\\n\\n<!-- gallery -->\\n- valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_02\\n- valeriya_baranova_uchastnitsa_rossiyskoy_studenchesk_2025_03",
+    "content": "\\n\\n\\n\\nСтудентка 4 курса специальности \"Музыкальное искусство эстрады\" Липецкого областного колледжа искусств Валерия Баранова в составе делегации Липецкой области приняла участие в Российской студенческой весне среди профессиональных образовательных организаций. В этом году фестиваль проходил в г.Ставрополе . Участниками стали 2000 человек из 70 регионов России. Нашу область представляли 35 студентов. Ребята демонстрировали свои таланты в театральном, вокальном, танцевальном направлениях, моде и съемке видео. Липецкая область впервые завоевала Гран-при Российской Студенческой весны.\r\n\r\n«Липецкая молодежь потрясающая – яркая, талантливая, смелая, целеустремленная. Поздравляю ребят с победами и желаю дальнейших успехов как в творчестве, так и в той профессии, которую они осваивают в учебных заведениях», – отметил губернатор Липецкой области Игорь Артамонов.",
     "category": "news",
     "cover": {
       "src": "/media/2025/2025-10-06-valeriya-baranova-studvesna/cover.jpg",
@@ -291,8 +291,8 @@
         "title": "Валерия Баранова — участница Российской студенческой весны в Ставрополе"
       }
     ],
-    "linked_photoalbum_id": null,
-    "subcategory": null
+    "linked_photoalbum_id": "null",
+    "subcategory": "конкурсы"
   },
   {
     "id": "43",
@@ -312,8 +312,8 @@
         "title": "Открытый межрегиональный конкурс-фестиваль эстрадно - джазового вокала «ДЖАЗ У САМОВАРА»"
       }
     ],
-    "linked_photoalbum_id": null,
-    "subcategory": null
+    "linked_photoalbum_id": "null",
+    "subcategory": "конкурсы"
   },
   {
     "id": "39",
@@ -371,7 +371,7 @@
       }
     ],
     "linked_photoalbum_id": 42,
-    "subcategory": null
+    "subcategory": "концерты"
   },
   {
     "id": "47",
@@ -392,7 +392,7 @@
       }
     ],
     "linked_photoalbum_id": null,
-    "subcategory": null
+    "subcategory": "разное"
   },
   {
     "id": "44",
@@ -421,11 +421,11 @@
   },
   {
     "id": "1",
-    "slug": "master-class-rakhmaninov",
+    "slug": "master-klass-studentov-rgk-im-rakhmaninova",
     "title": "Мастер-класс студентов РГК им. Рахманинова",
     "date": "2024-02-06",
     "description": "\\n\\n\\n\\nРепетицию эстрадного оркестра посетили - Алексей Семьянинов и Наталья Белановская. Ребята легко дополнили коллектив, поиграли с оркестром несколько композиций, устроили небольшой джем-сейшн и поделились своим опытом обучения в высшем учебном",
-    "content": "\\n\\n\\n\\nРепетицию эстрадного оркестра посетили - Алексей Семьянинов и Наталья Белановская. Ребята легко дополнили коллектив, поиграли с оркестром несколько композиций, устроили небольшой джем-сейшн и поделились своим опытом обучения в высшем учебном заведении. Эта встреча, как минимум, оставила много впечатлений и вдохновения для наших студентов, ведь каждый из них увидел настоящий пример целеустремленных сверстников, которые своими успехами и творчеством воплощают профессиональные мечты в жизнь.\n\n<!-- gallery -->\n- mc_rakhmaninov_2024_02\n- mc_rakhmaninov_2024_03\n- mc_rakhmaninov_2024_04\n- mc_rakhmaninov_2024_05\n- mc_rakhmaninov_2024_06\n- mc_rakhmaninov_2024_07\n- mc_rakhmaninov_2024_08\n- mc_rakhmaninov_2024_09\n- mc_rakhmaninov_2024_10\n\n<!-- gallery -->\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10\n\n<!-- gallery -->\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10\n\n<!-- gallery -->\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10\\n\\n<!-- gallery -->\\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10\\n\\n<!-- gallery -->\\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10",
+    "content": "\\n\\n\\n\\nРепетицию эстрадного оркестра посетили - Алексей Семьянинов и Наталья Белановская. Ребята легко дополнили коллектив, поиграли с оркестром несколько композиций, устроили небольшой джем-сейшн и поделились своим опытом обучения в высшем учебном заведении. Эта встреча, как минимум, оставила много впечатлений и вдохновения для наших студентов, ведь каждый из них увидел настоящий пример целеустремленных сверстников, которые своими успехами и творчеством воплощают профессиональные мечты в жизнь.\r\n\r\n<!-- gallery -->\r\n- mc_rakhmaninov_2024_02\r\n- mc_rakhmaninov_2024_03\r\n- mc_rakhmaninov_2024_04\r\n- mc_rakhmaninov_2024_05\r\n- mc_rakhmaninov_2024_06\r\n- mc_rakhmaninov_2024_07\r\n- mc_rakhmaninov_2024_08\r\n- mc_rakhmaninov_2024_09\r\n- mc_rakhmaninov_2024_10\r\n\r\n<!-- gallery -->\r\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10\r\n\r\n<!-- gallery -->\r\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10\r\n\r\n<!-- gallery -->\r\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10\\n\\n<!-- gallery -->\\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10\\n\\n<!-- gallery -->\\n- mc_rakhmaninov_2024_02\\n- mc_rakhmaninov_2024_03\\n- mc_rakhmaninov_2024_04\\n- mc_rakhmaninov_2024_05\\n- mc_rakhmaninov_2024_06\\n- mc_rakhmaninov_2024_07\\n- mc_rakhmaninov_2024_08\\n- mc_rakhmaninov_2024_09\\n- mc_rakhmaninov_2024_10",
     "category": "news",
     "cover": {
       "src": "/media/2024/2024-02-06-master-klass-rgk-rakhmaninova/cover.jpg",
@@ -473,8 +473,8 @@
         "title": "Финальный аккорд"
       }
     ],
-    "linked_photoalbum_id": null,
-    "subcategory": null
+    "linked_photoalbum_id": "null",
+    "subcategory": "мастер-классы"
   },
   {
     "id": "45",
@@ -495,7 +495,7 @@
       }
     ],
     "linked_photoalbum_id": 46,
-    "subcategory": null
+    "subcategory": "мастер-классы"
   },
   {
     "id": "48",
@@ -516,7 +516,7 @@
       }
     ],
     "linked_photoalbum_id": 53,
-    "subcategory": "null"
+    "subcategory": "конкурсы"
   },
   {
     "id": "16",
@@ -613,103 +613,6 @@
       }
     ],
     "linked_photoalbum_id": 34,
-    "subcategory": null
-  },
-  {
-    "id": "34",
-    "slug": "fotootchet-dzhaz-konzert",
-    "title": "фотоотчет - ДЖАЗ КОНZЕРТ",
-    "date": "2021-06-21",
-    "description": "Фотоальбом",
-    "content": "Фотоальбом",
-    "category": "news",
-    "cover": {
-      "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/cover.jpg",
-      "title": "фотоотчет - ДЖАЗ КОНZЕРТ"
-    },
-    "gallery": [
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/cover.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_1.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_10.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_11.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_12.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_13.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_14.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_15.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_16.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_17.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_18.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_19.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_2.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_3.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_4.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_5.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_6.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_7.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_8.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      },
-      {
-        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_9.jpg",
-        "title": "ДЖАЗ КОНZЕРТ"
-      }
-    ],
-    "linked_photoalbum_id": null,
     "subcategory": "концерты"
   }
 ]

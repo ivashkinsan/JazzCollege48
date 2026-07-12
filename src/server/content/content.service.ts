@@ -74,42 +74,9 @@ export class ContentService {
 
   // --- Admin Content Services ---
   
-  getAdminList(manager: string) {
-    const tableMap: Record<string, string> = {
-      news: "content",
-      afisha: "content",
-      achievements: "achievements",
-      videos: "videos",
-      library: "library_links",
-      photoalbum: "content",
-      graduates: "graduates",
-    };
-    const tableName = tableMap[manager];
-  
-    if (!tableName) {
-      throw new BadRequestException("Invalid manager type");
-    }
-
-    let query = `SELECT * FROM ${tableName}`;
-    let params: any[] = [];
-
-    // Add WHERE clauses
-    if (manager === "news" || manager === "afisha" || manager === "photoalbum") {
-      query += ` WHERE category = ?`;
-      params.push(manager);
-    }
-
-    // Add ORDER BY clauses
-    if (tableName === "graduates") {
-      query += ` ORDER BY graduation_year DESC`;
-    } else if (tableName === "library_links") {
-      query += ` ORDER BY category, title`;
-    } else {
-      query += ` ORDER BY date DESC`;
-    }
-    
-    const stmt = this.db.prepare(query);
-    return stmt.all(...params);
+  getAdminContentList() {
+    const stmt = this.db.prepare("SELECT * FROM content ORDER BY date DESC");
+    return stmt.all();
   }
 
   getContentById(id: string) {

@@ -111,22 +111,6 @@ const PreviewPane: React.FC<PreviewPaneProps> = ({ activeTab, formData, selected
                 };
                 return <VideoCard video={videoItemPreview} />;
             }
-            case 'photoalbum': {
-                return (
-                    <div className="albumPreview">
-                        <h3>{formData.title || 'Название альбома'}</h3>
-                        <p>{formData.date || 'Дата'}</p>
-                        <div className="albumGrid">
-                            {formData.photos && formData.photos.map((photo: any, index: number) => (
-                                <img key={index} src={getVersionedAssetUrl(photo.src)} alt="Альбом" className="albumImage" />
-                            ))}
-                            {selectedFiles.get('galleryImages') && selectedFiles.get('galleryImages')!.map((file, index) => (
-                                <img key={index} src={URL.createObjectURL(file)} alt="Новое фото" className="albumImage" />
-                            ))}
-                        </div>
-                    </div>
-                );
-            }
             default:
                 return <p>Предпросмотр для этого раздела еще не реализован.</p>;
         }

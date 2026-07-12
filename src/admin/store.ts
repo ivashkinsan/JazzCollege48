@@ -35,7 +35,6 @@ interface AdminState {
     status: { type: 'success' | 'error'; message: string } | null;
     isSubmitting: boolean;
     selectedFiles: Map<string, File[]>;
-    photoAlbumsForSelection: { value: number; label: string }[];
     
     // Actions
     setActiveTab: (tab: TabType) => void;
@@ -48,19 +47,18 @@ interface AdminState {
     requestEdit: (id: number) => Promise<void>;
     requestDelete: (id: number) => Promise<void>;
     submitForm: () => Promise<void>;
-    setFormData: (data: any) => void;
+    setFormData: (updater: (prev: any) => any) => void;
 }
 
 const getInitialFormData = (activeTab: TabType) => {
-    const common = { title: '', date: new Date().toISOString().split('T')[0] };
+    const common = { title: '', date: new Date().toISOString().split('T')[0], subcategory: 'разное' };
     switch (activeTab) {
-        case 'news': return { ...common, category: 'news', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
-        case 'afisha': return { ...common, category: 'afisha', slug: '', body: '', time: '', venue: '', tags: '', linked_photoalbum_id: '' };
+        case 'news': return { ...common, category: 'news', slug: '', body: '', time: '', venue: '', tags: '' };
+        case 'afisha': return { ...common, category: 'afisha', slug: '', body: '', time: '', venue: '', tags: '' };
         case 'achievements': return { ...common, student_name: '', competition: '', place: '', category: '', image_src: '', city: '' };
         case 'graduates': return { ...common, name: '', graduation_year: new Date().getFullYear(), instrument: '', workplace: '', image_src: '', bio: '', is_featured: false };
         case 'videos': return { ...common, description: '', video_url: '', source: 'rutube' };
         case 'library': return { ...common, description: '', url: '', category: 'Видео-уроки и каналы' };
-        case 'photoalbum': return { ...common, category: 'photoalbum', slug: '', title: '', body: '' };
         default: return {};
     }
 };
@@ -75,7 +73,6 @@ export const useAdminStore = create<AdminState>((set, get) => ({
     status: null,
     isSubmitting: false,
     selectedFiles: new Map(),
-    photoAlbumsForSelection: [],
 
     setFormData: (updater) => set(state => ({
         formData: typeof updater === 'function' ? updater(state.formData) : updater
@@ -85,29 +82,9 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         set({ activeTab: tab, mode: 'list', editingId: null, status: null });
         get().resetForm();
         get().fetchItems();
-        if (tab === 'news' || tab === 'afisha') {
-            get().fetchPhotoAlbums();
-        }
     },
 
     setMode: (mode) => set({ mode }),
-
-    fetchPhotoAlbums: async () => {
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/admin/list/photoalbum`, { cache: 'no-store' });
-            if (!response.ok) throw new Error('Failed to fetch albums');
-            const data = await response.json();
-            console.log('Fetched albums:', data); // Добавлено логирование
-            const albums = (Array.isArray(data) ? data : []).map((album: any) => ({
-                value: album.id,
-                label: album.title
-            }));
-            set({ photoAlbumsForSelection: albums });
-        } catch (error) {
-            console.error('Failed to fetch photo albums', error);
-            set({ photoAlbumsForSelection: [] });
-        }
-    },
 
     resetForm: () => {
         set({
@@ -119,15 +96,17 @@ export const useAdminStore = create<AdminState>((set, get) => ({
 
     fetchItems: async () => {
         const activeTab = get().activeTab;
-        const manager = activeTab; // Simplified: manager is the same as the active tab
+        const isContent = activeTab === 'news' || activeTab === 'afisha';
+        const manager = isContent ? 'content' : activeTab;
         const adminListEndpoint = `/api/admin/list/${manager}`;
         try {
             const response = await fetch(API_BASE_URL + adminListEndpoint, { cache: 'no-store' });
-            if (!response.ok) throw new Error('Failed to fetch items');
+            if (!response.ok) throw new Error(`Failed to fetch items. Status: ${response.status}`);
             const data = await response.json();
+            
             const adaptedData = data.map((item: any) => {
-                 if (manager === 'achievements') return { ...item, studentName: item.student_name, image: item.image_src, city: item.city };
-                 if (manager === 'graduates') return { ...item, graduationYear: item.graduation_year, image: item.image_src, isFeatured: !!item.is_featured };
+                 if (activeTab === 'achievements') return { ...item, studentName: item.student_name, image: item.image_src, city: item.city };
+                 if (activeTab === 'graduates') return { ...item, graduationYear: item.graduation_year, image: item.image_src, isFeatured: !!item.is_featured };
                  return item;
             });
             set({ items: adaptedData });
@@ -151,8 +130,7 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         const { name, value, type, checked } = e.target as HTMLInputElement;
         set(state => {
             const newFormData = { ...state.formData };
-            if (name === 'linked_photoalbum_id') newFormData[name] = value === '' ? '' : String(value);
-            else if (type === 'checkbox') newFormData[name] = checked;
+            if (type === 'checkbox') newFormData[name] = checked;
             else newFormData[name] = value;
             if (name === 'title' && !state.editingId) newFormData.slug = createSlug(value);
             return { formData: newFormData };
@@ -163,8 +141,10 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         if (!window.confirm('Удалить это изображение?')) return;
         try {
             const response = await fetch(`${API_BASE_URL}/api/gallery-images/${imageId}`, { method: 'DELETE' });
-            const result = await response.json();
-            if (!response.ok) throw new Error(result.message || 'Не удалось удалить изображение.');
+            if (!response.ok) {
+                const result = await response.json();
+                throw new Error(result.message || 'Не удалось удалить изображение.');
+            }
             set(state => ({
                 formData: { ...state.formData, photos: state.formData.photos.filter((p: any) => p.id !== imageId) },
                 status: { type: 'success', message: 'Изображение успешно удалено.' }
@@ -176,17 +156,14 @@ export const useAdminStore = create<AdminState>((set, get) => ({
 
     requestEdit: async (id) => {
         const { activeTab } = get();
-        const isContentManager = activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum';
+        const isContentManager = activeTab === 'news' || activeTab === 'afisha';
         const apiEndpoint = isContentManager ? '/api/content' : `/api/${activeTab}`;
         try {
             const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`);
             const data = await response.json();
             
-            console.log('DEBUG: Data loaded for editing:', data);
-            
             if (data.date) data.date = formatDateToYYYYMMDD(data.date);
             if (data.linked_photoalbum_id !== null && data.linked_photoalbum_id !== undefined) data.linked_photoalbum_id = String(data.linked_photoalbum_id);
-            if (activeTab === 'photoalbum') data.category = (data.subcategory && data.subcategory !== 'photoalbum') ? data.subcategory : 'другое';
             if (activeTab === 'graduates') data.is_featured = !!data.is_featured;
             
             set({ formData: data, editingId: id, mode: 'form', status: null });
@@ -199,7 +176,7 @@ export const useAdminStore = create<AdminState>((set, get) => ({
     requestDelete: async (id) => {
         if (!window.confirm('Вы уверены, что хотите удалить эту запись?')) return;
         const { activeTab } = get();
-        const isContentManager = activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum';
+        const isContentManager = activeTab === 'news' || activeTab === 'afisha';
         const apiEndpoint = isContentManager ? '/api/content' : `/api/${activeTab}`;
         try {
             const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`, { method: 'DELETE' });
@@ -218,53 +195,28 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         set({ isSubmitting: true, status: null });
         const { editingId, activeTab, formData, selectedFiles } = get();
         
-        console.log('Submitting form. Data:', formData);
-        for (const [key, value] of Object.entries(formData)) {
-            if (typeof value === 'string' && value.length > 500) {
-                console.warn(`Field ${key} is very long: ${value.length} characters`);
-            }
-        }
-        
         try {
             const dataToSend = new FormData();
-            // ... (логика сборки FormData)
+
             for (const key in formData) {
                 if (Object.prototype.hasOwnProperty.call(formData, key)) {
-                     if ((key === 'image_src' && activeTab === 'achievements' && selectedFiles.has('image')) || (key === 'image_src' && activeTab === 'graduates' && selectedFiles.has('image'))) continue;
-                     
                      if (key === 'tags') {
-                         // Проверка длины тегов перед добавлением
                          const tagsValue = formData[key];
                          if (typeof tagsValue === 'string' && tagsValue.length > 500) {
-                             console.warn('Tags field too long, skipping or truncating');
-                             continue; // Или dataToSend.append(key, tagsValue.substring(0, 500));
+                             continue;
                          }
-                         dataToSend.append(key, tagsValue);
-                         continue;
                      }
-
-                     if (key === 'is_featured' && activeTab === 'graduates') dataToSend.append(key, formData[key] ? '1' : '0');
-                     else if (key !== 'linked_photoalbum_id') dataToSend.append(key, formData[key]);
+                     dataToSend.append(key, formData[key]);
                 }
             }
-            if ((activeTab === 'news' || activeTab === 'afisha') && formData.linked_photoalbum_id !== undefined) {
-                dataToSend.append('linked_photoalbum_id', formData.linked_photoalbum_id === '' ? '' : String(Number(formData.linked_photoalbum_id)));
-            }
 
-            if (activeTab === 'photoalbum') {
-                 dataToSend.set('category', 'photoalbum');
-                 let subcatValue = formData.category;
-                 if (Array.isArray(subcatValue)) subcatValue = subcatValue[0];
-                 dataToSend.set('subcategory', String(subcatValue || 'другое'));
-            } else {
-                 dataToSend.set('category', activeTab);
-            }
+            dataToSend.set('category', activeTab);
             
             selectedFiles.forEach((files, name) => {
                 files.forEach(file => dataToSend.append(name, file));
             });
 
-            const isContentManager = activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum';
+            const isContentManager = activeTab === 'news' || activeTab === 'afisha';
             const apiEndpoint = isContentManager ? '/api/content' : `/api/${activeTab}`;
             const url = editingId ? `${API_BASE_URL}${apiEndpoint}/${editingId}` : API_BASE_URL + apiEndpoint;
             
@@ -286,5 +238,5 @@ export const useAdminStore = create<AdminState>((set, get) => ({
     }
 }));
 
-// Fetch initial data or perform side effects
+// Fetch initial data for the default tab
 useAdminStore.getState().fetchItems();

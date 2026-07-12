@@ -12,9 +12,15 @@ interface AdminListProps {
 }
 
 const AdminList: React.FC<AdminListProps> = ({ activeTab, items, handleEditRequest, handleDeleteRequest, resetForm, setMode }) => {
-    const manager = (activeTab === 'news' || activeTab === 'afisha' || activeTab === 'photoalbum') ? 'content' : activeTab;
+    const manager = (activeTab === 'news' || activeTab === 'afisha') ? 'content' : activeTab;
     const filteredItems = manager === 'content' ? items.filter(item => item.category === activeTab) : items;
     const isLibrary = activeTab === 'library';
+
+    console.log(`[AdminList] Rendering for tab: ${activeTab}`);
+    console.log(`[AdminList] Received ${items.length} total items.`);
+    console.log(`[AdminList] Filtered to ${filteredItems.length} items.`);
+    console.log('[AdminList] First received item (if any):', items[0]);
+    console.log('[AdminList] First filtered item (if any):', filteredItems[0]);
 
     return (
         <div>

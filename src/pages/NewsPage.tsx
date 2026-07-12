@@ -6,7 +6,6 @@ import Lightbox from '../components/Lightbox';
 import styles from './NewsPage.module.css';
 import { Helmet } from 'react-helmet-async';
 import { getVersionedAssetUrl } from '../utils/assetVersion';
-import DrumSelector from '../components/DrumSelector';
 
 // Helper to get unique years from news items
 const getUniqueYears = (items: ExtendedNewsItem[]): number[] => {
@@ -104,7 +103,6 @@ function NewsPage() {
 
       <section className={styles.filtersSection}>
         <div className="container">
-          <h3 className={styles.mainFilterLabel}>Фильтры</h3>
           <div className={styles.filterGroup}>
             <div className={styles.buttonRowWrapper}>
               <div className={styles.buttonRow}>
@@ -112,7 +110,7 @@ function NewsPage() {
                   className={`${styles.filterButton} ${selectedYear === 'all' ? styles.filterButtonActive : ''}`} 
                   onClick={(e) => { setSelectedYear('all'); handleFilterClick(e); }}
                 >
-                  Все годы
+                  Все
                 </button>
                 {uniqueYears.map(year => (
                     <button 

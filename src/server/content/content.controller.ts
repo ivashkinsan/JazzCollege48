@@ -7,9 +7,9 @@ import { ContentService } from './content.service.js';
 export class ContentController {
   constructor(private readonly contentService: ContentService) {}
 
-  @Get('admin/list/:manager')
-  getAdminList(@Param('manager') manager: string) {
-    return this.contentService.getAdminList(manager);
+  @Get('admin/list/content')
+  getAdminContentList() {
+    return this.contentService.getAdminContentList();
   }
 
   @Get('news')
