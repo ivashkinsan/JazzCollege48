@@ -200,10 +200,22 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                 <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
                 <div className={styles.formGroup}>
                     <label>Фотографии для галереи (до 100)</label>
+                    {(() => {
+                        console.log('DEBUG Rendering photoalbum:', formData.photos);
+                        return null;
+                    })()}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '10px' }}>
                         {formData.photos && formData.photos.map((photo: any) => (
                             <div key={photo.id} className={styles.thumbnailContainer}>
-                                <img src={getVersionedAssetUrl(photo.src)} alt={`Фото ${photo.id}`} className={styles.thumbnail} />
+                                <img 
+                                    src={getVersionedAssetUrl(photo.src)} 
+                                    alt={`Фото ${photo.id}`} 
+                                    className={styles.thumbnail}
+                                    onError={(e) => {
+                                        console.error('Image load error:', photo.src);
+                                        (e.target as HTMLImageElement).style.display = 'none';
+                                    }}
+                                />
                                 <button 
                                     type="button" 
                                     className={styles.deleteThumbnailButton} 

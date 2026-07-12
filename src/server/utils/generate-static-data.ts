@@ -11,7 +11,7 @@ const dbPath = path.resolve(process.cwd(), 'src/data/database.db');
 const STATIC_DATA_DIR = path.resolve(process.cwd(), 'public/data');
 // --- End Configuration ---
 
-console.log('🚀 Starting static data generation...');
+console.log('🚀 Generating static data...');
 
 export async function generateStaticData() {
     let db: Database.Database | null = null;
@@ -37,7 +37,6 @@ export async function generateStaticData() {
         };
 
         // --- Generate News Data ---
-        console.log('Generating news.json...');
         const newsContentStmt = db.prepare("SELECT * FROM content WHERE category = 'news' ORDER BY date DESC");
         const rawNews = newsContentStmt.all();
         const newsData = rawNews.map((item: any) => {
@@ -56,10 +55,8 @@ export async function generateStaticData() {
             };
         });
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'news.json'), JSON.stringify(newsData, null, 2));
-        console.log('✅ news.json generated.');
 
         // --- Generate Afisha Data ---
-        console.log('Generating afisha.json...');
         const afishaContentStmt = db.prepare("SELECT * FROM content WHERE category = 'afisha' ORDER BY date DESC");
         const rawAfisha = afishaContentStmt.all();
         const afishaData = rawAfisha.map((item: any) => ({
@@ -76,40 +73,32 @@ export async function generateStaticData() {
             linked_photoalbum_id: item.linked_photoalbum_id
         }));
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'afisha.json'), JSON.stringify(afishaData, null, 2));
-        console.log('✅ afisha.json generated.');
 
         // --- Generate Achievements Data ---
-        console.log('Generating achievements.json...');
         const achievementsStmt = db.prepare('SELECT * FROM achievements ORDER BY date DESC');
         const achievementsData = achievementsStmt.all().map((item: any) => ({
             ...item,
             image: item.image_src // Adapt to frontend expectation
         }));
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'achievements.json'), JSON.stringify(achievementsData, null, 2));
-        console.log('✅ achievements.json generated.');
 
         // --- Generate Videos Data ---
-        console.log('Generating videos.json...');
         const videosStmt = db.prepare('SELECT * FROM videos ORDER BY date DESC');
         const videosData = videosStmt.all().map((item: any) => ({
             ...item,
             videoUrl: item.video_url // Adapt to frontend expectation
         }));
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'videos.json'), JSON.stringify(videosData, null, 2));
-        console.log('✅ videos.json generated.');
 
         // --- Generate Library Data ---
-        console.log('Generating library.json...');
         const libraryLinksStmt = db.prepare('SELECT * FROM library_links ORDER BY category, title');
         const libraryLinks = libraryLinksStmt.all();
         const categoryStmt = db.prepare('SELECT DISTINCT category FROM library_links ORDER BY category');
         const categories = categoryStmt.all().map((cat: any) => cat.category);
         const libraryData = { links: libraryLinks, categories: categories };
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'library.json'), JSON.stringify(libraryData, null, 2));
-        console.log('✅ library.json generated.');
 
         // --- Generate Photo Albums Data ---
-        console.log('Generating photoalbums.json...');
         const albumsStmt = db.prepare(`
             SELECT id, slug, title, date, category, subcategory
             FROM content
@@ -128,10 +117,8 @@ export async function generateStaticData() {
             };
         });
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'photoalbums.json'), JSON.stringify(photoalbumsData, null, 2));
-        console.log('✅ photoalbums.json generated.');
 
         // --- Generate Graduates Data ---
-        console.log('Generating graduates.json...');
         const graduatesStmt = db.prepare('SELECT * FROM graduates ORDER BY graduation_year DESC, name ASC');
         const graduatesData = graduatesStmt.all().map((item: any) => ({
             ...item,
@@ -140,7 +127,6 @@ export async function generateStaticData() {
             isFeatured: Boolean(item.is_featured)
         }));
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'graduates.json'), JSON.stringify(graduatesData, null, 2));
-        console.log('✅ graduates.json generated.');
 
         console.log('🎉 Static data generation complete.');
 
@@ -150,7 +136,6 @@ export async function generateStaticData() {
     } finally {
         if (db) {
             db.close();
-            console.log('Database connection closed.');
         }
     }
 }

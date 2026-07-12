@@ -97,7 +97,8 @@ export const useAdminStore = create<AdminState>((set, get) => ({
             const response = await fetch(`${API_BASE_URL}/api/admin/list/photoalbum`, { cache: 'no-store' });
             if (!response.ok) throw new Error('Failed to fetch albums');
             const data = await response.json();
-            const albums = data.map((album: any) => ({
+            console.log('Fetched albums:', data); // Добавлено логирование
+            const albums = (Array.isArray(data) ? data : []).map((album: any) => ({
                 value: album.id,
                 label: album.title
             }));
@@ -180,6 +181,9 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         try {
             const response = await fetch(`${API_BASE_URL}${apiEndpoint}/${id}`);
             const data = await response.json();
+            
+            console.log('DEBUG: Data loaded for editing:', data);
+            
             if (data.date) data.date = formatDateToYYYYMMDD(data.date);
             if (data.linked_photoalbum_id !== null && data.linked_photoalbum_id !== undefined) data.linked_photoalbum_id = String(data.linked_photoalbum_id);
             if (activeTab === 'photoalbum') data.category = (data.subcategory && data.subcategory !== 'photoalbum') ? data.subcategory : 'другое';
@@ -214,12 +218,31 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         set({ isSubmitting: true, status: null });
         const { editingId, activeTab, formData, selectedFiles } = get();
         
+        console.log('Submitting form. Data:', formData);
+        for (const [key, value] of Object.entries(formData)) {
+            if (typeof value === 'string' && value.length > 500) {
+                console.warn(`Field ${key} is very long: ${value.length} characters`);
+            }
+        }
+        
         try {
             const dataToSend = new FormData();
-            // This logic is complex and needs to be carefully ported from AdminApp
+            // ... (логика сборки FormData)
             for (const key in formData) {
                 if (Object.prototype.hasOwnProperty.call(formData, key)) {
                      if ((key === 'image_src' && activeTab === 'achievements' && selectedFiles.has('image')) || (key === 'image_src' && activeTab === 'graduates' && selectedFiles.has('image'))) continue;
+                     
+                     if (key === 'tags') {
+                         // Проверка длины тегов перед добавлением
+                         const tagsValue = formData[key];
+                         if (typeof tagsValue === 'string' && tagsValue.length > 500) {
+                             console.warn('Tags field too long, skipping or truncating');
+                             continue; // Или dataToSend.append(key, tagsValue.substring(0, 500));
+                         }
+                         dataToSend.append(key, tagsValue);
+                         continue;
+                     }
+
                      if (key === 'is_featured' && activeTab === 'graduates') dataToSend.append(key, formData[key] ? '1' : '0');
                      else if (key !== 'linked_photoalbum_id') dataToSend.append(key, formData[key]);
                 }
@@ -246,10 +269,14 @@ export const useAdminStore = create<AdminState>((set, get) => ({
             const url = editingId ? `${API_BASE_URL}${apiEndpoint}/${editingId}` : API_BASE_URL + apiEndpoint;
             
             const response = await fetch(url, { method: 'POST', body: dataToSend });
-            const result = await response.json();
-            if (!response.ok) throw new Error(result.message || 'Server error');
             
-            set({ status: { type: 'success', message: 'Успешно сохранено!' }, mode: 'list' });
+            if (!response.ok) {
+                const result = await response.json();
+                console.error('Server error response:', result);
+                throw new Error(result.message || 'Server error');
+            }
+            
+            set({ status: { type: 'success', message: 'Успешно сохранено!' }, mode: 'list', selectedFiles: new Map() });
             get().fetchItems();
         } catch (error: any) {
             set({ status: { type: 'error', message: error.message } });

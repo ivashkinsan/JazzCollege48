@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const MEDIA_TARGET_ROOT = path.resolve(__dirname, '../../../../public/media');
+const MEDIA_TARGET_ROOT = path.resolve(__dirname, '../../../public/media');
 
 @Injectable()
 export class ContentService {
@@ -133,7 +133,9 @@ export class ContentService {
 
     const existingSlugStmt = this.db.prepare("SELECT id FROM content WHERE slug = ?");
     if (existingSlugStmt.get(slug)) {
-      slug = `${slug}-${Date.now()}`;
+      // Вместо Date.now(), просто добавляем суффикс или оставляем как есть, если это допустимо.
+      // Лучше всего - выдавать ошибку или использовать существующий slug, если это обновление.
+      // Для createContent оставим просто slug, так как БД должна гарантировать уникальность.
     }
 
     const year = new Date(date).getFullYear().toString();
@@ -168,12 +170,14 @@ export class ContentService {
       insertGalleryImageStmt.run(newContentId, coverImageSrc, title);
     }
 
-    for (const imageFile of galleryImageFiles) {
-      const newPath = path.join(imageDirPath, imageFile.originalname);
-      await fs.copyFile(imageFile.path, newPath);
-      await fs.unlink(imageFile.path);
-      const imageSrc = path.join("/media", imageDir, imageFile.originalname).replace(/\\/g, "/");
-      insertGalleryImageStmt.run(newContentId, imageSrc, title);
+    if (galleryImageFiles.length > 0) {
+      for (const imageFile of galleryImageFiles) {
+        const newPath = path.join(imageDirPath, imageFile.originalname);
+        await fs.copyFile(imageFile.path, newPath);
+        await fs.unlink(imageFile.path);
+        const imageSrc = path.join("/media", imageDir, imageFile.originalname).replace(/\\/g, "/");
+        insertGalleryImageStmt.run(newContentId, imageSrc, title);
+      }
     }
     
     await generateStaticData();
@@ -203,7 +207,10 @@ export class ContentService {
     }
 
     const galleryImageFiles = files?.galleryImages || [];
-    if (category === "photoalbum" && galleryImageFiles.length > 0) {
+    
+    // Если есть новые файлы, сохраняем их
+    if (galleryImageFiles.length > 0) {
+      console.log(`[DEBUG] Found ${galleryImageFiles.length} new gallery files to process.`);
       const year = new Date(date).getFullYear().toString();
       const imageDir = path.join(year, `${date}-${slug}`);
       const imageDirPath = path.join(MEDIA_TARGET_ROOT, imageDir);
@@ -211,11 +218,23 @@ export class ContentService {
 
       const insertGalleryImageStmt = this.db.prepare(`INSERT INTO gallery_images (content_id, src, title) VALUES (?, ?, ?)`);
       for (const imageFile of galleryImageFiles) {
-        const newPath = path.join(imageDirPath, imageFile.originalname);
-        await fs.copyFile(imageFile.path, newPath);
-        await fs.unlink(imageFile.path);
         const imageSrc = path.join("/media", imageDir, imageFile.originalname).replace(/\\/g, "/");
-        insertGalleryImageStmt.run(id, imageSrc, title);
+        // Проверка на дубликаты
+        const existing = this.db.prepare("SELECT id FROM gallery_images WHERE content_id = ? AND src = ?").get(id, imageSrc);
+        if (!existing) {
+          const newPath = path.join(imageDirPath, imageFile.originalname);
+          try {
+              console.log(`[DEBUG] Moving '${imageFile.path}' to '${newPath}'`);
+              await fs.rename(imageFile.path, newPath);
+              console.log(`[DEBUG] -> Moved successfully. Inserting into DB.`);
+              insertGalleryImageStmt.run(id, imageSrc, title);
+          } catch (err) {
+              console.error("[ERROR] Error moving gallery image:", err);
+              continue; 
+          }
+        } else {
+            console.log(`[DEBUG] Skipping duplicate DB entry for: ${imageSrc}`);
+        }
       }
     }
 
