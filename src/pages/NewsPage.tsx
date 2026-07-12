@@ -1,43 +1,64 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { loadNews } from '../data';
 import type { ExtendedNewsItem } from '../types/college';
 import Lightbox from '../components/Lightbox';
 import styles from './NewsPage.module.css';
 import { Helmet } from 'react-helmet-async';
-import { searchNews } from '../utils/search';
 import { getVersionedAssetUrl } from '../utils/assetVersion';
+import DrumSelector from '../components/DrumSelector';
 
-const categoryLabels: Record<string, string> = {
-  konzert: '🎵 Концерт',
-  konkurs: '🏆 Конкурс',
-  masterclass: '🎓 Мастер-класс',
-  announcement: '📢 Объявление',
-  '["news"]': 'Новости'
+// Helper to get unique years from news items
+const getUniqueYears = (items: ExtendedNewsItem[]): number[] => {
+  const years = items.map(item => new Date(item.date).getFullYear()).filter(year => !isNaN(year));
+  return [...new Set(years)].sort((a, b) => b - a);
 };
+
+// Static categories for filtering
+const FILTER_CATEGORIES = ['все', 'концерты', 'мастер-классы', 'конкурсы', 'разное'];
+const MAIN_CATEGORIES = ['концерты', 'мастер-классы', 'конкурсы'];
 
 function NewsPage() {
   const [newsData, setNewsData] = useState<ExtendedNewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const [expandedNews, setExpandedNews] = useState<string | null>(null);
+  // Filter states
+  const [selectedYear, setSelectedYear] = useState<number | 'all'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('все');
+
+  // Lightbox states
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [searchQuery, setSearchQuery] = useState(''); // New state for search query
 
+  // Memoized values for filters
+  const uniqueYears = useMemo(() => getUniqueYears(newsData), [newsData]);
+  
   useEffect(() => {
-    loadNews().then(setNewsData);
+    setLoading(true);
+    loadNews().then(data => {
+      setNewsData(data);
+      setLoading(false);
+    });
   }, []);
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const filteredNews = searchNews(searchQuery, newsData); // Use searchNews function directly on newsData
-
-  const toggleExpand = (id: string) => {
-    setExpandedNews(expandedNews === id ? null : id);
-  };
+  // Combined filtering logic
+  const filteredNews = useMemo(() => {
+    return newsData.filter(item => {
+      const yearMatch = selectedYear === 'all' || new Date(item.date).getFullYear() === selectedYear;
+      
+      let categoryMatch = true;
+      if (selectedCategory === 'все') {
+        categoryMatch = true;
+      } else if (selectedCategory === 'разное') {
+        categoryMatch = !MAIN_CATEGORIES.includes(item.subcategory || '');
+      } else {
+        categoryMatch = item.subcategory === selectedCategory;
+      }
+      
+      return yearMatch && categoryMatch;
+    });
+  }, [newsData, selectedYear, selectedCategory]);
 
   const openLightbox = (images: string[], index: number) => {
     setLightboxImages(images);
@@ -45,137 +66,121 @@ function NewsPage() {
     setLightboxOpen(true);
   };
 
+  const handleFilterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.currentTarget.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+      block: 'nearest'
+    });
+  };
+  
+  if (loading) {
+    return (
+        <div className={styles.page}>
+            <section className={styles.hero}>
+                <div className="container">
+                    <h1 className={styles.title}>Новости</h1>
+                    <p className={styles.subtitle}>Загрузка событий...</p>
+                </div>
+            </section>
+        </div>
+    );
+  }
+
   return (
     <div className={styles.page}>
       <Helmet>
-        <title>Новости отделения - JazzCollege48</title>
-        <meta name="description" content="Последние новости, события, мастер-классы и концерты эстрадного отделения Липецкого колледжа искусств." />
+        <title>Новости и события - JazzCollege48</title>
+        <meta name="description" content="Все события, новости, фотоотчеты, мастер-классы и концерты эстрадного отделения Липецкого колледжа искусств." />
       </Helmet>
       <section className={styles.hero}>
         <div className="container">
-          <h1 className={styles.title}>Новости отделения</h1>
+          <h1 className={styles.title}>Новости и события</h1>
           <p className={styles.subtitle}>
-            Концерты, мастер-классы, конкурсы и события эстрадного отделения
+            Концерты, мастер-классы, конкурсы и все события эстрадного отделения
           </p>
         </div>
       </section>
 
-      <section className={styles.searchSection}>
+      <section className={styles.filtersSection}>
         <div className="container">
-          <input
-            type="text"
-            placeholder="Поиск новостей..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className={styles.searchInput}
-          />
+          <h3 className={styles.mainFilterLabel}>Фильтры</h3>
+          <div className={styles.filterGroup}>
+            <div className={styles.buttonRowWrapper}>
+              <div className={styles.buttonRow}>
+                <button 
+                  className={`${styles.filterButton} ${selectedYear === 'all' ? styles.filterButtonActive : ''}`} 
+                  onClick={(e) => { setSelectedYear('all'); handleFilterClick(e); }}
+                >
+                  Все годы
+                </button>
+                {uniqueYears.map(year => (
+                    <button 
+                      key={year} 
+                      className={`${styles.filterButton} ${selectedYear === year ? styles.filterButtonActive : ''}`} 
+                      onClick={(e) => { setSelectedYear(year); handleFilterClick(e); }}
+                    >
+                      {year}
+                    </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className={styles.filterGroup}>
+            <div className={styles.buttonRowWrapper}>
+              <div className={styles.buttonRow}>
+                {FILTER_CATEGORIES.map(category => (
+                    <button 
+                      key={category} 
+                      className={`${styles.filterButton} ${selectedCategory === category ? styles.filterButtonActive : ''}`} 
+                      onClick={(e) => { setSelectedCategory(category); handleFilterClick(e); }}
+                    >
+                      {category}
+                    </button>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className={styles.newsSection}>
         <div className="container">
           <div className={styles.resultsInfo}>
-            {filteredNews.length} {filteredNews.length === 1 ? 'новость' : filteredNews.length < 5 ? 'новости' : 'новостей'}
+            Найдено: {filteredNews.length} {filteredNews.length === 1 ? 'событие' : (filteredNews.length > 1 && filteredNews.length < 5) ? 'события' : 'событий'}
           </div>
 
           {filteredNews.length === 0 ? (
-            <p className={styles.empty}>Новостей в этой категории пока нет</p>
+            <p className={styles.empty}>Событий по выбранным фильтрам не найдено.</p>
           ) : (
             <div className={styles.newsGrid}>
               {filteredNews.map((item) => {
                 const date = new Date(item.date);
-                const dateStr = date.toLocaleDateString('ru-RU', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                });
-                const isExpanded = expandedNews === item.id;
-                // Removed 'hasGallery' variable
-                // const hasGallery = item.gallery && item.gallery.length > 0;
-
-                // FIX: Extract src strings from Photo objects
-                const allImages = Array.from(new Set([
-                  item.cover?.src,
-                  ...(item.gallery?.map(p => p.src) || [])
-                ].filter((src): src is string => !!src))).map(img => getVersionedAssetUrl(img));
+                const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+                const allImages = Array.from(new Set(item.gallery?.map(p => p.src) || [])).filter(Boolean).map(img => getVersionedAssetUrl(img as string));
+                const coverImage = item.cover?.src ? getVersionedAssetUrl(item.cover.src) : allImages[0];
 
                 return (
                   <article key={item.id} className={styles.newsCard}>
-                    {/* Обложка */}
-                    <div 
-                      className={styles.newsCardCover}
-                      onClick={() => allImages.length > 0 && openLightbox(allImages, 0)}
-                    >
-                      {item.cover?.src ? (
-                        <img src={getVersionedAssetUrl(item.cover.src)} alt={item.title} loading="lazy" />
+                    <div className={styles.newsCardCover} onClick={() => allImages.length > 0 && openLightbox(allImages, 0)}>
+                      {coverImage ? (
+                        <img src={coverImage} alt={item.title} loading="lazy" />
                       ) : (
                         <div className={styles.newsCardCoverPlaceholder}>
-                          <span className={styles.coverPlaceholderIcon}>
-                            {item.category === 'konzert' && '🎵'}
-                            {item.category === 'konkurs' && '🏆'}
-                            {item.category === 'masterclass' && '🎓'}
-                            {item.category === 'announcement' && '📢'}
-                            {!item.category && '📰'}
-                          </span>
+                          <span className={styles.coverPlaceholderIcon}>📰</span>
                         </div>
                       )}
-                      {item.cover?.src && (
-                        <div className={styles.coverOverlay}>
-                          <span>🔍</span>
-                        </div>
-                      )}
+                      {coverImage && <div className={styles.coverOverlay}><span>🔍</span></div>}
                     </div>
 
                     <div className={styles.newsCardContent}>
-                      {/* Категория и дата */}
                       <div className={styles.newsCardMeta}>
-                        {item.category && (
-                          <span className={styles.newsCardCategory}>
-                            {categoryLabels[item.category] || item.category}
-                          </span>
-                        )}
+                        {item.subcategory && <span className={styles.newsCardCategory}>{item.subcategory}</span>}
                         <div className={styles.newsCardDate}>{dateStr}</div>
                       </div>
-
-                      <h3 className={styles.newsCardTitle}>{item.title}</h3>
-                      <p className={styles.newsCardDescription}>
-                        {isExpanded ? item.content : item.description}
-                        {item.content && item.content.length > item.description.length && !isExpanded && '...'}
-                      </p>
-
-                      {/* Gallery Thumbnails */}
-                      {isExpanded && item.gallery && item.gallery.length > 1 && (
-                        <div className={styles.newsCardGallery}>
-                          {item.gallery.map((photo, idx) => {
-                            // Skip the cover image if it's also in the gallery
-                            if (photo.src === item.cover?.src) return null;
-                            
-                            const imagePath = getVersionedAssetUrl(photo.src);
-                            const imageIndexInGallery = allImages.findIndex(src => src === imagePath);
-                            
-                            return (
-                              <img
-                                key={photo.src}
-                                src={imagePath}
-                                alt={`${item.title} - фото ${idx + 1}`}
-                                className={styles.newsCardGalleryImage}
-                                onClick={() => openLightbox(allImages, imageIndexInGallery)}
-                                loading="lazy"
-                              />
-                            );
-                          })}
-                        </div>
-                      )}
-
-                      {/* Кнопка развернуть/свернуть */}
-                      {item.content && item.content.length > item.description.length && (
-                        <button
-                          className={styles.expandBtn}
-                          onClick={() => toggleExpand(item.id)}
-                        >
-                          {isExpanded ? 'Свернуть' : 'Читать далее →'}
-                        </button>
-                      )}
+                      <h3 className={styles.newsCardTitle}><Link to={`/news/${item.slug}`}>{item.title}</Link></h3>
+                      {item.description && <p className={styles.newsCardDescription}>{item.description}...</p>}
+                      <Link to={`/news/${item.slug}`} className={styles.expandBtn}>Подробнее →</Link>
                     </div>
                   </article>
                 );
@@ -185,21 +190,7 @@ function NewsPage() {
         </div>
       </section>
 
-      <footer className={styles.pageFooter}>
-        <div className="container">
-          <Link to="/" className={styles.backLink}>
-            ← На главную
-          </Link>
-        </div>
-      </footer>
-
-      {/* Lightbox */}
-      <Lightbox
-        images={lightboxImages}
-        initialIndex={lightboxIndex}
-        isOpen={lightboxOpen}
-        onClose={() => setLightboxOpen(false)}
-      />
+      <Lightbox images={lightboxImages} initialIndex={lightboxIndex} isOpen={lightboxOpen} onClose={() => setLightboxOpen(false)} />
     </div>
   );
 }

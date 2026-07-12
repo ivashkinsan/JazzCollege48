@@ -18,11 +18,11 @@ import Admission from './components/Admission';
 import Contacts from './components/Contacts';
 import GraduatesPage from './pages/GraduatesPage';
 import AdminPage from './pages/AdminPage';
-import PhotosPage from './pages/PhotosPage';
 import VideosPage from './pages/VideosPage';
 import VideosPage2 from './pages/VideosPage2';
 import DaiPage from './pages/DaiPage';
 import DepartmentPage from './pages/DepartmentPage';
+import NewsDetailPage from './pages/NewsDetailPage';
 import NewsPage from './pages/NewsPage';
 import AfishaPage from './pages/AfishaPage';
 import LibraryPage from './pages/LibraryPage';
@@ -85,12 +85,12 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/news" element={<NewsPage />} />
+            <Route path="/news/:slug" element={<NewsDetailPage />} />
             <Route path="/afisha" element={<AfishaPage />} />
             <Route path="/graduates" element={<GraduatesPage />} />
             <Route path="/dai" element={<DaiPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/department" element={<DepartmentPage />} />
-            <Route path="/photos" element={<PhotosPage />} />
             <Route path="/videos" element={<VideosPage />} />
             <Route path="/videos2" element={<VideosPage2 />} />
             <Route path="/library" element={<LibraryPage />} />

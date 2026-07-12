@@ -21,7 +21,6 @@ export const navigation: NavigationEntry[] = [
     id: "media",
     label: "Медиа",
     items: [
-      { id: "photos", label: "Фото", href: "/photos" },
       { id: "videos", label: "Видео", href: "/videos" },
       { id: "library", label: "Библиотека", href: "/library" },
     ],

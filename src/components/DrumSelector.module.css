@@ -1,0 +1,77 @@
+.selectorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.selectorLabel {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+}
+
+.drum {
+    height: 200px;
+    width: 180px;
+    position: relative;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--color-bg-tertiary);
+    
+    /* 3D контекст */
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+}
+
+.drumList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 100%;
+    overflow-y: scroll;
+    
+    /* Скрытие скроллбара */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.drumList::-webkit-scrollbar {
+    display: none;
+}
+
+.drumItem {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--color-text);
+    
+    position: absolute;
+    top: 80px; /* (container_height - item_height) / 2 */
+    left: 0;
+    right: 0;
+    
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    
+    transition: opacity 0.3s;
+}
+
+.highlight {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 40px;
+    transform: translateY(-50%);
+    border-top: 2px solid var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
+    pointer-events: none;
+    background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+    
+    /* Маска, чтобы скрыть выходящие за пределы барабана элементы */
+    mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+}

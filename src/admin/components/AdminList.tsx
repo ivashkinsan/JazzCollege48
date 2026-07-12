@@ -34,8 +34,11 @@ const AdminList: React.FC<AdminListProps> = ({ activeTab, items, handleEditReque
                         {activeTab === 'graduates' && <th>Место работы/учебы</th>}
                         {activeTab === 'graduates' && <th>Биография</th>}
                         {activeTab === 'graduates' && <th>Наша гордость</th>}
-                        {!['graduates', 'photoalbum'].includes(activeTab) && <th>{isLibrary ? 'Категория' : 'Дата'}</th>}
-                        {activeTab === 'photoalbum' && <th>Подкатегория</th>}
+                        {!['graduates', 'news'].includes(activeTab) && <th>{isLibrary ? 'Категория' : 'Дата'}</th>}
+                        {activeTab === 'news' && <>
+                            <th>Дата</th>
+                            <th>Подкатегория</th>
+                        </>}
                         <th>Действия</th>
                     </tr>
                 </thead>
@@ -54,8 +57,11 @@ const AdminList: React.FC<AdminListProps> = ({ activeTab, items, handleEditReque
                             {activeTab === 'graduates' && <td>{item.workplace || 'N/A'}</td>}
                             {activeTab === 'graduates' && <td>{item.bio ? item.bio.substring(0, 30) + '...' : 'N/A'}</td>}
                             {activeTab === 'graduates' && <td>{item.isFeatured ? 'Да' : 'Нет'}</td>}
-                            {!['graduates', 'photoalbum'].includes(activeTab) && <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>}
-                            {activeTab === 'photoalbum' && <td>{(item.subcategory && item.subcategory !== 'null') ? item.subcategory : 'другое'}</td>}
+                            {!['graduates', 'news'].includes(activeTab) && <td>{isLibrary ? item.category : (item.date ? new Date(item.date).toLocaleDateString() : '')}</td>}
+                            {activeTab === 'news' && <>
+                                <td>{item.date ? new Date(item.date).toLocaleDateString() : ''}</td>
+                                <td>{(item.subcategory && item.subcategory !== 'null') ? item.subcategory : '—'}</td>
+                            </>}
                             <td>
                                 <div style={{ display: 'flex', gap: '5px' }}>
                                     <button onClick={() => handleEditRequest(item.id)} className={`${styles.actionButton} ${styles.editButton}`}>Редактировать</button>

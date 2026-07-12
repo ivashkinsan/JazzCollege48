@@ -17,6 +17,13 @@
 | 7 | [Стили и дизайн](./07-styles-design.md) | `07-styles-design.md` | CSS-модули, дизайн-система, переменные |
 | 8 | [Сборка и деплой](./08-build-deploy.md) | `08-build-deploy.md` | GitHub Pages, asset(), устранение проблем |
 | 9 | [Парсинг данных](./09-data-parsing.md) | `09-data-parsing.md` | Детальное описание логики парсинга Markdown |
+| 10 | [Реализация SQL](./10-sql-implementation.md) | `10-sql-implementation.md` | Переход на SQLite, структура БД, CRUD |
+| 11 | [Недавние изменения](./11-recent-changes.md) | `11-recent-changes.md` | Обновления за июнь 2026 |
+| 12 | [Админ-панель](./12-admin-panel-updates.md) | `12-admin-panel-updates.md` | Обновления админ-панели |
+| 13 | [Бэкенд-рефакторинг](./13-backend-refactoring-and-features.md) | `13-backend-refactoring-and-features.md` | Улучшения и новые функции бэкенда |
+| 14 | [Миграция на NestJS](./14-backend-nestjs-migration.md) | `14-backend-nestjs-migration.md` | Переход бэкенда на NestJS |
+| 15 | [Управление контентом](./15-content-media-workflow.md) | `15-content-media-workflow.md` | Рабочий процесс с контентом и медиа |
+| 16 | [Фильтры новостей](./16-news-page-filters.md) | `16-news-page-filters.md` | Реализация UI и поведения фильтров |
 
 ---
 

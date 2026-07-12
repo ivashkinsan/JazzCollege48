@@ -36,16 +36,18 @@ export async function generateStaticData() {
             }));
         };
 
-        // --- Generate News Data ---
-        const newsContentStmt = db.prepare("SELECT * FROM content WHERE category = 'news' ORDER BY date DESC");
-        const rawNews = newsContentStmt.all();
-        const newsData = rawNews.map((item: any) => {
+        // --- Generate News Data (News + Photo Albums) ---
+        const contentStmt = db.prepare("SELECT * FROM content WHERE category = 'news' ORDER BY date DESC");
+        const rawContent = contentStmt.all();
+        const newsData = rawContent.map((item: any) => {
+            // Logic for gallery images remains the same, as it's fetched by content_id
             const ownPhotos = getGalleryImages(item.id);
             const albumPhotos = item.linked_photoalbum_id ? getGalleryImages(item.linked_photoalbum_id) : [];
             
             const combinedGallery = [...ownPhotos, ...albumPhotos];
-            const uniqueGallery = Array.from(new Map(combinedGallery.map(p => [p.src, p])).values());
+            const uniqueGallery = Array.from(new Map(combinedGallery.map((p: any) => [p.src, p])).values());
 
+            // For photo albums, the body might be empty. This is fine.
             return {
                 id: item.id.toString(),
                 slug: item.slug,
@@ -54,9 +56,14 @@ export async function generateStaticData() {
                 description: item.body?.slice(0, 250).replace(/[#*_~`]/g, '').trim() || '',
                 content: item.body,
                 category: item.category,
-                cover: item.cover_image_src ? { src: item.cover_image_src, title: item.title } : undefined,
+                // Ensure photo albums also get a proper cover image from their gallery if cover_image_src is missing
+                cover: item.cover_image_src 
+                    ? { src: item.cover_image_src, title: item.title } 
+                    : (uniqueGallery.length > 0 ? { src: uniqueGallery[0].src, title: item.title } : undefined),
                 gallery: uniqueGallery,
-                linked_photoalbum_id: item.linked_photoalbum_id
+                linked_photoalbum_id: item.linked_photoalbum_id,
+                // Add subcategory for filtering on the frontend
+                subcategory: item.subcategory 
             };
         });
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'news.json'), JSON.stringify(newsData, null, 2));
@@ -102,26 +109,6 @@ export async function generateStaticData() {
         const categories = categoryStmt.all().map((cat: any) => cat.category);
         const libraryData = { links: libraryLinks, categories: categories };
         await fs.writeFile(path.join(STATIC_DATA_DIR, 'library.json'), JSON.stringify(libraryData, null, 2));
-
-        // --- Generate Photo Albums Data ---
-        const albumsStmt = db.prepare(`
-            SELECT id, slug, title, date, category, subcategory
-            FROM content
-            WHERE category = 'photoalbum'
-            ORDER BY date DESC
-        `);
-        const albumsFromDb = albumsStmt.all();
-        const photoalbumsData = albumsFromDb.map((album: any) => {
-            const photos = getPhotoalbumPhotos(album.id);
-            return {
-                albumId: album.slug,
-                albumTitle: album.title,
-                albumDate: album.date,
-                albumCategory: album.subcategory || album.category, // Use subcategory, fallback to category
-                photos: photos,
-            };
-        });
-        await fs.writeFile(path.join(STATIC_DATA_DIR, 'photoalbums.json'), JSON.stringify(photoalbumsData, null, 2));
 
         // --- Generate Graduates Data ---
         const graduatesStmt = db.prepare('SELECT * FROM graduates ORDER BY graduation_year DESC, name ASC');

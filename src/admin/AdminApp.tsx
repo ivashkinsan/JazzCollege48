@@ -14,7 +14,6 @@ const TABS: { key: TabType, label: string }[] = [
     { key: 'graduates', label: 'Выпускники' },
     { key: 'videos', label: 'Видео' },
     { key: 'library', label: 'Библиотека' },
-    { key: 'photoalbum', label: 'Фотоальбомы' },
 ];
 
 const AdminApp: React.FC = () => {

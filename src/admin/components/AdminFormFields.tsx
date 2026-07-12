@@ -184,62 +184,6 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                 <div className={styles.formGroup}><label>Описание</label><textarea name="description" value={formData.description || ''} onChange={handleInputChange} rows={3}></textarea></div>
             </>
         );
-        case 'photoalbum': return (
-            <>
-                <div className={styles.formGroup}><label>Заголовок</label><input type="text" name="title" value={formData.title || ''} onChange={handleInputChange} required /></div>
-                <div className={styles.formGroup}><label>URL (slug)</label><input type="text" name="slug" value={formData.slug || ''} onChange={handleInputChange} required /></div>
-                <div className={styles.formGroup}><label>Дата</label><input type="date" name="date" value={formData.date || ''} onChange={handleInputChange} required /></div>
-                <div className={styles.formGroup}>
-                    <label>Категория</label>
-                    <select name="category" value={formData.category || 'другое'} onChange={handleInputChange}>
-                        {['концерты', 'мастер-классы', 'конкурсы', 'будни', 'выпускные', 'другое'].map(cat => (
-                            <option key={cat} value={cat}>{cat}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
-                <div className={styles.formGroup}>
-                    <label>Фотографии для галереи (до 100)</label>
-                    {(() => {
-                        console.log('DEBUG Rendering photoalbum:', formData.photos);
-                        return null;
-                    })()}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '10px' }}>
-                        {formData.photos && formData.photos.map((photo: any) => (
-                            <div key={photo.id} className={styles.thumbnailContainer}>
-                                <img 
-                                    src={getVersionedAssetUrl(photo.src)} 
-                                    alt={`Фото ${photo.id}`} 
-                                    className={styles.thumbnail}
-                                    onError={(e) => {
-                                        console.error('Image load error:', photo.src);
-                                        (e.target as HTMLImageElement).style.display = 'none';
-                                    }}
-                                />
-                                <button 
-                                    type="button" 
-                                    className={styles.deleteThumbnailButton} 
-                                    onClick={() => handleDeleteImage(photo.id)}
-                                    title="Удалить изображение"
-                                >
-                                    &times;
-                                </button>
-                            </div>
-                        ))}
-                        {selectedFiles.get('galleryImages') && selectedFiles.get('galleryImages')!.map((file, index) => (
-                            <div key={file.name + index} className={styles.thumbnailContainer}>
-                                <img src={URL.createObjectURL(file)} alt={`Новая ${file.name}`} className={styles.thumbnail} onLoad={() => URL.revokeObjectURL(file.name)} />
-                                <span className={styles.newFileIndicator}>Новое</span>
-                            </div>
-                        ))}
-                    </div>
-                    <div className={styles.fileInputWrapper}>
-                            <label className={styles.fileInputLabel} htmlFor="galleryImagesInput">Выберите файлы</label>
-                            <input id="galleryImagesInput" type="file" name="galleryImages" multiple onChange={handleFileChange} accept="image/*" />
-                        </div>
-                </div>
-            </>
-        );
         default: return <p>Форма для этого раздела еще не реализована.</p>;
     }
 };

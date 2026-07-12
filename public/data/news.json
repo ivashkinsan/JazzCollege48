@@ -13,27 +13,12 @@
     },
     "gallery": [
       {
-        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_5.jpg",
-        "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
-      },
-      {
-        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_4.jpg",
-        "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
-      },
-      {
-        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_3.jpg",
-        "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
-      },
-      {
         "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_2.jpg",
-        "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
-      },
-      {
-        "src": "/media/2026/2026-06-13-dmitriy-nikolaevich-na-forume-pedagogov-mjf2026/13-06-2026_Kokshin_MJF2026_1.jpg",
         "title": "Дмитрий Николаевич на форуме педагогов MJF2026"
       }
     ],
-    "linked_photoalbum_id": 38
+    "linked_photoalbum_id": 38,
+    "subcategory": null
   },
   {
     "id": "11",
@@ -61,7 +46,8 @@
         "title": "✨ Поздравляем победителей ✨"
       }
     ],
-    "linked_photoalbum_id": 28
+    "linked_photoalbum_id": 28,
+    "subcategory": "null"
   },
   {
     "id": "10",
@@ -89,7 +75,8 @@
         "title": "12 марта завершился наш джазовый марафон! Концерт «Весна в ритмах джаза» по Пушкинской карте"
       }
     ],
-    "linked_photoalbum_id": 27
+    "linked_photoalbum_id": 27,
+    "subcategory": "null"
   },
   {
     "id": "9",
@@ -105,27 +92,12 @@
     },
     "gallery": [
       {
-        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/cover.jpg",
-        "title": "🎶 Весна пришла в ритме джаза! 🎶"
-      },
-      {
-        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/gallery-1.jpg",
-        "title": "🎶 Весна пришла в ритме джаза! 🎶"
-      },
-      {
-        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/gallery-2.jpg",
-        "title": "🎶 Весна пришла в ритме джаза! 🎶"
-      },
-      {
-        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/gallery-3.jpg",
-        "title": "🎶 Весна пришла в ритме джаза! 🎶"
-      },
-      {
-        "src": "/media/2026/2026-03-06-vesna-v-ritme-dzhaza/gallery-4.jpg",
-        "title": "🎶 Весна пришла в ритме джаза! 🎶"
+        "src": "/media/2026/2026-03-10-priglashenie-vesna-v-ritme-dzhaza/cover.jpg",
+        "title": "11, 12 марта приглашаем на концерт «Весна в ритмах джаза…» тех, кто не смог 6-го марта"
       }
     ],
-    "linked_photoalbum_id": 25
+    "linked_photoalbum_id": 25,
+    "subcategory": "null"
   },
   {
     "id": "8",
@@ -161,7 +133,8 @@
         "title": "🎶 Весна пришла в ритме джаза! 🎶"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
   },
   {
     "id": "3",
@@ -181,7 +154,8 @@
         "title": "Студенты и преподаватели на сцене"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
   },
   {
     "id": "7",
@@ -205,7 +179,8 @@
         "title": "В колледже искусств состоялся мастер-класс Ивана Чаги, победителя XX Международного конкурса"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
   },
   {
     "id": "6",
@@ -241,7 +216,8 @@
         "title": "21 ноября студенты специальности Музыкальное искусство эстрады выступили в колледже индустрии сервиса"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
   },
   {
     "id": "17",
@@ -265,7 +241,8 @@
         "title": "Екатерина Меринова 2"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
   },
   {
     "id": "5",
@@ -285,7 +262,8 @@
         "title": "концертной программы в честь Областного слёта ветеранов войны и труда Серебряный волонтёр"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
   },
   {
     "id": "4",
@@ -313,7 +291,8 @@
         "title": "Валерия Баранова — участница Российской студенческой весны в Ставрополе"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
   },
   {
     "id": "43",
@@ -333,7 +312,45 @@
         "title": "Открытый межрегиональный конкурс-фестиваль эстрадно - джазового вокала «ДЖАЗ У САМОВАРА»"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
+  },
+  {
+    "id": "39",
+    "slug": "detskiy-triumf-dzhaza",
+    "title": "Детский триумф джаза",
+    "date": "2025-03-08",
+    "description": "",
+    "content": "",
+    "category": "news",
+    "cover": {
+      "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_1.jpg",
+      "title": "Детский триумф джаза"
+    },
+    "gallery": [
+      {
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_1.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_2.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_3.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_4.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "src": "/media/2025/2025-03-08-detskiy-triumf-dzhaza/2025-03-09_Detskiy_triumf_jazza_5.jpg",
+        "title": "Детский триумф джаза"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "конкурсы"
   },
   {
     "id": "41",
@@ -349,15 +366,12 @@
     },
     "gallery": [
       {
-        "src": "/media/2025/2025-12-29-dzhaz-v-polden-1783547224515/2025-12_Jazz_v_polden_1.jpg",
-        "title": "Джаз в полдень"
-      },
-      {
-        "src": "/media/2025/2025-12-29-dzhaz-v-polden-1783547224515/2025-12_Jazz_v_polden_2.jpg",
+        "src": "/media/2025/2025-12-29-dzhaz-v-polden/2025-12_Jazz_v_polden_1.jpg",
         "title": "Джаз в полдень"
       }
     ],
-    "linked_photoalbum_id": 42
+    "linked_photoalbum_id": 42,
+    "subcategory": null
   },
   {
     "id": "47",
@@ -377,7 +391,33 @@
         "title": "II всероссийский студенческий джазовый фестиваль-конкурс JAZZ 48"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
+  },
+  {
+    "id": "44",
+    "slug": "detskiy-triumf-dzhaza-1783547754363",
+    "title": "Детский триумф джаза",
+    "date": "2024-03-09",
+    "description": "",
+    "content": "",
+    "category": "news",
+    "cover": {
+      "src": "/media/2024/2024-03-09-detskiy-triumf-dzhaza-1783547754363/2024-03-09_DTJ_1.jpg",
+      "title": "Детский триумф джаза"
+    },
+    "gallery": [
+      {
+        "src": "/media/2024/2024-03-09-detskiy-triumf-dzhaza-1783547754363/2024-03-09_DTJ_1.jpg",
+        "title": "Детский триумф джаза"
+      },
+      {
+        "src": "/media/2024/2024-03-09-detskiy-triumf-dzhaza-1783547754363/2024-03-09_DTJ_2.jpg",
+        "title": "Детский триумф джаза"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "конкурсы"
   },
   {
     "id": "1",
@@ -433,7 +473,8 @@
         "title": "Финальный аккорд"
       }
     ],
-    "linked_photoalbum_id": null
+    "linked_photoalbum_id": null,
+    "subcategory": null
   },
   {
     "id": "45",
@@ -449,19 +490,12 @@
     },
     "gallery": [
       {
-        "src": "/media/2023/2023-05-24-master-klass-denisa-mel-nikova-i-pavla-brucheeva-1783548013293/2024-05-24_masterclass_Melnikov_3.jpg",
-        "title": "Мастер-класс Дениса Мельникова и Павла Бручеева"
-      },
-      {
-        "src": "/media/2023/2023-05-24-master-klass-denisa-mel-nikova-i-pavla-brucheeva-1783548013293/2024-05-24_masterclass_Melnikov_2.jpg",
-        "title": "Мастер-класс Дениса Мельникова и Павла Бручеева"
-      },
-      {
-        "src": "/media/2023/2023-05-24-master-klass-denisa-mel-nikova-i-pavla-brucheeva-1783548013293/2024-05-24_masterclass_Melnikov_1.jpg",
+        "src": "/media/2024/2024-05-24-master-klass-denisa-mel-nikova-i-pavla-brucheeva/2024-05-24_masterclass_Melnikov_1.jpg",
         "title": "Мастер-класс Дениса Мельникова и Павла Бручеева"
       }
     ],
-    "linked_photoalbum_id": 46
+    "linked_photoalbum_id": 46,
+    "subcategory": null
   },
   {
     "id": "48",
@@ -479,17 +513,10 @@
       {
         "src": "/media/2023/2023-04-12-ii-vserossiyskiy-konkurs-dzhazovykh-ansambley-imeni-kima-nazaretova/2023-04-12_Rostov_konkurs_1.jpg",
         "title": "II Всероссийский конкурс джазовых ансамблей имени Кима Назаретова"
-      },
-      {
-        "src": "/media/2023/2023-04-12-ii-vserossiyskiy-konkurs-dzhazovykh-ansambley-imeni-kima-nazaretova/2023-04-12_Rostov_konkurs_2.jpg",
-        "title": "II Всероссийский конкурс джазовых ансамблей имени Кима Назаретова"
-      },
-      {
-        "src": "/media/2023/2023-04-12-ii-vserossiyskiy-konkurs-dzhazovykh-ansambley-imeni-kima-nazaretova/2023-04-12_Rostov_konkurs_3.jpg",
-        "title": "II Всероссийский конкурс джазовых ансамблей имени Кима Назаретова"
       }
     ],
-    "linked_photoalbum_id": 53
+    "linked_photoalbum_id": 53,
+    "subcategory": "null"
   },
   {
     "id": "16",
@@ -585,6 +612,104 @@
         "title": "ДЖАЗ КОНZЕРТ"
       }
     ],
-    "linked_photoalbum_id": 34
+    "linked_photoalbum_id": 34,
+    "subcategory": null
+  },
+  {
+    "id": "34",
+    "slug": "fotootchet-dzhaz-konzert",
+    "title": "фотоотчет - ДЖАЗ КОНZЕРТ",
+    "date": "2021-06-21",
+    "description": "Фотоальбом",
+    "content": "Фотоальбом",
+    "category": "news",
+    "cover": {
+      "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/cover.jpg",
+      "title": "фотоотчет - ДЖАЗ КОНZЕРТ"
+    },
+    "gallery": [
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/cover.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_1.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_10.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_11.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_12.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_13.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_14.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_15.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_16.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_17.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_18.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_19.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_2.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_3.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_4.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_5.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_6.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_7.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_8.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      },
+      {
+        "src": "/media/2021/2021-06-21-dzhaz-kontsert-biblioteka-2021-06-21/jazz_v_biblioteke_9.jpg",
+        "title": "ДЖАЗ КОНZЕРТ"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "концерты"
   }
 ]
