@@ -77,15 +77,36 @@ export const useAdminStore = create<AdminState>((set, get) => ({
     selectedFiles: new Map(),
     photoAlbumsForSelection: [],
 
-    setFormData: (data) => set({ formData: data }),
+    setFormData: (updater) => set(state => ({
+        formData: typeof updater === 'function' ? updater(state.formData) : updater
+    })),
 
     setActiveTab: (tab) => {
         set({ activeTab: tab, mode: 'list', editingId: null, status: null });
         get().resetForm();
         get().fetchItems();
+        if (tab === 'news' || tab === 'afisha') {
+            get().fetchPhotoAlbums();
+        }
     },
 
     setMode: (mode) => set({ mode }),
+
+    fetchPhotoAlbums: async () => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/admin/list/photoalbum`, { cache: 'no-store' });
+            if (!response.ok) throw new Error('Failed to fetch albums');
+            const data = await response.json();
+            const albums = data.map((album: any) => ({
+                value: album.id,
+                label: album.title
+            }));
+            set({ photoAlbumsForSelection: albums });
+        } catch (error) {
+            console.error('Failed to fetch photo albums', error);
+            set({ photoAlbumsForSelection: [] });
+        }
+    },
 
     resetForm: () => {
         set({

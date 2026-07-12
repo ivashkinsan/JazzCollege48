@@ -44,7 +44,10 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                                 <p>Текущий путь: {formData.cover_image_src}</p>
                             </div>
                         )}
-                        <input type="file" name="coverImage" onChange={handleFileChange} />
+                        <div className={styles.fileInputWrapper}>
+                            <label className={styles.fileInputLabel} htmlFor="coverImageInput">Выберите файл</label>
+                            <input id="coverImageInput" type="file" name="coverImage" onChange={handleFileChange} />
+                        </div>
                     </div>
                     <div className={styles.formGroup}>
                         <label>Дополнительные фото для галереи</label>
@@ -72,7 +75,10 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                                 </div>
                             ))}
                         </div>
-                        <input type="file" name="galleryImages" multiple onChange={handleFileChange} accept="image/*" />
+                        <div className={styles.fileInputWrapper}>
+                            <label className={styles.fileInputLabel} htmlFor="galleryImagesInput">Выберите файлы</label>
+                            <input id="galleryImagesInput" type="file" name="galleryImages" multiple onChange={handleFileChange} accept="image/*" />
+                        </div>
                     </div>
                     <div className={styles.formGroup}><label>Основной текст (Markdown)</label><textarea name="body" value={formData.body || ''} onChange={handleInputChange} rows={10}></textarea></div>
                     <div className={styles.formGroup}>
@@ -107,7 +113,10 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                             <p>Текущий путь: {formData.image_src}</p>
                         </div>
                     )}
-                    <input type="file" name="image" onChange={handleFileChange} />
+                    <div className={styles.fileInputWrapper}>
+                            <label className={styles.fileInputLabel} htmlFor="imageInput">Выберите файл</label>
+                            <input id="imageInput" type="file" name="image" onChange={handleFileChange} />
+                        </div>
                 </div>
             </>
         );
@@ -130,16 +139,30 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                             <p>Текущий путь: {formData.image_src}</p>
                         </div>
                     )}
-                    <input type="file" name="image" onChange={handleFileChange} />
+                    <div className={styles.fileInputWrapper}>
+                            <label className={styles.fileInputLabel} htmlFor="imageInput">Выберите файл</label>
+                            <input id="imageInput" type="file" name="image" onChange={handleFileChange} />
+                        </div>
                 </div>
                 <div className={styles.formGroup}><label>Биография</label><textarea name="bio" value={formData.bio || ''} onChange={handleInputChange} rows={5}></textarea></div>
                 <div className={styles.formGroup}>
-                    <label>
-                        <input type="checkbox" name="is_featured" checked={formData.is_featured || false} onChange={(e) => {
-                            const { name, checked } = e.target;
-                            setFormData((prev: any) => ({ ...prev, [name]: checked }));
-                        }} />
-                        Наша гордость
+                    <label className={styles.toggleContainer}>
+                        <input 
+                            type="checkbox" 
+                            name="is_featured" 
+                            className={styles.toggleInput}
+                            checked={!!formData.is_featured} 
+                            onChange={(e) => {
+                                const { name, checked } = e.target;
+                                console.log(`Toggle clicked: ${name} = ${checked}`);
+                                setFormData((prev: any) => ({
+                                    ...prev,
+                                    [name]: checked
+                                }));
+                            }} 
+                        />
+                        <span className={styles.toggleSlider}></span>
+                        <span>Наша гордость</span>
                     </label>
                 </div>
             </>
@@ -198,7 +221,10 @@ const AdminFormFields: React.FC<AdminFormFieldsProps> = ({
                             </div>
                         ))}
                     </div>
-                    <input type="file" name="galleryImages" multiple onChange={handleFileChange} accept="image/*" />
+                    <div className={styles.fileInputWrapper}>
+                            <label className={styles.fileInputLabel} htmlFor="galleryImagesInput">Выберите файлы</label>
+                            <input id="galleryImagesInput" type="file" name="galleryImages" multiple onChange={handleFileChange} accept="image/*" />
+                        </div>
                 </div>
             </>
         );
