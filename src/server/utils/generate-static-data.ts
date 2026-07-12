@@ -40,7 +40,12 @@ export async function generateStaticData() {
         const newsContentStmt = db.prepare("SELECT * FROM content WHERE category = 'news' ORDER BY date DESC");
         const rawNews = newsContentStmt.all();
         const newsData = rawNews.map((item: any) => {
-            const gallerySourceId = item.linked_photoalbum_id || item.id;
+            const ownPhotos = getGalleryImages(item.id);
+            const albumPhotos = item.linked_photoalbum_id ? getGalleryImages(item.linked_photoalbum_id) : [];
+            
+            const combinedGallery = [...ownPhotos, ...albumPhotos];
+            const uniqueGallery = Array.from(new Map(combinedGallery.map(p => [p.src, p])).values());
+
             return {
                 id: item.id.toString(),
                 slug: item.slug,
@@ -50,7 +55,7 @@ export async function generateStaticData() {
                 content: item.body,
                 category: item.category,
                 cover: item.cover_image_src ? { src: item.cover_image_src, title: item.title } : undefined,
-                gallery: getGalleryImages(gallerySourceId),
+                gallery: uniqueGallery,
                 linked_photoalbum_id: item.linked_photoalbum_id
             };
         });
