@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server/utils/generate-static-data.ts && vite",
-    "build": "tsx src/server/utils/generate-static-data.ts && tsc && vite build",
+    "build": "tsc --build tsconfig.node.json && tsx src/server/utils/generate-static-data.ts && tsc && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
