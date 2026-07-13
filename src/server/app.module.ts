@@ -6,11 +6,12 @@ import { ContentModule } from './content/content.module.js';
 import { DatabaseModule } from './database/database.module.js';
 import { GraduatesModule } from './graduates/graduates.module.js';
 import { LibraryModule } from './library/library.module.js';
+import { VideosModule } from './videos/videos.module.js'; // Added VideosModule
 
 import { AdminModule } from './admin/admin.module.js';
 
 @Module({
-  imports: [DatabaseModule, ContentModule, GraduatesModule, LibraryModule, AdminModule],
+  imports: [DatabaseModule, ContentModule, GraduatesModule, LibraryModule, VideosModule, AdminModule], // Added VideosModule
   controllers: [AppController],
   providers: [AppService],
 })

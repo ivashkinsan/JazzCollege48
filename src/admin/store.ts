@@ -196,31 +196,37 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         const { editingId, activeTab, formData, selectedFiles } = get();
         
         try {
-            const dataToSend = new FormData();
+            let bodyToSend: FormData | string;
+            const headers: HeadersInit = {};
 
-            for (const key in formData) {
-                if (Object.prototype.hasOwnProperty.call(formData, key)) {
-                     if (key === 'tags') {
-                         const tagsValue = formData[key];
-                         if (typeof tagsValue === 'string' && tagsValue.length > 500) {
+            const isMultipart = activeTab === 'news' || activeTab === 'afisha' || activeTab === 'graduates';
+
+            if (isMultipart) {
+                bodyToSend = new FormData();
+                for (const key in formData) {
+                    if (Object.prototype.hasOwnProperty.call(formData, key)) {
+                         if (key === 'tags' && typeof formData[key] === 'string' && formData[key].length > 500) {
                              continue;
                          }
-                     }
-                     dataToSend.append(key, formData[key]);
+                         bodyToSend.append(key, formData[key]);
+                    }
                 }
+                bodyToSend.set('category', activeTab);
+                selectedFiles.forEach((files, name) => {
+                    files.forEach(file => bodyToSend.append(name, file));
+                });
+            } else { // Send as JSON for videos, library, achievements (no file uploads via selectedFiles)
+                bodyToSend = JSON.stringify({ ...formData, category: activeTab });
+                headers['Content-Type'] = 'application/json';
             }
-
-            dataToSend.set('category', activeTab);
-            
-            selectedFiles.forEach((files, name) => {
-                files.forEach(file => dataToSend.append(name, file));
-            });
 
             const isContentManager = activeTab === 'news' || activeTab === 'afisha';
             const apiEndpoint = isContentManager ? '/api/content' : `/api/${activeTab}`;
             const url = editingId ? `${API_BASE_URL}${apiEndpoint}/${editingId}` : API_BASE_URL + apiEndpoint;
             
-            const response = await fetch(url, { method: 'POST', body: dataToSend });
+            const method = editingId ? 'PUT' : 'POST'; // Assuming PUT for updates, POST for creation
+
+            const response = await fetch(url, { method: method, headers: headers, body: bodyToSend });
             
             if (!response.ok) {
                 const result = await response.json();
