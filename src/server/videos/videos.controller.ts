@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Delete, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Post, Body, Put } from '@nestjs/common';
 import { VideosService } from './videos.service.js';
 
 @Controller('api/videos') // Base path for videos
@@ -18,6 +18,11 @@ export class VideosController {
   @Post()
   create(@Body() body: any) {
     return this.videosService.create(body);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() body: any) {
+    return this.videosService.update(id, body);
   }
 
   @Delete(':id')

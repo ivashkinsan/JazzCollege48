@@ -42,6 +42,33 @@ export class VideosService {
     return { id: result.lastInsertRowid, ...body };
   }
 
+  async update(id: string, body: any) {
+    const { title, description, video_url, date, source } = body;
+    if (!title || !video_url || !date) {
+      throw new BadRequestException('Title, video_url, and date are required.');
+    }
+
+    const stmt = this.db.prepare(`
+      UPDATE videos
+      SET title = @title, description = @description, video_url = @video_url, date = @date, source = @source
+      WHERE id = @id
+    `);
+    const result = stmt.run({
+      title,
+      description: description || null,
+      video_url,
+      date,
+      source: source || null,
+      id: id,
+    });
+
+    if (result.changes === 0) {
+      throw new NotFoundException(`Video with ID ${id} not found or no changes made.`);
+    }
+    await generateStaticData();
+    return { success: true, message: `Video with ID ${id} updated successfully` };
+  }
+
   async remove(id: string) {
     const stmt = this.db.prepare('DELETE FROM videos WHERE id = ?');
     const result = stmt.run(id);

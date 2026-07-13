@@ -5,6 +5,8 @@
   overflow: hidden;
   box-shadow: var(--shadow-md);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: flex; /* Added */
+  flex-direction: column; /* Added */
 }
 
 .videoCard:hover {
@@ -17,6 +19,7 @@
   width: 100%;
   padding-bottom: 56.25%; /* 16:9 aspect ratio */
   background-color: #000;
+  flex-shrink: 0; /* Added: prevent shrinking */
 }
 
 .videoFrame {
@@ -30,6 +33,9 @@
 
 .videoInfo {
   padding: var(--spacing-lg);
+  flex-grow: 1; /* Added: take available space */
+  display: flex; /* Added */
+  flex-direction: column; /* Added */
 }
 
 .videoTitle {
@@ -37,6 +43,10 @@
   color: var(--color-accent);
   margin-bottom: var(--spacing-sm);
   font-weight: 600;
+  display: -webkit-box; /* Added */
+  -webkit-line-clamp: 2; /* Added */
+  -webkit-box-orient: vertical; /* Added */
+  overflow: hidden; /* Added */
 }
 
 .videoDescription {
@@ -54,6 +64,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto; /* Added to push to bottom */
 }
 
 .videoDate {
