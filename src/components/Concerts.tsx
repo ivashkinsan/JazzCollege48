@@ -1,3 +1,4 @@
+import ReactMarkdown from 'react-markdown'; // Import ReactMarkdown
 import { useState } from 'react'; // Import useState
 import type { AfishaItem } from '../types/college';
 import styles from './Concerts.module.css';
@@ -76,7 +77,7 @@ function Concerts({ concerts }: ConcertsProps) {
                 <h3 className={styles.concertCardTitle}>{concert.title}</h3>
                 <p className={styles.concertCardVenue}>📍 {concert.venue}</p>
                 {concert.time && <p className={styles.concertCardTime}>🕐 {concert.time}</p>}
-                <p className={styles.concertCardDescription}>{concert.content}</p>
+                <div className={styles.concertCardDescription}><ReactMarkdown>{concert.content}</ReactMarkdown></div>
               </div>
             </article>
           );

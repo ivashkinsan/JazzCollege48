@@ -74,7 +74,9 @@ function NewsDetailPage() {
         )}
 
         {item.content && (
-            <ReactMarkdown className={styles.contentBody}>{item.content}</ReactMarkdown>
+            <div className={styles.contentBody}>
+              <ReactMarkdown>{item.content}</ReactMarkdown>
+            </div>
         )}
 
         {allImages.length > 1 && (

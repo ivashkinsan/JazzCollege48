@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import type { ExtendedNewsItem } from '../types/college';
+import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import Lightbox from './Lightbox';
 import styles from './NewsPreview.module.css';
 
@@ -100,10 +102,11 @@ function NewsPreview({ news }: NewsPreviewProps) {
                   </div>
 
                   <h3 className={styles.newsCardTitle}>{item.title}</h3>
-                  <p className={styles.newsCardDescription}>
-                    {isExpanded && item.content ? item.content : item.description}
-                    {!isExpanded && hasFullContent && '...'}
-                  </p>
+                  <div className={styles.newsCardDescription}>
+                    <ReactMarkdown>
+                      {(isExpanded && item.content ? item.content : item.description) + (!isExpanded && hasFullContent ? '...' : '')}
+                    </ReactMarkdown>
+                  </div>
 
                   {/* Мини-галерея */}
                   {hasGallery && isExpanded && (
@@ -140,9 +143,9 @@ function NewsPreview({ news }: NewsPreviewProps) {
         </div>
 
         <div className={styles.moreLink}>
-          <div className={styles.moreButton}>
+          <Link to="/news" className={styles.moreButton}>
             Все новости →
-          </div>
+          </Link>
         </div>
       </div>
 

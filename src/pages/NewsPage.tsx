@@ -7,6 +7,8 @@ import styles from './NewsPage.module.css';
 import { Helmet } from 'react-helmet-async';
 import { getVersionedAssetUrl } from '../utils/assetVersion';
 
+import ReactMarkdown from 'react-markdown';
+
 // Helper to get unique years from news items
 const getUniqueYears = (items: ExtendedNewsItem[]): number[] => {
   const years = items.map(item => new Date(item.date).getFullYear()).filter(year => !isNaN(year));
@@ -177,7 +179,7 @@ function NewsPage() {
                         <div className={styles.newsCardDate}>{dateStr}</div>
                       </div>
                       <h3 className={styles.newsCardTitle}><Link to={`/news/${item.slug}`}>{item.title}</Link></h3>
-                      {item.description && <p className={styles.newsCardDescription}>{item.description}...</p>}
+                      {item.description && <div className={styles.newsCardDescription}><ReactMarkdown>{item.description + '...'}</ReactMarkdown></div>}
                       <Link to={`/news/${item.slug}`} className={styles.expandBtn}>Подробнее →</Link>
                     </div>
                   </article>

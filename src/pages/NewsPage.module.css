@@ -65,8 +65,7 @@
   gap: var(--spacing-sm);
   overflow-x: auto;
   flex-wrap: nowrap;
-  padding-bottom: 15px;
-  margin-bottom: -15px;
+  margin-bottom: 5px;
   -ms-overflow-style: none;
   scrollbar-width: none;
   overscroll-behavior-x: contain;
