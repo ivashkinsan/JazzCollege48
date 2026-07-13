@@ -213,7 +213,7 @@ export const useAdminStore = create<AdminState>((set, get) => ({
                 }
                 bodyToSend.set('category', activeTab);
                 selectedFiles.forEach((files, name) => {
-                    files.forEach(file => bodyToSend.append(name, file));
+                    files.forEach(file => (bodyToSend as FormData).append(name, file));
                 });
             } else { // Send as JSON for videos, library, achievements (no file uploads via selectedFiles)
                 bodyToSend = JSON.stringify({ ...formData, category: activeTab });

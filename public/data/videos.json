@@ -63,10 +63,20 @@
     "id": 15,
     "legacy_id": null,
     "title": "Moscow Jazz Festival 2022 / парк Зарядье / гр.VISITORS",
-    "description": "Состав ансамбля: \nНаталья Белановская - тенор саксофон \nАлександр Ушков - электрогитара \nАнна Елисеева - фортепиано \nПавел Лунёв - бас-гитара \nИван Чага - ударные",
+    "description": "Наталья Белановская - тенор саксофон \nАлександр Ушков - электрогитара \nАнна Елисеева - фортепиано \nПавел Лунёв - бас-гитара \nИван Чага - ударные",
     "video_url": "https://rutube.ru/video/private/550f4a838356336e1ad750104bbd768a/?p=Z196Q2HY2iVvK6kT3bsLMA",
     "date": "2022-06-18",
     "source": "rutube",
     "videoUrl": "https://rutube.ru/video/private/550f4a838356336e1ad750104bbd768a/?p=Z196Q2HY2iVvK6kT3bsLMA"
+  },
+  {
+    "id": 16,
+    "legacy_id": null,
+    "title": "Весенний музыкальный вернисаж",
+    "description": null,
+    "video_url": "https://rutube.ru/video/e58e532cb241a7b9580b22e700c59eed/",
+    "date": "2022-03-08",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/e58e532cb241a7b9580b22e700c59eed/"
   }
 ]
