@@ -96,9 +96,9 @@ function NewsPage() {
       </Helmet>
       <section className={styles.hero}>
         <div className="container">
-          <h1 className={styles.title}>Новости и события</h1>
+          <h1 className={styles.title}>Новости</h1>
           <p className={styles.subtitle}>
-            Концерты, мастер-классы, конкурсы и все события эстрадного отделения
+            Концерты, мастер-классы, конкурсы и все события
           </p>
         </div>
       </section>

@@ -125,6 +125,11 @@
   font-weight: 600;
   margin-bottom: var(--spacing-sm);
   line-height: 1.4;
+  /* Ensure consistent height for titles */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 [data-theme='dark'] .newsCardTitle {
@@ -138,6 +143,11 @@
 .newsCardDescription {
   line-height: 1.7;
   font-size: 0.9375rem;
+  /* Ensure consistent height for descriptions */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 [data-theme='dark'] .newsCardDescription {

@@ -54,7 +54,7 @@ function AfishaPage() {
       <section className={styles.hero}>
         <div className="container">
           <p className={styles.subtitle}>Афиша</p>
-          <h2 className={styles.title}>Все события</h2>
+          <h2 className={styles.title}>Анонсы концертов и мероприятий</h2>
         </div>
       </section>
 

@@ -219,6 +219,11 @@
   margin-bottom: var(--spacing-sm);
   line-height: 1.4;
   flex-grow: 1;
+  /* Ensure consistent height for titles */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .newsCardTitle a {
   color: inherit;
@@ -233,6 +238,11 @@
   font-size: 0.9rem;
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-md);
+  /* Ensure consistent height for descriptions */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .expandBtn {
