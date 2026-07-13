@@ -99,10 +99,10 @@ export class ContentService {
     const galleryImageFiles = files?.galleryImages || [];
 
     const existingSlugStmt = this.db.prepare("SELECT id FROM content WHERE slug = ?");
-    if (existingSlugStmt.get(slug)) {
-      // Вместо Date.now(), просто добавляем суффикс или оставляем как есть, если это допустимо.
-      // Лучше всего - выдавать ошибку или использовать существующий slug, если это обновление.
-      // Для createContent оставим просто slug, так как БД должна гарантировать уникальность.
+    while (existingSlugStmt.get(slug)) {
+      // If slug exists, append a random 4-character string to make it unique
+      const randomSuffix = Math.random().toString(36).substring(2, 6);
+      slug = `${createSlug(title)}-${randomSuffix}`;
     }
 
     const year = new Date(date).getFullYear().toString();

@@ -7,6 +7,8 @@ import styles from './NewsDetailPage.module.css';
 import { Helmet } from 'react-helmet-async';
 import { getVersionedAssetUrl } from '../utils/assetVersion';
 
+import ReactMarkdown from 'react-markdown';
+
 function NewsDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const [item, setItem] = useState<ExtendedNewsItem | null>(null);
@@ -72,7 +74,7 @@ function NewsDetailPage() {
         )}
 
         {item.content && (
-            <div className={styles.contentBody} dangerouslySetInnerHTML={{ __html: item.content.replace(/\\n/g, '<br />') }}></div>
+            <ReactMarkdown className={styles.contentBody}>{item.content}</ReactMarkdown>
         )}
 
         {allImages.length > 1 && (

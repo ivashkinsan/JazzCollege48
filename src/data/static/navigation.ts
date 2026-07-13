@@ -11,7 +11,6 @@ export const navigation: NavigationEntry[] = [
       { id: "orchestra", label: "Оркестр", href: "/department" },
       { id: "graduates", label: "Выпускники", href: "/graduates" },
       { id: "achievements", label: "Наши достижения", href: "/achievements" },
-      { id: "admin", label: "Администрация", href: "/admin" },
       { id: "dai", label: "ДАИ", href: "/dai" },
     ],
   },

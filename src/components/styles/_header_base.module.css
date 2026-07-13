@@ -34,28 +34,7 @@
   justify-content: flex-end;
 }
 
-.searchContainer {
-  position: relative;
-}
 
-.searchBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--color-text-secondary);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-}
-.searchBtn:hover {
-  color: var(--color-accent);
-  background-color: var(--color-bg-secondary);
-  border-color: var(--border-color);
-}
 
 /* ===== Логотип ===== */
 .headerLogo {

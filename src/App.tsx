@@ -17,7 +17,6 @@ import NewsPreview from './components/NewsPreview';
 import Admission from './components/Admission';
 import Contacts from './components/Contacts';
 import GraduatesPage from './pages/GraduatesPage';
-import AdminPage from './pages/AdminPage';
 import VideosPage from './pages/VideosPage';
 import VideosPage2 from './pages/VideosPage2';
 import DaiPage from './pages/DaiPage';
@@ -89,7 +88,6 @@ function App() {
             <Route path="/afisha" element={<AfishaPage />} />
             <Route path="/graduates" element={<GraduatesPage />} />
             <Route path="/dai" element={<DaiPage />} />
-            <Route path="/admin" element={<AdminPage />} />
             <Route path="/department" element={<DepartmentPage />} />
             <Route path="/videos" element={<VideosPage />} />
             <Route path="/videos2" element={<VideosPage2 />} />
