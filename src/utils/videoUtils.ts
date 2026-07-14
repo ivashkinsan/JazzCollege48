@@ -22,9 +22,18 @@ export const getEmbedUrl = (video: Video) => {
       }
     }
     if (video.source === 'vk') {
-      // Example: https://vk.com/video-123_456
-      const videoId = url.pathname.split('/').pop();
-      return `https://vk.com/video_ext.php?oid=${videoId?.split('_')[0]}&id=${videoId?.split('_')[1]}`;
+      // Handles URLs like https://vk.com/video-123_456 or https://vkvideo.ru/video-123_456
+      const videoIdentifier = url.pathname.split('/').pop(); // e.g., video-123_456
+      if (videoIdentifier) {
+        const parts = videoIdentifier.split('_');
+        if (parts.length === 2) {
+            const ownerId = parts[0].replace('video', ''); // from 'video-123' to '-123'
+            const videoId = parts[1];
+            if (ownerId && videoId) {
+                return `https://vk.com/video_ext.php?oid=${ownerId}&id=${videoId}`;
+            }
+        }
+      }
     }
   } catch (error) {
     console.error(`Error parsing video URL: ${video.videoUrl}`, error);

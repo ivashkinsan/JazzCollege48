@@ -1,25 +1,5 @@
 [
   {
-    "id": 14,
-    "legacy_id": null,
-    "title": "Отчетный концерт МИЭ 6 марта 2026г",
-    "description": null,
-    "video_url": "https://rutube.ru/video/private/8ed8848d786861c08c1bee33d0a7ad19/?p=BJ2yiirtBTpfhPfC2Cx1wQ",
-    "date": "222026-03-06",
-    "source": "rutube",
-    "videoUrl": "https://rutube.ru/video/private/8ed8848d786861c08c1bee33d0a7ad19/?p=BJ2yiirtBTpfhPfC2Cx1wQ"
-  },
-  {
-    "id": 17,
-    "legacy_id": null,
-    "title": "II Всероссийский студенческий джазовый фестиваль - конкурс ансамблей и оркестров JAZZ-48",
-    "description": "1 часть",
-    "video_url": "https://vkvideo.ru/video-215322611_456239043",
-    "date": "2026-07-14",
-    "source": "vk",
-    "videoUrl": "https://vkvideo.ru/video-215322611_456239043"
-  },
-  {
     "id": 7,
     "legacy_id": "v6",
     "title": "Moscow Jazz Festival 2026 / ВДНХ",
@@ -50,6 +30,16 @@
     "videoUrl": "https://rutube.ru/video/c8e7b162920f25da4b97dfee3aac59bc/"
   },
   {
+    "id": 14,
+    "legacy_id": null,
+    "title": "Отчетный концерт МИЭ 6 марта 2026г",
+    "description": null,
+    "video_url": "https://rutube.ru/video/private/8ed8848d786861c08c1bee33d0a7ad19/?p=BJ2yiirtBTpfhPfC2Cx1wQ",
+    "date": "2026-03-06",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/private/8ed8848d786861c08c1bee33d0a7ad19/?p=BJ2yiirtBTpfhPfC2Cx1wQ"
+  },
+  {
     "id": 13,
     "legacy_id": null,
     "title": "Moscow Jazz Festival 2025 / Музеон",
@@ -58,6 +48,56 @@
     "date": "2025-06-10",
     "source": "rutube",
     "videoUrl": "https://rutube.ru/video/25caa3d9b9beb185360c9604c8d9229e/"
+  },
+  {
+    "id": 24,
+    "legacy_id": null,
+    "title": "Bob Mintzer - Computer",
+    "description": null,
+    "video_url": "https://rutube.ru/video/83c3ecdf28906507afc8bb0f761553e9/",
+    "date": "2025-03-06",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/83c3ecdf28906507afc8bb0f761553e9/"
+  },
+  {
+    "id": 17,
+    "legacy_id": null,
+    "title": "JAZZ 48 (2024) - 1 часть",
+    "description": "Конкурсные прослушивания",
+    "video_url": "https://vkvideo.ru/video-215322611_456239044",
+    "date": "2024-04-24",
+    "source": "vk",
+    "videoUrl": "https://vkvideo.ru/video-215322611_456239044"
+  },
+  {
+    "id": 18,
+    "legacy_id": null,
+    "title": "JAZZ 48 (2024) - 2 часть",
+    "description": "Конкурсные прослушивания",
+    "video_url": "https://vkvideo.ru/video-215322611_456239043",
+    "date": "2024-04-24",
+    "source": "vk",
+    "videoUrl": "https://vkvideo.ru/video-215322611_456239043"
+  },
+  {
+    "id": 19,
+    "legacy_id": null,
+    "title": "JAZZ 48 (2024) - 3 часть",
+    "description": "Конкурсные прослушивания",
+    "video_url": "https://vkvideo.ru/video-215322611_456239042",
+    "date": "2024-04-24",
+    "source": "vk",
+    "videoUrl": "https://vkvideo.ru/video-215322611_456239042"
+  },
+  {
+    "id": 20,
+    "legacy_id": null,
+    "title": "JAZZ 48  (2024) - 4 часть",
+    "description": "Конкурсные прослушивания",
+    "video_url": "https://vkvideo.ru/video-215322611_456239041",
+    "date": "2024-04-24",
+    "source": "vk",
+    "videoUrl": "https://vkvideo.ru/video-215322611_456239041"
   },
   {
     "id": 12,
@@ -70,6 +110,16 @@
     "videoUrl": "https://rutube.ru/video/63f91b00d470696e0401af0ef0ddc617/"
   },
   {
+    "id": 25,
+    "legacy_id": null,
+    "title": "Поездка на Moscow Jazz Fest 2022",
+    "description": "видеоотчет о поездке",
+    "video_url": "https://rutube.ru/video/private/7eb73b6b917001e82e70206c0e9220a5/?p=1AG9Opv9JFzhYDSEnb7_Ow",
+    "date": "2022-06-20",
+    "source": "rutube",
+    "videoUrl": "https://rutube.ru/video/private/7eb73b6b917001e82e70206c0e9220a5/?p=1AG9Opv9JFzhYDSEnb7_Ow"
+  },
+  {
     "id": 15,
     "legacy_id": null,
     "title": "Moscow Jazz Festival 2022 / парк Зарядье / гр.VISITORS",
@@ -80,12 +130,42 @@
     "videoUrl": "https://rutube.ru/video/private/550f4a838356336e1ad750104bbd768a/?p=Z196Q2HY2iVvK6kT3bsLMA"
   },
   {
+    "id": 21,
+    "legacy_id": null,
+    "title": "JAZZ 48 (2022)  - 1 часть",
+    "description": "Конеурсные прослушивания",
+    "video_url": "https://vkvideo.ru/video7022718_456239658",
+    "date": "2022-04-27",
+    "source": "vk",
+    "videoUrl": "https://vkvideo.ru/video7022718_456239658"
+  },
+  {
+    "id": 22,
+    "legacy_id": null,
+    "title": "JAZZ 48 (2022) - 2 часть",
+    "description": "Конкурсные прослушивания",
+    "video_url": "https://vkvideo.ru/video7022718_456239659",
+    "date": "2022-04-27",
+    "source": "vk",
+    "videoUrl": "https://vkvideo.ru/video7022718_456239659"
+  },
+  {
+    "id": 23,
+    "legacy_id": null,
+    "title": "JAZZ 48 (2022) - 3 часть",
+    "description": "Конкурсные прослушивания",
+    "video_url": "https://vkvideo.ru/video7022718_456239660",
+    "date": "2022-04-27",
+    "source": "vk",
+    "videoUrl": "https://vkvideo.ru/video7022718_456239660"
+  },
+  {
     "id": 16,
     "legacy_id": null,
     "title": "Весенний музыкальный вернисаж",
     "description": null,
     "video_url": "https://rutube.ru/video/e58e532cb241a7b9580b22e700c59eed/",
-    "date": "2022-03-08",
+    "date": "2021-03-08",
     "source": "rutube",
     "videoUrl": "https://rutube.ru/video/e58e532cb241a7b9580b22e700c59eed/"
   }
