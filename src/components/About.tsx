@@ -36,16 +36,16 @@ function About({ department: _department }: AboutProps) {
                 <div className={styles.statLabel}>Лет истории</div>
               </div>
               <div className={styles.stat}>
-                <div className={styles.statValue}>5976</div>
-                <div className={styles.statLabel}>Учебных часов</div>
+                <div className={styles.statValue}>5000+</div>
+                <div className={styles.statLabel}>Уроков за 8 семестров</div>
               </div>
               <div className={styles.stat}>
                 <div className={styles.statValue}>19</div>
-                <div className={styles.statLabel}>Исполнительских экзаменов</div>
+                <div className={styles.statLabel}>Экзаменов по специальности</div>
               </div>
               <div className={styles.stat}>
                 <div className={styles.statValue}>&#8734;</div>
-                <div className={styles.statLabel}>Часов практики</div>
+                <div className={styles.statLabel}>возможности для практики</div>
               </div>
             </div>
             <div className={styles.aboutLogoBadge} style={{ marginTop: 'var(--spacing-lg)' }}>
