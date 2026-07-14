@@ -199,7 +199,7 @@ export const useAdminStore = create<AdminState>((set, get) => ({
             let bodyToSend: FormData | string;
             const headers: HeadersInit = {};
 
-            const isMultipart = activeTab === 'news' || activeTab === 'afisha' || activeTab === 'graduates';
+            const isMultipart = activeTab === 'news' || activeTab === 'afisha' || activeTab === 'graduates' || activeTab === 'achievements';
 
             if (isMultipart) {
                 bodyToSend = new FormData();
@@ -224,7 +224,7 @@ export const useAdminStore = create<AdminState>((set, get) => ({
             const apiEndpoint = isContentManager ? '/api/content' : `/api/${activeTab}`;
             const url = editingId ? `${API_BASE_URL}${apiEndpoint}/${editingId}` : API_BASE_URL + apiEndpoint;
             
-            const method = editingId ? 'PUT' : 'POST'; // Assuming PUT for updates, POST for creation
+            const method = editingId && activeTab === 'videos' ? 'PUT' : 'POST';
 
             const response = await fetch(url, { method: method, headers: headers, body: bodyToSend });
             

@@ -104,6 +104,19 @@
     "image": "/Diploms/2024_03_09_Seliverstov_Pavel.jpg"
   },
   {
+    "id": 29,
+    "legacy_id": null,
+    "title": "Диплом",
+    "student_name": "VISITORS",
+    "competition": "Moscow Jazz Festival 2022",
+    "date": "2022-06-18",
+    "place": "Победитель",
+    "category": "achievements",
+    "image_src": "/Diploms/2022-06-10_MJF_VISITORS.jpg",
+    "city": "Москва",
+    "image": "/Diploms/2022-06-10_MJF_VISITORS.jpg"
+  },
+  {
     "id": 18,
     "legacy_id": "diploma-18",
     "title": "Диплом",
@@ -128,6 +141,45 @@
     "image_src": "/Diploms/2022_Jazz48_orchestra.jpg",
     "city": "Липецк",
     "image": "/Diploms/2022_Jazz48_orchestra.jpg"
+  },
+  {
+    "id": 35,
+    "legacy_id": null,
+    "title": "Диплом",
+    "student_name": "Квартет саксофонов п/у Л. Реннер",
+    "competition": "Детский триумф джаза",
+    "date": "2022-03-09",
+    "place": "Лауреат II степени",
+    "category": "achievements",
+    "image_src": "/Diploms/2022-03-09_Kvartet_saxophones.jpg",
+    "city": "Москва",
+    "image": "/Diploms/2022-03-09_Kvartet_saxophones.jpg"
+  },
+  {
+    "id": 36,
+    "legacy_id": null,
+    "title": "Диплом",
+    "student_name": "Коротков Максим",
+    "competition": "Детский триумф джаза",
+    "date": "2022-03-09",
+    "place": "Дипломант",
+    "category": "achievements",
+    "image_src": "/Diploms/2022-03-09_Korotkov_Maxim.jpg",
+    "city": "Москва",
+    "image": "/Diploms/2022-03-09_Korotkov_Maxim.jpg"
+  },
+  {
+    "id": 37,
+    "legacy_id": null,
+    "title": "Диплом",
+    "student_name": "Кузьмин Сергей",
+    "competition": "Детский триумф джаза",
+    "date": "2022-03-09",
+    "place": "Лауреат II степени",
+    "category": "achievements",
+    "image_src": "/Diploms/2022-03-09_Kuzmin_Sergey.jpg",
+    "city": "Москва",
+    "image": "/Diploms/2022-03-09_Kuzmin_Sergey.jpg"
   },
   {
     "id": 14,
@@ -362,5 +414,70 @@
     "image_src": "/Diploms/2015-04_Voronov_SOCHI.JPG",
     "city": "Сочи",
     "image": "/Diploms/2015-04_Voronov_SOCHI.JPG"
+  },
+  {
+    "id": 30,
+    "legacy_id": null,
+    "title": "Диплом",
+    "student_name": "Корниец Иван",
+    "competition": "JAZZ STEP 2012",
+    "date": "2012-04-20",
+    "place": "Дипломант",
+    "category": "achievements",
+    "image_src": "/Diploms/2012-04_Jazz_Step_Korniez_Ivan.jpg",
+    "city": "Сочи",
+    "image": "/Diploms/2012-04_Jazz_Step_Korniez_Ivan.jpg"
+  },
+  {
+    "id": 31,
+    "legacy_id": null,
+    "title": "Диплом ",
+    "student_name": "Катрук Максим Николаевич",
+    "competition": "JAZZ STEP 2012",
+    "date": "2012-04-20",
+    "place": "Диплом за подготовку",
+    "category": "achievements",
+    "image_src": "/Diploms/2012-04_Jazz_Step_Katruk.jpg",
+    "city": "Сочи",
+    "image": "/Diploms/2012-04_Jazz_Step_Katruk.jpg"
+  },
+  {
+    "id": 32,
+    "legacy_id": null,
+    "title": "Диплом",
+    "student_name": "Ряжских Александр",
+    "competition": "Всеросийский конкурс молодых исполнителей джазовой музыки им. В.В.Некрасова",
+    "date": "2011-05-21",
+    "place": "Диплом лауреата",
+    "category": "achievements",
+    "image_src": "/Diploms/2011-05-21_Orel_Ryajskih_Alexandr.jpg",
+    "city": "Орёл",
+    "image": "/Diploms/2011-05-21_Orel_Ryajskih_Alexandr.jpg"
+  },
+  {
+    "id": 33,
+    "legacy_id": null,
+    "title": "Диплом",
+    "student_name": "Потапов Михаил",
+    "competition": "Всеросийский конкурс молодых исполнителей джазовой музыки им. В.В.Некрасова",
+    "date": "2011-05-21",
+    "place": "Диплом лауреата",
+    "category": "achievements",
+    "image_src": "/Diploms/2011-05-21_Orel_Potapov_Mihail.jpg",
+    "city": "Орёл",
+    "image": "/Diploms/2011-05-21_Orel_Potapov_Mihail.jpg"
+  },
+  {
+    "id": 34,
+    "legacy_id": null,
+    "title": "Диплом",
+    "student_name": "Корниец Иван",
+    "competition": "Всеросийский конкурс молодых исполнителей джазовой музыки им. В.В.Некрасова",
+    "date": "2011-05-21",
+    "place": "Диплом лауреата",
+    "category": "achievements",
+    "image_src": "/Diploms/2011-05-21_Orel_Korniez_Ivan.jpg",
+    "city": "Орёл",
+    "image": "/Diploms/2011-05-21_Orel_Korniez_Ivan.jpg"
   }
 ]

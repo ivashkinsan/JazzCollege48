@@ -9,6 +9,8 @@ import { getVersionedAssetUrl } from '../utils/assetVersion';
 
 import ReactMarkdown from 'react-markdown';
 
+import FloatingBackButton from '../components/FloatingBackButton';
+
 function NewsDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const [item, setItem] = useState<ExtendedNewsItem | null>(null);
@@ -105,6 +107,7 @@ function NewsDetailPage() {
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
       />
+      <FloatingBackButton />
     </div>
   );
 }

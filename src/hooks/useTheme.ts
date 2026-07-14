@@ -15,10 +15,6 @@ export function useTheme(): UseThemeReturn {
       if (stored) {
         return stored;
       }
-      // Проверка системной темы
-      if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-        return 'light';
-      }
     }
     return 'dark';
   });
