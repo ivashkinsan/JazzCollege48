@@ -17,7 +17,6 @@ const categoryLabels: Record<string, string> = {
 };
 
 function NewsPreview({ news }: NewsPreviewProps) {
-  const [expandedNews, setExpandedNews] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -26,10 +25,6 @@ function NewsPreview({ news }: NewsPreviewProps) {
   const latestNews = news.slice(0, 3);
 
   if (latestNews.length === 0) return null;
-
-  const toggleExpand = (id: string) => {
-    setExpandedNews(expandedNews === id ? null : id);
-  };
 
   const openLightbox = (images: string[], index: number) => {
     setLightboxImages(images);
@@ -53,9 +48,7 @@ function NewsPreview({ news }: NewsPreviewProps) {
               month: 'long',
               year: 'numeric',
             });
-            const isExpanded = expandedNews === item.id;
             const hasFullContent = item.content && item.content.length > item.description.length;
-            const hasGallery = item.gallery && item.gallery.length > 0;
             
             // FIX: Extract src strings from Photo objects
             const allImages = [
@@ -104,37 +97,15 @@ function NewsPreview({ news }: NewsPreviewProps) {
                   <h3 className={styles.newsCardTitle}>{item.title}</h3>
                   <div className={styles.newsCardDescription}>
                     <ReactMarkdown>
-                      {(isExpanded && item.content ? item.content : item.description) + (!isExpanded && hasFullContent ? '...' : '')}
+                      {item.description + (hasFullContent ? '...' : '')}
                     </ReactMarkdown>
                   </div>
 
-                  {/* Мини-галерея */}
-                  {hasGallery && isExpanded && (
-                    <div className={styles.miniGallery}>
-                      {item.gallery!.map((img) => (
-                        <img
-                          key={img.id}
-                          src={img.src}
-                          alt={`${item.title} — фото ${img.id}`}
-                          loading="lazy"
-                          className={styles.miniGalleryImage}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openLightbox(allImages, allImages.indexOf(img.src));
-                          }}
-                        />
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Кнопка развернуть */}
+                  {/* Кнопка "Подробнее" */}
                   {hasFullContent && (
-                    <button
-                      className={styles.expandBtn}
-                      onClick={() => toggleExpand(item.id)}
-                    >
-                      {isExpanded ? 'Свернуть' : 'Читать далее →'}
-                    </button>
+                    <Link to={`/news/${item.slug}`} className={styles.expandBtn}>
+                      Подробнее →
+                    </Link>
                   )}
                 </div>
               </article>
