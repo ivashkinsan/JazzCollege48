@@ -215,8 +215,8 @@ export const useAdminStore = create<AdminState>((set, get) => ({
                 selectedFiles.forEach((files, name) => {
                     files.forEach(file => (bodyToSend as FormData).append(name, file));
                 });
-            } else { // Send as JSON for videos, library, achievements (no file uploads via selectedFiles)
-                bodyToSend = JSON.stringify({ ...formData, category: activeTab });
+            } else { // Send as JSON for videos, library
+                bodyToSend = JSON.stringify(formData); // Do not override category from form
                 headers['Content-Type'] = 'application/json';
             }
 

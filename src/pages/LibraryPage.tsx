@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { LibraryLink } from '../types/college';
 import styles from './LibraryPage.module.css';
-import LibraryLinkCard from '../components/LibraryLinkCard';
 
 function LibraryPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('Все');
@@ -21,7 +20,12 @@ function LibraryPage() {
         }
         const fullData = await response.json(); // Get all data
 
-        const categoriesFromData = fullData.categories || [];
+        let categoriesFromData = fullData.categories || [];
+        // Filter out the old category
+        categoriesFromData = categoriesFromData.filter(
+          (cat: string) => cat !== 'Музыканты и оркестры'
+        );
+        
         // On first load, also set the categories for the filter buttons
         if (allCategories.length === 1) { // Check if 'Все' is the only category
           setAllCategories(['Все', ...categoriesFromData]);
@@ -93,11 +97,18 @@ function LibraryPage() {
             Object.entries(groupedLinks).map(([category, categoryLinks]) => (
               <div key={category} className={styles.categoryWrapper}>
                 <h2 className={styles.categoryTitle}>{category}</h2>
-                <div className={styles.linksGrid}>
+                <ul className={styles.linksList}>
                   {categoryLinks.map((link) => (
-                    <LibraryLinkCard key={link.id} link={link} />
+                    <li key={link.id} className={styles.linkItem}>
+                      <a href={link.url} target="_blank" rel="noopener noreferrer" className={styles.linkAnchor}>
+                        <span className={styles.linkTitle}>{link.title}</span>
+                        <span className={styles.linkDescription}>
+                          {link.description}
+                        </span>
+                      </a>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))
           ) : (

@@ -329,21 +329,50 @@
     width: 120px;
 }
 
-/* Column widths for tables with 'Заголовок' (news, afisha, videos, library, photoalbum) */
-/* Assuming order: ID, Заголовок, Дата/Категория, Действия */
-.newsTable th:nth-child(2), .newsTable td:nth-child(2),
-.afishaTable th:nth-child(2), .afishaTable td:nth-child(2),
-.videosTable th:nth-child(2), .videosTable td:nth-child(2),
-.libraryTable th:nth-child(2), .libraryTable td:nth-child(2),
-.photoalbumTable th:nth-child(2), .photoalbumTable td:nth-child(2) {
+/* Column widths for newsTable */
+.newsTable th:nth-child(2), .newsTable td:nth-child(2) {
     width: auto; /* Let content fill remaining space */
 }
-.newsTable th:nth-child(3), .newsTable td:nth-child(3),
-.afishaTable th:nth-child(3), .afishaTable td:nth-child(3),
-.videosTable th:nth-child(3), .videosTable td:nth-child(3),
-.libraryTable th:nth-child(3), .libraryTable td:nth-child(3),
+.newsTable th:nth-child(3), .newsTable td:nth-child(3) {
+    width: 120px; /* Date column */
+}
+/* Note: newsTable might have a 4th child (subcategory) if active */
+.newsTable th:nth-child(4), .newsTable td:nth-child(4) {
+    width: 150px; /* Subcategory column */
+}
+
+
+/* Column widths for afishaTable */
+.afishaTable th:nth-child(2), .afishaTable td:nth-child(2) {
+    width: auto;
+}
+.afishaTable th:nth-child(3), .afishaTable td:nth-child(3) {
+    width: 120px; /* Date column */
+}
+
+/* Column widths for videosTable */
+.videosTable th:nth-child(2), .videosTable td:nth-child(2) {
+    width: auto;
+}
+.videosTable th:nth-child(3), .videosTable td:nth-child(3) {
+    width: 120px; /* Date column */
+}
+
+/* Column widths for libraryTable */
+.libraryTable th:nth-child(2), .libraryTable td:nth-child(2) {
+    width: auto;
+}
+
+.libraryTable th:nth-child(3), .libraryTable td:nth-child(3) {
+    width: 800px; /* Category column */
+}
+
+/* Column widths for photoalbumTable (if used) */
+.photoalbumTable th:nth-child(2), .photoalbumTable td:nth-child(2) {
+    width: auto;
+}
 .photoalbumTable th:nth-child(3), .photoalbumTable td:nth-child(3) {
-    width: 120px; /* Date/Category column */
+    width: 120px; /* Date column */
 }
 
 .adminListTable th {

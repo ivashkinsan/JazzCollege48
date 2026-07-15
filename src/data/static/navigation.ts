@@ -8,7 +8,7 @@ export const navigation: NavigationEntry[] = [
     items: [
       { id: "specialties", label: "Специальности", href: "#specialties" },
       { id: "teachers", label: "Преподаватели", href: "#teachers" },
-      { id: "orchestra", label: "Оркестр", href: "/department" },
+      { id: "orchestra", label: "Оркестр", href: "/orchestra" },
       { id: "graduates", label: "Выпускники", href: "/graduates" },
       { id: "achievements", label: "Наши достижения", href: "/achievements" },
       { id: "dai", label: "ДАИ", href: "/dai" },
