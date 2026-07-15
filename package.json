@@ -1,7 +1,7 @@
 {
   "name": "lipetsk-college-arts",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "scripts": {
     "dev": "tsx src/server/utils/generate-static-data.ts && vite",
