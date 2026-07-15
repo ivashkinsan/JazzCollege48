@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { loadNews } from '../data';
 import type { ExtendedNewsItem } from '../types/college';
@@ -32,6 +32,10 @@ function NewsPage() {
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
+  // Refs for scrolling
+  const contentRef = useRef<HTMLElement>(null);
+  const isInitialLoad = useRef(true);
+
   // Memoized values for filters
   const uniqueYears = useMemo(() => getUniqueYears(newsData), [newsData]);
   
@@ -42,6 +46,19 @@ function NewsPage() {
       setLoading(false);
     });
   }, []);
+
+  // Scroll to content on filter change
+  useEffect(() => {
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
+    
+    setTimeout(() => {
+      contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    
+  }, [selectedYear, selectedCategory]);
 
   // Combined filtering logic
   const filteredNews = useMemo(() => {
@@ -144,7 +161,7 @@ function NewsPage() {
         </div>
       </section>
 
-      <section className={styles.newsSection}>
+      <section ref={contentRef} className={styles.newsSection}>
         <div className="container">
           <div className={styles.resultsInfo}>
             Найдено: {filteredNews.length} {filteredNews.length === 1 ? 'событие' : (filteredNews.length > 1 && filteredNews.length < 5) ? 'события' : 'событий'}

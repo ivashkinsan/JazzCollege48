@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { loadGraduates } from '../data';
 import type { Graduate } from '../types/college';
 import { asset } from '../utils/asset';
@@ -47,6 +47,8 @@ const decades = [
 function GraduatesPage() {
   const [activeDecade, setActiveDecade] = useState<string>('Все'); // Активное десятилетие по умолчанию - "Все"
   const [graduatesList, setGraduatesList] = useState<Graduate[]>([]);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const isInitialLoad = useRef(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,6 +57,18 @@ function GraduatesPage() {
     });
     return () => { cancelled = true; };
   }, []);
+
+  useEffect(() => {
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
+    
+    setTimeout(() => {
+      contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    
+  }, [activeDecade]);
 
   const groupedGraduates = groupByFiveYears(graduatesList);
   const graduatesToDisplay = activeDecade === 'Все' ? graduatesList : groupedGraduates[activeDecade];
@@ -94,7 +108,7 @@ function GraduatesPage() {
             </div>
           </div>
 
-          <div className={styles.graduatesGrid}>
+          <div ref={contentRef} className={styles.graduatesGrid}>
             {graduatesToDisplay?.map((graduate) => (
               <article key={graduate.id} className={styles.graduateCard}>
                 <div className={styles.imageWrapper}>

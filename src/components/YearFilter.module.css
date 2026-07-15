@@ -1,0 +1,60 @@
+/* Extracted from NewsPage.module.css */
+.filterGroup {
+  width: 100%;
+}
+
+.buttonRowWrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+  padding-bottom: 8px;
+  margin-bottom: -8px;
+}
+
+.buttonRowWrapper::-webkit-scrollbar {
+  height: 4px;
+}
+
+.buttonRowWrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.buttonRowWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent);
+  border-radius: 2px;
+}
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  width: max-content;
+}
+
+.filterButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+}
+
+.filterButton:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.filterButtonActive {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-white) !important;
+}
+
+.filterButtonActive:hover {
+  background: var(--color-accent-dark, var(--color-accent));
+}

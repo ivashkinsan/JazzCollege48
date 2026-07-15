@@ -1,13 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import type { Video } from '../types/college';
 import { loadVideos } from '../data/videosLoader';
 import styles from './VideosPage.module.css';
-import VideoCard from '../components/VideoCard'; // Import VideoCard
+import VideoCard from '../components/VideoCard';
+import YearFilter from '../components/YearFilter';
+
+// Helper to get unique years from video items
+const getUniqueYears = (items: Video[]): number[] => {
+  const years = items.map(item => new Date(item.date).getFullYear()).filter(year => !isNaN(year));
+  return [...new Set(years)].sort((a, b) => b - a);
+};
 
 function VideosPage() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState<number | 'all'>('all');
+  
+  const contentRef = useRef<HTMLElement>(null);
+  const isInitialLoad = useRef(true);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -23,6 +34,25 @@ function VideosPage() {
     fetchVideos();
   }, []);
 
+  const uniqueYears = useMemo(() => getUniqueYears(videos), [videos]);
+
+  const filteredVideos = useMemo(() => {
+    if (selectedYear === 'all') {
+      return videos;
+    }
+    return videos.filter(item => new Date(item.date).getFullYear() === selectedYear);
+  }, [videos, selectedYear]);
+
+  useEffect(() => {
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
+    setTimeout(() => {
+      contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }, [selectedYear]);
+
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
@@ -34,16 +64,24 @@ function VideosPage() {
         </div>
       </section>
 
-      <section className={styles.videosSection}>
+      <section className={styles.filtersSection}>
+        <div className="container">
+          <YearFilter years={uniqueYears} selectedYear={selectedYear} onSelectYear={setSelectedYear} />
+        </div>
+      </section>
+
+      <section ref={contentRef} className={styles.videosSection}>
         <div className="container">
           {loading ? (
             <p>Загрузка видео...</p>
-          ) : (
+          ) : filteredVideos.length > 0 ? (
             <div className={styles.videosGrid}>
-              {videos.map((video) => (
+              {filteredVideos.map((video) => (
                 <VideoCard key={video.id} video={video} /> // Use VideoCard component
               ))}
             </div>
+          ) : (
+            <p className={styles.empty}>Видео за выбранный год не найдено.</p>
           )}
         </div>
       </section>

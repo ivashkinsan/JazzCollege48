@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { LibraryLink } from '../types/college';
@@ -9,6 +9,8 @@ function LibraryPage() {
   const [allCategories, setAllCategories] = useState<string[]>(['Все']);
   const [links, setLinks] = useState<LibraryLink[]>([]);
   const [loading, setLoading] = useState(true);
+  const contentRef = useRef<HTMLElement>(null);
+  const isInitialLoad = useRef(true);
 
   useEffect(() => {
     const fetchLibraryData = async () => {
@@ -47,6 +49,20 @@ function LibraryPage() {
 
     fetchLibraryData();
   }, [selectedCategory]); // Re-fetch when selectedCategory changes
+
+  useEffect(() => {
+    // Don't scroll on the initial page load, only on subsequent filter clicks
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false;
+      return;
+    }
+
+    // A small timeout can help ensure the DOM is updated before scrolling
+    setTimeout(() => {
+      contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    
+  }, [selectedCategory]);
 
   // Group links by category for rendering
   const groupedLinks = useMemo(() => {
@@ -89,7 +105,7 @@ function LibraryPage() {
         </div>
       </section>
 
-      <section className={styles.librarySection}>
+      <section ref={contentRef} className={styles.librarySection}>
         <div className="container">
           {loading ? (
             <p>Загрузка...</p>

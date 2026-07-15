@@ -26,9 +26,25 @@
   margin: 0 auto;
 }
 
+.filtersSection {
+  padding: var(--spacing-md) 0;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: var(--header-height);
+  z-index: 10;
+}
+
 .contentSection {
   padding: var(--spacing-xl) 0;
   flex: 1;
+}
+
+.empty {
+  text-align: center;
+  padding: var(--spacing-xxl) 0;
+  color: var(--color-text-muted);
+  font-style: italic;
 }
 
 .pageFooter {
