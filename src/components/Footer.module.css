@@ -82,13 +82,6 @@
   color: var(--color-text-secondary);
 }
 
-.footerSubtext {
-  font-size: 0.8125rem;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
 .footerCreator {
   font-size: 0.75rem; /* Slightly smaller than footerText */
   color: var(--color-text-muted); /* More muted color */

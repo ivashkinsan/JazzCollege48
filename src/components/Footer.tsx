@@ -46,7 +46,6 @@ function Footer({ navigation }: FooterProps) {
               </div>
             </Link>
             <p className={styles.footerText}>© ЛОКИ им. К.Н. Игумнова, 2026. Все права защищены.</p>
-            <p className={styles.footerSubtext}>Эстрадное отделение</p>
             <p className={styles.footerCreator}>Разработчик: Ивашкин Александр jazzScriptDev 2026г.</p>
             <p className={styles.footerVersion}>Версия: {import.meta.env.VITE_APP_VERSION}</p>
           </div>
