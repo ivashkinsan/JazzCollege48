@@ -29,6 +29,7 @@ import AchievementsPage from './pages/AchievementsPage';
 import OrchestraPage from './pages/OrchestraPage';
 import ScrollToHash from './components/ScrollToHash';
 import ScrollToTop from './components/ScrollToTop';
+import ScrollToNext from './components/ScrollToNext';
 
 const baseName = import.meta.env.BASE_URL;
 
@@ -100,6 +101,7 @@ function App() {
         <Footer navigation={navigation} />
       </div>
       <ScrollToTop />
+      <ScrollToNext />
     </BrowserRouter>
   );
 }

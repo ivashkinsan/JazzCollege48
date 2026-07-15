@@ -32,6 +32,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, index, o
             className={styles.achievementCardImage} 
             loading="lazy"
           />
+          <div className={styles.overlay}><span>🔍</span></div>
           <span className={styles.achievementCardPlace}>{achievement.place}</span>
         </div>
       ) : (

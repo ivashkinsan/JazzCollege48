@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import styles from './Lightbox.module.css';
 
 interface LightboxProps {
@@ -10,28 +10,11 @@ interface LightboxProps {
 
 function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const thumbnailsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setCurrentIndex(initialIndex);
-  }, [initialIndex]);
-
-  // Закрытие по Escape
-  useEffect(() => {
-    if (!isOpen) return;
-    
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') setCurrentIndex(prev => (prev > 0 ? prev - 1 : images.length - 1));
-      if (e.key === 'ArrowRight') setCurrentIndex(prev => (prev < images.length - 1 ? prev + 1 : 0));
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
-    };
-  }, [isOpen, images.length, onClose]);
+  }, [initialIndex, isOpen]); // Reset index if re-opened with a different initialIndex
 
   const goNext = useCallback(() => {
     setCurrentIndex(prev => (prev < images.length - 1 ? prev + 1 : 0));
@@ -40,6 +23,38 @@ function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
   const goPrev = useCallback(() => {
     setCurrentIndex(prev => (prev > 0 ? prev - 1 : images.length - 1));
   }, [images.length]);
+
+  // Keyboard navigation and body overflow handling
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') goPrev();
+      if (e.key === 'ArrowRight') goNext();
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen, goPrev, goNext, onClose]);
+
+  // Scroll active thumbnail into view
+  useEffect(() => {
+    if (isOpen && thumbnailsRef.current) {
+      const activeThumbnail = thumbnailsRef.current.children[currentIndex] as HTMLElement;
+      if (activeThumbnail) {
+        activeThumbnail.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+      }
+    }
+  }, [currentIndex, isOpen]);
 
   if (!isOpen || images.length === 0) return null;
 
@@ -69,7 +84,7 @@ function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
         {images.length > 1 && (
           <div className={styles.navBar} onClick={(e) => e.stopPropagation()}>
             <button className={styles.navBtn} onClick={goPrev}>‹</button>
-            <div className={styles.thumbnails}>
+            <div className={styles.thumbnails} ref={thumbnailsRef}>
               {images.map((img, idx) => (
                 <img
                   key={idx}

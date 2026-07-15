@@ -16,13 +16,7 @@ export const navigation: NavigationEntry[] = [
   },
   { id: "afisha", label: "Афиша", href: "/afisha" },
   { id: "news", label: "Новости", href: "/news" },
-  {
-    id: "media",
-    label: "Медиа",
-    items: [
-      { id: "videos", label: "Видео", href: "/videos" },
-      { id: "library", label: "Библиотека", href: "/library" },
-    ],
-  },
+  { id: "videos", label: "Видео", href: "/videos" },
+  { id: "library", label: "Библиотека", href: "/library" },
   { id: "contacts", label: "Контакты", href: "#contacts" },
 ];

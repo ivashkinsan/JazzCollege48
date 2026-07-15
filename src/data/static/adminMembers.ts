@@ -35,7 +35,7 @@ export const adminMembers: AdminMember[] = [
     position: "Заведующий эстрадным отделением",
     image: asset("/foto_admin/Kokshin.jpg"),
     bio: "Руководит эстрадным отделением. Преподаватель по классу саксофона.",
-    email: "kolledgisskusstv@yandex.ru",
+    email: "jazzcollege48@yandex.ru",
     phone: "+7 (474) 241-41-74",
   },
 ];

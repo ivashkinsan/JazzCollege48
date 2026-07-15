@@ -27,12 +27,12 @@ function Contacts({ collegeInfo }: ContactsProps) {
               {collegeInfo.address}
             </a>
           </div>
-          <div className={styles.contactItem}>
+          {/* <div className={styles.contactItem}>
             <span className={styles.contactIcon}>📞</span>
             <a href={`tel:${collegeInfo.phone.replace(/\s/g, '')}`} className={styles.contactLink}>
               {collegeInfo.phone}
             </a>
-          </div>
+          </div> */}
           <div className={styles.contactItem}>
             <span className={styles.contactIcon}>✉️</span>
             <a href={`mailto:${collegeInfo.email}`} className={styles.contactLink}>

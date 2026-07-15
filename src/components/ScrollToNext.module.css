@@ -1,6 +1,7 @@
-.scrollToTop {
+/* Based on ScrollToTop.module.css */
+.scrollToNext {
   position: fixed;
-  bottom: 5.5rem;
+  bottom: 2rem; /* Positioned below the ScrollToTop button */
   right: 2rem;
   z-index: 998;
   width: 48px;
@@ -22,25 +23,25 @@
   box-shadow: var(--shadow-md);
 }
 
-.scrollToTop.visible {
+.scrollToNext.visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-.scrollToTop:hover {
+.scrollToNext:hover {
   background-color: var(--color-accent-hover);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
-.scrollToTop:active {
+.scrollToNext:active {
   transform: translateY(0);
 }
 
 @media (max-width: 768px) {
-  .scrollToTop {
-    bottom: 5rem;
+  .scrollToNext {
+    bottom: 1.5rem;
     right: 1rem;
     width: 44px;
     height: 44px;

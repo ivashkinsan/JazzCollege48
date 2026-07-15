@@ -34,6 +34,28 @@
   align-items: center;
   justify-content: center;
   background-color: var(--color-bg);
+  cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  z-index: 1; /* Ensure overlay is above the image but below the place tag */
+}
+
+.achievementCardImageWrapper:hover .overlay {
+  opacity: 0.6;
+}
+
+.overlay span {
+  font-size: 3rem;
+  color: white;
 }
 
 .achievementCardImage {
