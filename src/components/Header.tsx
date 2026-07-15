@@ -4,6 +4,7 @@ import { useTheme } from '../hooks/useTheme';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './Header.module.css';
+import PwaInstallButton from './PwaInstallButton';
 
 interface HeaderProps {
   navigation: NavigationEntry[];
@@ -217,6 +218,8 @@ function Header({ navigation }: HeaderProps) {
           <nav className={styles.headerNav}>
             {navigation.map(renderNavItem)}
           </nav>
+
+          <PwaInstallButton />
 
           <button
             onClick={toggleTheme}

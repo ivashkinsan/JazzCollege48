@@ -9,7 +9,7 @@ function ScrollToNext() {
     const viewportCenter = window.scrollY + (window.innerHeight / 2);
 
     return sections.find(section => {
-      const sectionTop = section.offsetTop;
+      const sectionTop = (section as HTMLElement).offsetTop;
       return sectionTop > viewportCenter;
     });
   }, []);

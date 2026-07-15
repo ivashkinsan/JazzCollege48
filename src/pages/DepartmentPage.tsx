@@ -1,5 +1,3 @@
-import React from 'react';
-
 function DepartmentPage() {
   return (
     <div style={{ padding: 'var(--header-height) 20px', textAlign: 'center' }}>
