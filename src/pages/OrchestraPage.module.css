@@ -58,11 +58,33 @@
   overflow: hidden;
   box-shadow: var(--shadow-md);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
 }
 
 .galleryItem:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-lg);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.galleryItem:hover .overlay {
+  opacity: 0.6;
+}
+
+.overlay span {
+  font-size: 3rem;
+  color: white;
 }
 
 .galleryItem img {
