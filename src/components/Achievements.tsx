@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import type { Achievement } from '../types/college';
 import styles from './Achievements.module.css';
-import { getVersionedAssetUrl } from '../utils/assetVersion';
+import AchievementCard from './AchievementCard';
+import Lightbox from './Lightbox';
 
 interface AchievementsProps {
   achievements: Achievement[];
@@ -8,6 +10,26 @@ interface AchievementsProps {
 }
 
 function Achievements({ achievements, hideTitle }: AchievementsProps) {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const imageAchievements = achievements.filter(a => a.image);
+  const galleryImageUrls = imageAchievements.map(a => a.image!);
+
+  const openLightbox = (imageIndex: number) => {
+    // This index is relative to the full 'achievements' array.
+    // We need to find the correct index in the 'galleryImageUrls' array.
+    const clickedAchievement = achievements[imageIndex];
+    const galleryIndex = imageAchievements.findIndex(a => a.id === clickedAchievement.id);
+
+    if (galleryIndex !== -1) {
+      setLightboxImages(galleryImageUrls);
+      setLightboxIndex(galleryIndex);
+      setLightboxOpen(true);
+    }
+  };
+  
   return (
     <section id="achievements" className="section section--dark">
       <div className="container">
@@ -23,38 +45,22 @@ function Achievements({ achievements, hideTitle }: AchievementsProps) {
           </>
         )}
         <div className={styles.achievementsGrid}>
-          {achievements.map((achievement) => {
-            const date = new Date(achievement.date);
-            const dateStr = date.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
-            return (
-              <article key={achievement.id} className={styles.achievementCard}>
-                {achievement.image ? (
-                  <div className={styles.achievementCardImageWrapper}>
-                    <img src={getVersionedAssetUrl(achievement.image)} alt={achievement.title} className={styles.achievementCardImage} />
-                    <span className={styles.achievementCardPlace}>{achievement.place}</span>
-                  </div>
-                ) : (
-                  <div className={styles.achievementCardPlaceholder}>
-                    <span className={styles.achievementCardIcon}>🏆</span>
-                    <p className={styles.achievementCardHint}>Диплом</p>
-                  </div>
-                )}
-                <div className={styles.achievementCardContent}>
-                  <h3 className={styles.achievementCardTitle}>{achievement.title}</h3>
-                  {achievement.studentName && (
-                    <p className={styles.achievementCardStudent}>{achievement.studentName}</p>
-                  )}
-                  <p className={styles.achievementCardCompetition}>{achievement.competition}</p>
-                  <div className={styles.achievementCardMeta}>
-                    <span className={styles.achievementCardCategory}>{achievement.category}</span>
-                    <span className={styles.achievementCardDate}>{dateStr}</span>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+          {achievements.map((achievement, index) => (
+            <AchievementCard 
+              key={achievement.id} 
+              achievement={achievement} 
+              index={index}
+              onImageClick={openLightbox}
+            />
+          ))}
         </div>
       </div>
+      <Lightbox
+        images={lightboxImages}
+        initialIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </section>
   );
 }

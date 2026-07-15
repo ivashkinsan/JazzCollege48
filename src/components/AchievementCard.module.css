@@ -1,0 +1,145 @@
+/* src/components/AchievementCard.module.css */
+/* These styles are a combination of Achievements.module.css and AchievementsPreview.module.css */
+
+.achievementCard {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+[data-theme='light'] .achievementCard {
+  box-shadow: var(--shadow-sm);
+}
+
+.achievementCard:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+}
+
+[data-theme='light'] .achievementCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.achievementCardImageWrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1 / 1.4142; /* A4 Portrait ratio */
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+}
+
+.achievementCardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Fill the container, cropping if necessary */
+  transition: none;
+}
+
+.achievementCardPlaceholder {
+  width: 100%;
+  aspect-ratio: 1 / 1.4142; /* A4 Portrait ratio */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  flex-shrink: 0;
+  background-color: var(--color-bg-secondary);
+}
+
+[data-theme='dark'] .achievementCardPlaceholder {
+  background-color: var(--color-bg);
+}
+
+[data-theme='light'] .achievementCardPlaceholder {
+  background-color: var(--color-sand);
+}
+
+.achievementCardIcon {
+  font-size: 2.5rem;
+}
+
+.achievementCardHint {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-muted);
+}
+
+.achievementCardContent {
+  flex: 1;
+  padding: var(--spacing-lg);
+  display: flex; /* Make it a flex container */
+  flex-direction: column; /* Stack content vertically */
+}
+
+.achievementCardPlace {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-accent);
+  color: var(--color-black);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: var(--border-radius);
+  z-index: 1;
+  box-shadow: var(--shadow-md);
+}
+
+.achievementCardTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+.achievementCardStudent {
+  font-size: 0.9375rem;
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-sm);
+}
+
+.achievementCardCompetition {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  flex-grow: 1; /* Allow this element to grow and push meta to bottom */
+}
+
+.achievementCardMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.achievementCardMetaPlace {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.achievementCardCategory {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.achievementCardDate {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
