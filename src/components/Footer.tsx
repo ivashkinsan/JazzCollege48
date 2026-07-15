@@ -3,6 +3,8 @@ import { asset } from '../utils/asset';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Footer.module.css';
 
+import PwaInstallButton from './PwaInstallButton';
+
 interface FooterProps {
   navigation: NavigationEntry[];
 }
@@ -31,24 +33,21 @@ function Footer({ navigation }: FooterProps) {
     <footer className={styles.footer}>
       <div className="container">
         <div className={styles.footerContent}>
-          <div className={styles.footerInfo}>
-            <Link to="/" className={styles.footerLogoLink}>
-              <img
-                src={asset('/Logo/Logo_var_1.png')}
-                alt="ЛОКИ им. К.Н. Игумнова"
-                className={styles.footerLogo}
-                width="50"
-                height="50"
-              />
-              <div className={styles.footerLogoText}>
-                <span className={styles.footerLogoTitle}>эстрадно-джазовое отделение</span>
-                <span className={styles.footerLogoSubtitle}>Липецк</span>
-              </div>
-            </Link>
-            <p className={styles.footerText}>© ЛОКИ им. К.Н. Игумнова, 2026. Все права защищены.</p>
-            <p className={styles.footerCreator}>Разработчик: Ивашкин Александр jazzScriptDev 2026г.</p>
-            <p className={styles.footerVersion}>Версия: {import.meta.env.VITE_APP_VERSION}</p>
-          </div>
+          
+          <Link to="/" className={styles.footerLogoLink}>
+            <img
+              src={asset('/Logo/Logo_var_1.png')}
+              alt="ЛОКИ им. К.Н. Игумнова"
+              className={styles.footerLogo}
+              width="50"
+              height="50"
+            />
+            <div className={styles.footerLogoText}>
+              <span className={styles.footerLogoTitle}>эстрадно-джазовое отделение</span>
+              <span className={styles.footerLogoSubtitle}>Липецк</span>
+            </div>
+          </Link>
+
           <nav className={styles.footerNav}>
             {flatLinks.map((item) => {
               const isAnchor = item.href.startsWith('#');
@@ -74,6 +73,14 @@ function Footer({ navigation }: FooterProps) {
               );
             })}
           </nav>
+
+          <div className={styles.footerBottom}>
+            <p className={styles.footerText}>© ЛОКИ им. К.Н. Игумнова, 2026. Все права защищены.</p>
+            <p className={styles.footerCreator}>Разработчик: Ивашкин Александр jazzScriptDev 2026г.</p>
+            <p className={styles.footerVersion}>Версия: {import.meta.env.VITE_APP_VERSION}</p>
+            <PwaInstallButton />
+          </div>
+          
         </div>
       </div>
     </footer>

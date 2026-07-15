@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import styles from './PwaInstallButton.module.css';
-import { InstallIcon } from './icons'; // Assuming an icon component exists or will be created
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -49,8 +48,7 @@ function PwaInstallButton() {
       onClick={handleInstallClick}
       title="Установить приложение"
     >
-      <InstallIcon />
-      <span className={styles.buttonText}>Установить</span>
+      установить как PWA на главный экран
     </button>
   );
 }

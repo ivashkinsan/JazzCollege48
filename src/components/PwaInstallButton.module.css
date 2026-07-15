@@ -1,34 +1,16 @@
 .installButton {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--color-accent);
-  color: var(--color-black);
+  background: none;
   border: none;
-  border-radius: var(--border-radius);
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 600;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: var(--color-text-muted);
+  text-decoration: underline;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
 }
 
 .installButton:hover {
-  background-color: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-}
-
-.installButton svg {
-  width: 18px;
-  height: 18px;
-}
-
-@media (max-width: 768px) {
-  .buttonText {
-    display: none; /* Hide text on mobile, show only icon */
-  }
-  .installButton {
-    padding: 0.6rem;
-  }
+  opacity: 1;
 }
