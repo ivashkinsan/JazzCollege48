@@ -11,6 +11,11 @@ interface LightboxProps {
 function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const thumbnailsRef = useRef<HTMLDivElement>(null);
+  
+  // State for swipe gestures
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const minSwipeDistance = 50;
 
   useEffect(() => {
     setCurrentIndex(initialIndex);
@@ -55,6 +60,33 @@ function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
       }
     }
   }, [currentIndex, isOpen]);
+  
+  // Swipe event handlers
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0); // Reset touch end
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goNext();
+    } else if (isRightSwipe) {
+      goPrev();
+    }
+    
+    // Reset after swipe
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
 
   if (!isOpen || images.length === 0) return null;
 
@@ -65,7 +97,13 @@ function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
         <button className={styles.closeBtn} onClick={onClose}>✕</button>
 
         {/* Изображение — клик по фото НЕ закрывает */}
-        <div className={styles.imageContainer} onClick={(e) => e.stopPropagation()}>
+        <div 
+          className={styles.imageContainer} 
+          onClick={(e) => e.stopPropagation()}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
           <img
             src={images[currentIndex]}
             alt={`Фото ${currentIndex + 1}`}

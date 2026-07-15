@@ -54,7 +54,7 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: var(--color-accent) transparent;
-  /* padding-bottom: 8px; */
+  padding-bottom: 12px;
 }
 
 .tabs::-webkit-scrollbar {

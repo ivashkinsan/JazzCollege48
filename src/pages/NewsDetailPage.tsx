@@ -53,12 +53,29 @@ function NewsDetailPage() {
   const allImages = Array.from(new Set(item.gallery?.map(p => p.src) || [])).filter(Boolean).map(img => getVersionedAssetUrl(img as string));
   const coverImage = item.cover?.src ? getVersionedAssetUrl(item.cover.src) : allImages[0];
   const dateStr = new Date(item.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+  const pageUrl = `https://jazzcollege48.ru/news/${item.slug}`;
+  const imageUrl = coverImage ? `https://jazzcollege48.ru${coverImage}` : 'https://jazzcollege48.ru/og-image.png';
 
   return (
     <div className={styles.page}>
       <Helmet>
         <title>{`${item.title} - Новости - JazzCollege48`}</title>
         <meta name="description" content={item.description} />
+        <link rel="canonical" href={pageUrl} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:title" content={item.title} />
+        <meta property="og:description" content={item.description} />
+        <meta property="og:image" content={imageUrl} />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={pageUrl} />
+        <meta property="twitter:title" content={item.title} />
+        <meta property="twitter:description" content={item.description} />
+        <meta property="twitter:image" content={imageUrl} />
       </Helmet>
       
       <article className={`container ${styles.articleContainer}`}>
