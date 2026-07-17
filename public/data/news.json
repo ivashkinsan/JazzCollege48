@@ -694,6 +694,27 @@
     "subcategory": "конкурсы"
   },
   {
+    "id": "73",
+    "slug": "kontsert-obshchego-fortepiano",
+    "title": "Концерт общего фортепиано",
+    "date": "2025-04-30",
+    "description": "Концерт преподавателей разных отделений колледжа и концертмейстеров к 80-летию Великой Победы \"Звенит Победой май цветущий!\".30.04.2025",
+    "content": "Концерт преподавателей разных отделений колледжа и концертмейстеров к 80-летию Великой Победы \"Звенит Победой май цветущий!\".30.04.2025",
+    "category": "news",
+    "cover": {
+      "src": "/media/2025/2025-04-30-kontsert-obshchego-fortepiano/2025-04-30_Conzert_konzertmeysterov.jpg",
+      "title": "Концерт общего фортепиано"
+    },
+    "gallery": [
+      {
+        "src": "/media/2025/2025-04-30-kontsert-obshchego-fortepiano/2025-04-30_Conzert_konzertmeysterov.jpg",
+        "title": "Концерт общего фортепиано"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "концерты"
+  },
+  {
     "id": "39",
     "slug": "detskiy-triumf-dzhaza",
     "title": "Детский триумф джаза",
@@ -750,6 +771,48 @@
     ],
     "linked_photoalbum_id": 42,
     "subcategory": "концерты"
+  },
+  {
+    "id": "81",
+    "slug": "muzyka-iz-fil-mov-rossiyskogo-i-zarubezhnogo-kino",
+    "title": "Музыка из фильмов российского и зарубежного кино",
+    "date": "2024-12-14",
+    "description": "Концерт специальности \"Фортепиано\" ЛОУНБ",
+    "content": "Концерт специальности \"Фортепиано\" ЛОУНБ ",
+    "category": "news",
+    "cover": {
+      "src": "/media/2024/2024-12-14-muzyka-iz-fil-mov-rossiyskogo-i-zarubezhnogo-kino/2024-12-14_Musika_iz_filmov.jpg",
+      "title": "Музыка из фильмов российского и зарубежного кино"
+    },
+    "gallery": [
+      {
+        "src": "/media/2024/2024-12-14-muzyka-iz-fil-mov-rossiyskogo-i-zarubezhnogo-kino/2024-12-14_Musika_iz_filmov.jpg",
+        "title": "Музыка из фильмов российского и зарубежного кино"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "концерты"
+  },
+  {
+    "id": "80",
+    "slug": "den-uchitelya",
+    "title": "День учителя",
+    "date": "2024-10-04",
+    "description": "Преподаватели специальности \"Музыкальное искусство эстрады\" Фото Инны Дориной",
+    "content": "Преподаватели специальности \"Музыкальное искусство эстрады\" Фото Инны Дориной",
+    "category": "news",
+    "cover": {
+      "src": "/media/2024/2024-10-04-den-uchitelya/2024-10-04_Den_Uchitelya.jpg",
+      "title": "День учителя"
+    },
+    "gallery": [
+      {
+        "src": "/media/2024/2024-10-04-den-uchitelya/2024-10-04_Den_Uchitelya.jpg",
+        "title": "День учителя"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "разное"
   },
   {
     "id": "56",
@@ -955,6 +1018,48 @@
     "subcategory": "мастер-классы"
   },
   {
+    "id": "74",
+    "slug": "tvorcheskaya-vstrecha",
+    "title": "Творческая встреча",
+    "date": "2023-10-19",
+    "description": "Творческая встреча Колупаева Вячеслава Ивановича в Мичуринской ДМШ им. С.В. Рахманинова со своим выпускником Антоном Поповым (ЛОКИ им. К.Н. Игумнова 2016г./ МГИК (бывш. МГУКИ) Кафедра эстрадных оркестров и ансамблей 2021г.).",
+    "content": "Творческая встреча Колупаева Вячеслава Ивановича в Мичуринской ДМШ им. С.В. Рахманинова со своим выпускником Антоном Поповым (ЛОКИ им. К.Н. Игумнова 2016г./ МГИК (бывш. МГУКИ) Кафедра эстрадных оркестров и ансамблей 2021г.).",
+    "category": "news",
+    "cover": {
+      "src": "/media/2023/2023-10-19-tvorcheskaya-vstrecha/2023-10-19_Tvorcheskaya_vstrecha_Kolupaev.jpg",
+      "title": "Творческая встреча"
+    },
+    "gallery": [
+      {
+        "src": "/media/2023/2023-10-19-tvorcheskaya-vstrecha/2023-10-19_Tvorcheskaya_vstrecha_Kolupaev.jpg",
+        "title": "Творческая встреча"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "разное"
+  },
+  {
+    "id": "75",
+    "slug": "tvorcheskaya-vstrecha-s-kolupaevym-vyacheslavom",
+    "title": "Творческая встреча с Колупаевым Вячеславом ",
+    "date": "2023-10-19",
+    "description": "в Мичуринской ДМШ им. С.В. Рахманинова",
+    "content": "в Мичуринской ДМШ им. С.В. Рахманинова",
+    "category": "news",
+    "cover": {
+      "src": "/media/2023/2023-10-19-tvorcheskaya-vstrecha-s-kolupaevym-vyacheslavom/2023-10-19_Tvorcheskaya_vstrecha_Kolupaev_2.jpg",
+      "title": "Творческая встреча с Колупаевым Вячеславом "
+    },
+    "gallery": [
+      {
+        "src": "/media/2023/2023-10-19-tvorcheskaya-vstrecha-s-kolupaevym-vyacheslavom/2023-10-19_Tvorcheskaya_vstrecha_Kolupaev_2.jpg",
+        "title": "Творческая встреча с Колупаевым Вячеславом "
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "мастер-классы"
+  },
+  {
     "id": "45",
     "slug": "master-klass-denisa-mel-nikova-i-mikhaila-brucheeva",
     "title": "Мастер-класс Дениса Мельникова и Михаила Бручеева",
@@ -984,6 +1089,52 @@
     "subcategory": "мастер-классы"
   },
   {
+    "id": "77",
+    "slug": "master-klass-vyacheslava-kolupaeva",
+    "title": "Мастер класс Вячеслава Колупаева",
+    "date": "2023-04-20",
+    "description": "Мастер-класс Вячеслава Колупаева в ДШИ №11 г. Липецка",
+    "content": "Мастер-класс Вячеслава Колупаева в ДШИ №11 г. Липецка",
+    "category": "news",
+    "cover": {
+      "src": "/media/2023/2023-04-20-master-klass-vyacheslava-kolupaeva/2023-04-18_Master_class_Kolupayev_3.jpg",
+      "title": "Мастер класс Вячеслава Колупаева"
+    },
+    "gallery": [
+      {
+        "src": "/media/2023/2023-04-20-master-klass-vyacheslava-kolupaeva/2023-04-18_Master_class_Kolupayev_3.jpg",
+        "title": "Мастер класс Вячеслава Колупаева"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "мастер-классы"
+  },
+  {
+    "id": "76",
+    "slug": "master-klass",
+    "title": "Мастер-класс",
+    "date": "2023-04-18",
+    "description": "Мастер-класс Вячеслава Колупаева в ДШИ Грязинского района Липецкой области",
+    "content": "Мастер-класс Вячеслава Колупаева в ДШИ Грязинского района Липецкой области",
+    "category": "news",
+    "cover": {
+      "src": "/media/2023/2023-04-18-master-klass/2023-04-18_Master_class_Kolupayev_1.jpg",
+      "title": "Мастер-класс"
+    },
+    "gallery": [
+      {
+        "src": "/media/2023/2023-04-18-master-klass/2023-04-18_Master_class_Kolupayev_1.jpg",
+        "title": "Мастер-класс"
+      },
+      {
+        "src": "/media/2023/2023-04-18-master-klass/2023-04-18_Master_class_Kolupayev_2.jpg",
+        "title": "Мастер-класс"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "мастер-классы"
+  },
+  {
     "id": "48",
     "slug": "ii-vserossiyskiy-konkurs-dzhazovykh-ansambley-imeni-kima-nazaretova",
     "title": "II Всероссийский конкурс джазовых ансамблей имени Кима Назаретова",
@@ -1003,6 +1154,48 @@
     ],
     "linked_photoalbum_id": 53,
     "subcategory": "конкурсы"
+  },
+  {
+    "id": "78",
+    "slug": "master-klass-vyacheslava-kolupaeva-2h94",
+    "title": "Мастер-класс Вячеслава Колупаева",
+    "date": "2022-12-02",
+    "description": "Мастер-класс Вячеслава Колупаева в ДШИ №11 г. Липецка",
+    "content": "Мастер-класс Вячеслава Колупаева в ДШИ №11 г. Липецка",
+    "category": "news",
+    "cover": {
+      "src": "/media/2022/2022-12-02-master-klass-vyacheslava-kolupaeva-2h94/2022-12-02_Master_class_Kolupaev.jpg",
+      "title": "Мастер-класс Вячеслава Колупаева"
+    },
+    "gallery": [
+      {
+        "src": "/media/2022/2022-12-02-master-klass-vyacheslava-kolupaeva-2h94/2022-12-02_Master_class_Kolupaev.jpg",
+        "title": "Мастер-класс Вячеслава Колупаева"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "мастер-классы"
+  },
+  {
+    "id": "79",
+    "slug": "master-klass-vyacheslava-kolupaeva-0by2",
+    "title": "Мастер-класс Вячеслава Колупаева",
+    "date": "2022-05-13",
+    "description": "Мастер-класс Вячеслава Колупаева в МАУ ДО ДШИ Грязинского муниципального района Липецкой области",
+    "content": "Мастер-класс Вячеслава Колупаева в МАУ ДО ДШИ Грязинского муниципального района Липецкой области",
+    "category": "news",
+    "cover": {
+      "src": "/media/2022/2022-05-13-master-klass-vyacheslava-kolupaeva-0by2/2022-05-12_Master_class_Kolupaev_MAU_DSHI_Gryazi.jpg",
+      "title": "Мастер-класс Вячеслава Колупаева"
+    },
+    "gallery": [
+      {
+        "src": "/media/2022/2022-05-13-master-klass-vyacheslava-kolupaeva-0by2/2022-05-12_Master_class_Kolupaev_MAU_DSHI_Gryazi.jpg",
+        "title": "Мастер-класс Вячеслава Колупаева"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "мастер-классы"
   },
   {
     "id": "47",
@@ -1188,6 +1381,52 @@
       }
     ],
     "linked_photoalbum_id": 34,
+    "subcategory": "концерты"
+  },
+  {
+    "id": "82",
+    "slug": "kontsert-i-master-klass",
+    "title": "Концерт и мастер класс",
+    "date": "2019-04-24",
+    "description": "Концерт учащегося ДАИ ЛОКИ им. К.Н. Игумнова К.Збаражского и мастер-класс Колупаева В.И. в ДШИ №12 г. Липецка",
+    "content": "Концерт учащегося ДАИ ЛОКИ им. К.Н. Игумнова К.Збаражского и мастер-класс Колупаева В.И. в ДШИ №12 г. Липецка ",
+    "category": "news",
+    "cover": {
+      "src": "/media/2019/2019-04-24-kontsert-i-master-klass/2019-04-29_Konzert_Master_class_Kolupaev.jpg",
+      "title": "Концерт и мастер класс"
+    },
+    "gallery": [
+      {
+        "src": "/media/2019/2019-04-24-kontsert-i-master-klass/2019-04-29_Konzert_Master_class_Kolupaev.jpg",
+        "title": "Концерт и мастер класс"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "мастер-классы"
+  },
+  {
+    "id": "83",
+    "slug": "dzhaz-dlya-zhenshchin",
+    "title": "Джаз для женщин",
+    "date": "2018-03-07",
+    "description": "Концерт ПЦК \"Музыкальное искусство эстрады\" Детская Академия искусств \"Розовые пантеры\" Г. Манчини и их укротитель!",
+    "content": "Концерт ПЦК \"Музыкальное искусство эстрады\" Детская Академия искусств \"Розовые пантеры\" Г. Манчини и их укротитель! ",
+    "category": "news",
+    "cover": {
+      "src": "/media/2018/2018-03-07-dzhaz-dlya-zhenshchin/2018-03-07_Jazz_dlya_genchin_1.jpg",
+      "title": "Джаз для женщин"
+    },
+    "gallery": [
+      {
+        "src": "/media/2018/2018-03-07-dzhaz-dlya-zhenshchin/2018-03-07_Jazz_dlya_genchin_1.jpg",
+        "title": "Джаз для женщин"
+      },
+      {
+        "src": "/media/2018/2018-03-07-dzhaz-dlya-zhenshchin/2018-03-07_Jazz_dlya_genchin_2.jpg",
+        "title": "Джаз для женщин"
+      }
+    ],
+    "linked_photoalbum_id": null,
     "subcategory": "концерты"
   },
   {
@@ -1417,6 +1656,27 @@
     "subcategory": "концерты"
   },
   {
+    "id": "84",
+    "slug": "iii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step",
+    "title": "III международный конкурс эстрадно-джазового исполнительства - JAZZ STEP",
+    "date": "2016-04-11",
+    "description": "6-8 апреля 2016 года г. Сочи. I премия. Владислав Воронов | преподаватель Колупаев Вячеслав Иванович | фото ЛОКИ им. К.Н.Игумнова",
+    "content": "6-8 апреля 2016 года г. Сочи. I премия. Владислав Воронов | преподаватель Колупаев Вячеслав Иванович | фото ЛОКИ им. К.Н.Игумнова",
+    "category": "news",
+    "cover": {
+      "src": "/media/2016/2016-04-11-iii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step/2016-04-11_Jazz_Step_Voronov_V_1.jpg",
+      "title": "III международный конкурс эстрадно-джазового исполнительства - JAZZ STEP"
+    },
+    "gallery": [
+      {
+        "src": "/media/2016/2016-04-11-iii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step/2016-04-11_Jazz_Step_Voronov_V_1.jpg",
+        "title": "III международный конкурс эстрадно-джазового исполнительства - JAZZ STEP"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "конкурсы"
+  },
+  {
     "id": "63",
     "slug": "jazz-step-v-g-sochi",
     "title": "JAZZ STEP в г.Сочи",
@@ -1439,6 +1699,35 @@
       }
     ],
     "linked_photoalbum_id": "null",
+    "subcategory": "конкурсы"
+  },
+  {
+    "id": "85",
+    "slug": "iii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step-2dx0",
+    "title": "III международный конкурс эстрадно-джазового исполнительства  - JAZZ STEP",
+    "date": "2016-04-08",
+    "description": "6-8 апреля 2016 года г. Сочи",
+    "content": "6-8 апреля 2016 года г. Сочи",
+    "category": "news",
+    "cover": {
+      "src": "/media/2016/2016-04-08-iii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step-2dx0/2016-04-08_Jazz_Step_2.jpg",
+      "title": "III международный конкурс эстрадно-джазового исполнительства  - JAZZ STEP"
+    },
+    "gallery": [
+      {
+        "src": "/media/2016/2016-04-08-iii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step-2dx0/2016-04-08_Jazz_Step_2.jpg",
+        "title": "III международный конкурс эстрадно-джазового исполнительства  - JAZZ STEP"
+      },
+      {
+        "src": "/media/2016/2016-04-08-iii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step-2dx0/2016-04-08_Jazz_Step_3.jpg",
+        "title": "III международный конкурс эстрадно-джазового исполнительства  - JAZZ STEP"
+      },
+      {
+        "src": "/media/2016/2016-04-08-iii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step-2dx0/2016-04-08_Jazz_Step_1.jpg",
+        "title": "III международный конкурс эстрадно-джазового исполнительства  - JAZZ STEP"
+      }
+    ],
+    "linked_photoalbum_id": null,
     "subcategory": "конкурсы"
   },
   {
@@ -1701,5 +1990,55 @@
     ],
     "linked_photoalbum_id": "null",
     "subcategory": "концерты"
+  },
+  {
+    "id": "86",
+    "slug": "ansambl-saksofonov-i-nikolay-vintskevich",
+    "title": "ансамбль саксофонов и Николай Винцкевич",
+    "date": "2015-05-04",
+    "description": "После творческой встречи",
+    "content": "После творческой встречи",
+    "category": "news",
+    "cover": {
+      "src": "/media/2015/2015-05-04-ansambl-saksofonov-i-nikolay-vintskevich/2015-05-04_Vinzkevich.jpg",
+      "title": "ансамбль саксофонов и Николай Винцкевич"
+    },
+    "gallery": [
+      {
+        "src": "/media/2015/2015-05-04-ansambl-saksofonov-i-nikolay-vintskevich/2015-05-04_Vinzkevich.jpg",
+        "title": "ансамбль саксофонов и Николай Винцкевич"
+      }
+    ],
+    "linked_photoalbum_id": null,
+    "subcategory": "разное"
+  },
+  {
+    "id": "87",
+    "slug": "ii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step",
+    "title": "II Международный конкурс эстрадно-джазового исполнительства Jazz Step",
+    "date": "2015-04-04",
+    "description": "г.Сочи 1-4 апреля 2015 года.\r\nМаксим Катрук | Авраимов Иван | Дмитрий Кокшин | Владислав Воронов | Денис Мельников | Виталий Полянский | Дмитрий Данилов",
+    "content": "г.Сочи 1-4 апреля 2015 года.\r\nМаксим Катрук | Авраимов Иван | Дмитрий Кокшин | Владислав Воронов | Денис Мельников | Виталий Полянский | Дмитрий Данилов",
+    "category": "news",
+    "cover": {
+      "src": "/media/2015/2015-04-04-ii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step/2015-04-04_Jazz_Step_1.jpg",
+      "title": "II Международный конкурс эстрадно-джазового исполнительства Jazz Step"
+    },
+    "gallery": [
+      {
+        "src": "/media/2015/2015-04-04-ii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step/2015-04-04_Jazz_Step_1.jpg",
+        "title": "II Международный конкурс эстрадно-джазового исполнительства Jazz Step"
+      },
+      {
+        "src": "/media/2015/2015-04-04-ii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step/2015-04-04_Jazz_Step_3.jpg",
+        "title": "II Международный конкурс эстрадно-джазового исполнительства Jazz Step"
+      },
+      {
+        "src": "/media/2015/2015-04-04-ii-mezhdunarodnyy-konkurs-estradno-dzhazovogo-ispolnitel-stva-jazz-step/2015-04-04_Jazz_Step_2.jpg",
+        "title": "II Международный конкурс эстрадно-джазового исполнительства Jazz Step"
+      }
+    ],
+    "linked_photoalbum_id": "null",
+    "subcategory": "конкурсы"
   }
 ]
